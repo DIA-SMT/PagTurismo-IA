@@ -7,8 +7,8 @@ import { HeroFotos } from "@/components/HeroFotos";
 import { Icono } from "@/components/Iconos";
 import { getClima } from "@/lib/clima";
 import {
-  ACCESOS, AGENDA, ANTES_DE_LLEGAR, BUS, CATEGORIAS, DESTACADOS, ESCAPADAS,
-  EXPERIENCIAS, FECHAS, REDES, SABORES, TURISMO,
+  ACCESOS, AGENDA, ANTES_DE_LLEGAR, BUS, BUS_TURISTICO, CATEGORIAS, DESTACADOS,
+  ESCAPADAS, EXPERIENCIAS, FECHAS, REDES, SABORES, TURISMO,
 } from "@/lib/contenido";
 
 // El clima se vuelve a pedir cada media hora; el resto es estático.
@@ -69,9 +69,9 @@ export default async function Landing() {
               <a className="boton boton--primario" href="#que-hacer">
                 Descubrí qué hacer <Icono nombre="flecha" tamano={18} />
               </a>
-              <a className="boton boton--claro" href="#recorridos">
-                <Icono nombre="bus-linea" tamano={18} /> Bus turístico gratuito
-              </a>
+              <Externo className="boton boton--claro" href={BUS_TURISTICO}>
+                <Icono nombre="bus-linea" tamano={18} /> Bus turístico gratuito <Icono nombre="externo" tamano={16} />
+              </Externo>
             </div>
           </div>
 
@@ -82,11 +82,11 @@ export default async function Landing() {
 
           <nav className="accesos" aria-label="Accesos rápidos">
             {ACCESOS.map((a, i) => (
-              <a className={`acceso tono-${[1, 0, 3, 4][i]}`} href={a.url} key={a.titulo}>
+              <Externo className={`acceso tono-${[1, 0, 3, 4][i]}`} href={a.url} key={a.titulo}>
                 <span className="icono-pastel"><Icono nombre={a.icono} tamano={24} /></span>
                 <span><strong>{a.titulo}</strong><small>{a.detalle}</small></span>
-                <Icono nombre="flecha" tamano={18} />
-              </a>
+                <Icono nombre={a.url.startsWith("http") ? "externo" : "flecha"} tamano={18} />
+              </Externo>
             ))}
           </nav>
         </div>
@@ -164,11 +164,11 @@ export default async function Landing() {
                 <li><Icono nombre="ticket" tamano={16} /> Gratuito</li>
               </ul>
               <div className="inscripcion">
-                <h3>Consultas e inscripción</h3>
-                <p>Oficina de Turismo: {TURISMO.domicilio}.</p>
-                <a className="boton boton--amarillo" href={`mailto:${TURISMO.email}?subject=Inscripción al Bus Turístico`}>
-                  <Icono nombre="correo" tamano={18} /> {TURISMO.email}
-                </a>
+                <h3>Salidas y reservas</h3>
+                <p>Los horarios de salida y la reserva están en el sitio del Bus Turístico, junto con los turnos del Bus Educativo para escuelas.</p>
+                <Externo className="boton boton--amarillo" href={BUS.url}>
+                  <Icono nombre="bus-linea" tamano={18} /> Ir al Bus Turístico <Icono nombre="externo" tamano={16} />
+                </Externo>
               </div>
             </div>
             <CircuitosBus />

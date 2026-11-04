@@ -14,6 +14,10 @@
 
 export const PORTAL = "https://smt.gob.ar";
 
+/** Sitios propios: los enlaces van ahí y no a una sección de la landing. */
+export const BUS_TURISTICO = "https://busturistico.smt.gob.ar/";
+export const PALACIO = "https://palacio.smt.gob.ar/";
+
 export type Enlace = { texto: string; url: string; externo?: boolean };
 
 export const NAV: Enlace[] = [
@@ -43,7 +47,7 @@ export const HERO = {
 
 export const ACCESOS = [
   { titulo: "Qué hacer", detalle: "Lugares y experiencias", url: "#que-hacer", icono: "brujula" },
-  { titulo: "Bus turístico", detalle: "Gratis, con guía", url: "#recorridos", icono: "bus-linea" },
+  { titulo: "Bus turístico", detalle: "Gratis, con guía", url: BUS_TURISTICO, icono: "bus-linea" },
   { titulo: "Agenda", detalle: "Fechas para agendar", url: "#agenda", icono: "calendario" },
   { titulo: "Cómo llegar", detalle: "Datos para tu viaje", url: "#antes-de-llegar", icono: "avion" },
 ];
@@ -56,7 +60,7 @@ export const DESTACADOS = [
     titulo: "City Tour en Bus Turístico",
     detalle: "Un recorrido guiado y gratuito de unas dos horas por la historia, la cultura y el patrimonio arquitectónico de la ciudad.",
     imagen: "/fotos/san-miguel-de-tucuman.webp",
-    url: `${PORTAL}/busturistico`,
+    url: BUS_TURISTICO,
   },
   {
     etiqueta: "A pie",
@@ -121,10 +125,10 @@ export const CATEGORIAS: Categoria[] = [
     url: "#recorridos",
   },
   {
-    titulo: "Deportes",
-    detalle: "El Palacio de los Deportes y los circuitos para correr en el parque.",
+    titulo: "Palacio de los Deportes",
+    detalle: "Deporte, música y cultura bajo un mismo techo: mirá la cartelera.",
     foto: "/fotos/palacio-de-los-deportes.webp",
-    url: `${PORTAL}/parques_smt`,
+    url: PALACIO,
   },
   {
     titulo: "Plazas y noches",
@@ -155,7 +159,7 @@ export const FECHAS = [
 export const BUS = {
   titulo: "City Tour en Bus Turístico",
   detalle: "Recorrido guiado y gratuito de aproximadamente dos horas. Cada circuito propone una mirada distinta sobre la identidad tucumana, con guías especializados y paradas en sitios emblemáticos.",
-  url: `${PORTAL}/busturistico`,
+  url: BUS_TURISTICO,
   circuitos: [
     {
       nombre: "Histórico Cultural",
@@ -359,12 +363,13 @@ export const PIE: { titulo: string; enlaces: Enlace[] }[] = [
       { texto: "Lugares de interés", url: `${PORTAL}/lugares-de-interes`, externo: true },
       { texto: "Parques", url: `${PORTAL}/parques_smt`, externo: true },
       { texto: "Museo Escultórico", url: `${PORTAL}/museoescultorio`, externo: true },
+      { texto: "Palacio de los Deportes", url: PALACIO, externo: true },
     ],
   },
   {
     titulo: "Recorridos",
     enlaces: [
-      { texto: "Bus Turístico", url: `${PORTAL}/busturistico`, externo: true },
+      { texto: "Bus Turístico", url: BUS_TURISTICO, externo: true },
       { texto: "Circuito a pie", url: `${PORTAL}/circuitosturisticospie`, externo: true },
       { texto: "Circuitos turísticos", url: `${PORTAL}/circuitos-turisticos`, externo: true },
       { texto: "Mapa interactivo", url: "https://mapa.smt.gob.ar/", externo: true },
