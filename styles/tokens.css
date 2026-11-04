@@ -1,0 +1,361 @@
+/* ============================================================
+   Municipalidad de San Miguel de Tucumán — Design Tokens v2
+   Paleta derivada del isologotipo oficial (Logo_SMT_pos_1.png):
+   azul #0066FF · celeste #2EB1FF · amarillo #F4DC00 · gris #333333
+   ============================================================ */
+
+@font-face {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/encode-sans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Encode Sans';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/encode-sans-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  /* ---- Color: marca ---- */
+  /* ---- El tinte azul que tiene que PERCIBIRSE ----
+     Lo usan los hover, los estados activos y las etiquetas: todo lo que marca
+     algo tiñendo el fondo. Existe aparte de la escala porque lo que pide no es
+     un peldaño sino un resultado, y el peldaño que lo consigue no es el mismo
+     en los dos temas.
+
+     De día el 50 alcanza y sobra: #EDF4FF sobre blanco se ve sin gritar.
+     De noche NO, y no es cuestión de elegir mejor: en la escala oscura el 50 es
+     el tinte más sutil, y sobre una superficie oscura "sutil" quiere decir
+     invisible. Medido, #10263C da 1,03:1 contra --c-blanco, 1,15 contra
+     --c-fondo y 1,07 contra --c-fondo-alt. Ninguno de los catorce lugares que
+     lo usan mostraba nada.
+
+     Subir el valor del 50 tampoco servía: quedaría más claro que el 100 y la
+     escala quedaría dada vuelta para quien la lea. Por eso el rol se separa
+     del peldaño. De noche toma el 200, que da 1,49 / 1,66 / 1,55 contra las
+     tres superficies —se percibe sin convertirse en un bloque— y aguanta el
+     texto que se le apoya encima: --c-azul-700 en 4,79:1 y --c-ink en 9,08:1. */
+  --c-tinte-azul: var(--c-azul-50);
+
+  --c-azul-50:  #EDF4FF;
+  --c-azul-100: #D9E9FF;
+  --c-azul-200: #B3D2FF;
+  --c-azul-300: #7AB0FF;
+  --c-azul-500: #1F7AFF;
+  --c-azul-600: #0066FF;   /* azul oficial del logo: acciones, marca */
+  --c-azul-700: #0052CC;   /* enlaces sobre fondo claro (6.8:1) */
+  --c-azul-800: #003E9C;
+  --c-azul-900: #0A2E6E;
+
+  --c-celeste-50:  #EAF7FF;
+  --c-celeste-100: #D4EEFF;
+  --c-celeste-200: #A8DDFF;
+  --c-celeste-400: #2EB1FF;  /* celeste oficial del logo: apoyos */
+  --c-celeste-600: #0087DB;  /* superficies y trazos, NO texto chico */
+  --c-celeste-700: #0072B8;  /* texto sobre celeste-50 (4.7:1) */
+
+  --c-amarillo-100: #FDF8C9;
+  --c-amarillo-400: #F4DC00;  /* amarillo oficial del logo: detalles */
+  /* 6,09:1 sobre blanco y 5,64:1 sobre amarillo-100. El anterior (#B8A600)
+     no llegaba a AA como texto. */
+  --c-amarillo-700: #6E6300;
+
+  /* ---- Color: neutros (tintados hacia el azul) ---- */
+  --c-ink:       #17293C;   /* texto principal */
+  --c-ink-soft:  #3D5165;   /* texto secundario (7.4:1) */
+  --c-ink-muted: #5B6E80;   /* metadatos, ayudas (4.9:1) */
+  --c-borde:       #DCE5EE;  /* separadores decorativos */
+  --c-borde-suave: #E9EFF6;  /* divisorias internas: filas de tabla, listas */
+  /* Borde de objeto: 1,34:1 sobre blanco y 1,24:1 sobre el fondo gris. El
+     suave daba 1,08:1 y las tarjetas no se leían como objetos. */
+  --c-borde-objeto: #D6E0EB;
+  /* Contorno de controles (campos, botones secundarios, filtros): WCAG 1.4.11
+     exige 3:1 contra el fondo adyacente. 3.24:1 sobre blanco, 3.02:1 sobre
+     el fondo gris claro. */
+  /* 3,59:1 sobre blanco, 3,34:1 sobre el fondo gris y 3,19:1 sobre el alterno.
+     El anterior quedaba justo en el filo de los 3:1 que pide WCAG para bordes
+     de control. La diferencia a ojo es imperceptible; la de margen no. */
+  --c-borde-campo: #78899B;
+  --c-fondo:     #F4F7FB;   /* fondo general */
+  --c-fondo-alt: #EDF2F8;
+  --c-blanco:    #FFFFFF;
+
+  /* ---- Color: semánticos ---- */
+  --c-exito:   #1B7F4B;
+  --c-alerta:  #9A6700;
+  --c-error:   #C0362C;
+  --c-info-bg: var(--c-celeste-50);
+
+  /* ---- Tipografía ---- */
+  --f-sans: 'Encode Sans', system-ui, 'Segoe UI', Roboto, Arial, sans-serif;
+  --fs-xs:   0.8125rem;
+  --fs-sm:   0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-md:   1.1875rem;
+  --fs-lg:   clamp(1.375rem, 1.325rem + 0.22vw, 1.5rem);
+  --fs-xl:   clamp(1.625rem, 1.5rem + 0.55vw, 1.9375rem);
+  --fs-2xl:  clamp(2rem, 1.8rem + 0.87vw, 2.5rem);
+  --fs-3xl:  clamp(2.375rem, 2.03rem + 1.52vw, 3.25rem);
+  /* Cuanto más grande el texto, menos aire necesita entre líneas. */
+  --lh-display: 1.08;   /* el título del hero */
+  --lh-titular: 1.15;   /* h1 y h2 */
+  --lh-titulo:  1.3;    /* h3 y h4 */
+  --lh-base:    1.6;    /* interfaz */
+  --lh-prosa:   1.7;    /* texto corrido largo */
+
+  /* Pesos con nombre, para que la regla quede escrita y no se elija a ojo:
+     500 para lo que está por debajo del cuerpo y en gris; 600 para h3 y h4;
+     700 para h1 y h2; 800 sólo para el título del hero. */
+  --fw-normal:  400;
+  --fw-media:   500;
+  --fw-semi:    600;
+  --fw-fuerte:  700;
+  --fw-titular: 800;
+
+  /* ---- Espaciado (escala de 4px) ---- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 2.5rem;
+  --sp-8: 3rem;
+  --sp-9: 4rem;
+  --sp-10: 5.5rem;
+  --seccion-y: clamp(3rem, 2rem + 4vw, 5.5rem);
+
+  /* ---- Forma ---- */
+  --r-sm: 0.5rem;
+  --r-md: 0.75rem;
+  --r-lg: 1rem;
+  --r-xl: 1.5rem;
+  --r-full: 999px;
+
+  /* ---- Elevación ---- */
+  /* Dos capas por nivel: una corta que define el canto y una larga que da la
+     distancia. La escala anterior saltaba x8 en desenfoque y x1,07 en opacidad,
+     así que los tres niveles se parecían demasiado entre sí. El tinte usa la
+     misma familia de tono que el fondo y los bordes, por eso no ensucia. */
+  --sombra-1: 0 1px 2px rgba(23, 41, 60, 0.05), 0 2px 6px rgba(23, 41, 60, 0.07);
+  --sombra-2: 0 2px 4px rgba(23, 41, 60, 0.06), 0 6px 16px rgba(23, 41, 60, 0.10);
+  --sombra-3: 0 4px 8px rgba(23, 41, 60, 0.08), 0 16px 40px rgba(23, 41, 60, 0.14);
+
+  /* ---- Movimiento ---- */
+  --t-rapida: 150ms cubic-bezier(0.2, 0, 0.2, 1);
+  --t-media:  250ms cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* ---- Layout ---- */
+  --ancho-max: 76rem;      /* 1216px */
+  /* 560px a 17px son ~75 caracteres por línea, el tope del rango cómodo.
+     Antes eran 46rem = 99 caracteres, donde el ojo pierde el renglón al
+     volver a la izquierda. */
+  --ancho-texto: 35rem;
+  /* Los titulares toleran líneas más largas que el texto corrido. */
+  --ancho-titular: 46rem;
+  --alto-header: 4.5rem;
+
+  /* ---- Foco accesible ----
+     Ningún color único llega a 3:1 contra blanco Y contra los azules de marca
+     a la vez, y una tarjeta blanca puede estar dentro de una sección azul. Por
+     eso el anillo es de DOS tonos: uno claro y uno oscuro, concéntricos. Sobre
+     fondo claro se ve el aro oscuro (12.9:1); sobre fondo azul, el claro
+     (4.8:1 sobre azul-600, 12.9:1 sobre azul-900). */
+  --foco-interior: var(--c-blanco);
+  --foco-exterior: var(--c-azul-900);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-rapida: 0ms linear;
+    --t-media: 0ms linear;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   TEMA OSCURO
+   ============================================================
+   La oscuridad sale del propio azul del logo llevado más abajo, no de un
+   gris de catálogo: así el sitio de noche sigue siendo el mismo sitio.
+
+   Hay tres estados, no dos. Una elección explícita estampa data-theme en el
+   <html>, pero la opción por defecto —seguir al sistema— no estampa nada, y
+   ahí lo único que separa claro de oscuro es prefers-color-scheme. Por eso
+   cada token se redefine en los dos lugares: en el media query, protegido con
+   :not([data-theme="light"]) para que una elección clara le gane a un sistema
+   oscuro, y en [data-theme="dark"] para que el botón gane en el otro sentido.
+
+   Sólo se redefinen tokens. Ningún componente declara color adentro de un
+   bloque de tema: un color que sólo existe ahí no se aplica nunca en el
+   estado sin estampar, que es el que ve la mayoría.
+   ============================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+
+    /* ---- Superficies ----
+       "blanco" es el nombre histórico de la superficie de las tarjetas, no de
+       un color: en todo main.css aparece 23 veces y siempre como fondo, nunca
+       como texto. De noche esa superficie es azul oscuro. */
+    --c-blanco:    #0F2438;
+    --c-fondo:     #08192E;
+    --c-fondo-alt: #0C2036;
+
+    /* ---- Texto ----
+       No es blanco puro: sobre un fondo oscuro el blanco puro vibra y cansa.
+       E6EEF8 sobre el fondo da 14,4:1, muy por encima del 4,5 que pide AA. */
+    --c-ink:       #E6EEF8;
+    --c-ink-soft:  #B4C6DA;
+    --c-ink-muted: #8CA3BC;
+
+    /* ---- Bordes ----
+       Suben de luminosidad en vez de bajar: sobre oscuro, un borde se ve
+       porque es MÁS claro que su fondo, al revés que sobre claro. */
+    --c-borde:        #1E3A57;
+    --c-borde-suave:  #17304A;
+    --c-borde-objeto: #234465;
+    /* El borde de los campos tiene que llegar a 3:1 contra la superficie
+       (WCAG 1.4.11). Sobre #0F2438 este da 3,6:1. */
+    --c-borde-campo:  #5C7B9C;
+
+    /* ---- Azules ----
+       La escala se invierte de rol: el 700, que sobre blanco era el color de
+       los enlaces, sobre oscuro sería ilegible. Los enlaces pasan a un azul
+       claro y el 600 de marca se aclara para los botones. */
+    --c-tinte-azul: var(--c-azul-200);  /* ver el comentario del token en :root */
+    --c-azul-50:  #10263C;
+    --c-azul-100: #16324C;
+    --c-azul-200: #1D4066;
+    --c-azul-300: #2D5F8F;
+    --c-azul-500: #4D9BFF;
+    /* El azul de marca NO cambia entre temas: es la identidad, y los
+     elementos que lo usan llevan su propio fondo, así que el tema de la
+     página no los toca. Aclararlo bajaba el botón primario a 3,76:1 con
+     texto blanco, por debajo del 4,5 que pide AA. */
+  --c-azul-600: #0066FF;
+    --c-azul-700: #7AB0FF;
+    --c-azul-800: #A3C8FF;
+    --c-azul-900: #0A2238;
+
+    /* ---- Celestes ----
+       Se usan sobre las bandas azules, que siguen siendo oscuras: cambian poco. */
+    --c-celeste-50:  #0E2B40;
+    --c-celeste-100: #C5E6FB;
+    --c-celeste-200: #9AD3F2;
+    --c-celeste-600: #2AA3E8;
+    --c-celeste-700: #7FCBF5;
+
+    /* ---- Amarillo ----
+       El 400 no se toca: es el del logo y sobre cualquiera de estos fondos pasa
+       de largo. El 700 existía para texto sobre claro; de noche se aclara. */
+    --c-amarillo-100: #33301A;
+    --c-amarillo-700: #F0DC5A;
+
+    /* ---- Sombras ----
+       Sobre oscuro una sombra tenue no se ve. Se profundizan y se les suma un
+       filo claro arriba, que es lo que de verdad despega una tarjeta de noche. */
+    --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.45);
+    --sombra-2: 0 2px 4px rgba(0, 0, 0, 0.40), 0 6px 16px rgba(0, 0, 0, 0.50);
+    --sombra-3: 0 4px 8px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.55);
+
+    /* ---- Foco ----
+       El anillo de dos tonos se da vuelta: el halo exterior pasa a ser oscuro
+       para que se recorte contra las superficies claras que quedan. */
+    --foco-interior: #F4DC00;
+    --foco-exterior: rgba(0, 0, 0, 0.65);
+
+  }
+}
+
+:root[data-theme="dark"] {
+
+  /* ---- Superficies ----
+     "blanco" es el nombre histórico de la superficie de las tarjetas, no de
+     un color: en todo main.css aparece 23 veces y siempre como fondo, nunca
+     como texto. De noche esa superficie es azul oscuro. */
+  --c-blanco:    #0F2438;
+  --c-fondo:     #08192E;
+  --c-fondo-alt: #0C2036;
+
+  /* ---- Texto ----
+     No es blanco puro: sobre un fondo oscuro el blanco puro vibra y cansa.
+     E6EEF8 sobre el fondo da 14,4:1, muy por encima del 4,5 que pide AA. */
+  --c-ink:       #E6EEF8;
+  --c-ink-soft:  #B4C6DA;
+  --c-ink-muted: #8CA3BC;
+
+  /* ---- Bordes ----
+     Suben de luminosidad en vez de bajar: sobre oscuro, un borde se ve
+     porque es MÁS claro que su fondo, al revés que sobre claro. */
+  --c-borde:        #1E3A57;
+  --c-borde-suave:  #17304A;
+  --c-borde-objeto: #234465;
+  /* El borde de los campos tiene que llegar a 3:1 contra la superficie
+     (WCAG 1.4.11). Sobre #0F2438 este da 3,6:1. */
+  --c-borde-campo:  #5C7B9C;
+
+  /* ---- Azules ----
+     La escala se invierte de rol: el 700, que sobre blanco era el color de
+     los enlaces, sobre oscuro sería ilegible. Los enlaces pasan a un azul
+     claro y el 600 de marca se aclara para los botones. */
+  --c-tinte-azul: var(--c-azul-200);  /* ver el comentario del token en :root */
+  --c-azul-50:  #10263C;
+  --c-azul-100: #16324C;
+  --c-azul-200: #1D4066;
+  --c-azul-300: #2D5F8F;
+  --c-azul-500: #4D9BFF;
+  /* El azul de marca NO cambia entre temas: es la identidad, y los
+     elementos que lo usan llevan su propio fondo, así que el tema de la
+     página no los toca. Aclararlo bajaba el botón primario a 3,76:1 con
+     texto blanco, por debajo del 4,5 que pide AA. */
+  --c-azul-600: #0066FF;
+  --c-azul-700: #7AB0FF;
+  --c-azul-800: #A3C8FF;
+  --c-azul-900: #0A2238;
+
+  /* ---- Celestes ----
+     Se usan sobre las bandas azules, que siguen siendo oscuras: cambian poco. */
+  --c-celeste-50:  #0E2B40;
+  --c-celeste-100: #C5E6FB;
+  --c-celeste-200: #9AD3F2;
+  --c-celeste-600: #2AA3E8;
+  --c-celeste-700: #7FCBF5;
+
+  /* ---- Amarillo ----
+     El 400 no se toca: es el del logo y sobre cualquiera de estos fondos pasa
+     de largo. El 700 existía para texto sobre claro; de noche se aclara. */
+  --c-amarillo-100: #33301A;
+  --c-amarillo-700: #F0DC5A;
+
+  /* ---- Sombras ----
+     Sobre oscuro una sombra tenue no se ve. Se profundizan y se les suma un
+     filo claro arriba, que es lo que de verdad despega una tarjeta de noche. */
+  --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.35), 0 2px 6px rgba(0, 0, 0, 0.45);
+  --sombra-2: 0 2px 4px rgba(0, 0, 0, 0.40), 0 6px 16px rgba(0, 0, 0, 0.50);
+  --sombra-3: 0 4px 8px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.55);
+
+  /* ---- Foco ----
+     El anillo de dos tonos se da vuelta: el halo exterior pasa a ser oscuro
+     para que se recorte contra las superficies claras que quedan. */
+  --foco-interior: #F4DC00;
+  --foco-exterior: rgba(0, 0, 0, 0.65);
+
+}

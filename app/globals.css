@@ -1,0 +1,4 @@
+/* Sistema visual de smt.gob.ar: los tokens salen del isologotipo oficial. */
+@import "../styles/tokens.css";
+@import "../styles/base.css";
+@import "../styles/landing.css";
