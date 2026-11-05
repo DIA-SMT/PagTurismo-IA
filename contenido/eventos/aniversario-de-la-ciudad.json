@@ -1,0 +1,41 @@
+{
+  "estado": "publicado",
+  "titulo": "Aniversario de la ciudad",
+  "clase": "efemeride",
+  "resumen": "Se recuerda la primera fundación, en 1565, en el paraje de Ibatín.",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [],
+  "recurrente": {
+    "dia": 31,
+    "mes": 5
+  },
+  "lugar": "",
+  "sede": "San Miguel de Tucumán",
+  "fueraDeLaCiudad": false,
+  "localidad": "",
+  "organizador": "",
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "inscripcion": "",
+  "urlOficial": "",
+  "ocurrencias": [],
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    },
+    {
+      "titulo": "Historia — smt.gob.ar",
+      "url": "https://smt.gob.ar/historia"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

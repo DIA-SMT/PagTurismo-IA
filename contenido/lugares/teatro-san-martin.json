@@ -1,0 +1,40 @@
+{
+  "estado": "borrador",
+  "titulo": "Teatro San Martín",
+  "clase": "teatro",
+  "resumen": "Teatro histórico de la ciudad, con programación de música, danza y teatro.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "bajo-techo",
+    "nocturno"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

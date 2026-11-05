@@ -1,0 +1,56 @@
+{
+  "estado": "publicado",
+  "titulo": "La ciudad de noche",
+  "resumen": "Fuentes, plazas y fachadas iluminadas: el centro también se recorre después del atardecer.",
+  "descripcion": "",
+  "modalidad": "a-pie",
+  "guiada": false,
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "gratis",
+    "nocturno",
+    "a-pie"
+  ],
+  "duracion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "puntoEncuentro": "",
+  "lugares": [
+    "plaza-independencia",
+    "catedral",
+    "monumento-al-bicentenario"
+  ],
+  "incluye": "",
+  "requisitos": "",
+  "politicaClima": "",
+  "operador": "",
+  "costo": {
+    "modalidad": "gratis",
+    "detalle": "Paseo libre por el espacio público."
+  },
+  "accion": {
+    "tipo": "sin-inscripcion",
+    "texto": "Paseo libre, sin inscripción"
+  },
+  "salidas": [],
+  "imagen": {
+    "src": "/fotos/la-fuente-de-los-leones.webp",
+    "alt": "Fuente iluminada de noche",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

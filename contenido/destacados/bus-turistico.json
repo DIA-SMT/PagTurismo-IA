@@ -1,0 +1,20 @@
+{
+  "estado": "publicado",
+  "titulo": "City Tour en Bus Turístico",
+  "etiqueta": "Recorridos",
+  "detalle": "Un recorrido guiado y gratuito de unas dos horas por la historia, la cultura y el patrimonio arquitectónico de la ciudad.",
+  "imagen": {
+    "src": "/fotos/san-miguel-de-tucuman.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "destino": {
+    "url": "",
+    "coleccion": "experiencias",
+    "slug": "city-tour-bus-turistico"
+  },
+  "desde": "",
+  "hasta": "",
+  "orden": 1
+}

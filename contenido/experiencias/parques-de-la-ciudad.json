@@ -1,0 +1,59 @@
+{
+  "estado": "publicado",
+  "titulo": "Parques de la ciudad",
+  "resumen": "Parque 9 de Julio, Avellaneda y Guillermina: para caminar, hacer deporte y compartir en familia.",
+  "descripcion": "",
+  "modalidad": "libre",
+  "guiada": false,
+  "categorias": [
+    "parques-y-aire-libre",
+    "futbol-y-deportes"
+  ],
+  "etiquetas": [
+    "gratis",
+    "a-pie",
+    "en-familia"
+  ],
+  "duracion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "puntoEncuentro": "",
+  "lugares": [
+    "parque-9-de-julio",
+    "parque-avellaneda",
+    "parque-guillermina"
+  ],
+  "incluye": "",
+  "requisitos": "",
+  "politicaClima": "",
+  "operador": "",
+  "costo": {
+    "modalidad": "gratis",
+    "detalle": "Espacios públicos de acceso libre."
+  },
+  "accion": {
+    "tipo": "sin-inscripcion",
+    "texto": "Más información de los parques en smt.gob.ar",
+    "url": "https://smt.gob.ar/parques_smt"
+  },
+  "salidas": [],
+  "imagen": {
+    "src": "/fotos/campus-educativo-ambiental.webp",
+    "alt": "Senderos arbolados en un parque de la ciudad",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Parques — smt.gob.ar",
+      "url": "https://smt.gob.ar/parques_smt"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

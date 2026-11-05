@@ -10,7 +10,10 @@ export const metadata: Metadata = {
   // La URL pública con la que se arman las de Open Graph. Se define al
   // desplegar; ver README.
   metadataBase: new URL(process.env.SITIO_URL ?? "http://localhost:3000"),
-  title: "Turismo | Ciudad San Miguel de Tucumán",
+  title: {
+    default: "Turismo | Ciudad San Miguel de Tucumán",
+    template: "%s | Turismo San Miguel de Tucumán",
+  },
   description:
     "Sitio oficial de turismo de San Miguel de Tucumán: qué hacer, recorridos guiados gratuitos, agenda, gastronomía, escapadas y datos útiles para tu visita a la ciudad donde se declaró la Independencia.",
   openGraph: {

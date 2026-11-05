@@ -49,6 +49,12 @@ export function SpriteIconos() {
         <symbol id="i-reloj" viewBox="0 0 24 24" {...T}>
           <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
         </symbol>
+        <symbol id="i-buscar" viewBox="0 0 24 24" {...T}>
+          <circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" />
+        </symbol>
+        <symbol id="i-estrella" viewBox="0 0 24 24" {...T}>
+          <path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z" />
+        </symbol>
 
         {/* ---- Turismo ---- */}
         <symbol id="i-brujula" viewBox="0 0 24 24" {...T}>

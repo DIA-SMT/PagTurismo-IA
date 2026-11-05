@@ -1,0 +1,75 @@
+{
+  "estado": "publicado",
+  "titulo": "Circuito La Ciudadela",
+  "orden": 3,
+  "resumen": "Un paseo con fuerte identidad histórica y popular.",
+  "descripcion": "",
+  "tipo": "circuito",
+  "modalidad": "bus",
+  "guiado": true,
+  "categorias": [
+    "historia-y-patrimonio",
+    "futbol-y-deportes"
+  ],
+  "etiquetas": [
+    "gratis",
+    "requiere-reserva"
+  ],
+  "duracion": "Unas 2 horas",
+  "distancia": "",
+  "esfuerzo": "Bajo: se recorre en bus.",
+  "inicio": "Plaza Independencia",
+  "fin": "Plaza Independencia",
+  "paradas": [
+    {
+      "nombre": "Plaza Independencia",
+      "lugar": "plaza-independencia"
+    },
+    {
+      "nombre": "Plaza Belgrano",
+      "lugar": "plaza-belgrano"
+    },
+    {
+      "nombre": "Mercado de Abasto",
+      "lugar": "mercado-de-abasto"
+    },
+    {
+      "nombre": "Teatro Municipal Rosita Ávila",
+      "lugar": "teatro-rosita-avila"
+    },
+    {
+      "nombre": "Facultad de Ciencias Naturales (legado Miguel Lillo)"
+    },
+    {
+      "nombre": "Cancha de San Martín"
+    },
+    {
+      "nombre": "Regreso a Plaza Independencia",
+      "lugar": "plaza-independencia"
+    }
+  ],
+  "experiencia": "city-tour-bus-turistico",
+  "condiciones": "",
+  "aviso": "El Bus Turístico puede tener otros circuitos o cambios de recorrido. Antes de ir, confirmá en su sitio las salidas vigentes.",
+  "imagen": {
+    "src": "/fotos/san-miguel-de-tucuman.webp",
+    "alt": "Vista del centro de San Miguel de Tucumán",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    },
+    {
+      "titulo": "Sitio del Bus Turístico",
+      "url": "https://busturistico.smt.gob.ar/"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

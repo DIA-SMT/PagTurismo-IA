@@ -1,19 +1,23 @@
-# Turismo San Miguel de Tucumán — landing
+# Turismo San Miguel de Tucumán — portal
 
-Landing de turismo de la Municipalidad de San Miguel de Tucumán. La
-estructura sigue a [turismo.buenosaires.gob.ar](https://turismo.buenosaires.gob.ar/es)
-y la estética es la del portal nuevo de smt.gob.ar
-([DIA-SMT/Pagina-SMT-IA](https://github.com/DIA-SMT/Pagina-SMT-IA)): mismos
-tokens de color, misma tipografía, mismo encabezado y pie, y Migue
-presentando la ciudad.
+Portal de turismo de la Municipalidad de San Miguel de Tucumán. Pasó de ser
+una landing de una sola página a un portal con fichas propias de lugares,
+experiencias, recorridos y eventos, un catálogo con filtros, una agenda por
+fecha y una administración de contenidos en `/admin`.
 
-Stack igual al del portal para que se pueda integrar sin traducir nada:
-Next.js 16.3.5 · React 19.2.8 · App Router · TypeScript · CSS propio, sin
-Tailwind.
+La especificación es el informe *Investigación Turismo SMT* (comparación con
+[turismo.buenosaires.gob.ar](https://turismo.buenosaires.gob.ar/es)). La
+estética es la del portal nuevo de smt.gob.ar
+([DIA-SMT/Pagina-SMT-IA](https://github.com/DIA-SMT/Pagina-SMT-IA)).
 
-## Cómo levantarla
+Stack: Next.js 16.3.5 · React 19.2.8 · App Router · TypeScript · CSS propio.
+Contenido en archivos JSON dentro del repositorio, editados con
+[Decap CMS](https://decapcms.org/). No tiene base de datos.
 
-Requisitos: Node 20.9 o superior.
+## Cómo levantarlo
+
+Requisitos: Node 20.9 o superior para el sitio; Node 22.18 o superior para
+las pruebas y el validador.
 
 ```bash
 npm install
@@ -23,58 +27,138 @@ npm run dev
 Abrir <http://localhost:3000>. También está la configuración `turismo-smt`
 en `.claude/launch.json`.
 
-Variables opcionales:
+| Comando | Para qué |
+|---|---|
+| `npm run dev` | Sitio en desarrollo. Muestra también los borradores. |
+| `npm run cms` | Servidor local de Decap: con él, `/admin` edita los archivos sin GitHub. |
+| `npm run validar` | Revisa el contenido: relaciones, fechas, imágenes, revisiones vencidas. |
+| `npm test` | Pruebas de agenda, catálogo y contenido. |
+| `npm run build` | Compilación de producción. |
+
+## Variables de entorno
 
 | Variable | Para qué |
 |---|---|
-| `SITIO_URL` | URL pública del sitio. Next la usa para armar las URLs absolutas de Open Graph. Sin ella quedan apuntando a `localhost`. |
+| `SITIO_URL` | URL pública. Se usa para Open Graph, sitemap y robots. |
+| `DECAP_GITHUB_CLIENT_ID` | Aplicación OAuth de GitHub para entrar a `/admin`. |
+| `DECAP_GITHUB_CLIENT_SECRET` | Secreto de esa aplicación. |
+| `MOSTRAR_BORRADORES` | `1` en un despliegue de vista previa para revisar borradores en contexto. Nunca en producción. |
 
-## Secciones
+## Rutas
 
-| Sección | Equivale en BA a | Contenido |
-|---|---|---|
-| Hero | Video "Siempre es temporada alta" | Panorámicas de día o de noche según el tema, Migue y cuatro accesos rápidos |
-| Destacados | Destacados | Bus turístico, circuito a pie, la ciudad de noche |
-| Qué hacer | Carrusel "Qué hacer" | Ocho categorías: patrimonio, gastronomía, religioso, parques, cultura, deportes, plazas, escapadas |
-| Una ciudad que hizo historia | Razones para venir | Línea de tiempo 1565 · 1685 · 1812 · 1816 |
-| Recorridos | Paseos y experiencias | Los tres circuitos del bus turístico en pestañas, inscripción y otras experiencias |
-| Agenda | Eventos | Fechas fijas del calendario tucumano |
-| Sabores / Escapadas | Gastronomía, Naturaleza | Platos típicos y salidas desde la ciudad |
-| Antes de llegar | Cómo llegar, moverse, clima, datos útiles, accesibilidad | Con el clima actual en vivo |
-| Contacto | Contacto | Dirección de Turismo, redes y mapa interactivo |
-
-## Dónde está cada cosa
-
-| Archivo | Contenido |
+| Ruta | Contenido |
 |---|---|
-| `lib/contenido.ts` | **Todo el texto de la página.** Para corregir un horario, una parada o un enlace no hace falta tocar componentes. |
-| `lib/clima.ts` | Clima actual desde [Open-Meteo](https://open-meteo.com/) (gratis, sin clave). Se pide desde el servidor y se cachea 30 minutos; si falla, la página se arma igual sin el dato. |
-| `app/page.tsx` | La landing, sección por sección. |
-| `components/` | Encabezado, pie, hero, carrusel, pestañas de circuitos. `Tema.tsx` y `LogoSMT.tsx` son copia exacta de los del portal. |
-| `styles/tokens.css` | Copia exacta de los tokens del portal (paleta del isologotipo, tipografía, espaciado, tema oscuro). |
-| `styles/base.css` | Reset, accesibilidad, encabezado, botones, emergencias y pie, tomados del portal. |
-| `styles/landing.css` | Las secciones de la landing. |
+| `/` | Portada: búsqueda, accesos, destacados, temas, agenda, recorridos, itinerarios, sabores, planificación, ayuda. Las anclas viejas (`#que-hacer`, `#agenda`, `#recorridos`, `#sabores`, `#antes-de-llegar`, `#contacto`, `#escapadas`) siguen funcionando. |
+| `/descubri` | Imperdibles, itinerarios por tiempo, temas e historia. |
+| `/que-hacer` | Catálogo con búsqueda, tema, tipo y gratuidad. Los filtros quedan en la URL. |
+| `/que-hacer/[tema]` | Todo lo de un tema. |
+| `/lugares/[slug]` | Ficha de lugar. |
+| `/experiencias/[slug]` | Ficha de experiencia con acción principal y salidas. |
+| `/recorridos`, `/recorridos/[slug]` | Circuitos e itinerarios, con paradas numeradas. |
+| `/agenda`, `/agenda/[slug]` | Agenda por fecha (hoy, fin de semana, fecha) y calendario anual. |
+| `/planifica`, `/planifica/[slug]` | Guías prácticas. |
+| `/sabores`, `/escapadas` | Gastronomía y salidas fuera de la ciudad. |
+| `/admin` | Administración de contenidos (Decap CMS). |
+| `/admin/revision` | Tablero de lo pendiente: borradores, avisos, revisiones vencidas. |
 
-## De dónde sale el contenido
+## Contenido
 
-Los recorridos, horarios, paradas, domicilio y correo se tomaron de las notas
-publicadas en smt.gob.ar: `busturistico`, `circuitosturisticospie`,
-`circuitos-turisticos`, `museoescultorio`, `parques_smt`, `historia` y el área
-89 (Dirección de Turismo) de la estructura de gobierno. Los teléfonos de
-emergencia salen del mismo CMS.
+Cada ficha es un archivo en `contenido/<colección>/<slug>.json`. El slug es
+el final de la dirección: `contenido/lugares/casa-historica.json` se ve en
+`/lugares/casa-historica`.
 
-Fotos, ilustraciones, logos, la tipografía Encode Sans y Migue son los
-recursos oficiales que ya usa el portal.
+| Colección | Qué es |
+|---|---|
+| `lugares` | Atractivos permanentes. |
+| `experiencias` | Actividades con modalidad, acción principal (reservar, inscribirse, consultar) y salidas. |
+| `eventos` | El concepto (la fiesta) con sus ocurrencias (cada fecha concreta). |
+| `recorridos` | Circuitos e itinerarios: paradas ordenadas que enlazan lugares. |
+| `planifica` | Guías prácticas. |
+| `destacados` | Tarjetas de la portada, con ventana de publicación. |
+| `sabores`, `escapadas` | Platos y destinos fuera de la ciudad. |
+| `configuracion/` | Datos del sitio (portada, contacto, redes, emergencias, historia) y temas y etiquetas. |
+
+Las relaciones se guardan por slug: un horario o una descripción se escribe
+una sola vez y la portada, el catálogo y las fichas lo leen del mismo lugar.
+
+### Reglas que aplica el sitio
+
+- **Borradores.** Cada ficha tiene un estado. En producción sólo se ven las
+  publicadas; si una ficha publicada apunta a un borrador, el enlace no
+  aparece.
+- **Datos sin confirmar.** Un horario sin la marca *confirmado* se muestra con
+  "Dato a confirmar". No hay "Abierto ahora". El costo sin dato dice
+  "Consultar antes de ir".
+- **Reservas.** El sistema responsable es el del Bus Turístico. El portal
+  enlaza con un botón explícito y no muestra cupos ni confirma nada.
+- **Agenda.** Fechas en hora de Tucumán (`AAAA-MM-DDTHH:mm`). Las terminadas
+  salen solas; las canceladas o suspendidas se muestran con su estado y no se
+  destacan. Una efeméride va en el calendario anual, nunca como evento
+  confirmado.
+- **Escapadas** y eventos fuera de la ciudad llevan la marca "Fuera de la ciudad".
+
+### Cómo cargar un lugar, un evento y un recorrido sin tocar código
+
+1. Entrar a `/admin` con una cuenta de GitHub que tenga permiso de escritura en el repositorio.
+2. **Lugar:** *Lugares → Nuevo lugar*. Completar título, tipo, resumen y
+   temas; dirección y horario sólo si están confirmados (y tildar
+   *Confirmado*). Cargar la foto con su texto alternativo, crédito y permiso.
+   Dejar el estado en *Borrador* hasta revisar.
+3. **Evento:** *Agenda → Nuevo evento*. La descripción es lo que no cambia; cada
+   fecha concreta se agrega en *Ocurrencias* con inicio, fin y estado. Si
+   después se cancela, se cambia el estado de esa ocurrencia: no se borra.
+4. **Recorrido:** *Recorridos → Nuevo recorrido*. Agregar las paradas en orden;
+   en cada una, elegir la ficha del lugar si existe. Si es guiado, elegir la
+   experiencia que lo opera: de ahí salen el botón de reserva y las salidas.
+5. Completar *Validación* (fecha, responsable, próxima revisión) y pasar a
+   *Publicado*.
+6. Guardar. Con el flujo editorial, el cambio queda como borrador → en
+   revisión → listo; al publicarlo se hace un commit y el sitio se vuelve a
+   desplegar.
+
+Antes de publicar conviene mirar `/admin/revision` o correr `npm run validar`.
+
+## Administración: puesta en marcha
+
+`/admin` es Decap CMS (versión fijada en `public/admin/index.html`, con hash
+de integridad). La configuración de colecciones y campos está en
+`public/admin/config.yml`.
+
+**En desarrollo** no hace falta GitHub: con `npm run dev` y `npm run cms` en
+paralelo, el botón *Iniciar sesión* entra directo y los cambios se escriben
+en los archivos locales.
+
+**En producción** hay que crear una aplicación OAuth de GitHub (en la
+organización DIA-SMT → Settings → Developer settings → OAuth Apps):
+
+- *Homepage URL:* la URL pública del sitio.
+- *Authorization callback URL:* `https://<dominio>/api/decap/callback`.
+
+Después, cargar `DECAP_GITHUB_CLIENT_ID` y `DECAP_GITHUB_CLIENT_SECRET` en
+las variables del despliegue. Sólo pueden guardar cambios las personas con
+permiso de escritura en el repositorio. GitHub controla ese permiso, no el sitio.
+
+Para actualizar Decap, cambiar la versión en `public/admin/index.html` y
+recalcular el `integrity` (`sha384` del archivo `dist/decap-cms.js`).
 
 ## Para revisar con la Dirección de Turismo antes de publicar
 
+- **Lugares nuevos (22).** Se armaron a partir de los recorridos y las notas
+  de smt.gob.ar, pero en borrador. Hay que confirmar texto, horarios, costo,
+  accesibilidad y dirección antes de publicarlos. Mientras tanto, las paradas
+  de los circuitos se ven sin enlace.
+- **Itinerarios por duración (3).** Son las ideas del apartado 8 del informe,
+  en borrador. Hay que validar la secuencia y los tiempos.
 - **Domicilio de la oficina.** El área publica "Congreso y Crisóstomo
-  Álvarez", la nota del bus dice "Congreso 101" y la ficha "Congreso 171".
-  Se usó el del área.
-- **Distancias de las escapadas** (San Javier 25 km, Tafí del Valle 107 km,
-  Quilmes 180 km, Famaillá 35 km): son aproximadas.
-- **Agenda.** Hoy son fechas fijas del calendario. Lo ideal es que salga del
-  CMS con los eventos reales de cada mes, como en BA.
-- **Formularios de contacto y newsletter.** BA los tiene; acá se reemplazaron
-  por el correo de Turismo porque necesitan un backend que todavía no existe.
-- **Idiomas.** BA ofrece inglés y portugués. No está implementado.
+  Álvarez", la nota del bus dice "Congreso 101" y la ficha "Congreso 171". Se
+  usó el del área.
+- **Circuitos del bus.** El sitio del Bus Turístico tiene más propuestas que
+  los tres circuitos cargados; hay que conciliarlos.
+- **Horario del circuito a pie (09:30).** Sale de una nota municipal: figura
+  como "a confirmar".
+- **Distancias de las escapadas.** Son aproximadas.
+- **Dónde dormir.** Falta definir la fuente oficial de alojamientos (borrador).
+- **Agenda.** No hay eventos con fecha confirmada cargados: la portada
+  muestra el calendario anual y la agenda lo explica.
+- **Formularios de contacto y newsletter.** Necesitan un backend que todavía no existe.
+- **Idiomas.** No está implementado.

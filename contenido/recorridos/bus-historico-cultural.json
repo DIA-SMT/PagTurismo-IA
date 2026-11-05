@@ -1,0 +1,102 @@
+{
+  "estado": "publicado",
+  "titulo": "Circuito Histórico Cultural",
+  "orden": 1,
+  "resumen": "Un viaje por los principales hitos de la historia tucumana.",
+  "descripcion": "",
+  "tipo": "circuito",
+  "modalidad": "bus",
+  "guiado": true,
+  "categorias": [
+    "historia-y-patrimonio",
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "gratis",
+    "requiere-reserva"
+  ],
+  "duracion": "Unas 2 horas",
+  "distancia": "",
+  "esfuerzo": "Bajo: se recorre en bus.",
+  "inicio": "Plaza Independencia",
+  "fin": "Plaza Independencia",
+  "paradas": [
+    {
+      "nombre": "Plaza Independencia",
+      "lugar": "plaza-independencia"
+    },
+    {
+      "nombre": "Centro Cultural Rougés",
+      "lugar": "centro-cultural-rouges"
+    },
+    {
+      "nombre": "Federación Económica"
+    },
+    {
+      "nombre": "Ex Hotel Plaza"
+    },
+    {
+      "nombre": "Jockey Club",
+      "lugar": "jockey-club"
+    },
+    {
+      "nombre": "Iglesia San Francisco",
+      "lugar": "iglesia-san-francisco"
+    },
+    {
+      "nombre": "Casa de Gobierno",
+      "lugar": "casa-de-gobierno"
+    },
+    {
+      "nombre": "Museo Casa Padilla",
+      "lugar": "museo-casa-padilla"
+    },
+    {
+      "nombre": "Casa Museo de la Ciudad",
+      "lugar": "casa-museo-de-la-ciudad"
+    },
+    {
+      "nombre": "Museo Casa Natal de Mercedes Sosa",
+      "lugar": "casa-natal-mercedes-sosa"
+    },
+    {
+      "nombre": "Parque 9 de Julio",
+      "lugar": "parque-9-de-julio"
+    },
+    {
+      "nombre": "Solar de Belgrano"
+    },
+    {
+      "nombre": "Museo de la Industria Azucarera",
+      "lugar": "museo-industria-azucarera"
+    },
+    {
+      "nombre": "Regreso a Plaza Independencia",
+      "lugar": "plaza-independencia"
+    }
+  ],
+  "experiencia": "city-tour-bus-turistico",
+  "condiciones": "",
+  "aviso": "El Bus Turístico puede tener otros circuitos o cambios de recorrido. Antes de ir, confirmá en su sitio las salidas vigentes.",
+  "imagen": {
+    "src": "/fotos/san-miguel-de-tucuman.webp",
+    "alt": "Vista del centro de San Miguel de Tucumán",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    },
+    {
+      "titulo": "Sitio del Bus Turístico",
+      "url": "https://busturistico.smt.gob.ar/"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

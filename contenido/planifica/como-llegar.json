@@ -1,0 +1,28 @@
+{
+  "estado": "publicado",
+  "titulo": "Cómo llegar",
+  "resumen": "Por avión al Aeropuerto Internacional Benjamín Matienzo o en micro a la Terminal de Ómnibus.",
+  "icono": "avion",
+  "orden": 1,
+  "secciones": [
+    {
+      "titulo": "En avión",
+      "texto": "El Aeropuerto Internacional Benjamín Matienzo está a unos 10 km del centro."
+    },
+    {
+      "titulo": "En micro",
+      "texto": "Los micros de larga distancia llegan a la Terminal de Ómnibus de la ciudad."
+    }
+  ],
+  "enlaces": [],
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

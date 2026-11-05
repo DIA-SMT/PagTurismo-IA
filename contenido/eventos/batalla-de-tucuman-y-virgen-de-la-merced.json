@@ -1,0 +1,42 @@
+{
+  "estado": "publicado",
+  "titulo": "Batalla de Tucumán y Virgen de la Merced",
+  "clase": "efemeride",
+  "resumen": "Feriado provincial: la victoria de Belgrano en 1812 y la fiesta de la patrona de Tucumán.",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio",
+    "turismo-religioso"
+  ],
+  "etiquetas": [],
+  "recurrente": {
+    "dia": 24,
+    "mes": 9
+  },
+  "lugar": "",
+  "sede": "Centro histórico",
+  "fueraDeLaCiudad": false,
+  "localidad": "",
+  "organizador": "",
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "inscripcion": "",
+  "urlOficial": "",
+  "ocurrencias": [],
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    },
+    {
+      "titulo": "Historia — smt.gob.ar",
+      "url": "https://smt.gob.ar/historia"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

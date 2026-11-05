@@ -1,0 +1,603 @@
+# Administración de contenidos del portal de Turismo (Decap CMS).
+#
+# Cada cambio que se guarda acá es un commit en el repositorio, así que el
+# historial de quién cambió qué y cuándo queda en git. Con el flujo editorial
+# los cambios pasan por Borrador → En revisión → Listo antes de publicarse.
+#
+# Las fichas tienen además un campo "Estado": las que están en borrador no
+# se muestran en el sitio público aunque estén guardadas.
+#
+# La conexión con GitHub (base_url) se completa en admin/index.html.
+
+backend:
+  name: github
+  repo: DIA-SMT/PagTurismo-IA
+  branch: main
+  auth_endpoint: api/decap/auth
+  commit_messages:
+    create: "Contenido: crea {{collection}} «{{slug}}»"
+    update: "Contenido: actualiza {{collection}} «{{slug}}»"
+    delete: "Contenido: borra {{collection}} «{{slug}}»"
+    uploadMedia: "Contenido: sube {{path}}"
+    deleteMedia: "Contenido: borra {{path}}"
+
+# Con `npx decap-server` corriendo, en localhost se edita sin GitHub.
+local_backend: true
+
+publish_mode: editorial_workflow
+locale: es
+logo_url: /img/logo-smt-pos.png
+site_url: /
+display_url: /
+show_preview_links: false
+
+media_folder: public/fotos/subidas
+public_folder: /fotos/subidas
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+# ---- Campos que se repiten ----
+x-campos:
+  estado: &estado
+    label: Estado
+    name: estado
+    widget: select
+    default: borrador
+    options:
+      - { label: "Borrador (no se ve en el sitio)", value: borrador }
+      - { label: "Publicado", value: publicado }
+    hint: "Dejalo en borrador hasta que los datos operativos estén confirmados."
+  titulo: &titulo { label: Título, name: titulo, widget: string }
+  resumen: &resumen { label: Resumen, name: resumen, widget: text, hint: "Una o dos oraciones. Se usa en tarjetas, buscador y al compartir." }
+  categorias: &categorias
+    label: Temas
+    name: categorias
+    widget: relation
+    collection: configuracion
+    file: categorias
+    search_fields: ["categorias.*.titulo"]
+    display_fields: ["categorias.*.titulo"]
+    value_field: "categorias.*.id"
+    multiple: true
+    required: false
+  etiquetas: &etiquetas
+    label: Etiquetas
+    name: etiquetas
+    widget: relation
+    collection: configuracion
+    file: categorias
+    search_fields: ["etiquetas.*.titulo"]
+    display_fields: ["etiquetas.*.titulo"]
+    value_field: "etiquetas.*.id"
+    multiple: true
+    required: false
+  imagen: &imagen
+    label: Imagen principal
+    name: imagen
+    widget: object
+    required: false
+    collapsed: true
+    fields:
+      - { label: Archivo, name: src, widget: image, required: false, choose_url: false }
+      - { label: Texto alternativo, name: alt, widget: string, required: false, hint: "Describí lo que se ve. Vacío sólo si la foto es decorativa." }
+      - { label: Autor o crédito, name: credito, widget: string, required: false }
+      - { label: Procedencia y permiso de uso, name: permiso, widget: string, required: false }
+  costo: &costo
+    label: Costo
+    name: costo
+    widget: object
+    fields:
+      - label: Modalidad
+        name: modalidad
+        widget: select
+        default: consultar
+        options:
+          - { label: "Gratis", value: gratis }
+          - { label: "Pago", value: pago }
+          - { label: "Consultar (sin dato confirmado)", value: consultar }
+      - { label: Detalle, name: detalle, widget: string, required: false }
+  horario: &horario
+    label: Horario
+    name: horario
+    widget: object
+    required: false
+    fields:
+      - { label: Texto, name: texto, widget: string, required: false, hint: "Ej.: Martes a domingo de 9 a 18. Feriados, consultar." }
+      - { label: Confirmado por el responsable del lugar, name: confirmado, widget: boolean, default: false, hint: "Si no está confirmado, el sitio pide consultar antes de ir." }
+  fuentes: &fuentes
+    label: Fuentes
+    name: fuentes
+    widget: list
+    required: false
+    collapsed: true
+    summary: "{{fields.titulo}}"
+    fields:
+      - { label: Título, name: titulo, widget: string }
+      - { label: URL, name: url, widget: string, required: false }
+  validacion: &validacion
+    label: Validación
+    name: validacion
+    widget: object
+    collapsed: true
+    hint: "Quién confirmó los datos operativos y cuándo hay que volver a revisarlos."
+    fields:
+      - { label: Fecha de validación, name: fecha, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+      - { label: Responsable, name: responsable, widget: string, required: false }
+      - { label: Próxima revisión, name: proximaRevision, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+  lugar: &relacion-lugar
+    widget: relation
+    collection: lugares
+    search_fields: [titulo]
+    display_fields: [titulo]
+    value_field: "{{slug}}"
+
+collections:
+  # ---------------------------------------------------------------- Lugares
+  - name: lugares
+    label: Lugares
+    label_singular: Lugar
+    description: "Atractivos permanentes: museos, plazas, parques, templos, teatros."
+    folder: contenido/lugares
+    extension: json
+    format: json
+    create: true
+    slug: "{{titulo}}"
+    identifier_field: titulo
+    summary: "{{titulo}} · {{estado}}"
+    sortable_fields: [titulo, estado]
+    view_filters:
+      - { label: Borradores, field: estado, pattern: borrador }
+      - { label: Publicados, field: estado, pattern: publicado }
+    fields:
+      - *estado
+      - *titulo
+      - { label: Tipo de lugar, name: clase, widget: string, hint: "museo, plaza, parque, templo, teatro, edificio, monumento…" }
+      - *resumen
+      - { label: Por qué ir, name: porQueIr, widget: text, required: false }
+      - { label: Descripción e historia, name: descripcion, widget: text, required: false, hint: "Separá los párrafos con una línea en blanco." }
+      - *categorias
+      - *etiquetas
+      - { label: Imperdible, name: imperdible, widget: boolean, default: false, hint: "Aparece en Descubrí San Miguel." }
+      - *imagen
+      - { label: Zona, name: zona, widget: string, required: false, hint: "Ej.: Centro, Parque 9 de Julio." }
+      - { label: Dirección, name: direccion, widget: string, required: false }
+      - label: Coordenadas verificadas
+        name: coordenadas
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: Latitud, name: lat, widget: number, value_type: float, required: false }
+          - { label: Longitud, name: lng, widget: number, value_type: float, required: false }
+      - *horario
+      - *costo
+      - { label: Duración orientativa de la visita, name: duracion, widget: string, required: false }
+      - label: Contacto
+        name: contacto
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: Teléfono, name: telefono, widget: string, required: false }
+          - { label: Correo, name: email, widget: string, required: false }
+          - { label: Sitio oficial, name: web, widget: string, required: false }
+      - { label: Accesibilidad, name: accesibilidad, widget: text, required: false, hint: "Sólo condiciones verificadas. No afirmes que todo es accesible por una rampa." }
+      - *fuentes
+      - *validacion
+
+  # ----------------------------------------------------------- Experiencias
+  - name: experiencias
+    label: Experiencias
+    label_singular: Experiencia
+    description: "Actividades: visitas guiadas, bus turístico, paseos."
+    folder: contenido/experiencias
+    extension: json
+    format: json
+    create: true
+    slug: "{{titulo}}"
+    identifier_field: titulo
+    summary: "{{titulo}} · {{estado}}"
+    fields:
+      - *estado
+      - *titulo
+      - *resumen
+      - { label: Descripción, name: descripcion, widget: text, required: false }
+      - label: Modalidad
+        name: modalidad
+        widget: select
+        options:
+          - { label: "A pie", value: a-pie }
+          - { label: "En bus", value: bus }
+          - { label: "En bicicleta", value: bicicleta }
+          - { label: "Paseo libre", value: libre }
+      - { label: Con guía, name: guiada, widget: boolean, default: false }
+      - *categorias
+      - *etiquetas
+      - *imagen
+      - { label: Duración, name: duracion, widget: string, required: false }
+      - *horario
+      - { label: Punto de encuentro, name: puntoEncuentro, widget: string, required: false }
+      - { <<: *relacion-lugar, label: Lugares que visita, name: lugares, multiple: true, required: false }
+      - { label: Qué incluye, name: incluye, widget: text, required: false }
+      - { label: Requisitos, name: requisitos, widget: text, required: false }
+      - { label: Si llueve, name: politicaClima, widget: string, required: false }
+      - { label: Operador o responsable, name: operador, widget: string, required: false }
+      - *costo
+      - label: Acción principal
+        name: accion
+        widget: object
+        hint: "El botón de la ficha. Nunca un 'Reservar' que lleve a una página genérica."
+        fields:
+          - label: Tipo
+            name: tipo
+            widget: select
+            options:
+              - { label: "Reservar", value: reservar }
+              - { label: "Inscribirse", value: inscripcion }
+              - { label: "Consultar", value: consultar }
+              - { label: "Sin inscripción", value: sin-inscripcion }
+              - { label: "Sin salidas publicadas", value: sin-salidas }
+          - { label: Texto del botón, name: texto, widget: string, hint: "Ej.: Ver salidas y reservar en Bus Turístico" }
+          - { label: Enlace, name: url, widget: string, required: false }
+      - label: Próximas salidas
+        name: salidas
+        widget: list
+        required: false
+        hint: "Sólo salidas confirmadas por el sistema responsable. Hora de Tucumán."
+        summary: "{{fields.inicio}} · {{fields.estado}}"
+        fields:
+          - { label: Inicio, name: inicio, widget: datetime, format: "YYYY-MM-DDTHH:mm", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+          - { label: Fin, name: fin, widget: datetime, format: "YYYY-MM-DDTHH:mm", date_format: "DD/MM/YYYY", time_format: "HH:mm", required: false }
+          - label: Estado
+            name: estado
+            widget: select
+            default: programada
+            options:
+              - { label: "Programada", value: programada }
+              - { label: "Agotada (confirmado por el sistema de reservas)", value: agotada }
+              - { label: "Suspendida", value: suspendida }
+              - { label: "Cancelada", value: cancelada }
+          - { label: Enlace de reserva de esta salida, name: urlReserva, widget: string, required: false }
+          - { label: Nota, name: nota, widget: string, required: false }
+      - *fuentes
+      - *validacion
+
+  # ------------------------------------------------------------------ Agenda
+  - name: eventos
+    label: Agenda
+    label_singular: Evento
+    description: "Un evento es el concepto (la fiesta, el ciclo); cada fecha concreta es una ocurrencia."
+    folder: contenido/eventos
+    extension: json
+    format: json
+    create: true
+    slug: "{{titulo}}"
+    identifier_field: titulo
+    summary: "{{titulo}} · {{estado}}"
+    fields:
+      - *estado
+      - *titulo
+      - label: Tipo
+        name: clase
+        widget: select
+        options:
+          - { label: "Fecha del calendario (efeméride)", value: efemeride }
+          - { label: "Festividad", value: festividad }
+          - { label: "Espectáculo", value: espectaculo }
+          - { label: "Feria", value: feria }
+          - { label: "Deportivo", value: deportivo }
+          - { label: "Otro", value: otro }
+      - *resumen
+      - { label: Descripción permanente, name: descripcion, widget: text, required: false, hint: "Lo que no cambia de un año a otro. El programa de cada edición va en las ocurrencias." }
+      - *categorias
+      - *etiquetas
+      - *imagen
+      - label: Fecha que se repite cada año
+        name: recurrente
+        widget: object
+        required: false
+        collapsed: true
+        hint: "Para el calendario anual. No es una confirmación de que haya un evento ese día."
+        fields:
+          - { label: Día, name: dia, widget: number, value_type: int, min: 1, max: 31, required: false }
+          - { label: Mes, name: mes, widget: number, value_type: int, min: 1, max: 12, required: false }
+      - { <<: *relacion-lugar, label: Lugar (si tiene ficha), name: lugar, required: false }
+      - { label: Sede (texto), name: sede, widget: string, required: false }
+      - { label: Es fuera de San Miguel de Tucumán, name: fueraDeLaCiudad, widget: boolean, default: false }
+      - { label: Localidad, name: localidad, widget: string, required: false, hint: "Ej.: Famaillá, a unos 35 km." }
+      - { label: Organizador, name: organizador, widget: string, required: false }
+      - *costo
+      - { label: Inscripción o entradas, name: inscripcion, widget: string, required: false }
+      - { label: Sitio oficial, name: urlOficial, widget: string, required: false }
+      - label: Ocurrencias (fechas confirmadas)
+        name: ocurrencias
+        widget: list
+        required: false
+        hint: "Hora de Tucumán. Si dura todo el día, cargá la fecha a las 00:00 y dejá el fin vacío."
+        summary: "{{fields.inicio}} · {{fields.estado}}"
+        fields:
+          - { label: Inicio, name: inicio, widget: datetime, format: "YYYY-MM-DDTHH:mm", date_format: "DD/MM/YYYY", time_format: "HH:mm" }
+          - { label: Fin, name: fin, widget: datetime, format: "YYYY-MM-DDTHH:mm", date_format: "DD/MM/YYYY", time_format: "HH:mm", required: false }
+          - label: Estado
+            name: estado
+            widget: select
+            default: confirmado
+            options:
+              - { label: "Confirmado", value: confirmado }
+              - { label: "Reprogramado", value: reprogramado }
+              - { label: "Suspendido", value: suspendido }
+              - { label: "Cancelado", value: cancelado }
+          - { label: Sede de esta fecha, name: sede, widget: string, required: false }
+          - { label: Nota, name: nota, widget: string, required: false }
+      - *fuentes
+      - *validacion
+
+  # -------------------------------------------------------------- Recorridos
+  - name: recorridos
+    label: Recorridos
+    label_singular: Recorrido
+    description: "Circuitos (bus, a pie) e itinerarios por tiempo disponible."
+    folder: contenido/recorridos
+    extension: json
+    format: json
+    create: true
+    slug: "{{titulo}}"
+    identifier_field: titulo
+    summary: "{{titulo}} · {{estado}}"
+    fields:
+      - *estado
+      - *titulo
+      - label: Tipo
+        name: tipo
+        widget: select
+        options:
+          - { label: "Circuito", value: circuito }
+          - { label: "Itinerario por tiempo disponible", value: itinerario }
+      - { label: Orden, name: orden, widget: number, value_type: int, default: 10, hint: "Para ordenar los listados: 1 aparece primero." }
+      - label: Modalidad
+        name: modalidad
+        widget: select
+        options:
+          - { label: "En bus", value: bus }
+          - { label: "A pie", value: a-pie }
+          - { label: "Mixto", value: mixto }
+      - { label: Guiado, name: guiado, widget: boolean, default: false }
+      - *resumen
+      - { label: Descripción, name: descripcion, widget: text, required: false }
+      - *categorias
+      - *etiquetas
+      - *imagen
+      - { label: Duración, name: duracion, widget: string, required: false }
+      - { label: Distancia (sólo si fue medida), name: distancia, widget: string, required: false }
+      - { label: Esfuerzo, name: esfuerzo, widget: string, required: false }
+      - { label: Inicio, name: inicio, widget: string, required: false }
+      - { label: Fin, name: fin, widget: string, required: false }
+      - label: Paradas en orden
+        name: paradas
+        widget: list
+        summary: "{{fields.nombre}}"
+        fields:
+          - { label: Nombre, name: nombre, widget: string }
+          - { <<: *relacion-lugar, label: Ficha del lugar, name: lugar, required: false }
+          - { label: Nota, name: nota, widget: string, required: false }
+          - { label: Día (itinerarios de varios días), name: dia, widget: number, value_type: int, min: 1, required: false }
+      - label: Experiencia que lo opera
+        name: experiencia
+        widget: relation
+        collection: experiencias
+        search_fields: [titulo]
+        display_fields: [titulo]
+        value_field: "{{slug}}"
+        required: false
+        hint: "Para los recorridos guiados: de ahí salen las salidas y el botón de reserva."
+      - { label: Condiciones, name: condiciones, widget: text, required: false }
+      - { label: Aviso destacado, name: aviso, widget: text, required: false }
+      - *fuentes
+      - *validacion
+
+  # ------------------------------------------------------------- Planificá
+  - name: planifica
+    label: Planificá tu visita
+    label_singular: Guía práctica
+    folder: contenido/planifica
+    extension: json
+    format: json
+    create: true
+    slug: "{{titulo}}"
+    identifier_field: titulo
+    summary: "{{titulo}} · {{estado}}"
+    fields:
+      - *estado
+      - *titulo
+      - *resumen
+      - label: Ícono
+        name: icono
+        widget: select
+        default: info
+        options: [avion, bus-linea, info, accesibilidad, ubicacion, mapa, calendario, caminata, reloj, ticket]
+      - { label: Orden, name: orden, widget: number, value_type: int, default: 10 }
+      - label: Secciones
+        name: secciones
+        widget: list
+        summary: "{{fields.titulo}}"
+        fields:
+          - { label: Título, name: titulo, widget: string, required: false }
+          - { label: Texto, name: texto, widget: text }
+      - label: Enlaces útiles
+        name: enlaces
+        widget: list
+        required: false
+        summary: "{{fields.texto}}"
+        fields:
+          - { label: Texto, name: texto, widget: string }
+          - { label: URL, name: url, widget: string }
+      - *fuentes
+      - *validacion
+
+  # ------------------------------------------------------------ Destacados
+  - name: destacados
+    label: Destacados de la portada
+    label_singular: Destacado
+    folder: contenido/destacados
+    extension: json
+    format: json
+    create: true
+    slug: "{{titulo}}"
+    identifier_field: titulo
+    summary: "{{orden}}. {{titulo}} · {{estado}}"
+    fields:
+      - *estado
+      - *titulo
+      - { label: Etiqueta, name: etiqueta, widget: string, hint: "Ej.: Recorridos, Esta semana, Temporada." }
+      - { label: Texto, name: detalle, widget: text }
+      - <<: *imagen
+        required: true
+        collapsed: false
+      - label: Destino
+        name: destino
+        widget: object
+        hint: "Adónde lleva la tarjeta. Si la ficha no existe o está en borrador, el destacado no se muestra."
+        fields:
+          - label: Tipo de destino
+            name: coleccion
+            widget: select
+            options:
+              - { label: "Lugar", value: lugares }
+              - { label: "Experiencia", value: experiencias }
+              - { label: "Evento", value: eventos }
+              - { label: "Recorrido", value: recorridos }
+              - { label: "Guía práctica", value: planifica }
+              - { label: "Sitio externo", value: externo }
+          - { label: Ficha (slug, el final de su dirección), name: slug, widget: string, required: false, hint: "Ej.: city-tour-bus-turistico" }
+          - { label: URL (sólo si es externo), name: url, widget: string, required: false }
+      - { label: Mostrar desde, name: desde, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+      - { label: Mostrar hasta, name: hasta, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false, required: false }
+      - { label: Orden, name: orden, widget: number, value_type: int, default: 10 }
+
+  # --------------------------------------------------------------- Sabores
+  - name: sabores
+    label: Sabores
+    label_singular: Plato
+    folder: contenido/sabores
+    extension: json
+    format: json
+    create: true
+    slug: "{{titulo}}"
+    identifier_field: titulo
+    summary: "{{titulo}} · {{estado}}"
+    fields:
+      - *estado
+      - *titulo
+      - { label: Texto, name: detalle, widget: text }
+      - <<: *imagen
+        required: true
+      - { label: Tono de fondo (0 a 5), name: tono, widget: number, value_type: int, min: 0, max: 5, default: 0 }
+      - { label: Orden, name: orden, widget: number, value_type: int, default: 10 }
+
+  # ------------------------------------------------------------- Escapadas
+  - name: escapadas
+    label: Escapadas
+    label_singular: Escapada
+    description: "Destinos fuera de San Miguel de Tucumán."
+    folder: contenido/escapadas
+    extension: json
+    format: json
+    create: true
+    slug: "{{titulo}}"
+    identifier_field: titulo
+    summary: "{{titulo}} · {{estado}}"
+    fields:
+      - *estado
+      - *titulo
+      - { label: Texto, name: detalle, widget: text }
+      - { label: Localidad, name: localidad, widget: string, required: false }
+      - { label: Distancia aproximada, name: distancia, widget: string, required: false }
+      - <<: *imagen
+        required: true
+      - { label: Tono de fondo (0 a 5), name: tono, widget: number, value_type: int, min: 0, max: 5, default: 0 }
+      - { label: Más información (URL), name: url, widget: string, required: false }
+      - { label: Orden, name: orden, widget: number, value_type: int, default: 10 }
+
+  # --------------------------------------------------------- Configuración
+  - name: configuracion
+    label: Configuración
+    editor: { preview: false }
+    files:
+      - name: sitio
+        label: Datos del sitio y contacto
+        file: contenido/configuracion/sitio.json
+        format: json
+        fields:
+          - label: Portada
+            name: hero
+            widget: object
+            fields:
+              - { label: Antetítulo, name: kicker, widget: string }
+              - { label: Título, name: titulo, widget: string }
+              - { label: Título (parte resaltada), name: tituloAcento, widget: string }
+              - { label: Bajada, name: bajada, widget: text }
+          - label: Dirección de Turismo
+            name: turismo
+            widget: object
+            fields:
+              - { label: Área, name: area, widget: string }
+              - { label: Domicilio, name: domicilio, widget: string }
+              - { label: Correo, name: email, widget: string }
+              - { label: Horario de atención (sólo si está confirmado), name: atencion, widget: string, required: false }
+          - label: Municipalidad
+            name: municipalidad
+            widget: object
+            fields:
+              - { label: Dirección, name: direccion, widget: string }
+              - { label: Teléfono, name: telefono, widget: string }
+              - { label: "Teléfono para marcar (+54…)", name: telefonoLink, widget: string }
+          - label: Redes
+            name: redes
+            widget: list
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: Nombre, name: titulo, widget: string }
+              - { label: URL, name: url, widget: string }
+              - { label: Ícono, name: icono, widget: select, options: [facebook, instagram, x, youtube] }
+          - label: Teléfonos de emergencia
+            name: emergencias
+            widget: list
+            summary: "{{fields.nombre}} {{fields.numero}}"
+            fields:
+              - { label: Nombre, name: nombre, widget: string }
+              - { label: Número, name: numero, widget: string }
+              - { label: Ícono, name: icono, widget: select, options: [emergencia-cruz, emergencia-escudo, emergencia-fuego] }
+          - label: Línea de tiempo
+            name: historia
+            widget: list
+            summary: "{{fields.anio}} · {{fields.titulo}}"
+            fields:
+              - { label: Año, name: anio, widget: string }
+              - { label: Título, name: titulo, widget: string }
+              - { label: Texto, name: detalle, widget: text }
+      - name: categorias
+        label: Temas y etiquetas
+        file: contenido/configuracion/categorias.json
+        format: json
+        fields:
+          - label: Temas
+            name: categorias
+            widget: list
+            summary: "{{fields.titulo}}"
+            hint: "No cambies el identificador de un tema existente: las fichas lo usan para relacionarse."
+            fields:
+              - { label: Identificador, name: id, widget: string, pattern: ["^[a-z0-9-]+$", "Sólo minúsculas, números y guiones"] }
+              - { label: Nombre, name: titulo, widget: string }
+              - { label: Texto, name: detalle, widget: text }
+              - { label: Imagen, name: imagen, widget: image, choose_url: false }
+              - { label: "Tono de fondo si la imagen es una ilustración (0 a 5)", name: tono, widget: number, value_type: int, min: 0, max: 5, required: false }
+          - label: Etiquetas
+            name: etiquetas
+            widget: list
+            summary: "{{fields.titulo}}"
+            fields:
+              - { label: Identificador, name: id, widget: string, pattern: ["^[a-z0-9-]+$", "Sólo minúsculas, números y guiones"] }
+              - { label: Nombre, name: titulo, widget: string }

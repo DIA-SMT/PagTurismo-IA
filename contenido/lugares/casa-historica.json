@@ -1,0 +1,49 @@
+{
+  "estado": "borrador",
+  "titulo": "Museo Casa Histórica de la Independencia",
+  "clase": "museo",
+  "resumen": "La casa donde el Congreso declaró la independencia el 9 de julio de 1816.",
+  "porQueIr": "Es el lugar más simbólico de la historia argentina y el punto de partida del circuito a pie por el casco histórico.",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "bajo-techo"
+  ],
+  "imperdible": true,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "imagen": {
+    "src": "/fotos/museo-nacional-de-la-independencia.webp",
+    "alt": "Fachada colonial blanca de la Casa Histórica de la Independencia",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Historia — smt.gob.ar",
+      "url": "https://smt.gob.ar/historia"
+    },
+    {
+      "titulo": "Circuitos turísticos a pie — smt.gob.ar",
+      "url": "https://smt.gob.ar/circuitosturisticospie"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

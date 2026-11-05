@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Administración · Turismo San Miguel de Tucumán</title>
+    <link rel="icon" href="/icon.png" />
+    <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+  </head>
+  <body>
+    <!--
+      Decap CMS: el panel guarda cada cambio como un commit en el repositorio.
+      La versión está fijada y verificada con su hash; para actualizarla, ver
+      README (sección Administración).
+    -->
+    <script>window.CMS_MANUAL_INIT = true;</script>
+    <script
+      src="https://unpkg.com/decap-cms@3.17.1/dist/decap-cms.js"
+      integrity="sha384-d2pbrhjc5asvSK35gKkrgRIk0Wq+2CQynWnXtSsYWQawXCgBXhcAK737jBAKXT4T"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // El inicio de sesión con GitHub pasa por las rutas /api/decap/* de este
+      // mismo sitio, así que la base es siempre el dominio desde el que se abre.
+      CMS.init({ config: { backend: { base_url: window.location.origin } } });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "estado": "borrador",
+  "titulo": "Parque 9 de Julio",
+  "clase": "parque",
+  "resumen": "El gran parque de la ciudad: paseos arbolados, esculturas, museos y espacio para hacer deporte.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "parques-y-aire-libre"
+  ],
+  "etiquetas": [
+    "gratis",
+    "a-pie",
+    "en-familia"
+  ],
+  "imperdible": true,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "gratis",
+    "detalle": "Espacio público de acceso libre."
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Parques — smt.gob.ar",
+      "url": "https://smt.gob.ar/parques_smt"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "estado": "publicado",
+  "titulo": "Accesibilidad",
+  "resumen": "Si necesitás asistencia durante tu visita, escribinos antes de llegar y te ayudamos a planificarla.",
+  "icono": "accesibilidad",
+  "orden": 4,
+  "secciones": [
+    {
+      "titulo": "Antes de viajar",
+      "texto": "Escribinos a turismo@smt.gob.ar contándonos qué necesitás y te ayudamos a planificar la visita."
+    },
+    {
+      "titulo": "En cada lugar",
+      "texto": "Las condiciones de accesibilidad se informan en la ficha de cada lugar a medida que la Dirección de Turismo las verifica."
+    }
+  ],
+  "enlaces": [],
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

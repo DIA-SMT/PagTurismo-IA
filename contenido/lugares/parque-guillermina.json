@@ -1,0 +1,41 @@
+{
+  "estado": "borrador",
+  "titulo": "Parque Guillermina",
+  "clase": "parque",
+  "resumen": "Espacio verde para caminar, hacer deporte y compartir en familia.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "parques-y-aire-libre"
+  ],
+  "etiquetas": [
+    "gratis",
+    "a-pie",
+    "en-familia"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "gratis",
+    "detalle": "Espacio público de acceso libre."
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Parques — smt.gob.ar",
+      "url": "https://smt.gob.ar/parques_smt"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

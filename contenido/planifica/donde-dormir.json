@@ -1,0 +1,24 @@
+{
+  "estado": "borrador",
+  "titulo": "Dónde dormir",
+  "resumen": "Pendiente: enlazar el registro oficial de alojamientos que mantenga el organismo responsable.",
+  "icono": "ubicacion",
+  "orden": 5,
+  "secciones": [
+    {
+      "titulo": "Alojamiento",
+      "texto": "Pendiente de definir con la Dirección de Turismo cuál es la fuente oficial de alojamientos habilitados."
+    }
+  ],
+  "enlaces": [],
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

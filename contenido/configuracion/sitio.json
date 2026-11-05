@@ -1,0 +1,85 @@
+{
+  "hero": {
+    "kicker": "San Miguel de Tucumán · Ciudad Histórica",
+    "titulo": "Donde nació",
+    "tituloAcento": "la Independencia",
+    "bajada": "Historia, sabores y naturaleza al pie del cerro San Javier. Viví la capital del Jardín de la República."
+  },
+  "turismo": {
+    "area": "Dirección de Turismo",
+    "domicilio": "Congreso y Crisóstomo Álvarez, San Miguel de Tucumán",
+    "email": "turismo@smt.gob.ar",
+    "atencion": ""
+  },
+  "municipalidad": {
+    "direccion": "9 de Julio 570, T4000 San Miguel de Tucumán",
+    "telefono": "(0381) 451-6500",
+    "telefonoLink": "+543814516500"
+  },
+  "redes": [
+    {
+      "titulo": "Facebook",
+      "url": "https://www.facebook.com/MuniSMTucuman",
+      "icono": "facebook"
+    },
+    {
+      "titulo": "Instagram",
+      "url": "https://instagram.com/munismtucuman",
+      "icono": "instagram"
+    },
+    {
+      "titulo": "X (Twitter)",
+      "url": "https://twitter.com/MuniSMT",
+      "icono": "x"
+    },
+    {
+      "titulo": "YouTube",
+      "url": "https://www.youtube.com/user/MuniSMTucuman",
+      "icono": "youtube"
+    }
+  ],
+  "emergencias": [
+    {
+      "nombre": "Emergencia Salud",
+      "numero": "107",
+      "icono": "emergencia-cruz"
+    },
+    {
+      "nombre": "Emergencia Policial",
+      "numero": "911",
+      "icono": "emergencia-escudo"
+    },
+    {
+      "nombre": "Bomberos",
+      "numero": "100",
+      "icono": "emergencia-fuego"
+    },
+    {
+      "nombre": "Defensa Civil",
+      "numero": "103",
+      "icono": "emergencia-escudo"
+    }
+  ],
+  "historia": [
+    {
+      "anio": "1565",
+      "titulo": "Primera fundación",
+      "detalle": "Diego de Villarroel funda San Miguel de Tucumán en Ibatín, el 31 de mayo."
+    },
+    {
+      "anio": "1685",
+      "titulo": "Al pie del cerro",
+      "detalle": "La ciudad se traslada a su emplazamiento actual, frente al San Javier."
+    },
+    {
+      "anio": "1812",
+      "titulo": "Batalla de Tucumán",
+      "detalle": "El 24 de septiembre, el ejército de Belgrano vence a las fuerzas realistas."
+    },
+    {
+      "anio": "1816",
+      "titulo": "Independencia",
+      "detalle": "El 9 de julio, el Congreso declara la independencia en la Casa Histórica."
+    }
+  ]
+}

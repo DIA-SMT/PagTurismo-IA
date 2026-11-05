@@ -1,0 +1,40 @@
+{
+  "estado": "publicado",
+  "titulo": "Fiesta Nacional de la Empanada",
+  "clase": "festividad",
+  "resumen": "El concurso de la mejor empanada del país, a media hora de la ciudad.",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "recurrente": {
+    "mes": 9
+  },
+  "lugar": "",
+  "sede": "Famaillá",
+  "fueraDeLaCiudad": true,
+  "localidad": "Famaillá, a unos 35 km",
+  "organizador": "",
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "inscripcion": "",
+  "urlOficial": "",
+  "ocurrencias": [],
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    },
+    {
+      "titulo": "Historia — smt.gob.ar",
+      "url": "https://smt.gob.ar/historia"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

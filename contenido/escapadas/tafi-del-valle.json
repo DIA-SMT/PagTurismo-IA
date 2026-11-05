@@ -1,0 +1,16 @@
+{
+  "estado": "publicado",
+  "titulo": "Tafí del Valle",
+  "detalle": "Valle de altura con el dique La Angostura, quesos artesanales y la ruta entre yungas.",
+  "localidad": "Tafí del Valle",
+  "distancia": "107 km",
+  "imagen": {
+    "src": "/stickers/paisajes-tafi-cadillal.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "tono": 0,
+  "url": "",
+  "orden": 2
+}

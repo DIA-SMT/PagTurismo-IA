@@ -1,0 +1,56 @@
+{
+  "estado": "borrador",
+  "titulo": "San Miguel en un día",
+  "orden": 2,
+  "resumen": "Centro histórico por la mañana, sabores tucumanos al mediodía y paseo cultural por la tarde.",
+  "descripcion": "",
+  "tipo": "itinerario",
+  "modalidad": "a-pie",
+  "guiado": false,
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "a-pie"
+  ],
+  "duracion": "Un día",
+  "distancia": "",
+  "esfuerzo": "",
+  "inicio": "Plaza Independencia",
+  "fin": "Plaza Independencia de noche",
+  "paradas": [
+    {
+      "nombre": "Plaza Independencia",
+      "lugar": "plaza-independencia"
+    },
+    {
+      "nombre": "Museo Casa Histórica de la Independencia",
+      "lugar": "casa-historica"
+    },
+    {
+      "nombre": "Almuerzo con empanadas tucumanas",
+      "nota": "Pendiente: sumar zonas o establecimientos verificados."
+    },
+    {
+      "nombre": "Museo Casa Natal de Mercedes Sosa",
+      "lugar": "casa-natal-mercedes-sosa"
+    },
+    {
+      "nombre": "Plaza Independencia de noche",
+      "lugar": "plaza-independencia"
+    }
+  ],
+  "experiencia": "",
+  "condiciones": "",
+  "aviso": "Itinerario sugerido. Los tiempos son orientativos: confirmá horarios de apertura antes de salir.",
+  "fuentes": [
+    {
+      "titulo": "Investigación Turismo SMT, apartado 8 (idea editorial a validar)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

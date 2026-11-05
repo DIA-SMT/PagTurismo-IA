@@ -1,0 +1,13 @@
+{
+  "estado": "publicado",
+  "titulo": "Sánguche de milanesa",
+  "detalle": "El clásico de los carritos: pan, milanesa, lechuga, tomate, cebolla y picante a gusto.",
+  "imagen": {
+    "src": "/stickers/sanguche-milanesa.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "tono": 2,
+  "orden": 2
+}
