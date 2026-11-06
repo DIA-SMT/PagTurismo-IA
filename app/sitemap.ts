@@ -1,21 +1,22 @@
 import type { MetadataRoute } from "next";
 
-import { getCategorias, getEventos, getExperiencias, getGuias, getLugares, getRecorridos } from "@/lib/datos";
+import { contenido } from "@/lib/datos";
 import { rutas } from "@/lib/rutas";
 
 /** Sólo páginas publicadas: los borradores no se indexan. */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const c = await contenido();
   const base = (process.env.SITIO_URL ?? "http://localhost:3000").replace(/\/$/, "");
   const publicado = <T extends { estado: string }>(e: T) => e.estado === "publicado";
   const fijas = ["/", "/descubri", "/que-hacer", "/recorridos", "/agenda", "/planifica", "/sabores", "/escapadas"];
   const urls = [
     ...fijas,
-    ...getCategorias().map((c) => rutas.categoria(c.id)),
-    ...getLugares().filter(publicado).map((e) => rutas.lugar(e.slug)),
-    ...getExperiencias().filter(publicado).map((e) => rutas.experiencia(e.slug)),
-    ...getRecorridos().filter(publicado).map((e) => rutas.recorrido(e.slug)),
-    ...getEventos().filter(publicado).map((e) => rutas.evento(e.slug)),
-    ...getGuias().filter(publicado).map((e) => rutas.guia(e.slug)),
+    ...c.categorias.map((c) => rutas.categoria(c.id)),
+    ...c.lugares.filter(publicado).map((e) => rutas.lugar(e.slug)),
+    ...c.experiencias.filter(publicado).map((e) => rutas.experiencia(e.slug)),
+    ...c.recorridos.filter(publicado).map((e) => rutas.recorrido(e.slug)),
+    ...c.eventos.filter(publicado).map((e) => rutas.evento(e.slug)),
+    ...c.guias.filter(publicado).map((e) => rutas.guia(e.slug)),
   ];
   return urls.map((u) => ({ url: `${base}${u === "/" ? "" : u}` }));
 }

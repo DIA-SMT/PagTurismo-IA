@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-import { ClimaActual } from "@/components/ClimaActual";
-import { Encabezado } from "@/components/Encabezado";
 import { SpriteIconos } from "@/components/Iconos";
-import { PieDePagina } from "@/components/PieDePagina";
 
 export const metadata: Metadata = {
   // La URL pública con la que se arman las de Open Graph. Se define al
@@ -55,9 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a className="saltar-contenido" href="#contenido">Saltar al contenido principal</a>
         <SpriteIconos />
-        <Encabezado clima={<ClimaActual />} />
-        <main id="contenido">{children}</main>
-        <PieDePagina />
+        {children}
       </body>
     </html>
   );
