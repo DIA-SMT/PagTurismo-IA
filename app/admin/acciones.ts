@@ -90,10 +90,20 @@ export async function guardarConfiguracion(_previo: EstadoAccion, form: FormData
       categorias: new Set(((datos.categorias ?? []) as { id: string }[]).map((c) => c.id)),
       etiquetas: new Set(((datos.etiquetas ?? []) as { id: string }[]).map((e) => e.id)),
     };
+    // Solo cuentan las fichas: la propia configuración también tiene listas con esos nombres.
+    const fichas = filas.filter((f) => f.coleccion !== "configuracion");
     for (const tipo of ["categorias", "etiquetas"] as const) {
-      const usados = new Set(filas.flatMap((f) => (Array.isArray(f.datos[tipo]) ? (f.datos[tipo] as string[]) : [])));
-      const faltan = [...usados].filter((id) => !quedan[tipo].has(id));
-      if (faltan.length) errores[tipo] = `Todavía hay fichas que usan: ${faltan.join(", ")}. Quitalos de esas fichas antes.`;
+      const faltan = new Map<string, string[]>();
+      for (const f of fichas) {
+        const ids = Array.isArray(f.datos[tipo]) ? (f.datos[tipo] as unknown[]).filter((x): x is string => typeof x === "string") : [];
+        for (const id of ids) {
+          if (!quedan[tipo].has(id)) faltan.set(id, [...(faltan.get(id) ?? []), String(f.datos.titulo ?? f.slug)]);
+        }
+      }
+      if (faltan.size) {
+        const detalle = [...faltan].map(([id, usan]) => `«${id}» (${usan.slice(0, 3).join(", ")}${usan.length > 3 ? ` y ${usan.length - 3} más` : ""})`).join("; ");
+        errores[tipo] = `No se puede quitar porque todavía lo usan: ${detalle}. Sacalo de esas fichas primero.`;
+      }
     }
   }
   if (Object.keys(errores).length) return { error: "Revisá los campos marcados.", errores };

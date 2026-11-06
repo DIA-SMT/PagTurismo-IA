@@ -13,9 +13,15 @@ export function Banda({ titulo, bajada, acciones, migas }: {
   acciones?: ReactNode;
   migas?: { href: string; texto: string }[];
 }) {
+  const anterior = migas?.at(-1);
   return (
     <div className="adm-banda">
       <div>
+        {anterior && (
+          <Link className="adm-volver" href={anterior.href}>
+            <Icono nombre="flecha-izq" tamano={18} /> Volver a {anterior.texto}
+          </Link>
+        )}
         {migas ? (
           <nav className="adm-migas" aria-label="Estás en">
             <ol>

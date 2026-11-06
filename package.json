@@ -10,7 +10,8 @@
     "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/",
     "validar": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validar-contenido.ts",
     "db:local:reiniciar": "node -e \"require('fs').rmSync('.local/pgdata',{recursive:true,force:true});console.log('Base local borrada: se vuelve a crear al iniciar npm run dev.')\"",
-    "db:semilla": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env.local scripts/cargar-semilla.ts"
+    "db:semilla": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env.local scripts/cargar-semilla.ts",
+    "db:migrar": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env.local scripts/migrar.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

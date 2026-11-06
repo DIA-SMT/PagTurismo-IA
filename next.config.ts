@@ -3,6 +3,9 @@ import type { NextConfig } from "next";
 const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL) : null;
 
 const nextConfig: NextConfig = {
+  // Permite levantar una segunda copia (por ejemplo, en modo local para pruebas) sin pisar la
+  // carpeta de compilación de la que ya está corriendo.
+  distDir: process.env.DIRECTORIO_NEXT || ".next",
   // PGlite (base local) carga un .wasm desde node_modules.
   serverExternalPackages: ["@electric-sql/pglite"],
   // Sin Supabase (modo local, o una vista previa sin DATABASE_URL) la base se arma con las

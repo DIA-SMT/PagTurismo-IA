@@ -42,3 +42,4 @@ next-env.d.ts
 
 # base local (PGlite), fotos subidas y secreto de sesión del modo local
 /.local/
+/.next-pruebas/

@@ -14,7 +14,6 @@ export default async function Configuracion() {
     <>
       <Banda titulo="Configuración" bajada="Textos de la portada, contacto, redes, teléfonos de emergencia y línea de tiempo. Los cambios se ven en el sitio al guardar." />
       <FormularioFicha
-        key={ficha?.actualizado_at}
         esquemaId="sitio"
         modo="configuracion"
         inicial={ficha?.datos ?? {}}

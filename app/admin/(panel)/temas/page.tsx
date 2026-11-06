@@ -14,7 +14,6 @@ export default async function Temas() {
     <>
       <Banda titulo="Temas y etiquetas" bajada="Los temas organizan el catálogo «Qué hacer»; las etiquetas son filtros secundarios. Un tema que todavía usa alguna ficha no se puede quitar." />
       <FormularioFicha
-        key={ficha?.actualizado_at}
         esquemaId="categorias"
         modo="configuracion"
         inicial={ficha?.datos ?? {}}
