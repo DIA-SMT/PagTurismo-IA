@@ -42,7 +42,9 @@ export async function guardarFicha(_previo: EstadoAccion, form: FormData): Promi
   let slug = original;
   if (!original) {
     slug = String(form.get("slug") ?? "").trim() || slugDe(String(datos.titulo ?? ""));
-    if (!SLUG_VALIDO.test(slug)) errores.slug = "La dirección solo puede tener minúsculas, números y guiones.";
+    // Sin título ni dirección alcanza con el aviso del título.
+    if (!slug) { if (!errores.titulo) errores.slug = "Escribí la dirección de la ficha."; }
+    else if (!SLUG_VALIDO.test(slug)) errores.slug = "La dirección solo puede tener minúsculas, números y guiones.";
     else if (filas.some((f) => f.coleccion === esquema.id && f.slug === slug)) errores.slug = "Ya hay una ficha con esa dirección.";
   }
   if (Object.keys(errores).length) {

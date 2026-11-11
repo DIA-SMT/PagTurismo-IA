@@ -2,11 +2,12 @@ import type { MetadataRoute } from "next";
 
 import { contenido } from "@/lib/datos";
 import { rutas } from "@/lib/rutas";
+import { urlDelSitio } from "@/lib/url-sitio";
 
 /** Sólo páginas publicadas: los borradores no se indexan. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const c = await contenido();
-  const base = (process.env.SITIO_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const base = urlDelSitio();
   const publicado = <T extends { estado: string }>(e: T) => e.estado === "publicado";
   const fijas = ["/", "/descubri", "/que-hacer", "/recorridos", "/agenda", "/planifica", "/sabores", "/escapadas"];
   const urls = [
