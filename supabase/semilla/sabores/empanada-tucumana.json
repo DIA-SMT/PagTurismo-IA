@@ -1,0 +1,13 @@
+{
+  "estado": "publicado",
+  "titulo": "Empanada tucumana",
+  "detalle": "Carne cortada a cuchillo, repulgue bien marcado y un chorrito de limón. Al horno de barro, mejor.",
+  "imagen": {
+    "src": "/stickers/empanadas.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "tono": 4,
+  "orden": 1
+}

@@ -1,16 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-import { ClimaActual } from "@/components/ClimaActual";
-import { Encabezado } from "@/components/Encabezado";
 import { SpriteIconos } from "@/components/Iconos";
-import { PieDePagina } from "@/components/PieDePagina";
 
 export const metadata: Metadata = {
   // La URL pública con la que se arman las de Open Graph. Se define al
   // desplegar; ver README.
   metadataBase: new URL(process.env.SITIO_URL ?? "http://localhost:3000"),
-  title: "Turismo | Ciudad San Miguel de Tucumán",
+  title: {
+    default: "Turismo | Ciudad San Miguel de Tucumán",
+    template: "%s | Turismo San Miguel de Tucumán",
+  },
   description:
     "Sitio oficial de turismo de San Miguel de Tucumán: qué hacer, recorridos guiados gratuitos, agenda, gastronomía, escapadas y datos útiles para tu visita a la ciudad donde se declaró la Independencia.",
   openGraph: {
@@ -52,9 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a className="saltar-contenido" href="#contenido">Saltar al contenido principal</a>
         <SpriteIconos />
-        <Encabezado clima={<ClimaActual />} />
-        <main id="contenido">{children}</main>
-        <PieDePagina />
+        {children}
       </body>
     </html>
   );

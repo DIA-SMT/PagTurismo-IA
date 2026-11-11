@@ -1,0 +1,41 @@
+{
+  "estado": "publicado",
+  "titulo": "Museo Escultórico a Cielo Abierto",
+  "clase": "museo al aire libre",
+  "resumen": "Catorce esculturas neoclásicas emplazadas en 1928 sobre calle Ramón Paz Posse, en el Parque 9 de Julio.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "parques-y-aire-libre",
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "gratis",
+    "a-pie"
+  ],
+  "imperdible": false,
+  "zona": "Parque 9 de Julio",
+  "direccion": "Calle Ramón Paz Posse, Parque 9 de Julio",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "gratis",
+    "detalle": "Las esculturas están al aire libre."
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Museo Escultórico — smt.gob.ar",
+      "url": "https://smt.gob.ar/museoescultorio"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

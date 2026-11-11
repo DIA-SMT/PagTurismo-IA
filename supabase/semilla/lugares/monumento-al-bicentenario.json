@@ -1,0 +1,45 @@
+{
+  "estado": "borrador",
+  "titulo": "Monumento al Bicentenario",
+  "clase": "monumento",
+  "resumen": "Monumento que recuerda los doscientos años de la Independencia.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "a-pie",
+    "nocturno"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "imagen": {
+    "src": "/fotos/panoramas/monumento-al-bicentenario-diurno.webp",
+    "alt": "Monumento al Bicentenario bajo un cielo despejado",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

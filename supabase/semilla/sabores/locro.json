@@ -1,0 +1,13 @@
+{
+  "estado": "publicado",
+  "titulo": "Locro",
+  "detalle": "Maíz, zapallo y porotos a fuego lento. El plato de las fiestas patrias.",
+  "imagen": {
+    "src": "/stickers/locro.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "tono": 0,
+  "orden": 3
+}

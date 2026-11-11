@@ -1,0 +1,48 @@
+{
+  "estado": "publicado",
+  "titulo": "Palacio de los Deportes",
+  "clase": "estadio cubierto",
+  "resumen": "Deporte, música y cultura bajo un mismo techo. La cartelera está en su sitio oficial.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "futbol-y-deportes",
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "bajo-techo"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": "Depende de cada espectáculo."
+  },
+  "duracion": "",
+  "contacto": {
+    "web": "https://palacio.smt.gob.ar/"
+  },
+  "accesibilidad": "",
+  "imagen": {
+    "src": "/fotos/palacio-de-los-deportes.webp",
+    "alt": "Exterior del Palacio de los Deportes",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Palacio de los Deportes",
+      "url": "https://palacio.smt.gob.ar/"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

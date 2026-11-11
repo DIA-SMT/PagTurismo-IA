@@ -1,0 +1,61 @@
+{
+  "estado": "publicado",
+  "titulo": "City Tour en Bus Turístico",
+  "resumen": "Un recorrido guiado y gratuito de unas dos horas por la historia, la cultura y el patrimonio arquitectónico de la ciudad.",
+  "descripcion": "Cada circuito propone una mirada distinta sobre la identidad tucumana, con guías especializados y paradas en sitios emblemáticos.\n\nLos horarios de salida y la reserva están en el sitio del Bus Turístico, junto con los turnos del Bus Educativo para escuelas.",
+  "modalidad": "bus",
+  "guiada": true,
+  "categorias": [
+    "historia-y-patrimonio",
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "gratis",
+    "requiere-reserva",
+    "en-familia"
+  ],
+  "duracion": "Unas 2 horas",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "puntoEncuentro": "",
+  "lugares": [
+    "plaza-independencia"
+  ],
+  "incluye": "Guía especializado.",
+  "requisitos": "Reserva previa en el sitio del Bus Turístico.",
+  "politicaClima": "",
+  "operador": "Bus Turístico de la Municipalidad de San Miguel de Tucumán",
+  "costo": {
+    "modalidad": "gratis",
+    "detalle": ""
+  },
+  "accion": {
+    "tipo": "reservar",
+    "texto": "Ver salidas y reservar en Bus Turístico",
+    "url": "https://busturistico.smt.gob.ar/"
+  },
+  "salidas": [],
+  "imagen": {
+    "src": "/fotos/san-miguel-de-tucuman.webp",
+    "alt": "Vista del centro de San Miguel de Tucumán",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    },
+    {
+      "titulo": "Sitio del Bus Turístico",
+      "url": "https://busturistico.smt.gob.ar/"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

@@ -1,7 +1,10 @@
 import Image from "next/image";
 
 import { Icono } from "./Iconos";
-import { EMERGENCIAS, MUNICIPALIDAD, PIE, REDES, TURISMO, type Enlace } from "@/lib/contenido";
+import Link from "next/link";
+
+import { PIE, type Enlace } from "@/lib/contenido";
+import { contenido } from "@/lib/datos";
 
 function EnlaceDelPie({ enlace }: { enlace: Enlace }) {
   if (enlace.externo) {
@@ -12,11 +15,13 @@ function EnlaceDelPie({ enlace }: { enlace: Enlace }) {
       </a>
     );
   }
-  return <a href={enlace.url}>{enlace.texto}</a>;
+  return <Link href={enlace.url}>{enlace.texto}</Link>;
 }
 
 /** Franja de emergencias y pie institucional, iguales a los de smt.gob.ar. */
-export function PieDePagina() {
+export async function PieDePagina() {
+  const c = await contenido();
+  const { emergencias: EMERGENCIAS, municipalidad: MUNICIPALIDAD, redes: REDES, turismo: TURISMO } = c.sitio;
   return (
     <>
       <section className="franja-emergencias" aria-labelledby="titulo-emergencias">

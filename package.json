@@ -6,14 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/",
+    "validar": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validar-contenido.ts",
+    "db:local:reiniciar": "node -e \"require('fs').rmSync('.local/pgdata',{recursive:true,force:true});console.log('Base local borrada: se vuelve a crear al iniciar npm run dev.')\"",
+    "db:semilla": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env.local scripts/cargar-semilla.ts",
+    "db:migrar": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file=.env.local scripts/migrar.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.0",
     "next": "16.3.5",
+    "postgres": "^3.4.9",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "server-only": "^0.0.1",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.15",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

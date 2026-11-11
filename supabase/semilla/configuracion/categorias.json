@@ -1,0 +1,68 @@
+{
+  "categorias": [
+    {
+      "id": "historia-y-patrimonio",
+      "titulo": "Historia y patrimonio",
+      "detalle": "La Casa Histórica, la Casa de Gobierno y un casco urbano declarado Ciudad Histórica.",
+      "imagen": "/fotos/panoramas/casa-historica.webp"
+    },
+    {
+      "id": "sabores-tucumanos",
+      "titulo": "Sabores tucumanos",
+      "detalle": "Empanadas, sánguche de milanesa, locro y humitas: la mesa tucumana.",
+      "imagen": "/stickers/empanadas.webp",
+      "tono": 4
+    },
+    {
+      "id": "parques-y-aire-libre",
+      "titulo": "Parques y aire libre",
+      "detalle": "Parque 9 de Julio, Avellaneda, Guillermina y el Campus Educativo Ambiental.",
+      "imagen": "/fotos/campus-educativo-ambiental.webp"
+    },
+    {
+      "id": "cultura-y-espectaculos",
+      "titulo": "Cultura y espectáculos",
+      "detalle": "Museos, teatros y la Casa Natal de Mercedes Sosa.",
+      "imagen": "/stickers/mate-bombo.webp",
+      "tono": 2
+    },
+    {
+      "id": "turismo-religioso",
+      "titulo": "Turismo religioso",
+      "detalle": "La Catedral, San Francisco y los templos del centro histórico.",
+      "imagen": "/fotos/iglesia-catedral.webp"
+    },
+    {
+      "id": "futbol-y-deportes",
+      "titulo": "Fútbol y deportes",
+      "detalle": "El Palacio de los Deportes, los parques y la pasión de los clubes tucumanos.",
+      "imagen": "/fotos/palacio-de-los-deportes.webp"
+    }
+  ],
+  "etiquetas": [
+    {
+      "id": "gratis",
+      "titulo": "Gratis"
+    },
+    {
+      "id": "en-familia",
+      "titulo": "En familia"
+    },
+    {
+      "id": "nocturno",
+      "titulo": "De noche"
+    },
+    {
+      "id": "a-pie",
+      "titulo": "A pie"
+    },
+    {
+      "id": "bajo-techo",
+      "titulo": "Bajo techo"
+    },
+    {
+      "id": "requiere-reserva",
+      "titulo": "Requiere reserva"
+    }
+  ]
+}

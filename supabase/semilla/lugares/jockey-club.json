@@ -1,0 +1,37 @@
+{
+  "estado": "borrador",
+  "titulo": "Jockey Club",
+  "clase": "edificio",
+  "resumen": "Edificio emblemático del centro, donde termina el circuito a pie.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Circuitos turísticos a pie — smt.gob.ar",
+      "url": "https://smt.gob.ar/circuitosturisticospie"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

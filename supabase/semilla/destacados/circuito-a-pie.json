@@ -1,0 +1,20 @@
+{
+  "estado": "publicado",
+  "titulo": "Circuito guiado por el casco histórico",
+  "etiqueta": "A pie",
+  "detalle": "Sale desde el Museo Casa Histórica y termina en el Jockey Club, con un refresco antes de volver a la plaza.",
+  "imagen": {
+    "src": "/fotos/museo-nacional-de-la-independencia.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "destino": {
+    "url": "",
+    "coleccion": "experiencias",
+    "slug": "circuito-a-pie-casco-historico"
+  },
+  "desde": "",
+  "hasta": "",
+  "orden": 2
+}

@@ -1,0 +1,41 @@
+{
+  "estado": "publicado",
+  "titulo": "Cómo moverse",
+  "resumen": "Colectivos urbanos con tarjeta SUBE y taxis. El casco histórico se recorre cómodo a pie.",
+  "icono": "bus-linea",
+  "orden": 2,
+  "secciones": [
+    {
+      "titulo": "Colectivos",
+      "texto": "Las líneas urbanas se pagan con tarjeta SUBE. En el portal de la Municipalidad están los recorridos."
+    },
+    {
+      "titulo": "A pie",
+      "texto": "El casco histórico es compacto: la mayoría de los museos y templos del centro quedan a pocas cuadras de la Plaza Independencia."
+    }
+  ],
+  "enlaces": [
+    {
+      "texto": "Recorridos de colectivos",
+      "url": "https://smt.gob.ar/colectivos"
+    },
+    {
+      "texto": "Tarjeta SUBE",
+      "url": "https://smt.gob.ar/Sube"
+    },
+    {
+      "texto": "Mapa interactivo de la ciudad",
+      "url": "https://mapa.smt.gob.ar/"
+    }
+  ],
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

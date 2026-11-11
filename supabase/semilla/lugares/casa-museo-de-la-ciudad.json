@@ -1,0 +1,39 @@
+{
+  "estado": "borrador",
+  "titulo": "Casa Museo de la Ciudad",
+  "clase": "museo",
+  "resumen": "Un espacio dedicado a la historia de San Miguel de Tucumán.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "bajo-techo"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

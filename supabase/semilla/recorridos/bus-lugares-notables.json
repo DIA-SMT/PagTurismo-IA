@@ -1,0 +1,121 @@
+{
+  "estado": "publicado",
+  "titulo": "Circuito Lugares Notables",
+  "orden": 2,
+  "resumen": "Arquitectura, parques y barrios tradicionales.",
+  "descripcion": "",
+  "tipo": "circuito",
+  "modalidad": "bus",
+  "guiado": true,
+  "categorias": [
+    "historia-y-patrimonio",
+    "parques-y-aire-libre"
+  ],
+  "etiquetas": [
+    "gratis",
+    "requiere-reserva"
+  ],
+  "duracion": "Unas 2 horas",
+  "distancia": "",
+  "esfuerzo": "Bajo: se recorre en bus.",
+  "inicio": "Plaza Independencia",
+  "fin": "Plaza Independencia",
+  "paradas": [
+    {
+      "nombre": "Calles céntricas"
+    },
+    {
+      "nombre": "Av. Sarmiento"
+    },
+    {
+      "nombre": "Plaza Urquiza",
+      "lugar": "plaza-urquiza"
+    },
+    {
+      "nombre": "Teatro San Martín",
+      "lugar": "teatro-san-martin"
+    },
+    {
+      "nombre": "Colegio Nacional"
+    },
+    {
+      "nombre": "Parque 9 de Julio",
+      "lugar": "parque-9-de-julio"
+    },
+    {
+      "nombre": "Museo de la Industria Azucarera",
+      "lugar": "museo-industria-azucarera"
+    },
+    {
+      "nombre": "Reloj de Flores"
+    },
+    {
+      "nombre": "Palacio de los Deportes",
+      "lugar": "palacio-de-los-deportes"
+    },
+    {
+      "nombre": "Tribunales"
+    },
+    {
+      "nombre": "Plaza San Martín",
+      "lugar": "plaza-san-martin"
+    },
+    {
+      "nombre": "Plaza Belgrano",
+      "lugar": "plaza-belgrano"
+    },
+    {
+      "nombre": "Barrio La Ciudadela"
+    },
+    {
+      "nombre": "Ex Mercado de Abasto",
+      "lugar": "mercado-de-abasto"
+    },
+    {
+      "nombre": "Teatro Rosita Ávila",
+      "lugar": "teatro-rosita-avila"
+    },
+    {
+      "nombre": "Av. Mate de Luna"
+    },
+    {
+      "nombre": "Parque Avellaneda",
+      "lugar": "parque-avellaneda"
+    },
+    {
+      "nombre": "Monumento del Bicentenario",
+      "lugar": "monumento-al-bicentenario"
+    },
+    {
+      "nombre": "Cementerio del Oeste"
+    },
+    {
+      "nombre": "Regreso a Plaza Independencia",
+      "lugar": "plaza-independencia"
+    }
+  ],
+  "experiencia": "city-tour-bus-turistico",
+  "condiciones": "",
+  "aviso": "El Bus Turístico puede tener otros circuitos o cambios de recorrido. Antes de ir, confirmá en su sitio las salidas vigentes.",
+  "imagen": {
+    "src": "/fotos/san-miguel-de-tucuman.webp",
+    "alt": "Vista del centro de San Miguel de Tucumán",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    },
+    {
+      "titulo": "Sitio del Bus Turístico",
+      "url": "https://busturistico.smt.gob.ar/"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

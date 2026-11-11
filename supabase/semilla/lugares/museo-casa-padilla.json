@@ -1,0 +1,40 @@
+{
+  "estado": "borrador",
+  "titulo": "Museo Casa Padilla",
+  "clase": "museo",
+  "resumen": "Casona histórica junto a la Plaza Independencia, con colecciones de arte y objetos de época.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio",
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "bajo-techo"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

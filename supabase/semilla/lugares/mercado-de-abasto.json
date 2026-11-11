@@ -1,0 +1,37 @@
+{
+  "estado": "borrador",
+  "titulo": "Ex Mercado de Abasto",
+  "clase": "edificio",
+  "resumen": "El antiguo mercado de la ciudad, parada del circuito La Ciudadela.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "estado": "publicado",
+  "titulo": "Ruinas de Quilmes",
+  "detalle": "La ciudad sagrada del pueblo quilmes, en los Valles Calchaquíes.",
+  "localidad": "Amaicha del Valle",
+  "distancia": "180 km",
+  "imagen": {
+    "src": "/stickers/ruinas-quilmes.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "tono": 4,
+  "url": "",
+  "orden": 3
+}

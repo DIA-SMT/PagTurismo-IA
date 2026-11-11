@@ -1,0 +1,44 @@
+{
+  "estado": "borrador",
+  "titulo": "Campus Educativo Ambiental",
+  "clase": "parque",
+  "resumen": "Un espacio verde de la ciudad dedicado a la educación ambiental.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "parques-y-aire-libre"
+  ],
+  "etiquetas": [
+    "en-familia"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "imagen": {
+    "src": "/fotos/campus-educativo-ambiental.webp",
+    "alt": "Senderos y vegetación del Campus Educativo Ambiental",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

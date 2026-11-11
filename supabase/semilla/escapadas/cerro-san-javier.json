@@ -1,0 +1,16 @@
+{
+  "estado": "publicado",
+  "titulo": "Cerro San Javier",
+  "detalle": "Miradores sobre la ciudad, senderismo y el Cristo Bendicente.",
+  "localidad": "Yerba Buena y San Javier",
+  "distancia": "25 km",
+  "imagen": {
+    "src": "/stickers/cristo-bendicente.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "tono": 1,
+  "url": "",
+  "orden": 1
+}

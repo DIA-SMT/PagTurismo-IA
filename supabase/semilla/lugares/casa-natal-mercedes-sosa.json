@@ -1,0 +1,39 @@
+{
+  "estado": "borrador",
+  "titulo": "Museo Casa Natal de Mercedes Sosa",
+  "clase": "museo",
+  "resumen": "La casa donde nació la cantora tucumana, hoy convertida en museo.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "bajo-techo"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

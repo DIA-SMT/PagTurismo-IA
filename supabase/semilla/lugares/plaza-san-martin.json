@@ -1,0 +1,40 @@
+{
+  "estado": "borrador",
+  "titulo": "Plaza San Martín",
+  "clase": "plaza",
+  "resumen": "Plaza del circuito Lugares Notables del bus turístico.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "parques-y-aire-libre"
+  ],
+  "etiquetas": [
+    "gratis",
+    "a-pie"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "gratis",
+    "detalle": "Espacio público de acceso libre."
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "estado": "publicado",
+  "titulo": "Tamales y humitas",
+  "detalle": "Maíz molido envuelto en chala: salados, con carne, o a la olla con albahaca.",
+  "imagen": {
+    "src": "/stickers/tamal-humita.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "tono": 3,
+  "orden": 4
+}

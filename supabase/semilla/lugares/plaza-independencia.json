@@ -1,0 +1,48 @@
+{
+  "estado": "borrador",
+  "titulo": "Plaza Independencia",
+  "clase": "plaza",
+  "resumen": "El corazón de la ciudad, entre la Casa de Gobierno y la Catedral. De noche, sus fuentes y fachadas se iluminan.",
+  "porQueIr": "De acá salen los recorridos del bus turístico y en sus alrededores están los edificios más representativos del centro.",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "gratis",
+    "a-pie",
+    "nocturno",
+    "en-familia"
+  ],
+  "imperdible": true,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "gratis",
+    "detalle": "Espacio público de acceso libre."
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "imagen": {
+    "src": "/fotos/panoramas/plaza-independencia-nocturna.webp",
+    "alt": "Plaza Independencia de noche, con la fuente y las palmeras iluminadas",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

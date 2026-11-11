@@ -1,0 +1,20 @@
+{
+  "estado": "publicado",
+  "titulo": "La ciudad de noche",
+  "etiqueta": "Paseos",
+  "detalle": "Fuentes, plazas y fachadas iluminadas: el centro también se recorre después del atardecer.",
+  "imagen": {
+    "src": "/fotos/la-fuente-de-los-leones.webp",
+    "alt": "",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "destino": {
+    "url": "",
+    "coleccion": "experiencias",
+    "slug": "la-ciudad-de-noche"
+  },
+  "desde": "",
+  "hasta": "",
+  "orden": 3
+}

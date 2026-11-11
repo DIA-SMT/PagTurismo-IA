@@ -1,0 +1,57 @@
+{
+  "estado": "publicado",
+  "titulo": "Circuito guiado a pie por el casco histórico",
+  "resumen": "Visita guiada por museos, iglesias y la “city tucumana”, desde el Museo Casa Histórica hasta el Jockey Club.",
+  "descripcion": "Sale desde el Museo Casa Histórica y termina en el Jockey Club, con un refresco antes de volver a la plaza.",
+  "modalidad": "a-pie",
+  "guiada": true,
+  "categorias": [
+    "historia-y-patrimonio",
+    "turismo-religioso"
+  ],
+  "etiquetas": [
+    "a-pie",
+    "requiere-reserva"
+  ],
+  "duracion": "",
+  "horario": {
+    "texto": "Salida a las 09:30",
+    "confirmado": false
+  },
+  "puntoEncuentro": "Museo Casa Histórica de la Independencia",
+  "lugares": [
+    "casa-historica",
+    "jockey-club"
+  ],
+  "incluye": "Visita guiada y un refresco al final.",
+  "requisitos": "Inscripción previa.",
+  "politicaClima": "",
+  "operador": "Dirección de Turismo de la Municipalidad",
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "accion": {
+    "tipo": "inscripcion",
+    "texto": "Ver condiciones e inscribirse en smt.gob.ar",
+    "url": "https://smt.gob.ar/circuitosturisticospie"
+  },
+  "salidas": [],
+  "imagen": {
+    "src": "/fotos/museo-nacional-de-la-independencia.webp",
+    "alt": "Fachada de la Casa Histórica, punto de partida del circuito",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Circuitos turísticos a pie — smt.gob.ar",
+      "url": "https://smt.gob.ar/circuitosturisticospie"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

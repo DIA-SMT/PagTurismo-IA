@@ -1,0 +1,40 @@
+{
+  "estado": "borrador",
+  "titulo": "Iglesia San Francisco",
+  "clase": "templo",
+  "resumen": "Templo franciscano del centro histórico, frente a la Plaza Independencia.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "turismo-religioso",
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "bajo-techo"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

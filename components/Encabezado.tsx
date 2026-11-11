@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { Icono } from "./Iconos";
@@ -8,9 +10,9 @@ import { Tema } from "./Tema";
 import { NAV } from "@/lib/contenido";
 
 /**
- * Barra de la landing. Es una sola página, así que la navegación son anclas:
- * la sección que se está leyendo se marca en el menú, y la barra se compacta
- * después del primer tramo de desplazamiento, igual que en smt.gob.ar.
+ * Barra del portal. La navegación lleva a las secciones (rutas propias) y
+ * marca la actual según la URL. La barra se compacta después del primer
+ * tramo de desplazamiento, igual que en smt.gob.ar.
  *
  * El clima llega armado desde el servidor como `clima`, para que el pedido a
  * la API no salga del navegador.
@@ -18,44 +20,36 @@ import { NAV } from "@/lib/contenido";
 export function Encabezado({ clima }: { clima?: ReactNode }) {
   const [desplazado, setDesplazado] = useState(false);
   const [movil, setMovil] = useState(false);
-  const [activa, setActiva] = useState<string | null>(null);
+  const ruta = usePathname();
 
-  // Compacta la barra y marca la sección que se está leyendo: la última del
-  // menú cuyo comienzo ya pasó el tercio superior de la pantalla. Se calcula
-  // en cada scroll y no con IntersectionObserver porque entre secciones del
-  // menú hay otras (historia, escapadas) y un salto directo por ancla no
-  // dispara ninguna intersección.
   useEffect(() => {
-    const secciones = NAV.flatMap((e) => document.querySelector<HTMLElement>(e.url) ?? []);
-    const alScrollear = () => {
-      setDesplazado(window.scrollY > 80);
-      const linea = window.innerHeight / 3;
-      const pasadas = secciones.filter((s) => s.getBoundingClientRect().top <= linea);
-      const alFinal = window.innerHeight + window.scrollY >= document.body.scrollHeight - 4;
-      const actual = alFinal ? secciones.at(-1) : pasadas.at(-1);
-      setActiva(actual ? `#${actual.id}` : null);
-    };
+    const alScrollear = () => setDesplazado(window.scrollY > 80);
     alScrollear();
     window.addEventListener("scroll", alScrollear, { passive: true });
     return () => window.removeEventListener("scroll", alScrollear);
   }, []);
 
+  // Al navegar a otra página se cierra el menú móvil.
+  useEffect(() => setMovil(false), [ruta]);
+
+  const actual = (url: string) => ruta === url || ruta.startsWith(`${url}/`);
+
   return (
     <>
       <header className="header" data-compacto={desplazado ? "" : undefined}>
         <div className="contenedor header__inner">
-          <a className="header__marca" href="#inicio" aria-label="Turismo — Ciudad San Miguel de Tucumán, ir al inicio">
+          <Link className="header__marca" href="/" aria-label="Turismo — Ciudad San Miguel de Tucumán, ir al inicio">
             <LogoSMT ancho={184} alto={60} alt="" prioritario />
             <span className="header__turismo" aria-hidden="true">Turismo</span>
-          </a>
+          </Link>
 
           <nav className="nav" aria-label="Secciones">
             <ul>
               {NAV.map((e) => (
                 <li key={e.url}>
-                  <a className="nav__enlace" href={e.url} aria-current={activa === e.url ? "true" : undefined}>
+                  <Link className="nav__enlace" href={e.url} aria-current={actual(e.url) ? "page" : undefined}>
                     {e.texto}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -64,10 +58,10 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
           <div className="header__acciones">
             {clima}
             <Tema />
-            <a className="boton-planificar" href="#antes-de-llegar">
-              <Icono nombre="mapa" tamano={18} />
-              Planificá tu visita
-            </a>
+            <Link className="boton-planificar" href="/que-hacer#buscar">
+              <Icono nombre="buscar" tamano={18} />
+              Buscar
+            </Link>
             <button
               className="boton-menu"
               type="button"
@@ -82,12 +76,12 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
         </div>
       </header>
 
-      {movil && <PanelMovil cerrar={() => setMovil(false)} />}
+      {movil && <PanelMovil cerrar={() => setMovil(false)} actual={actual} />}
     </>
   );
 }
 
-function PanelMovil({ cerrar }: { cerrar: () => void }) {
+function PanelMovil({ cerrar, actual }: { cerrar: () => void; actual: (url: string) => boolean }) {
   const caja = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -132,18 +126,17 @@ function PanelMovil({ cerrar }: { cerrar: () => void }) {
           <ul>
             {NAV.map((e) => (
               <li key={e.url}>
-                {/* El ancla navega sola; cerrar el panel devuelve el scroll. */}
-                <a href={e.url} onClick={cerrar}>
+                <Link href={e.url} onClick={cerrar} aria-current={actual(e.url) ? "page" : undefined}>
                   {e.texto}
                   <Icono nombre="flecha" tamano={18} />
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
-        <a className="boton boton--primario panel-movil__cta" href="#antes-de-llegar" onClick={cerrar}>
-          Planificá tu visita
-        </a>
+        <Link className="boton boton--primario panel-movil__cta" href="/que-hacer#buscar" onClick={cerrar}>
+          <Icono nombre="buscar" tamano={18} /> Buscar en el portal
+        </Link>
       </div>
     </div>
   );

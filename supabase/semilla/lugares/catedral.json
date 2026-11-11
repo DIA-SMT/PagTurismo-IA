@@ -1,0 +1,46 @@
+{
+  "estado": "borrador",
+  "titulo": "Iglesia Catedral",
+  "clase": "templo",
+  "resumen": "La iglesia mayor de la ciudad, frente a la Plaza Independencia.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "turismo-religioso",
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "bajo-techo"
+  ],
+  "imperdible": true,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "imagen": {
+    "src": "/fotos/iglesia-catedral.webp",
+    "alt": "Fachada de la Iglesia Catedral de San Miguel de Tucumán",
+    "credito": "Municipalidad de San Miguel de Tucumán",
+    "permiso": "Recurso oficial del portal smt.gob.ar"
+  },
+  "fuentes": [
+    {
+      "titulo": "Lugares de interés — smt.gob.ar",
+      "url": "https://smt.gob.ar/lugares-de-interes"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

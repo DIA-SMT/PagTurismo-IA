@@ -1,0 +1,71 @@
+{
+  "estado": "borrador",
+  "titulo": "Dos días en la ciudad",
+  "orden": 3,
+  "resumen": "Un día para la historia y otro para el Parque 9 de Julio y sus museos.",
+  "descripcion": "",
+  "tipo": "itinerario",
+  "modalidad": "a-pie",
+  "guiado": false,
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [
+    "a-pie"
+  ],
+  "duracion": "Dos días",
+  "distancia": "",
+  "esfuerzo": "",
+  "inicio": "Plaza Independencia",
+  "fin": "Museo Escultórico a Cielo Abierto",
+  "paradas": [
+    {
+      "nombre": "Plaza Independencia",
+      "lugar": "plaza-independencia",
+      "dia": 1
+    },
+    {
+      "nombre": "Museo Casa Histórica de la Independencia",
+      "lugar": "casa-historica",
+      "dia": 1
+    },
+    {
+      "nombre": "Iglesia Catedral",
+      "lugar": "catedral",
+      "dia": 1
+    },
+    {
+      "nombre": "Museo Casa Padilla",
+      "lugar": "museo-casa-padilla",
+      "dia": 1
+    },
+    {
+      "nombre": "Parque 9 de Julio",
+      "lugar": "parque-9-de-julio",
+      "dia": 2
+    },
+    {
+      "nombre": "Museo de la Industria Azucarera",
+      "lugar": "museo-industria-azucarera",
+      "dia": 2
+    },
+    {
+      "nombre": "Museo Escultórico a Cielo Abierto",
+      "lugar": "museo-escultorico",
+      "dia": 2
+    }
+  ],
+  "experiencia": "",
+  "condiciones": "",
+  "aviso": "Itinerario sugerido. Los tiempos son orientativos: confirmá horarios de apertura antes de salir.",
+  "fuentes": [
+    {
+      "titulo": "Investigación Turismo SMT, apartado 8 (idea editorial a validar)"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

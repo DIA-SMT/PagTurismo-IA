@@ -1,0 +1,40 @@
+{
+  "estado": "borrador",
+  "titulo": "Teatro Municipal Rosita Ávila",
+  "clase": "teatro",
+  "resumen": "El teatro de la Municipalidad, parte del circuito La Ciudadela.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "bajo-techo",
+    "nocturno"
+  ],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bus Turístico — smt.gob.ar",
+      "url": "https://smt.gob.ar/busturistico"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}

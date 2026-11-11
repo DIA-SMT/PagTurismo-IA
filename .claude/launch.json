@@ -6,6 +6,13 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "turismo-local-pruebas",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--", "-p", "3002"],
+      "env": { "DATABASE_URL": "", "DIRECTORIO_NEXT": ".next-pruebas" },
+      "port": 3002
     }
   ]
 }

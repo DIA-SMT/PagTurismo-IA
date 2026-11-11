@@ -1,0 +1,41 @@
+{
+  "estado": "publicado",
+  "titulo": "Día de la Independencia",
+  "clase": "efemeride",
+  "resumen": "La ciudad donde se declaró la independencia celebra su fecha más importante.",
+  "descripcion": "",
+  "categorias": [
+    "historia-y-patrimonio"
+  ],
+  "etiquetas": [],
+  "recurrente": {
+    "dia": 9,
+    "mes": 7
+  },
+  "lugar": "casa-historica",
+  "sede": "Casa Histórica y Plaza Independencia",
+  "fueraDeLaCiudad": false,
+  "localidad": "",
+  "organizador": "",
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "inscripcion": "",
+  "urlOficial": "",
+  "ocurrencias": [],
+  "fuentes": [
+    {
+      "titulo": "Landing de turismo anterior (contenido ya publicado)"
+    },
+    {
+      "titulo": "Historia — smt.gob.ar",
+      "url": "https://smt.gob.ar/historia"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  }
+}
