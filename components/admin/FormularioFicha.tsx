@@ -43,7 +43,7 @@ function escribirRuta(obj: unknown, ruta: Ruta, valor: unknown): unknown {
  *  - modo "ficha": colecciones con estado (borrador o publicado) y dirección (slug).
  *  - modo "configuracion": datos del sitio o temas y etiquetas.
  */
-export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuardado = "borrador", slugOriginal = "", opciones, rutaPublica, actualizado, lateralExtra }: {
+export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuardado = "borrador", slugOriginal = "", opciones, rutaPublica, ultimoCambio, lateralExtra }: {
   esquemaId: string;
   modo: "ficha" | "configuracion";
   inicial: Json;
@@ -51,7 +51,7 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
   slugOriginal?: string;
   opciones: Opciones;
   rutaPublica?: string;
-  actualizado?: ReactNode;
+  ultimoCambio?: string;
   lateralExtra?: ReactNode;
 }) {
   const esquema = esquemaPorId(esquemaId);
@@ -159,7 +159,7 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
                 <Icono nombre="ojo" tamano={18} /> Ver en el sitio
               </Link>
             )}
-            {actualizado}
+            {ultimoCambio && <p className="adm-campo__ayuda">{ultimoCambio}</p>}
           </div>
         </section>
         {lateralExtra}

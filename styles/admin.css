@@ -259,7 +259,7 @@ a.adm-dato:hover { box-shadow: var(--a-sombra-alta), 0 0 0 1px var(--a-smt); }
 .adm-boton--ancho { width: 100%; }
 
 /* Tablas */
-.adm-tabla-caja { overflow-x: auto; border-radius: var(--a-radio); background: #fff; box-shadow: var(--a-sombra), 0 0 0 1px rgb(230 225 215 / 0.8); }
+.adm-tabla-caja { position: relative; overflow-x: auto; border-radius: var(--a-radio); background: #fff; box-shadow: var(--a-sombra), 0 0 0 1px rgb(230 225 215 / 0.8); }
 .adm-tabla { width: 100%; min-width: 44rem; border-collapse: collapse; font-size: 0.95rem; }
 .adm-tabla th { padding: 0.75rem 1rem; background: var(--a-superficie); color: var(--a-gris); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-align: left; text-transform: uppercase; white-space: nowrap; }
 .adm-tabla td { padding: 0.85rem 1rem; border-top: 1px solid var(--a-linea); vertical-align: middle; }
@@ -293,7 +293,8 @@ a.adm-dato:hover { box-shadow: var(--a-sombra-alta), 0 0 0 1px var(--a-smt); }
   background: #fff;
   color: var(--a-tinta);
   font: inherit;
-  font-size: 0.98rem;
+  /* 16 px: con menos, el iPhone hace zoom al tocar el campo. */
+  font-size: 1rem;
 }
 .adm textarea { min-height: auto; resize: vertical; line-height: 1.5; }
 .adm-input:hover, .adm select:hover, .adm textarea:hover { border-color: var(--a-gris); }

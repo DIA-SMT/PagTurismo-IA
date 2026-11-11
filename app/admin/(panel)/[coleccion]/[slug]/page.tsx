@@ -47,11 +47,7 @@ export default async function EditarFicha({ params, searchParams }: PageProps<"/
         slugOriginal={ficha.slug}
         opciones={opcionesDeFormulario(filas)}
         rutaPublica={esquema.rutaPublica?.(ficha.slug)}
-        actualizado={
-          <p className="adm-campo__ayuda">
-            Último cambio: {fechaCorta(ficha.actualizado_at)}, por {ficha.actualizado_por_nombre ?? "la carga inicial"}.
-          </p>
-        }
+        ultimoCambio={`Último cambio: ${fechaCorta(ficha.actualizado_at)}, por ${ficha.actualizado_por_nombre ?? "la carga inicial"}.`}
         lateralExtra={
           <>
             <Tarjeta titulo="Historial">
