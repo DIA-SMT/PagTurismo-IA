@@ -95,7 +95,7 @@ Protecciones (iguales a las de la subasta):
    | `NEXT_PUBLIC_SUPABASE_URL` | Supabase → *Project Settings* → *API*. |
    | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → *Project Settings* → *API* (clave `anon`). |
    | `SUPABASE_CA_CERT` | Opcional: certificado raíz de Supabase (PEM) para verificar la conexión. |
-   | `SITIO_URL` | URL pública del sitio (Open Graph, sitemap). |
+   | `SITIO_URL` | URL pública del sitio (Open Graph, sitemap). Opcional: en Vercel, si falta, se usa el dominio de producción del proyecto. |
    | `MOSTRAR_BORRADORES` | `1` solo en un despliegue de vista previa, para que se vean los borradores sin sesión. |
 
 3. **Cargar el contenido inicial:**
@@ -114,6 +114,8 @@ Protecciones (iguales a las de la subasta):
 
    Para quitarle el acceso a alguien: `update public.admins set activo = false where user_id = …`.
 5. **Vercel:** cargar las mismas variables en *Settings → Environment Variables* y desplegar.
+   Las funciones corren en São Paulo (`gru1`, en `vercel.json`), la misma región que la base
+   (`sa-east-1`). Si la base se muda, cambiar también esa región: cada página consulta la base.
 
 ## Rutas del sitio
 

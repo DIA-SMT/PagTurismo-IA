@@ -2,11 +2,11 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 import { SpriteIconos } from "@/components/Iconos";
+import { urlDelSitio } from "@/lib/url-sitio";
 
 export const metadata: Metadata = {
-  // La URL pública con la que se arman las de Open Graph. Se define al
-  // desplegar; ver README.
-  metadataBase: new URL(process.env.SITIO_URL ?? "http://localhost:3000"),
+  // La URL pública con la que se arman las de Open Graph (ver README).
+  metadataBase: new URL(urlDelSitio()),
   title: {
     default: "Turismo | Ciudad San Miguel de Tucumán",
     template: "%s | Turismo San Miguel de Tucumán",
