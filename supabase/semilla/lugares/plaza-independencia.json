@@ -23,7 +23,15 @@
   },
   "costo": {
     "modalidad": "gratis",
-    "detalle": "Espacio público de acceso libre."
+    "detalle": "Espacio público de acceso libre.",
+    "traducciones": {
+      "en": {
+        "detalle": "Public space, free admission."
+      },
+      "pt": {
+        "detalle": "Espaço público de acesso livre."
+      }
+    }
   },
   "duracion": "",
   "contacto": {},
@@ -32,7 +40,15 @@
     "src": "/fotos/panoramas/plaza-independencia-nocturna.webp",
     "alt": "Plaza Independencia de noche, con la fuente y las palmeras iluminadas",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "Plaza Independencia at night, with the fountain and palm trees lit up"
+      },
+      "pt": {
+        "alt": "Plaza Independencia à noite, com a fonte e as palmeiras iluminadas"
+      }
+    }
   },
   "fuentes": [
     {
@@ -44,5 +60,19 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Independence Square (Plaza Independencia)",
+      "clase": "square",
+      "resumen": "The heart of the city, between Government House and the Cathedral. At night, its fountains and facades light up.",
+      "porQueIr": "The tourist bus tours start here, and the most representative buildings of downtown are all around it."
+    },
+    "pt": {
+      "titulo": "Praça Independência (Plaza Independencia)",
+      "clase": "praça",
+      "resumen": "O coração da cidade, entre a Casa de Governo e a Catedral. À noite, suas fontes e fachadas se iluminam.",
+      "porQueIr": "Daqui saem os passeios do ônibus turístico, e ao redor estão os edifícios mais representativos do centro."
+    }
   }
 }

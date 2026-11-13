@@ -4,65 +4,173 @@
       "id": "historia-y-patrimonio",
       "titulo": "Historia y patrimonio",
       "detalle": "La Casa Histórica, la Casa de Gobierno y un casco urbano declarado Ciudad Histórica.",
-      "imagen": "/fotos/panoramas/casa-historica.webp"
+      "imagen": "/fotos/panoramas/casa-historica.webp",
+      "traducciones": {
+        "en": {
+          "titulo": "History & heritage",
+          "detalle": "The Historic House, Government House and a downtown declared a Historic City."
+        },
+        "pt": {
+          "titulo": "História e patrimônio",
+          "detalle": "A Casa Histórica, a Casa de Governo e um centro urbano declarado Cidade Histórica."
+        }
+      }
     },
     {
       "id": "sabores-tucumanos",
       "titulo": "Sabores tucumanos",
       "detalle": "Empanadas, sánguche de milanesa, locro y humitas: la mesa tucumana.",
       "imagen": "/stickers/empanadas.webp",
-      "tono": 4
+      "tono": 4,
+      "traducciones": {
+        "en": {
+          "titulo": "Tucumán flavors",
+          "detalle": "Empanadas, milanesa sandwiches, locro and humitas: the Tucumán table."
+        },
+        "pt": {
+          "titulo": "Sabores tucumanos",
+          "detalle": "Empanadas, sanduíche de milanesa, locro e humitas: a mesa tucumana."
+        }
+      }
     },
     {
       "id": "parques-y-aire-libre",
       "titulo": "Parques y aire libre",
       "detalle": "Parque 9 de Julio, Avellaneda, Guillermina y el Campus Educativo Ambiental.",
-      "imagen": "/fotos/campus-educativo-ambiental.webp"
+      "imagen": "/fotos/campus-educativo-ambiental.webp",
+      "traducciones": {
+        "en": {
+          "titulo": "Parks & outdoors",
+          "detalle": "Parque 9 de Julio, Avellaneda, Guillermina and the Environmental Education Campus."
+        },
+        "pt": {
+          "titulo": "Parques e ar livre",
+          "detalle": "Parque 9 de Julio, Avellaneda, Guillermina e o Campus Educativo Ambiental."
+        }
+      }
     },
     {
       "id": "cultura-y-espectaculos",
       "titulo": "Cultura y espectáculos",
       "detalle": "Museos, teatros y la Casa Natal de Mercedes Sosa.",
       "imagen": "/stickers/mate-bombo.webp",
-      "tono": 2
+      "tono": 2,
+      "traducciones": {
+        "en": {
+          "titulo": "Culture & shows",
+          "detalle": "Museums, theaters and Mercedes Sosa's birthplace."
+        },
+        "pt": {
+          "titulo": "Cultura e espetáculos",
+          "detalle": "Museus, teatros e a Casa Natal de Mercedes Sosa."
+        }
+      }
     },
     {
       "id": "turismo-religioso",
       "titulo": "Turismo religioso",
       "detalle": "La Catedral, San Francisco y los templos del centro histórico.",
-      "imagen": "/fotos/iglesia-catedral.webp"
+      "imagen": "/fotos/iglesia-catedral.webp",
+      "traducciones": {
+        "en": {
+          "titulo": "Religious tourism",
+          "detalle": "The Cathedral, San Francisco and the churches of the historic center."
+        },
+        "pt": {
+          "titulo": "Turismo religioso",
+          "detalle": "A Catedral, San Francisco e os templos do centro histórico."
+        }
+      }
     },
     {
       "id": "futbol-y-deportes",
       "titulo": "Fútbol y deportes",
       "detalle": "El Palacio de los Deportes, los parques y la pasión de los clubes tucumanos.",
-      "imagen": "/fotos/palacio-de-los-deportes.webp"
+      "imagen": "/fotos/palacio-de-los-deportes.webp",
+      "traducciones": {
+        "en": {
+          "titulo": "Soccer & sports",
+          "detalle": "The Palacio de los Deportes, the parks and the passion of Tucumán's clubs."
+        },
+        "pt": {
+          "titulo": "Futebol e esportes",
+          "detalle": "O Palácio dos Esportes, os parques e a paixão dos clubes tucumanos."
+        }
+      }
     }
   ],
   "etiquetas": [
     {
       "id": "gratis",
-      "titulo": "Gratis"
+      "titulo": "Gratis",
+      "traducciones": {
+        "en": {
+          "titulo": "Free"
+        },
+        "pt": {
+          "titulo": "Grátis"
+        }
+      }
     },
     {
       "id": "en-familia",
-      "titulo": "En familia"
+      "titulo": "En familia",
+      "traducciones": {
+        "en": {
+          "titulo": "Family-friendly"
+        },
+        "pt": {
+          "titulo": "Em família"
+        }
+      }
     },
     {
       "id": "nocturno",
-      "titulo": "De noche"
+      "titulo": "De noche",
+      "traducciones": {
+        "en": {
+          "titulo": "At night"
+        },
+        "pt": {
+          "titulo": "À noite"
+        }
+      }
     },
     {
       "id": "a-pie",
-      "titulo": "A pie"
+      "titulo": "A pie",
+      "traducciones": {
+        "en": {
+          "titulo": "On foot"
+        },
+        "pt": {
+          "titulo": "A pé"
+        }
+      }
     },
     {
       "id": "bajo-techo",
-      "titulo": "Bajo techo"
+      "titulo": "Bajo techo",
+      "traducciones": {
+        "en": {
+          "titulo": "Indoors"
+        },
+        "pt": {
+          "titulo": "Em local coberto"
+        }
+      }
     },
     {
       "id": "requiere-reserva",
-      "titulo": "Requiere reserva"
+      "titulo": "Requiere reserva",
+      "traducciones": {
+        "en": {
+          "titulo": "Booking required"
+        },
+        "pt": {
+          "titulo": "Requer reserva"
+        }
+      }
     }
   ]
 }

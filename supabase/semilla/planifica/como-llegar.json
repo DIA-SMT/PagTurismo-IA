@@ -7,11 +7,31 @@
   "secciones": [
     {
       "titulo": "En avión",
-      "texto": "El Aeropuerto Internacional Benjamín Matienzo está a unos 10 km del centro."
+      "texto": "El Aeropuerto Internacional Benjamín Matienzo está a unos 10 km del centro.",
+      "traducciones": {
+        "en": {
+          "titulo": "By plane",
+          "texto": "Benjamín Matienzo International Airport is about 10 km from downtown."
+        },
+        "pt": {
+          "titulo": "De avião",
+          "texto": "O Aeroporto Internacional Benjamín Matienzo fica a cerca de 10 km do centro."
+        }
+      }
     },
     {
       "titulo": "En micro",
-      "texto": "Los micros de larga distancia llegan a la Terminal de Ómnibus de la ciudad."
+      "texto": "Los micros de larga distancia llegan a la Terminal de Ómnibus de la ciudad.",
+      "traducciones": {
+        "en": {
+          "titulo": "By bus",
+          "texto": "Long-distance buses arrive at the city's Bus Terminal."
+        },
+        "pt": {
+          "titulo": "De ônibus",
+          "texto": "Os ônibus de longa distância chegam à Rodoviária da cidade."
+        }
+      }
     }
   ],
   "enlaces": [],
@@ -24,5 +44,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Getting here",
+      "resumen": "By plane to Benjamín Matienzo International Airport or by long-distance bus to the Bus Terminal."
+    },
+    "pt": {
+      "titulo": "Como chegar",
+      "resumen": "De avião até o Aeroporto Internacional Benjamín Matienzo ou de ônibus até a Rodoviária."
+    }
   }
 }

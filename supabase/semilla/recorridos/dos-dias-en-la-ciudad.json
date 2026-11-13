@@ -22,37 +22,93 @@
     {
       "nombre": "Plaza Independencia",
       "lugar": "plaza-independencia",
-      "dia": 1
+      "dia": 1,
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Independencia"
+        },
+        "pt": {
+          "nombre": "Praça Independência"
+        }
+      }
     },
     {
       "nombre": "Museo Casa Histórica de la Independencia",
       "lugar": "casa-historica",
-      "dia": 1
+      "dia": 1,
+      "traducciones": {
+        "en": {
+          "nombre": "Historic House of Independence Museum"
+        },
+        "pt": {
+          "nombre": "Museu Casa Histórica da Independência"
+        }
+      }
     },
     {
       "nombre": "Iglesia Catedral",
       "lugar": "catedral",
-      "dia": 1
+      "dia": 1,
+      "traducciones": {
+        "en": {
+          "nombre": "Cathedral"
+        },
+        "pt": {
+          "nombre": "Catedral"
+        }
+      }
     },
     {
       "nombre": "Museo Casa Padilla",
       "lugar": "museo-casa-padilla",
-      "dia": 1
+      "dia": 1,
+      "traducciones": {
+        "en": {
+          "nombre": "Casa Padilla Museum"
+        },
+        "pt": {
+          "nombre": "Museu Casa Padilla"
+        }
+      }
     },
     {
       "nombre": "Parque 9 de Julio",
       "lugar": "parque-9-de-julio",
-      "dia": 2
+      "dia": 2,
+      "traducciones": {
+        "en": {
+          "nombre": "Parque 9 de Julio"
+        },
+        "pt": {
+          "nombre": "Parque 9 de Julio"
+        }
+      }
     },
     {
       "nombre": "Museo de la Industria Azucarera",
       "lugar": "museo-industria-azucarera",
-      "dia": 2
+      "dia": 2,
+      "traducciones": {
+        "en": {
+          "nombre": "Sugar Industry Museum"
+        },
+        "pt": {
+          "nombre": "Museu da Indústria Açucareira"
+        }
+      }
     },
     {
       "nombre": "Museo Escultórico a Cielo Abierto",
       "lugar": "museo-escultorico",
-      "dia": 2
+      "dia": 2,
+      "traducciones": {
+        "en": {
+          "nombre": "Open-Air Sculpture Museum"
+        },
+        "pt": {
+          "nombre": "Museu de Esculturas a Céu Aberto"
+        }
+      }
     }
   ],
   "experiencia": "",
@@ -67,5 +123,23 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Two days in the city",
+      "resumen": "One day for history and another for Parque 9 de Julio and its museums.",
+      "duracion": "Two days",
+      "inicio": "Plaza Independencia",
+      "fin": "Open-Air Sculpture Museum",
+      "aviso": "Suggested itinerary. Times are approximate: check opening hours before you head out."
+    },
+    "pt": {
+      "titulo": "Dois dias na cidade",
+      "resumen": "Um dia para a história e outro para o Parque 9 de Julio e seus museus.",
+      "duracion": "Dois dias",
+      "inicio": "Praça Independência",
+      "fin": "Museu de Esculturas a Céu Aberto",
+      "aviso": "Roteiro sugerido. Os horários são aproximados: confira o horário de funcionamento antes de sair."
+    }
   }
 }

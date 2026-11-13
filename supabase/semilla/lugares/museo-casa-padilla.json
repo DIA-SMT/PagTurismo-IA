@@ -36,5 +36,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Casa Padilla Museum",
+      "clase": "museum",
+      "resumen": "A historic mansion next to Plaza Independencia, with art collections and period objects."
+    },
+    "pt": {
+      "titulo": "Museu Casa Padilla",
+      "clase": "museu",
+      "resumen": "Casarão histórico ao lado da Plaza Independencia, com coleções de arte e objetos de época."
+    }
   }
 }

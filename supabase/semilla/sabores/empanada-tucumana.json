@@ -9,5 +9,15 @@
     "permiso": "Recurso oficial del portal smt.gob.ar"
   },
   "tono": 4,
-  "orden": 1
+  "orden": 1,
+  "traducciones": {
+    "en": {
+      "titulo": "Tucumán-style empanada",
+      "detalle": "Hand-cut beef, a well-defined crimped edge and a squeeze of lemon. Best baked in a clay oven."
+    },
+    "pt": {
+      "titulo": "Empanada tucumana",
+      "detalle": "Carne cortada na faca, borda bem repulgada e umas gotas de limão. Melhor ainda no forno de barro."
+    }
+  }
 }

@@ -7,7 +7,17 @@
   "secciones": [
     {
       "titulo": "Alojamiento",
-      "texto": "Pendiente de definir con la Dirección de Turismo cuál es la fuente oficial de alojamientos habilitados."
+      "texto": "Pendiente de definir con la Dirección de Turismo cuál es la fuente oficial de alojamientos habilitados.",
+      "traducciones": {
+        "en": {
+          "titulo": "Accommodation",
+          "texto": "Pending: agree with the Tourism Office on the official source of licensed accommodation."
+        },
+        "pt": {
+          "titulo": "Hospedagem",
+          "texto": "Pendente definir com a Secretaria de Turismo qual é a fonte oficial de hospedagens habilitadas."
+        }
+      }
     }
   ],
   "enlaces": [],
@@ -20,5 +30,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Where to stay",
+      "resumen": "Pending: link to the official accommodation registry kept by the responsible agency."
+    },
+    "pt": {
+      "titulo": "Onde ficar",
+      "resumen": "Pendente: vincular o cadastro oficial de hospedagens mantido pelo órgão responsável."
+    }
   }
 }

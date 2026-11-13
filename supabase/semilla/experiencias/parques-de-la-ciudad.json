@@ -31,19 +31,43 @@
   "operador": "",
   "costo": {
     "modalidad": "gratis",
-    "detalle": "Espacios públicos de acceso libre."
+    "detalle": "Espacios públicos de acceso libre.",
+    "traducciones": {
+      "en": {
+        "detalle": "Public spaces with free admission."
+      },
+      "pt": {
+        "detalle": "Espaços públicos de acesso livre."
+      }
+    }
   },
   "accion": {
     "tipo": "sin-inscripcion",
     "texto": "Más información de los parques en smt.gob.ar",
-    "url": "https://smt.gob.ar/parques_smt"
+    "url": "https://smt.gob.ar/parques_smt",
+    "traducciones": {
+      "en": {
+        "texto": "More park information at smt.gob.ar"
+      },
+      "pt": {
+        "texto": "Mais informações sobre os parques em smt.gob.ar"
+      }
+    }
   },
   "salidas": [],
   "imagen": {
     "src": "/fotos/campus-educativo-ambiental.webp",
     "alt": "Senderos arbolados en un parque de la ciudad",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "Tree-lined paths in a city park"
+      },
+      "pt": {
+        "alt": "Trilhas arborizadas em um parque da cidade"
+      }
+    }
   },
   "fuentes": [
     {
@@ -55,5 +79,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "City parks",
+      "resumen": "Parque 9 de Julio, Avellaneda and Guillermina: for walking, exercising and family time."
+    },
+    "pt": {
+      "titulo": "Parques da cidade",
+      "resumen": "Parque 9 de Julio, Avellaneda e Guillermina: para caminhar, praticar esportes e curtir em família."
+    }
   }
 }

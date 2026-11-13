@@ -16,5 +16,17 @@
   },
   "desde": "",
   "hasta": "",
-  "orden": 1
+  "orden": 1,
+  "traducciones": {
+    "en": {
+      "titulo": "Tourist Bus City Tour",
+      "etiqueta": "Tours",
+      "detalle": "A free, roughly two-hour guided tour through the city's history, culture and architectural heritage."
+    },
+    "pt": {
+      "titulo": "City Tour de Ônibus Turístico",
+      "etiqueta": "Passeios",
+      "detalle": "Um passeio guiado e gratuito de cerca de duas horas pela história, cultura e patrimônio arquitetônico da cidade."
+    }
+  }
 }

@@ -37,5 +37,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Independence Day",
+      "resumen": "The city where independence was declared celebrates its most important date."
+    },
+    "pt": {
+      "titulo": "Dia da Independência",
+      "resumen": "A cidade onde foi declarada a independência celebra sua data mais importante."
+    }
   }
 }

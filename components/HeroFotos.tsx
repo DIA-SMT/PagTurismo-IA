@@ -3,7 +3,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { useTextos } from "./i18n/Idioma";
 import { HERO } from "@/lib/contenido";
+import { formatear } from "@/lib/i18n/definir";
 
 /**
  * Las panorámicas del hero. Hay una serie de día y otra de noche, y el CSS
@@ -14,6 +16,7 @@ import { HERO } from "@/lib/contenido";
  * mueve más de cinco segundos.
  */
 export function HeroFotos() {
+  const { comun: t } = useTextos();
   const [foto, setFoto] = useState(0);
   const [pausado, setPausado] = useState<boolean | null>(null);
 
@@ -59,22 +62,22 @@ export function HeroFotos() {
         const total = escenas.length;
         const actual = foto % total;
         return (
-          <div key={tema} className={`hero-fotos__controles hero-fotos__tema--${tema}`} role="group" aria-label="Fotos de San Miguel de Tucumán">
-            <p className="hero-fotos__lugar" aria-live="polite">{escenas[actual].lugar}</p>
+          <div key={tema} className={`hero-fotos__controles hero-fotos__tema--${tema}`} role="group" aria-label={t.controles.fotosDeLaCiudad}>
+            <p className="hero-fotos__lugar" aria-live="polite">{t.hero[escenas[actual].archivo]}</p>
             <div className="hero-fotos__botones">
-              <button type="button" aria-label="Foto anterior" onClick={() => setFoto((actual + total - 1) % total)}>‹</button>
+              <button type="button" aria-label={t.controles.fotoAnterior} onClick={() => setFoto((actual + total - 1) % total)}>‹</button>
               {escenas.map(({ archivo }, indice) => (
                 <button
                   key={archivo}
                   type="button"
                   className="hero-fotos__punto"
-                  aria-label={`Foto ${indice + 1} de ${total}`}
+                  aria-label={formatear(t.controles.fotoNumero, { n: indice + 1, total })}
                   aria-current={indice === actual}
                   onClick={() => setFoto(indice)}
                 />
               ))}
-              <button type="button" aria-label="Foto siguiente" onClick={() => setFoto((actual + 1) % total)}>›</button>
-              <button type="button" aria-label={pausado ? "Reanudar fotos" : "Pausar fotos"} onClick={() => setPausado((p) => !p)}>
+              <button type="button" aria-label={t.controles.fotoSiguiente} onClick={() => setFoto((actual + 1) % total)}>›</button>
+              <button type="button" aria-label={pausado ? t.controles.reanudarFotos : t.controles.pausarFotos} onClick={() => setPausado((p) => !p)}>
                 {pausado ? "▶" : "❚❚"}
               </button>
             </div>

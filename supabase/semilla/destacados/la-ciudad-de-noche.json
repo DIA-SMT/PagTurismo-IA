@@ -16,5 +16,17 @@
   },
   "desde": "",
   "hasta": "",
-  "orden": 3
+  "orden": 3,
+  "traducciones": {
+    "en": {
+      "titulo": "The city by night",
+      "etiqueta": "Strolls",
+      "detalle": "Fountains, squares and illuminated facades: downtown is just as worth exploring after sunset."
+    },
+    "pt": {
+      "titulo": "A cidade à noite",
+      "etiqueta": "Passeios",
+      "detalle": "Fontes, praças e fachadas iluminadas: o centro também se percorre depois do pôr do sol."
+    }
+  }
 }

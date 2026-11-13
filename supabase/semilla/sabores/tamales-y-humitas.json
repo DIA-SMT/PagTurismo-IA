@@ -9,5 +9,15 @@
     "permiso": "Recurso oficial del portal smt.gob.ar"
   },
   "tono": 3,
-  "orden": 4
+  "orden": 4,
+  "traducciones": {
+    "en": {
+      "titulo": "Tamales and humitas",
+      "detalle": "Ground corn wrapped in corn husks: savory, with meat, or stewed in a pot with basil."
+    },
+    "pt": {
+      "titulo": "Tamales e humitas",
+      "detalle": "Milho moído envolto na palha: salgados, com carne, ou na panela com manjericão."
+    }
+  }
 }

@@ -10,6 +10,9 @@
 import { aInstante, esFechaValida } from "../fechas.ts";
 import type { Campo, Esquema } from "./esquemas.ts";
 
+/** Idiomas a los que se traduce el contenido (el español es el original). */
+export const IDIOMAS_TRADUCCION = ["en", "pt"] as const;
+
 export type Contexto = {
   temas: Set<string>;
   etiquetas: Set<string>;
@@ -96,7 +99,8 @@ function limpiarCampo(campo: Campo, valor: unknown, ruta: string, ctx: Contexto,
       if (!src) return falta();
       if (!URL_VALIDA.test(src)) errores[`${ruta}.src`] = "La imagen tiene que ser una ruta del sitio o una dirección https.";
       const texto = (k: string) => (typeof i[k] === "string" ? (i[k] as string).trim() : "");
-      return { src, alt: texto("alt"), credito: texto("credito"), permiso: texto("permiso") };
+      const traducciones = limpiarTraducciones([ALT_TRADUCIBLE], i.traducciones);
+      return { src, alt: texto("alt"), credito: texto("credito"), permiso: texto("permiso"), ...(traducciones && { traducciones }) };
     }
     case "fecha":
     case "fechaHora": {
@@ -126,7 +130,33 @@ function limpiarCampos(campos: Campo[], objeto: Json, ruta: string, ctx: Context
     const r = limpiarCampo(campo, objeto[campo.nombre], ruta ? `${ruta}.${campo.nombre}` : campo.nombre, ctx, errores);
     if (r !== undefined) salida[campo.nombre] = r;
   }
+  const traducciones = limpiarTraducciones(campos, objeto.traducciones);
+  if (traducciones) salida.traducciones = traducciones;
   return salida;
+}
+
+/** El texto alternativo de una imagen también se traduce. */
+const ALT_TRADUCIBLE: Campo = { tipo: "texto", nombre: "alt", etiqueta: "Texto alternativo", traducible: true };
+
+/**
+ * Traducciones de los textos propios de un objeto (ver lib/i18n/contenido.ts): solo los campos
+ * marcados como traducibles, recortados, y sin idiomas vacíos. Una traducción nunca es obligatoria.
+ */
+function limpiarTraducciones(campos: Campo[], valor: unknown): Json | undefined {
+  if (!valor || typeof valor !== "object" || Array.isArray(valor)) return undefined;
+  const salida: Json = {};
+  for (const idioma of IDIOMAS_TRADUCCION) {
+    const propias = (valor as Json)[idioma];
+    if (!propias || typeof propias !== "object" || Array.isArray(propias)) continue;
+    const limpias: Json = {};
+    for (const campo of campos) {
+      if ((campo.tipo !== "texto" && campo.tipo !== "parrafo") || !campo.traducible) continue;
+      const t = (propias as Json)[campo.nombre];
+      if (typeof t === "string" && t.trim()) limpias[campo.nombre] = t.trim().slice(0, 5000);
+    }
+    if (Object.keys(limpias).length) salida[idioma] = limpias;
+  }
+  return Object.keys(salida).length ? salida : undefined;
 }
 
 /** Reglas que dependen de más de un campo. */

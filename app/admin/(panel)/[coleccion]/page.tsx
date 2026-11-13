@@ -6,6 +6,8 @@ import { Icono } from "@/components/Iconos";
 import { Aviso, Banda, Chip, ChipEstado, Vacio, fechaCorta } from "@/components/admin/Piezas";
 import { fichasDe } from "@/lib/admin/datos";
 import { esquemaDe } from "@/lib/admin/esquemas";
+import { IDIOMAS_TRADUCCION } from "@/lib/admin/limpiar";
+import { avanceDeTraduccion } from "@/lib/admin/traducibles";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { normalizar } from "@/lib/buscar";
 import { diaLocal } from "@/lib/fechas";
@@ -81,6 +83,7 @@ export default async function Listado({ params, searchParams }: PageProps<"/admi
                 <th scope="col">Ficha</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Validación</th>
+                <th scope="col">Traducción</th>
                 <th scope="col">Último cambio</th>
                 <th scope="col"><span className="adm-oculto">Acciones</span></th>
               </tr>
@@ -102,6 +105,15 @@ export default async function Listado({ params, searchParams }: PageProps<"/admi
                           : v.fecha ? <Chip tono="verde">Validada {v.fecha.split("-").reverse().join("/")}</Chip>
                             : <Chip tono="gris">Sin validar</Chip>
                         : <span className="adm-tabla__sub">—</span>}
+                    </td>
+                    <td>
+                      <span className="adm-tabla__idiomas">
+                        {Object.entries(avanceDeTraduccion(esquema, f.datos, IDIOMAS_TRADUCCION)).map(([idioma, { hechos, total }]) => (
+                          <Chip key={idioma} tono={!total || hechos === total ? "verde" : hechos ? "ambar" : "gris"}>
+                            {idioma.toUpperCase()}{total > 0 && hechos < total ? ` ${hechos}/${total}` : " ✓"}
+                          </Chip>
+                        ))}
+                      </span>
                     </td>
                     <td>
                       {fechaCorta(f.actualizado_at)}

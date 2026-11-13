@@ -7,15 +7,45 @@
   "secciones": [
     {
       "titulo": "Emergencias",
-      "texto": "Emergencia de salud: 107. Policía: 911. Bomberos: 100. Defensa Civil: 103."
+      "texto": "Emergencia de salud: 107. Policía: 911. Bomberos: 100. Defensa Civil: 103.",
+      "traducciones": {
+        "en": {
+          "titulo": "Emergencies",
+          "texto": "Medical emergency: 107. Police: 911. Fire department: 100. Civil Defense: 103."
+        },
+        "pt": {
+          "titulo": "Emergências",
+          "texto": "Emergência de saúde: 107. Polícia: 911. Bombeiros: 100. Defesa Civil: 103."
+        }
+      }
     },
     {
       "titulo": "Clima",
-      "texto": "Clima subtropical: veranos cálidos y lluviosos, inviernos templados y secos. En verano no olvides el repelente."
+      "texto": "Clima subtropical: veranos cálidos y lluviosos, inviernos templados y secos. En verano no olvides el repelente.",
+      "traducciones": {
+        "en": {
+          "titulo": "Weather",
+          "texto": "Subtropical climate: hot, rainy summers and mild, dry winters. In summer, don't forget insect repellent."
+        },
+        "pt": {
+          "titulo": "Clima",
+          "texto": "Clima subtropical: verões quentes e chuvosos, invernos amenos e secos. No verão, não esqueça o repelente."
+        }
+      }
     },
     {
       "titulo": "Moneda",
-      "texto": "Peso argentino."
+      "texto": "Peso argentino.",
+      "traducciones": {
+        "en": {
+          "titulo": "Currency",
+          "texto": "Argentine peso."
+        },
+        "pt": {
+          "titulo": "Moeda",
+          "texto": "Peso argentino."
+        }
+      }
     }
   ],
   "enlaces": [],
@@ -28,5 +58,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Useful info",
+      "resumen": "Medical emergencies 107, police 911 and fire department 100. Currency: Argentine peso."
+    },
+    "pt": {
+      "titulo": "Informações úteis",
+      "resumen": "Emergências de saúde 107, polícia 911 e bombeiros 100. Moeda: peso argentino."
+    }
   }
 }

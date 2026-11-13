@@ -29,7 +29,15 @@
     "src": "/fotos/campus-educativo-ambiental.webp",
     "alt": "Senderos y vegetación del Campus Educativo Ambiental",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "Trails and vegetation at the Environmental Education Campus"
+      },
+      "pt": {
+        "alt": "Trilhas e vegetação do Campus Educativo Ambiental"
+      }
+    }
   },
   "fuentes": [
     {
@@ -40,5 +48,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Environmental Education Campus",
+      "clase": "park",
+      "resumen": "A green space in the city devoted to environmental education."
+    },
+    "pt": {
+      "titulo": "Campus Educativo Ambiental",
+      "clase": "parque",
+      "resumen": "Um espaço verde da cidade dedicado à educação ambiental."
+    }
   }
 }

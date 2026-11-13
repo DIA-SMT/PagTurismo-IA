@@ -17,14 +17,21 @@ export const BUS_TURISTICO = "https://busturistico.smt.gob.ar/";
 export const PALACIO = "https://palacio.smt.gob.ar/";
 export const MAPA = "https://mapa.smt.gob.ar/";
 
-export type Enlace = { texto: string; url: string; externo?: boolean };
+import type { comun } from "./i18n/textos/comun";
 
-export const NAV: Enlace[] = [
-  { texto: "Descubrí San Miguel", url: "/descubri" },
-  { texto: "Qué hacer", url: "/que-hacer" },
-  { texto: "Recorridos", url: "/recorridos" },
-  { texto: "Agenda", url: "/agenda" },
-  { texto: "Planificá tu visita", url: "/planifica" },
+type TextosComun = (typeof comun)["es"];
+export type ClaveNav = keyof TextosComun["nav"];
+export type ClavePie = keyof TextosComun["pie"]["enlaces"];
+
+/** Los textos salen de lib/i18n/textos/comun.ts según el idioma. */
+export type Enlace = { clave: ClavePie; url: string; externo?: boolean };
+
+export const NAV: { clave: ClaveNav; url: string }[] = [
+  { clave: "descubri", url: "/descubri" },
+  { clave: "queHacer", url: "/que-hacer" },
+  { clave: "recorridos", url: "/recorridos" },
+  { clave: "agenda", url: "/agenda" },
+  { clave: "planifica", url: "/planifica" },
 ];
 
 /* ---- Hero ---- */
@@ -43,41 +50,41 @@ export const HERO = {
   ],
 } as const;
 
-export const PIE: { titulo: string; enlaces: Enlace[] }[] = [
+export const PIE: { columna: keyof TextosComun["pie"]["columnas"]; enlaces: Enlace[] }[] = [
   {
-    titulo: "Qué hacer",
+    columna: "queHacer",
     enlaces: [
-      { texto: "Catálogo de lugares y experiencias", url: "/que-hacer" },
-      { texto: "Historia y patrimonio", url: "/que-hacer/historia-y-patrimonio" },
-      { texto: "Parques y aire libre", url: "/que-hacer/parques-y-aire-libre" },
-      { texto: "Sabores tucumanos", url: "/sabores" },
-      { texto: "Escapadas", url: "/escapadas" },
+      { clave: "catalogo", url: "/que-hacer" },
+      { clave: "historia", url: "/que-hacer/historia-y-patrimonio" },
+      { clave: "parques", url: "/que-hacer/parques-y-aire-libre" },
+      { clave: "sabores", url: "/sabores" },
+      { clave: "escapadas", url: "/escapadas" },
     ],
   },
   {
-    titulo: "Recorridos",
+    columna: "recorridos",
     enlaces: [
-      { texto: "Todos los recorridos", url: "/recorridos" },
-      { texto: "Bus Turístico", url: BUS_TURISTICO, externo: true },
-      { texto: "Circuito a pie", url: `${PORTAL}/circuitosturisticospie`, externo: true },
-      { texto: "Mapa interactivo", url: MAPA, externo: true },
+      { clave: "todosLosRecorridos", url: "/recorridos" },
+      { clave: "busTuristico", url: BUS_TURISTICO, externo: true },
+      { clave: "circuitoAPie", url: `${PORTAL}/circuitosturisticospie`, externo: true },
+      { clave: "mapa", url: MAPA, externo: true },
     ],
   },
   {
-    titulo: "Planificá tu visita",
+    columna: "planifica",
     enlaces: [
-      { texto: "Agenda", url: "/agenda" },
-      { texto: "Cómo llegar", url: "/planifica/como-llegar" },
-      { texto: "Cómo moverse", url: "/planifica/como-moverse" },
-      { texto: "Accesibilidad", url: "/planifica/accesibilidad" },
+      { clave: "agenda", url: "/agenda" },
+      { clave: "comoLlegar", url: "/planifica/como-llegar" },
+      { clave: "comoMoverse", url: "/planifica/como-moverse" },
+      { clave: "accesibilidad", url: "/planifica/accesibilidad" },
     ],
   },
   {
-    titulo: "La Municipalidad",
+    columna: "municipalidad",
     enlaces: [
-      { texto: "Portal oficial", url: PORTAL, externo: true },
-      { texto: "Noticias", url: "https://comunicacionsmt.gob.ar/", externo: true },
-      { texto: "Contacto", url: "/#contacto" },
+      { clave: "portal", url: PORTAL, externo: true },
+      { clave: "noticias", url: "https://comunicacionsmt.gob.ar/", externo: true },
+      { clave: "contacto", url: "/#contacto" },
     ],
   },
 ];

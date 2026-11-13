@@ -35,5 +35,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Rougés Cultural Center",
+      "clase": "cultural space",
+      "resumen": "Cultural center in the historic district, first stop on the Histórico Cultural tour."
+    },
+    "pt": {
+      "titulo": "Centro Cultural Rougés",
+      "clase": "espaço cultural",
+      "resumen": "Centro cultural do centro histórico, primeira parada do circuito Histórico Cultural."
+    }
   }
 }
