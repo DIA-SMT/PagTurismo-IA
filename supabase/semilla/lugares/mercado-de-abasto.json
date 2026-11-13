@@ -33,5 +33,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Former Abasto Market",
+      "clase": "building",
+      "resumen": "The city's old market hall, a stop on the La Ciudadela tour."
+    },
+    "pt": {
+      "titulo": "Antigo Mercado de Abasto",
+      "clase": "edifício",
+      "resumen": "O antigo mercado da cidade, parada do circuito La Ciudadela."
+    }
   }
 }

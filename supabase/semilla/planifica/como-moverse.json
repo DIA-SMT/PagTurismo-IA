@@ -7,25 +7,69 @@
   "secciones": [
     {
       "titulo": "Colectivos",
-      "texto": "Las líneas urbanas se pagan con tarjeta SUBE. En el portal de la Municipalidad están los recorridos."
+      "texto": "Las líneas urbanas se pagan con tarjeta SUBE. En el portal de la Municipalidad están los recorridos.",
+      "traducciones": {
+        "en": {
+          "titulo": "City buses",
+          "texto": "City bus lines are paid with a SUBE card. Routes are listed on the City Government's website."
+        },
+        "pt": {
+          "titulo": "Ônibus urbanos",
+          "texto": "As linhas urbanas são pagas com o cartão SUBE. Os trajetos estão no portal da Prefeitura."
+        }
+      }
     },
     {
       "titulo": "A pie",
-      "texto": "El casco histórico es compacto: la mayoría de los museos y templos del centro quedan a pocas cuadras de la Plaza Independencia."
+      "texto": "El casco histórico es compacto: la mayoría de los museos y templos del centro quedan a pocas cuadras de la Plaza Independencia.",
+      "traducciones": {
+        "en": {
+          "titulo": "On foot",
+          "texto": "The historic center is compact: most downtown museums and churches are just a few blocks from Plaza Independencia."
+        },
+        "pt": {
+          "titulo": "A pé",
+          "texto": "O centro histórico é compacto: a maioria dos museus e templos do centro fica a poucas quadras da Praça Independência."
+        }
+      }
     }
   ],
   "enlaces": [
     {
       "texto": "Recorridos de colectivos",
-      "url": "https://smt.gob.ar/colectivos"
+      "url": "https://smt.gob.ar/colectivos",
+      "traducciones": {
+        "en": {
+          "texto": "City bus routes"
+        },
+        "pt": {
+          "texto": "Trajetos dos ônibus"
+        }
+      }
     },
     {
       "texto": "Tarjeta SUBE",
-      "url": "https://smt.gob.ar/Sube"
+      "url": "https://smt.gob.ar/Sube",
+      "traducciones": {
+        "en": {
+          "texto": "SUBE card"
+        },
+        "pt": {
+          "texto": "Cartão SUBE"
+        }
+      }
     },
     {
       "texto": "Mapa interactivo de la ciudad",
-      "url": "https://mapa.smt.gob.ar/"
+      "url": "https://mapa.smt.gob.ar/",
+      "traducciones": {
+        "en": {
+          "texto": "Interactive city map"
+        },
+        "pt": {
+          "texto": "Mapa interativo da cidade"
+        }
+      }
     }
   ],
   "fuentes": [
@@ -37,5 +81,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Getting around",
+      "resumen": "City buses with a SUBE card, and taxis. The historic center is easy to explore on foot."
+    },
+    "pt": {
+      "titulo": "Como se locomover",
+      "resumen": "Ônibus urbanos com cartão SUBE e táxis. O centro histórico se percorre facilmente a pé."
+    }
   }
 }

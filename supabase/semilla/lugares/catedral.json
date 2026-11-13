@@ -30,7 +30,15 @@
     "src": "/fotos/iglesia-catedral.webp",
     "alt": "Fachada de la Iglesia Catedral de San Miguel de Tucumán",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "Facade of the Cathedral of San Miguel de Tucumán"
+      },
+      "pt": {
+        "alt": "Fachada da Catedral de San Miguel de Tucumán"
+      }
+    }
   },
   "fuentes": [
     {
@@ -42,5 +50,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Cathedral",
+      "clase": "church",
+      "resumen": "The city's main church, facing Plaza Independencia."
+    },
+    "pt": {
+      "titulo": "Catedral",
+      "clase": "templo",
+      "resumen": "A igreja principal da cidade, em frente à Plaza Independencia."
+    }
   }
 }

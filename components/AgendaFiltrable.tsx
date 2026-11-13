@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useMemo, useState } from "react";
 
 import { Icono } from "./Iconos";
 import { Marca } from "./Ui";
+import { Vinculo as Link, useIdioma, useTextos } from "@/components/i18n/Idioma";
 import {
   aInstante, diaLocal, filtrarPorCuando, finDeOcurrencia, formatearOcurrencia, partesDeFecha, soloDia,
   type Cuando, type OcurrenciaDeEvento,
@@ -18,18 +18,14 @@ export type OcurrenciaAgenda = OcurrenciaDeEvento & {
   fueraDeLaCiudad: boolean;
 };
 
-const PESTANAS: { valor: Cuando; texto: string }[] = [
-  { valor: "proximos", texto: "Próximos" },
-  { valor: "hoy", texto: "Hoy" },
-  { valor: "finde", texto: "Este fin de semana" },
-  { valor: "fecha", texto: "Elegir fecha" },
-];
+const PESTANAS: Cuando[] = ["proximos", "hoy", "finde", "fecha"];
 
-const ESTADO: Record<OcurrenciaDeEvento["estado"], { texto: string; tipo: "exito" | "alerta" | "neutra" } | null> = {
+/** Marca de cada estado (el texto sale de los textos de la agenda). Lo confirmado no lleva. */
+const ESTADO: Record<OcurrenciaDeEvento["estado"], "exito" | "alerta" | "neutra" | null> = {
   confirmado: null,
-  reprogramado: { texto: "Reprogramado", tipo: "neutra" },
-  suspendido: { texto: "Suspendido", tipo: "alerta" },
-  cancelado: { texto: "Cancelado", tipo: "alerta" },
+  reprogramado: "neutra",
+  suspendido: "alerta",
+  cancelado: "alerta",
 };
 
 /**
@@ -42,9 +38,11 @@ export function AgendaFiltrable({ ocurrencias, ahoraServidor }: { ocurrencias: O
   const params = useSearchParams();
   const pedido = params.get("cuando") as Cuando | null;
   const fecha = params.get("fecha") ?? "";
-  const cuando: Cuando = PESTANAS.some((p) => p.valor === pedido) ? pedido! : "proximos";
+  const cuando: Cuando = pedido && PESTANAS.includes(pedido) ? pedido : "proximos";
   const [ahora, setAhora] = useState(ahoraServidor);
   const id = useId();
+  const idioma = useIdioma();
+  const { agenda: t, comun } = useTextos();
 
   useEffect(() => setAhora(Date.now()), []);
 
@@ -67,32 +65,32 @@ export function AgendaFiltrable({ ocurrencias, ahoraServidor }: { ocurrencias: O
 
   return (
     <div className="agenda-filtrable">
-      <div className="segmentado segmentado--grande" role="radiogroup" aria-label="Cuándo">
+      <div className="segmentado segmentado--grande" role="radiogroup" aria-label={t.filtro.cuando}>
         {PESTANAS.map((p) => (
-          <label key={p.valor}>
-            <input type="radio" name="cuando" value={p.valor} checked={cuando === p.valor}
-              onChange={() => elegir(p.valor, p.valor === "fecha" ? fecha || hoy : undefined)} />
-            <span>{p.texto}</span>
+          <label key={p}>
+            <input type="radio" name="cuando" value={p} checked={cuando === p}
+              onChange={() => elegir(p, p === "fecha" ? fecha || hoy : undefined)} />
+            <span>{t.filtro[p]}</span>
           </label>
         ))}
       </div>
 
       {cuando === "fecha" && (
         <div className="filtros__campo agenda-filtrable__fecha">
-          <label htmlFor={`${id}-fecha`}>Fecha</label>
+          <label htmlFor={`${id}-fecha`}>{t.filtro.campoFecha}</label>
           <input id={`${id}-fecha`} type="date" value={soloDia(fecha) ? fecha : hoy} min={hoy}
             onChange={(e) => elegir("fecha", e.target.value)} />
         </div>
       )}
 
       <p className="catalogo__estado" aria-live="polite">
-        <strong>{lista.length}</strong> {lista.length === 1 ? "actividad" : "actividades"}
+        <strong>{lista.length}</strong> {lista.length === 1 ? t.actividad : t.actividades}
       </p>
 
       {lista.length > 0 ? (
         <ul className="agenda-lista">
           {lista.map((o) => {
-            const { dia, mes } = partesDeFecha(o.inicio);
+            const { dia, mes } = partesDeFecha(o.inicio, idioma);
             const estado = ESTADO[o.estado];
             return (
               <li key={`${o.evento}-${o.inicio}`}>
@@ -103,12 +101,12 @@ export function AgendaFiltrable({ ocurrencias, ahoraServidor }: { ocurrencias: O
                   </span>
                   <span className="agenda-item__texto">
                     <span className="agenda-item__marcas">
-                      {o.enCurso && o.estado !== "cancelado" && <Marca tipo="exito">En curso</Marca>}
-                      {estado && <Marca tipo={estado.tipo}>{estado.texto}</Marca>}
-                      {o.fueraDeLaCiudad && <Marca tipo="alerta">Fuera de la ciudad</Marca>}
+                      {o.enCurso && o.estado !== "cancelado" && <Marca tipo="exito">{t.estado.enCurso}</Marca>}
+                      {estado && <Marca tipo={estado}>{t.estado[o.estado]}</Marca>}
+                      {o.fueraDeLaCiudad && <Marca tipo="alerta">{comun.ui.fueraDeLaCiudad}</Marca>}
                     </span>
                     <strong className="agenda-item__titulo">{o.titulo}</strong>
-                    <span className="agenda-item__cuando">{formatearOcurrencia(o)}</span>
+                    <span className="agenda-item__cuando">{formatearOcurrencia(o, idioma)}</span>
                     {(o.sede || o.lugar) && (
                       <span className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{o.sede || o.lugar}</span>
                     )}
@@ -120,12 +118,12 @@ export function AgendaFiltrable({ ocurrencias, ahoraServidor }: { ocurrencias: O
         </ul>
       ) : (
         <div className="vacio">
-          <h2>Todavía no hay programación publicada para {cuando === "hoy" ? "hoy" : cuando === "finde" ? "este fin de semana" : cuando === "fecha" ? "esa fecha" : "las próximas semanas"}</h2>
-          <p>Mientras tanto, la ciudad se puede recorrer todos los días: el Bus Turístico, el circuito a pie y los parques no dependen de la agenda.</p>
+          <h2>{t.vacio[cuando]}</h2>
+          <p>{t.vacio.texto}</p>
           <div className="vacio__acciones">
-            <Link className="boton boton--primario" href="/recorridos">Ver recorridos</Link>
+            <Link className="boton boton--primario" href="/recorridos">{t.vacio.verRecorridos}</Link>
             {cuando !== "proximos" && (
-              <button type="button" className="boton boton--claro" onClick={() => elegir("proximos")}>Ver todas las próximas fechas</button>
+              <button type="button" className="boton boton--claro" onClick={() => elegir("proximos")}>{t.vacio.verTodas}</button>
             )}
           </div>
         </div>

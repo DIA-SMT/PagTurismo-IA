@@ -2,10 +2,14 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 import { SpriteIconos } from "@/components/Iconos";
+import { LOCALE } from "@/lib/i18n/config";
+import { idiomaActual } from "@/lib/i18n/servidor";
+import { textos } from "@/lib/i18n/textos";
 import { urlDelSitio } from "@/lib/url-sitio";
 
 export const metadata: Metadata = {
-  // La URL pública con la que se arman las de Open Graph (ver README).
+  // La URL pública con la que se arman las de Open Graph (ver README). Título, descripción y
+  // Open Graph de cada idioma los pone app/[idioma]/layout.tsx; estos quedan para el panel.
   metadataBase: new URL(urlDelSitio()),
   title: {
     default: "Turismo | Ciudad San Miguel de Tucumán",
@@ -43,14 +47,15 @@ try {
 // suppressHydrationWarning sólo en <html>: el script de arriba estampa
 // data-theme antes de que React hidrate, así que ese atributo nunca coincide
 // con el del HTML servido.
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const idioma = await idiomaActual();
   return (
-    <html lang="es-AR" suppressHydrationWarning>
+    <html lang={LOCALE[idioma].lang} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: TEMA_SIN_DESTELLO }} />
       </head>
       <body>
-        <a className="saltar-contenido" href="#contenido">Saltar al contenido principal</a>
+        <a className="saltar-contenido" href="#contenido">{textos(idioma).comun.sitio.saltarAlContenido}</a>
         <SpriteIconos />
         {children}
       </body>

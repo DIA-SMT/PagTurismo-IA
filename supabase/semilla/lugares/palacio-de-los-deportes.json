@@ -21,7 +21,15 @@
   },
   "costo": {
     "modalidad": "consultar",
-    "detalle": "Depende de cada espectáculo."
+    "detalle": "Depende de cada espectáculo.",
+    "traducciones": {
+      "en": {
+        "detalle": "Varies by event."
+      },
+      "pt": {
+        "detalle": "Depende de cada espetáculo."
+      }
+    }
   },
   "duracion": "",
   "contacto": {
@@ -32,7 +40,15 @@
     "src": "/fotos/palacio-de-los-deportes.webp",
     "alt": "Exterior del Palacio de los Deportes",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "Exterior of the Palacio de los Deportes"
+      },
+      "pt": {
+        "alt": "Exterior do Palacio de los Deportes"
+      }
+    }
   },
   "fuentes": [
     {
@@ -44,5 +60,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Palacio de los Deportes",
+      "clase": "indoor arena",
+      "resumen": "Sports, music and culture under one roof. Check the official website for the event schedule."
+    },
+    "pt": {
+      "titulo": "Palacio de los Deportes",
+      "clase": "ginásio coberto",
+      "resumen": "Esporte, música e cultura sob o mesmo teto. A programação está no site oficial."
+    }
   }
 }

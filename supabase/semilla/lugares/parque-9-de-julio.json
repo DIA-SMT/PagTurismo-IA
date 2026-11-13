@@ -22,7 +22,15 @@
   },
   "costo": {
     "modalidad": "gratis",
-    "detalle": "Espacio público de acceso libre."
+    "detalle": "Espacio público de acceso libre.",
+    "traducciones": {
+      "en": {
+        "detalle": "Public space, free admission."
+      },
+      "pt": {
+        "detalle": "Espaço público de acesso livre."
+      }
+    }
   },
   "duracion": "",
   "contacto": {},
@@ -37,5 +45,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Parque 9 de Julio",
+      "clase": "park",
+      "resumen": "The city's great park: tree-lined walks, sculptures, museums and room for sports."
+    },
+    "pt": {
+      "titulo": "Parque 9 de Julio",
+      "clase": "parque",
+      "resumen": "O grande parque da cidade: passeios arborizados, esculturas, museus e espaço para praticar esportes."
+    }
   }
 }

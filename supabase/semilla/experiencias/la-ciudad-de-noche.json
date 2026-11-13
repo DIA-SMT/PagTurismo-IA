@@ -30,18 +30,42 @@
   "operador": "",
   "costo": {
     "modalidad": "gratis",
-    "detalle": "Paseo libre por el espacio público."
+    "detalle": "Paseo libre por el espacio público.",
+    "traducciones": {
+      "en": {
+        "detalle": "Self-guided stroll through public spaces."
+      },
+      "pt": {
+        "detalle": "Passeio livre pelo espaço público."
+      }
+    }
   },
   "accion": {
     "tipo": "sin-inscripcion",
-    "texto": "Paseo libre, sin inscripción"
+    "texto": "Paseo libre, sin inscripción",
+    "traducciones": {
+      "en": {
+        "texto": "Self-guided stroll, no registration needed"
+      },
+      "pt": {
+        "texto": "Passeio livre, sem inscrição"
+      }
+    }
   },
   "salidas": [],
   "imagen": {
     "src": "/fotos/la-fuente-de-los-leones.webp",
     "alt": "Fuente iluminada de noche",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "Fountain lit up at night"
+      },
+      "pt": {
+        "alt": "Fonte iluminada à noite"
+      }
+    }
   },
   "fuentes": [
     {
@@ -52,5 +76,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "The city by night",
+      "resumen": "Fountains, plazas and lit-up facades: downtown is just as rewarding to explore after sunset."
+    },
+    "pt": {
+      "titulo": "A cidade à noite",
+      "resumen": "Fontes, praças e fachadas iluminadas: o centro também se percorre depois do pôr do sol."
+    }
   }
 }

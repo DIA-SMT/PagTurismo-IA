@@ -36,5 +36,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Rosita Ávila Municipal Theater",
+      "clase": "theater",
+      "resumen": "The city's municipal theater, part of the La Ciudadela tour."
+    },
+    "pt": {
+      "titulo": "Teatro Municipal Rosita Ávila",
+      "clase": "teatro",
+      "resumen": "O teatro da Prefeitura, parte do circuito La Ciudadela."
+    }
   }
 }

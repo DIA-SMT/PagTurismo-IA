@@ -36,5 +36,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "San Martín Theater",
+      "clase": "theater",
+      "resumen": "The city's historic theater, with music, dance and drama on the bill."
+    },
+    "pt": {
+      "titulo": "Teatro San Martín",
+      "clase": "teatro",
+      "resumen": "Teatro histórico da cidade, com programação de música, dança e teatro."
+    }
   }
 }

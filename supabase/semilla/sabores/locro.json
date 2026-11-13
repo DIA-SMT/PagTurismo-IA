@@ -9,5 +9,15 @@
     "permiso": "Recurso oficial del portal smt.gob.ar"
   },
   "tono": 0,
-  "orden": 3
+  "orden": 3,
+  "traducciones": {
+    "en": {
+      "titulo": "Locro",
+      "detalle": "Corn, squash and beans, slow-cooked. The dish of Argentina's national holidays."
+    },
+    "pt": {
+      "titulo": "Locro",
+      "detalle": "Milho, abóbora e feijão em fogo baixo. O prato das festas pátrias."
+    }
+  }
 }

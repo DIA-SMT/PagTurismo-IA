@@ -227,6 +227,62 @@ ul, ol { padding-left: 1.4em; }
 .tema:hover { background: var(--c-tinte-azul); color: var(--c-azul-700); }
 .tema--reservado { display: inline-block; width: 2.75rem; height: 2.75rem; flex: none; }
 
+/* ---- Idioma ---- */
+.idioma { position: relative; }
+.idioma summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 2.75rem;
+  padding: 0 0.6rem;
+  border-radius: var(--r-full);
+  color: var(--c-ink-soft);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-fuerte);
+  list-style: none;
+  cursor: pointer;
+  transition: background var(--t-rapida), color var(--t-rapida);
+}
+.idioma summary::-webkit-details-marker { display: none; }
+.idioma summary:hover, .idioma[open] summary { background: var(--c-tinte-azul); color: var(--c-azul-700); }
+.idioma ul {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 60;
+  display: grid;
+  min-width: 11rem;
+  margin: 0;
+  padding: 6px;
+  border: 1px solid var(--c-borde);
+  border-radius: 12px;
+  background: var(--c-blanco);
+  box-shadow: 0 12px 32px rgb(15 36 56 / 0.16);
+  list-style: none;
+}
+.idioma a, .idioma-panel a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border-radius: 8px;
+  color: var(--c-ink);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+  text-decoration: none;
+}
+.idioma a:hover { background: var(--c-tinte-azul); color: var(--c-azul-700); }
+.idioma a[aria-current] { color: var(--c-azul-700); }
+.idioma a[aria-current]::after { content: "✓"; margin-left: auto; }
+.idioma__corto { width: 1.75rem; color: var(--c-ink-muted); font-size: var(--fs-xs); font-weight: var(--fw-fuerte); }
+.idioma-panel { display: flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-5); color: var(--c-ink-soft); }
+.idioma-panel ul { display: grid; flex: 1; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; margin: 0; padding: 0; list-style: none; }
+.idioma-panel a { justify-content: center; padding: 0 0.4rem; border: 1px solid var(--c-borde-objeto); font-size: var(--fs-xs); }
+.idioma-panel a[aria-current] { border-color: var(--c-azul-600); background: var(--c-tinte-azul); color: var(--c-azul-700); }
+/* En el celular el idioma se elige dentro del menú: en la barra no entra. */
+@media (max-width: 37.5rem) { .header .idioma { display: none; } }
+
 .boton-planificar {
   display: none;
   align-items: center;

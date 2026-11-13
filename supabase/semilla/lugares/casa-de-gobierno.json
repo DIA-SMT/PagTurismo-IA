@@ -33,5 +33,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Government House (Casa de Gobierno)",
+      "clase": "building",
+      "resumen": "Seat of the provincial executive branch, facing Plaza Independencia."
+    },
+    "pt": {
+      "titulo": "Casa de Governo",
+      "clase": "edifício",
+      "resumen": "Sede do Poder Executivo provincial, em frente à Plaza Independencia."
+    }
   }
 }

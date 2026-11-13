@@ -34,14 +34,30 @@
   "accion": {
     "tipo": "reservar",
     "texto": "Ver salidas y reservar en Bus Turístico",
-    "url": "https://busturistico.smt.gob.ar/"
+    "url": "https://busturistico.smt.gob.ar/",
+    "traducciones": {
+      "en": {
+        "texto": "See departures and book on the Tourist Bus site"
+      },
+      "pt": {
+        "texto": "Ver saídas e reservar no Ônibus Turístico"
+      }
+    }
   },
   "salidas": [],
   "imagen": {
     "src": "/fotos/san-miguel-de-tucuman.webp",
     "alt": "Vista del centro de San Miguel de Tucumán",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "View of downtown San Miguel de Tucumán"
+      },
+      "pt": {
+        "alt": "Vista do centro de San Miguel de Tucumán"
+      }
+    }
   },
   "fuentes": [
     {
@@ -57,5 +73,23 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "City Tour on the Tourist Bus",
+      "resumen": "A free guided tour of about two hours through the city's history, culture and architectural heritage.",
+      "descripcion": "Each route offers a different look at Tucumán's identity, with expert guides and stops at iconic sites.\n\nDeparture times and booking are on the Tourist Bus website, along with Educational Bus slots for schools.",
+      "duracion": "About 2 hours",
+      "incluye": "Expert guide.",
+      "requisitos": "Advance booking on the Tourist Bus website."
+    },
+    "pt": {
+      "titulo": "City Tour no Ônibus Turístico",
+      "resumen": "Um passeio guiado e gratuito de cerca de duas horas pela história, cultura e patrimônio arquitetônico da cidade.",
+      "descripcion": "Cada circuito propõe um olhar diferente sobre a identidade tucumana, com guias especializados e paradas em locais emblemáticos.\n\nOs horários de saída e as reservas estão no site do Ônibus Turístico, junto com os turnos do Ônibus Educativo para escolas.",
+      "duracion": "Cerca de 2 horas",
+      "incluye": "Guia especializado.",
+      "requisitos": "Reserva prévia no site do Ônibus Turístico."
+    }
   }
 }

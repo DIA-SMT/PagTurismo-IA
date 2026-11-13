@@ -21,23 +21,63 @@
   "paradas": [
     {
       "nombre": "Plaza Independencia",
-      "lugar": "plaza-independencia"
+      "lugar": "plaza-independencia",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Independencia"
+        },
+        "pt": {
+          "nombre": "Praça Independência"
+        }
+      }
     },
     {
       "nombre": "Casa de Gobierno",
-      "lugar": "casa-de-gobierno"
+      "lugar": "casa-de-gobierno",
+      "traducciones": {
+        "en": {
+          "nombre": "Government House"
+        },
+        "pt": {
+          "nombre": "Casa de Governo"
+        }
+      }
     },
     {
       "nombre": "Iglesia Catedral",
-      "lugar": "catedral"
+      "lugar": "catedral",
+      "traducciones": {
+        "en": {
+          "nombre": "Cathedral"
+        },
+        "pt": {
+          "nombre": "Catedral"
+        }
+      }
     },
     {
       "nombre": "Iglesia San Francisco",
-      "lugar": "iglesia-san-francisco"
+      "lugar": "iglesia-san-francisco",
+      "traducciones": {
+        "en": {
+          "nombre": "San Francisco Church"
+        },
+        "pt": {
+          "nombre": "Igreja de San Francisco"
+        }
+      }
     },
     {
       "nombre": "Museo Casa Histórica de la Independencia",
-      "lugar": "casa-historica"
+      "lugar": "casa-historica",
+      "traducciones": {
+        "en": {
+          "nombre": "Historic House of Independence Museum"
+        },
+        "pt": {
+          "nombre": "Museu Casa Histórica da Independência"
+        }
+      }
     }
   ],
   "experiencia": "",
@@ -52,5 +92,23 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "First time: half a day in the historic center",
+      "resumen": "The essentials of the historic quarter on foot, in one morning.",
+      "duracion": "Half a day",
+      "inicio": "Plaza Independencia",
+      "fin": "Historic House of Independence Museum",
+      "aviso": "Suggested itinerary. Times are approximate: check opening hours before you head out."
+    },
+    "pt": {
+      "titulo": "Primeira vez: meio dia no centro histórico",
+      "resumen": "O essencial do centro histórico a pé, em uma manhã.",
+      "duracion": "Meio dia",
+      "inicio": "Praça Independência",
+      "fin": "Museu Casa Histórica da Independência",
+      "aviso": "Roteiro sugerido. Os horários são aproximados: confira o horário de funcionamento antes de sair."
+    }
   }
 }
