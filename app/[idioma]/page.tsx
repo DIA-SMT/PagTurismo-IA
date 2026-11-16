@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 
+import { AbrirMigue } from "@/components/AbrirMigue";
 import { Carrusel } from "@/components/Carrusel";
 import { HeroFotos } from "@/components/HeroFotos";
 import { Vinculo as Link } from "@/components/i18n/Idioma";
@@ -89,8 +90,8 @@ export default async function Portada() {
             </div>
           </div>
 
-          <div className="hero__migue" aria-hidden="true">
-            <div className="hero__burbuja"><strong>{t.hero.hola}</strong><span>{t.hero.migueLinea1}<br />{t.hero.migueLinea2}</span></div>
+          <div className="hero__migue">
+            <AbrirMigue className="hero__burbuja"><strong>{t.hero.hola}</strong><span>{t.hero.migueLinea1}<br />{t.hero.migueLinea2}</span></AbrirMigue>
             <Image src="/migue/migue-presentando-palma-abierta.png" alt="" width={1315} height={1197} sizes="(max-width: 900px) 160px, 300px" loading="eager" />
           </div>
 

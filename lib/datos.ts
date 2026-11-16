@@ -76,6 +76,15 @@ const porTitulo = <T extends { titulo: string }>(a: T, b: T) => a.titulo.localeC
 /** Todo el contenido visible para este pedido. Se resuelve una vez por pedido. */
 export const contenido = cache(async (): Promise<Contenido> => {
   const [conBorradores, idioma] = await Promise.all([verBorradores(), idiomaActual()]);
+  return leerContenido(conBorradores, idioma);
+});
+
+/**
+ * El contenido en un idioma, con o sin borradores. Sin borradores lee como visitante (RLS): lo
+ * usa también la ruta de Migue, que nunca tiene que mostrar un borrador aunque quien pida tenga
+ * sesión en el panel.
+ */
+export async function leerContenido(conBorradores: boolean, idioma: Idioma): Promise<Contenido> {
   const sinTraducir = new Set<string>();
   const filas = await consultar<Fila>(
     conBorradores ? { rol: "servicio" } : { rol: "anon" },
@@ -116,7 +125,7 @@ export const contenido = cache(async (): Promise<Contenido> => {
     idioma,
     sinTraducir,
   };
-});
+}
 
 /* ---- Búsquedas sobre el contenido ---- */
 
