@@ -2,11 +2,11 @@ import "server-only";
 import { connection } from "next/server";
 import type { Options, Sql } from "postgres";
 
-import { modoLocal } from "@/lib/entorno";
+import { modoLocal, usaSupabase } from "@/lib/entorno";
 
 /**
- * Acceso a la base. Igual que en la subasta del Cementerio del Oeste: en local, PGlite con las
- * mismas migraciones; en producción, Supabase por postgres.js.
+ * Acceso a la base. En local, PGlite con las mismas migraciones; con Supabase o un PostgreSQL
+ * propio (la VPS), postgres.js.
  *
  * Contexto con el que corre cada consulta. Replica lo que hace la API de Supabase: fija el rol
  * y los claims dentro de la transacción, así las políticas RLS y auth.uid() se aplican igual.
@@ -46,10 +46,16 @@ export function opcionesTls(certificado = process.env.SUPABASE_CA_CERT): Options
   return ca ? { ca, rejectUnauthorized: true } : "require";
 }
 
-async function crearMotorSupabase(): Promise<Motor> {
+async function crearMotorPostgres(): Promise<Motor> {
   const { default: postgres } = await import("postgres");
-  // Pooler de Supabase en modo transacción (puerto 6543): sin prepared statements.
-  const sql = postgres(process.env.DATABASE_URL!, { prepare: false, max: 5, idle_timeout: 20, ssl: opcionesTls() });
+  // Supabase: pooler en modo transacción (puerto 6543), sin prepared statements y siempre con TLS.
+  // Servidor propio: PostgreSQL en 127.0.0.1, sin TLS (no sale de la máquina).
+  const sql = postgres(process.env.DATABASE_URL!, {
+    prepare: false,
+    max: usaSupabase ? 5 : 10,
+    idle_timeout: 20,
+    ssl: usaSupabase ? opcionesTls() : false,
+  });
   return motorPostgres(sql);
 }
 
@@ -65,7 +71,7 @@ export function motorPostgres(sql: Sql): Motor {
 export async function conBase<R>(ctx: Contexto, fn: (q: Consulta) => Promise<R>): Promise<R> {
   // El contenido se lee en el momento del pedido: lo que se guarda en el panel se ve al instante.
   await connection();
-  motor ??= modoLocal ? crearMotorLocal() : crearMotorSupabase();
+  motor ??= modoLocal ? crearMotorLocal() : crearMotorPostgres();
   return (await motor)(ctx, fn);
 }
 

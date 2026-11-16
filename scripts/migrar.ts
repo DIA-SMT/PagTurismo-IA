@@ -1,13 +1,16 @@
 /**
- * Aplica en Supabase las migraciones de supabase/migrations/ que falten, en orden de nombre.
+ * Aplica las migraciones de supabase/migrations/ que falten, en orden de nombre, en Supabase o en
+ * un PostgreSQL propio (la VPS). En una base propia nueva aplica antes supabase/local/shim.sql
+ * (roles, esquema auth y storage mínimos), porque las migraciones cuentan con eso.
  * Igual que el de la subasta: alternativa a `supabase db push` cuando la CLI no está. Registra lo
  * aplicado en supabase_migrations.schema_migrations, la misma tabla que usa la CLI.
  *
  *   npm run db:migrar            aplica lo que falta
  *   npm run db:migrar -- --ver   solo lista lo pendiente y las tablas que ya hay
  *
- * Usa DIRECT_URL (o DATABASE_URL con el puerto 5432) de .env.local: los cambios de esquema van
- * por el pooler en modo sesión; el modo transacción (6543), el que usa el sitio, no sirve.
+ * Usa DIRECT_URL (o DATABASE_URL) del .env. En Supabase, los cambios de esquema van por el pooler
+ * en modo sesión (5432); el modo transacción (6543), el que usa el sitio, no sirve. Contra
+ * 127.0.0.1 (la VPS) no usa TLS.
  */
 
 import fs from "node:fs";
@@ -21,13 +24,24 @@ if (!cadena) {
   process.exit(1);
 }
 const url = new URL(cadena);
-if (url.port === "6543") url.port = "5432";
+const esLocal = ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+if (!esLocal && url.port === "6543") url.port = "5432";
 
 const dir = path.join(process.cwd(), "supabase", "migrations");
 const archivos = fs.readdirSync(dir).filter((f) => f.endsWith(".sql")).sort();
-const sql = postgres(url.toString(), { ssl: "require", prepare: false, max: 1, onnotice: () => {} });
+const sql = postgres(url.toString(), { ssl: esLocal ? false : "require", prepare: false, max: 1, onnotice: () => {} });
 
 try {
+  // Base propia nueva: sin el esquema auth de Supabase, primero el reemplazo mínimo.
+  const [{ hayAuth }] = await sql`select exists (select 1 from pg_namespace where nspname = 'auth') as "hayAuth"`;
+  if (!hayAuth) {
+    if (soloVer) console.log("Base sin esquema auth: al migrar se aplica antes supabase/local/shim.sql.");
+    else {
+      await sql.begin((tx) => tx.unsafe(fs.readFileSync(path.join(process.cwd(), "supabase", "local", "shim.sql"), "utf8")));
+      console.log("Base propia: aplicado supabase/local/shim.sql (roles, auth y storage mínimos).");
+    }
+  }
+
   await sql.unsafe(`
     create schema if not exists supabase_migrations;
     create table if not exists supabase_migrations.schema_migrations (version text primary key, statements text[], name text);`);

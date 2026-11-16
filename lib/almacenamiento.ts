@@ -3,20 +3,22 @@ import crypto from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { modoLocal, supabase } from "@/lib/entorno";
+import { supabase, usaSupabase } from "@/lib/entorno";
 
-// Fotos e ilustraciones que sube el equipo desde el panel. En Supabase van al bucket público "fotos" (las
-// políticas de Storage exigen es_admin()); en modo local, a .local/subidas/ y se sirven desde
-// /subidas/. Las fotos que ya trae el sitio (/fotos, /stickers) siguen en public/.
+// Fotos e ilustraciones que sube el equipo desde el panel. En Supabase van al bucket público
+// "fotos" (las políticas de Storage exigen es_admin()). Sin Supabase van a una carpeta del disco y
+// se sirven desde /subidas/: en local, .local/subidas/; en un servidor propio, CARPETA_SUBIDAS,
+// que tiene que quedar FUERA de cada versión desplegada (p. ej. /srv/<app>/compartido/subidas)
+// para no perderlas en el próximo despliegue. Las fotos que ya trae el sitio siguen en public/.
 
-export const CARPETA_LOCAL = path.join(process.cwd(), ".local", "subidas");
+export const CARPETA_LOCAL = process.env.CARPETA_SUBIDAS || path.join(process.cwd(), ".local", "subidas");
 const BUCKET = "fotos";
 const TIPOS = new Set(["image/jpeg", "image/png", "image/webp"]);
 export const TAMANO_MAXIMO = 4 * 1024 * 1024;
 
 /** Dirección pública de una foto subida, la que se guarda en la ficha. */
 export function urlPublica(ruta: string) {
-  return modoLocal ? `/subidas/${ruta}` : `${supabase.url.replace(/\/$/, "")}/storage/v1/object/public/${BUCKET}/${ruta}`;
+  return usaSupabase ? `${supabase.url.replace(/\/$/, "")}/storage/v1/object/public/${BUCKET}/${ruta}` : `/subidas/${ruta}`;
 }
 
 /**
@@ -38,7 +40,7 @@ export async function guardarFoto(archivo: File, carpeta: string): Promise<{ src
   const extension = hasAlpha ? "webp" : "jpg";
 
   const ruta = `${carpeta}/${crypto.randomUUID()}.${extension}`;
-  if (modoLocal) {
+  if (!usaSupabase) {
     const destino = path.join(CARPETA_LOCAL, ruta);
     await fs.mkdir(path.dirname(destino), { recursive: true });
     await fs.writeFile(destino, data);
