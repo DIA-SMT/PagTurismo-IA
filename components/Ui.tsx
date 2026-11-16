@@ -1,8 +1,18 @@
+"use client";
+
+/*
+ * Piezas compartidas por las páginas (servidor) y por el catálogo y la agenda (navegador).
+ * Es un módulo de cliente para poder leer el idioma con useTextos; todo lo que recibe se
+ * puede serializar.
+ */
+
 import Image from "next/image";
-import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { Icono } from "./Iconos";
+import { useIdioma, useTextos, Vinculo as Link } from "./i18n/Idioma";
+import { LOCALE, type Idioma } from "@/lib/i18n/config";
+import { formatear } from "@/lib/i18n/definir";
 import { esExterno } from "@/lib/rutas";
 import type { Fuente, ItemCatalogo, Validacion } from "@/lib/tipos";
 
@@ -16,11 +26,12 @@ export function Enlace({ href, className, children, ...resto }: {
   children: ReactNode;
   "aria-label"?: string;
 }) {
+  const { comun: t } = useTextos();
   if (esExterno(href)) {
     return (
       <a href={href} className={className} rel="noopener" target="_blank" {...resto}>
         {children}
-        <span className="visualmente-oculto"> (se abre en otra pestaña)</span>
+        <span className="visualmente-oculto">{t.controles.otraPestana}</span>
       </a>
     );
   }
@@ -58,10 +69,11 @@ export function Cabecera({ id, kicker, titulo, bajada, enlace, nivel = 2 }: {
 export type Miga = { texto: string; url?: string };
 
 export function MigaDePan({ migas }: { migas: Miga[] }) {
+  const { comun: t } = useTextos();
   return (
-    <nav className="migas" aria-label="Estás en">
+    <nav className="migas" aria-label={t.ui.estasEn}>
       <ol>
-        <li><Link href="/">Inicio</Link></li>
+        <li><Link href="/">{t.ui.inicio}</Link></li>
         {migas.map((m) => (
           <li key={m.texto}>
             {m.url ? <Link href={m.url}>{m.texto}</Link> : <span aria-current="page">{m.texto}</span>}
@@ -94,9 +106,23 @@ export function EncabezadoPagina({ migas, kicker, titulo, bajada, children }: {
 }
 
 export function AvisoBorrador() {
+  const { comun: t } = useTextos();
   return (
     <p className="aviso aviso--borrador" role="note">
-      <strong>Borrador.</strong> Esta ficha no se muestra en el sitio público hasta que la Dirección de Turismo la revise y la publique.
+      <strong>{t.ui.borrador}.</strong> {t.ui.avisoBorrador}
+    </p>
+  );
+}
+
+/** En inglés o portugués, cuando la ficha todavía no tiene traducción y se muestra en español. */
+export function AvisoSinTraducir({ sinTraducir }: { sinTraducir: boolean }) {
+  const { comun: t } = useTextos();
+  const idioma = useIdioma();
+  if (!sinTraducir || idioma === "es") return null;
+  return (
+    <p className="aviso aviso--info" role="note">
+      <Icono nombre="idioma" tamano={18} />
+      <span>{t.ui.sinTraducir}</span>
     </p>
   );
 }
@@ -114,12 +140,9 @@ export function Marca({ children, tipo = "neutra" }: { children: ReactNode; tipo
   return <span className={`marca marca--${tipo}`}>{children}</span>;
 }
 
-const ENTIDAD: Record<ItemCatalogo["entidad"], string> = {
-  lugar: "Lugar", experiencia: "Experiencia", recorrido: "Recorrido", evento: "Agenda",
-};
-
 /** Tarjeta de resultado del catálogo y de los listados de categorías. */
 export function TarjetaItem({ item, titulo: Titulo = "h3" }: { item: ItemCatalogo; titulo?: "h2" | "h3" }) {
+  const { comun: t } = useTextos();
   return (
     <Link className="item" href={item.url}>
       <div className="item__foto">
@@ -131,10 +154,10 @@ export function TarjetaItem({ item, titulo: Titulo = "h3" }: { item: ItemCatalog
       </div>
       <div className="item__cuerpo">
         <div className="item__marcas">
-          <Marca>{ENTIDAD[item.entidad]}</Marca>
-          {item.gratis && <Marca tipo="exito">Gratis</Marca>}
-          {item.fueraDeLaCiudad && <Marca tipo="alerta">Fuera de la ciudad</Marca>}
-          {item.borrador && <Marca tipo="borrador">Borrador</Marca>}
+          <Marca>{t.ui.entidad[item.entidad]}</Marca>
+          {item.gratis && <Marca tipo="exito">{t.ui.gratis}</Marca>}
+          {item.fueraDeLaCiudad && <Marca tipo="alerta">{t.ui.fueraDeLaCiudad}</Marca>}
+          {item.borrador && <Marca tipo="borrador">{t.ui.borrador}</Marca>}
         </div>
         <Titulo className="item__titulo">{item.titulo}</Titulo>
         {item.meta && <p className="item__meta">{item.meta}</p>}
@@ -149,10 +172,12 @@ const ICONO_ENTIDAD: Record<ItemCatalogo["entidad"], string> = {
 };
 
 export function Fuentes({ fuentes, validacion }: { fuentes: Fuente[]; validacion: Validacion }) {
+  const { comun: t } = useTextos();
+  const idioma = useIdioma();
   if (!fuentes.length && !validacion.fecha) return null;
   return (
     <section className="fuentes" aria-labelledby="fuentes-titulo">
-      <h2 id="fuentes-titulo">Fuentes de esta información</h2>
+      <h2 id="fuentes-titulo">{t.ui.fuentesTitulo}</h2>
       {fuentes.length > 0 && (
         <ul>
           {fuentes.map((f) => (
@@ -162,16 +187,21 @@ export function Fuentes({ fuentes, validacion }: { fuentes: Fuente[]; validacion
       )}
       <p>
         {validacion.fecha
-          ? `Datos revisados el ${formatearDia(validacion.fecha)}${validacion.responsable ? ` por ${validacion.responsable}` : ""}.`
-          : "Los datos operativos todavía no fueron confirmados por la Dirección de Turismo: consultá antes de ir."}
+          ? formatear(validacion.responsable ? t.ui.datosRevisadosPor : t.ui.datosRevisados, {
+              fecha: formatearDia(validacion.fecha, idioma), responsable: validacion.responsable ?? "",
+            })
+          : t.ui.datosSinConfirmar}
       </p>
     </section>
   );
 }
 
-export function formatearDia(dia: string) {
-  const [a, m, d] = dia.split("-");
-  return d && m && a ? `${Number(d)}/${Number(m)}/${a}` : dia;
+/** "2026-11-12" → "12 de noviembre de 2026" / "November 12, 2026" / "12 de novembro de 2026". */
+function formatearDia(dia: string, idioma: Idioma) {
+  const [a, m, d] = dia.split("-").map(Number);
+  if (!a || !m || !d) return dia;
+  return new Intl.DateTimeFormat(LOCALE[idioma].intl, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })
+    .format(Date.UTC(a, m - 1, d));
 }
 
 /** Texto con párrafos separados por una línea en blanco. */
@@ -186,13 +216,14 @@ export function Parrafos({ texto, className }: { texto?: string; className?: str
 
 /** Foto principal de una ficha, con crédito si lo hay. */
 export function FotoFicha({ imagen }: { imagen?: { src: string; alt: string; credito?: string } }) {
+  const { comun: t } = useTextos();
   if (!imagen) return null;
   return (
     <figure className="ficha__foto">
       <div className="ficha__foto-marco">
         <Image src={imagen.src} alt={imagen.alt} fill priority sizes="(max-width: 900px) 100vw, 60vw" />
       </div>
-      {imagen.credito && <figcaption>Foto: {imagen.credito}</figcaption>}
+      {imagen.credito && <figcaption>{formatear(t.ui.foto, { credito: imagen.credito })}</figcaption>}
     </figure>
   );
 }

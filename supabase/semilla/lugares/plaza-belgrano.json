@@ -21,7 +21,15 @@
   },
   "costo": {
     "modalidad": "gratis",
-    "detalle": "Espacio público de acceso libre."
+    "detalle": "Espacio público de acceso libre.",
+    "traducciones": {
+      "en": {
+        "detalle": "Public space, free admission."
+      },
+      "pt": {
+        "detalle": "Espaço público de acesso livre."
+      }
+    }
   },
   "duracion": "",
   "contacto": {},
@@ -36,5 +44,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Plaza Belgrano",
+      "clase": "square",
+      "resumen": "A square on the tourist bus's Lugares Notables and La Ciudadela tours."
+    },
+    "pt": {
+      "titulo": "Plaza Belgrano",
+      "clase": "praça",
+      "resumen": "Praça dos circuitos Lugares Notables e La Ciudadela do ônibus turístico."
+    }
   }
 }

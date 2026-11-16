@@ -9,5 +9,15 @@
     "permiso": "Recurso oficial del portal smt.gob.ar"
   },
   "tono": 2,
-  "orden": 2
+  "orden": 2,
+  "traducciones": {
+    "en": {
+      "titulo": "Sánguche de milanesa",
+      "detalle": "The street-cart classic: bread, breaded steak, lettuce, tomato, onion and hot sauce to taste."
+    },
+    "pt": {
+      "titulo": "Sánguche de milanesa",
+      "detalle": "O clássico dos carrinhos de rua: pão, milanesa, alface, tomate, cebola e pimenta a gosto."
+    }
+  }
 }

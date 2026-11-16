@@ -23,56 +23,168 @@
   "paradas": [
     {
       "nombre": "Plaza Independencia",
-      "lugar": "plaza-independencia"
+      "lugar": "plaza-independencia",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Independencia"
+        },
+        "pt": {
+          "nombre": "Praça Independência"
+        }
+      }
     },
     {
       "nombre": "Centro Cultural Rougés",
-      "lugar": "centro-cultural-rouges"
+      "lugar": "centro-cultural-rouges",
+      "traducciones": {
+        "en": {
+          "nombre": "Rougés Cultural Center"
+        },
+        "pt": {
+          "nombre": "Centro Cultural Rougés"
+        }
+      }
     },
     {
-      "nombre": "Federación Económica"
+      "nombre": "Federación Económica",
+      "traducciones": {
+        "en": {
+          "nombre": "Federación Económica building"
+        },
+        "pt": {
+          "nombre": "Prédio da Federación Económica"
+        }
+      }
     },
     {
-      "nombre": "Ex Hotel Plaza"
+      "nombre": "Ex Hotel Plaza",
+      "traducciones": {
+        "en": {
+          "nombre": "Former Hotel Plaza"
+        },
+        "pt": {
+          "nombre": "Antigo Hotel Plaza"
+        }
+      }
     },
     {
       "nombre": "Jockey Club",
-      "lugar": "jockey-club"
+      "lugar": "jockey-club",
+      "traducciones": {
+        "en": {
+          "nombre": "Jockey Club"
+        },
+        "pt": {
+          "nombre": "Jockey Club"
+        }
+      }
     },
     {
       "nombre": "Iglesia San Francisco",
-      "lugar": "iglesia-san-francisco"
+      "lugar": "iglesia-san-francisco",
+      "traducciones": {
+        "en": {
+          "nombre": "San Francisco Church"
+        },
+        "pt": {
+          "nombre": "Igreja de San Francisco"
+        }
+      }
     },
     {
       "nombre": "Casa de Gobierno",
-      "lugar": "casa-de-gobierno"
+      "lugar": "casa-de-gobierno",
+      "traducciones": {
+        "en": {
+          "nombre": "Government House"
+        },
+        "pt": {
+          "nombre": "Casa de Governo"
+        }
+      }
     },
     {
       "nombre": "Museo Casa Padilla",
-      "lugar": "museo-casa-padilla"
+      "lugar": "museo-casa-padilla",
+      "traducciones": {
+        "en": {
+          "nombre": "Casa Padilla Museum"
+        },
+        "pt": {
+          "nombre": "Museu Casa Padilla"
+        }
+      }
     },
     {
       "nombre": "Casa Museo de la Ciudad",
-      "lugar": "casa-museo-de-la-ciudad"
+      "lugar": "casa-museo-de-la-ciudad",
+      "traducciones": {
+        "en": {
+          "nombre": "City House Museum"
+        },
+        "pt": {
+          "nombre": "Casa Museu da Cidade"
+        }
+      }
     },
     {
       "nombre": "Museo Casa Natal de Mercedes Sosa",
-      "lugar": "casa-natal-mercedes-sosa"
+      "lugar": "casa-natal-mercedes-sosa",
+      "traducciones": {
+        "en": {
+          "nombre": "Mercedes Sosa Birthplace Museum"
+        },
+        "pt": {
+          "nombre": "Museu Casa Natal de Mercedes Sosa"
+        }
+      }
     },
     {
       "nombre": "Parque 9 de Julio",
-      "lugar": "parque-9-de-julio"
+      "lugar": "parque-9-de-julio",
+      "traducciones": {
+        "en": {
+          "nombre": "Parque 9 de Julio"
+        },
+        "pt": {
+          "nombre": "Parque 9 de Julio"
+        }
+      }
     },
     {
-      "nombre": "Solar de Belgrano"
+      "nombre": "Solar de Belgrano",
+      "traducciones": {
+        "en": {
+          "nombre": "Solar de Belgrano"
+        },
+        "pt": {
+          "nombre": "Solar de Belgrano"
+        }
+      }
     },
     {
       "nombre": "Museo de la Industria Azucarera",
-      "lugar": "museo-industria-azucarera"
+      "lugar": "museo-industria-azucarera",
+      "traducciones": {
+        "en": {
+          "nombre": "Sugar Industry Museum"
+        },
+        "pt": {
+          "nombre": "Museu da Indústria Açucareira"
+        }
+      }
     },
     {
       "nombre": "Regreso a Plaza Independencia",
-      "lugar": "plaza-independencia"
+      "lugar": "plaza-independencia",
+      "traducciones": {
+        "en": {
+          "nombre": "Back to Plaza Independencia"
+        },
+        "pt": {
+          "nombre": "Retorno à Praça Independência"
+        }
+      }
     }
   ],
   "experiencia": "city-tour-bus-turistico",
@@ -82,7 +194,15 @@
     "src": "/fotos/san-miguel-de-tucuman.webp",
     "alt": "Vista del centro de San Miguel de Tucumán",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "View of downtown San Miguel de Tucumán"
+      },
+      "pt": {
+        "alt": "Vista do centro de San Miguel de Tucumán"
+      }
+    }
   },
   "fuentes": [
     {
@@ -98,5 +218,25 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Historic & Cultural Tour",
+      "resumen": "A journey through the key landmarks of Tucumán's history.",
+      "duracion": "About 2 hours",
+      "inicio": "Plaza Independencia",
+      "fin": "Plaza Independencia",
+      "esfuerzo": "Low: the tour is by bus.",
+      "aviso": "The Tourist Bus may run other routes or change its itinerary. Before you go, check its website for current departures."
+    },
+    "pt": {
+      "titulo": "Circuito Histórico-Cultural",
+      "resumen": "Uma viagem pelos principais marcos da história tucumana.",
+      "duracion": "Cerca de 2 horas",
+      "inicio": "Praça Independência",
+      "fin": "Praça Independência",
+      "esfuerzo": "Baixo: o percurso é feito de ônibus.",
+      "aviso": "O Ônibus Turístico pode ter outros circuitos ou mudanças de trajeto. Antes de ir, confira no site dele as saídas vigentes."
+    }
   }
 }

@@ -12,5 +12,15 @@
   },
   "tono": 1,
   "url": "",
-  "orden": 1
+  "orden": 1,
+  "traducciones": {
+    "en": {
+      "titulo": "Cerro San Javier",
+      "detalle": "Lookouts over the city, hiking trails and the Cristo Bendicente statue."
+    },
+    "pt": {
+      "titulo": "Cerro San Javier",
+      "detalle": "Mirantes sobre a cidade, trilhas e o Cristo Bendicente."
+    }
+  }
 }

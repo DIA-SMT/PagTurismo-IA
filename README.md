@@ -128,6 +128,33 @@ Protecciones (iguales a las de la subasta):
 | `/lugares/[slug]`, `/experiencias/[slug]`, `/recorridos/[slug]`, `/agenda/[slug]` | Fichas. |
 | `/recorridos`, `/agenda`, `/planifica`, `/sabores`, `/escapadas` | Listados. |
 
+## Idiomas: español, inglés y portugués
+
+El español va sin prefijo; inglés y portugués llevan el idioma y la sección traducida:
+
+| Español | Inglés | Portugués |
+|---|---|---|
+| `/que-hacer` | `/en/things-to-do` | `/pt/o-que-fazer` |
+| `/lugares/x` | `/en/places/x` | `/pt/lugares/x` |
+| `/recorridos` | `/en/tours` | `/pt/roteiros` |
+| `/agenda` | `/en/events` | `/pt/agenda` |
+| `/planifica` | `/en/plan-your-visit` | `/pt/planeje-sua-visita` |
+
+- **Cómo funciona:** el proxy (`proxy.ts`) traduce la dirección pública a la interna (`app/[idioma]/…`, siempre con
+  las secciones en español) y pasa el idioma en `x-idioma`. `/es/…` y las secciones en español dentro de otro
+  idioma redirigen a la dirección canónica. Las reglas están en `lib/i18n/config.ts`.
+- **Textos de la interfaz:** `lib/i18n/textos/` (un archivo por sección, con `es`, `en` y `pt`; TypeScript avisa si
+  falta una clave). Los enlaces internos se escriben en español con `Vinculo` (`components/i18n/Idioma.tsx`), que
+  los lleva al idioma de la página.
+- **Contenido:** cada ficha guarda sus traducciones al lado de los textos, en `traducciones.en` / `traducciones.pt`
+  de cada objeto (la ficha, un grupo, cada parada). En el panel, cada ficha tiene las pestañas *Español*,
+  *English* y *Português*, con el original al lado. Lo que no está traducido se ve en español, y la ficha avisa.
+  Qué campos se traducen lo marca `traducible: true` en `lib/admin/esquemas.ts`.
+- **Contenido inicial:** `npm run traducciones -- extraer <carpeta>` saca los textos a traducir;
+  `npm run traducciones -- aplicar <archivo>` los guarda en `supabase/semilla`; `npm run traducciones -- base`
+  los copia a Supabase sin pisar lo que el equipo cambió en el panel.
+- **Buscadores:** cada página declara sus versiones (`hreflang`) y el sitemap lista los tres idiomas.
+
 ## Dónde está cada cosa
 
 | Archivo | Contenido |
@@ -139,7 +166,8 @@ Protecciones (iguales a las de la subasta):
 | `lib/admin/limpiar.ts` | Revisión de lo que se guarda desde el panel. |
 | `lib/validar.ts` | Avisos y errores del tablero (relaciones, fechas, revisiones vencidas). |
 | `lib/fechas.ts` | Agenda en hora de Tucumán. |
-| `app/(sitio)/` | El sitio público. |
+| `app/[idioma]/` | El sitio público (las direcciones públicas las arma `proxy.ts`). |
+| `lib/i18n/` | Idiomas: direcciones, textos de la interfaz y traducciones del contenido. |
 | `app/admin/` | El panel. |
 | `styles/admin.css` | Estilos del panel (paleta municipal de la subasta). |
 

@@ -21,7 +21,15 @@
   },
   "costo": {
     "modalidad": "gratis",
-    "detalle": "Espacio público de acceso libre."
+    "detalle": "Espacio público de acceso libre.",
+    "traducciones": {
+      "en": {
+        "detalle": "Public space, free admission."
+      },
+      "pt": {
+        "detalle": "Espaço público de acesso livre."
+      }
+    }
   },
   "duracion": "",
   "contacto": {},
@@ -36,5 +44,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Plaza Urquiza",
+      "clase": "square",
+      "resumen": "A square on avenida Sarmiento, a stop on the Lugares Notables tour."
+    },
+    "pt": {
+      "titulo": "Plaza Urquiza",
+      "clase": "praça",
+      "resumen": "Praça na avenida Sarmiento, parada do circuito Lugares Notables."
+    }
   }
 }

@@ -2,6 +2,8 @@
 
 import { useRef, useSyncExternalStore } from "react";
 
+import { useTextos } from "./i18n/Idioma";
+
 type Tema = "light" | "dark";
 
 /**
@@ -50,6 +52,7 @@ function suscribir(avisar: () => void) {
  * grande que esa preferencia evita.
  */
 export function Tema() {
+  const { comun: { tema: t } } = useTextos();
   const boton = useRef<HTMLButtonElement>(null);
   const tema = useSyncExternalStore<Tema | null>(suscribir, leerTema, () => null);
 
@@ -113,8 +116,8 @@ export function Tema() {
       /* La etiqueta dice qué va a pasar al apretarlo, que es el patrón de un
          interruptor. Sin aria-pressed: con los dos juntos, el lector de
          pantalla anuncia el estado dos veces. */
-      aria-label={vaAOscuro ? "Cambiar a tema oscuro" : "Cambiar a tema claro"}
-      title={vaAOscuro ? "Tema oscuro" : "Tema claro"}
+      aria-label={vaAOscuro ? t.aOscuro : t.aClaro}
+      title={vaAOscuro ? t.oscuro : t.claro}
     >
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
         {vaAOscuro ? (

@@ -259,7 +259,7 @@ a.adm-dato:hover { box-shadow: var(--a-sombra-alta), 0 0 0 1px var(--a-smt); }
 .adm-boton--ancho { width: 100%; }
 
 /* Tablas */
-.adm-tabla-caja { overflow-x: auto; border-radius: var(--a-radio); background: #fff; box-shadow: var(--a-sombra), 0 0 0 1px rgb(230 225 215 / 0.8); }
+.adm-tabla-caja { position: relative; overflow-x: auto; border-radius: var(--a-radio); background: #fff; box-shadow: var(--a-sombra), 0 0 0 1px rgb(230 225 215 / 0.8); }
 .adm-tabla { width: 100%; min-width: 44rem; border-collapse: collapse; font-size: 0.95rem; }
 .adm-tabla th { padding: 0.75rem 1rem; background: var(--a-superficie); color: var(--a-gris); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-align: left; text-transform: uppercase; white-space: nowrap; }
 .adm-tabla td { padding: 0.85rem 1rem; border-top: 1px solid var(--a-linea); vertical-align: middle; }
@@ -293,7 +293,8 @@ a.adm-dato:hover { box-shadow: var(--a-sombra-alta), 0 0 0 1px var(--a-smt); }
   background: #fff;
   color: var(--a-tinta);
   font: inherit;
-  font-size: 0.98rem;
+  /* 16 px: con menos, el iPhone hace zoom al tocar el campo. */
+  font-size: 1rem;
 }
 .adm textarea { min-height: auto; resize: vertical; line-height: 1.5; }
 .adm-input:hover, .adm select:hover, .adm textarea:hover { border-color: var(--a-gris); }
@@ -417,3 +418,21 @@ a.adm-dato:hover { box-shadow: var(--a-sombra-alta), 0 0 0 1px var(--a-smt); }
 @media (prefers-reduced-motion: reduce) {
   .adm-menu, .adm-espaciador { transition: none; }
 }
+
+/* ---- Traducciones ---- */
+.adm-idiomas { display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0.35rem; border-radius: var(--a-radio); background: #fff; box-shadow: var(--a-sombra), 0 0 0 1px rgb(230 225 215 / 0.8); }
+.adm-idiomas__pestana {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  min-height: 2.75rem; padding: 0 1rem;
+  border: 0; border-radius: calc(var(--a-radio) - 4px);
+  background: none; color: var(--a-texto); font: inherit; font-weight: 700; cursor: pointer;
+}
+.adm-idiomas__pestana:hover { background: var(--a-superficie); }
+.adm-idiomas__pestana[aria-selected="true"] { background: var(--a-marino); color: #fff; }
+.adm-idiomas__pestana small { padding: 0.1rem 0.45rem; border-radius: 999px; background: rgb(0 0 0 / 0.06); font-size: 0.8rem; font-weight: 600; }
+.adm-idiomas__pestana[aria-selected="true"] small { background: rgb(255 255 255 / 0.18); }
+.adm-idiomas__listo::before { content: "✓ "; }
+.adm-traduccion { padding-bottom: 1rem; border-bottom: 1px solid var(--a-linea); }
+.adm-traduccion:last-child { border-bottom: 0; }
+.adm-traduccion__original { margin: 0; padding: 0.6rem 0.8rem; border-left: 3px solid var(--a-linea); border-radius: 4px; background: var(--a-superficie); color: var(--a-gris); font-size: 0.95rem; white-space: pre-line; }
+.adm-tabla__idiomas { display: inline-flex; flex-wrap: wrap; gap: 0.3rem; white-space: nowrap; }

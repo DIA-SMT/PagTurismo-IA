@@ -7,6 +7,9 @@
  * Borradores: el sitio lee como visitante (RLS: solo fichas publicadas). Quien tiene sesión
  * en el panel, o un despliegue de vista previa con MOSTRAR_BORRADORES=1, ve también los
  * borradores, marcados como tales, para revisarlos en contexto antes de publicarlos.
+ *
+ * Idiomas: el contenido llega ya en el idioma del pedido (lib/i18n/contenido.ts). Lo que no
+ * está traducido se muestra en español, y `sinTraducir` dice qué fichas son.
  */
 
 import "server-only";
@@ -15,6 +18,10 @@ import { cache } from "react";
 import { adminActual } from "./admin/sesion";
 import { consultar } from "./db";
 import { destacables, dentroDeVentana, ocurrenciasVigentes } from "./fechas";
+import type { Idioma } from "./i18n/config";
+import { localizarDatos, tieneTraduccion } from "./i18n/contenido";
+import { idiomaActual } from "./i18n/servidor";
+import { textos } from "./i18n/textos";
 import {
   normalizarDestacado, normalizarEscapada, normalizarEvento, normalizarExperiencia, normalizarGuia,
   normalizarLugar, normalizarPlato, normalizarRecorrido,
@@ -38,6 +45,10 @@ export type Contenido = {
   sitio: Sitio;
   /** Si este pedido ve borradores. */
   conBorradores: boolean;
+  /** Idioma en el que llega el contenido. */
+  idioma: Idioma;
+  /** Fichas sin traducción a este idioma, como "lugares/plaza-x": se muestran en español. */
+  sinTraducir: Set<string>;
 };
 
 type Fila = { coleccion: string; slug: string; estado: string; datos: Record<string, unknown> };
@@ -59,12 +70,13 @@ const SITIO_VACIO: Sitio = {
   redes: [], emergencias: [], historia: [],
 };
 
-const porOrden = <T extends { orden: number; titulo: string }>(a: T, b: T) => a.orden - b.orden || a.titulo.localeCompare(b.titulo, "es");
-const porTitulo = <T extends { titulo: string }>(a: T, b: T) => a.titulo.localeCompare(b.titulo, "es");
+const porOrden = <T extends { orden: number; titulo: string }>(a: T, b: T) => a.orden - b.orden || a.titulo.localeCompare(b.titulo);
+const porTitulo = <T extends { titulo: string }>(a: T, b: T) => a.titulo.localeCompare(b.titulo);
 
 /** Todo el contenido visible para este pedido. Se resuelve una vez por pedido. */
 export const contenido = cache(async (): Promise<Contenido> => {
-  const conBorradores = await verBorradores();
+  const [conBorradores, idioma] = await Promise.all([verBorradores(), idiomaActual()]);
+  const sinTraducir = new Set<string>();
   const filas = await consultar<Fila>(
     conBorradores ? { rol: "servicio" } : { rol: "anon" },
     "select coleccion, slug, estado, datos from public.contenidos",
@@ -74,14 +86,18 @@ export const contenido = cache(async (): Promise<Contenido> => {
       .filter((f) => f.coleccion === coleccion && (f.estado === "publicado" || conBorradores))
       .flatMap((f) => {
         try {
-          return [normalizar({ ...f.datos, estado: f.estado }, f.slug)];
+          if (!tieneTraduccion(f.datos, idioma)) sinTraducir.add(`${coleccion}/${f.slug}`);
+          return [normalizar({ ...localizarDatos(f.datos, idioma), estado: f.estado }, f.slug)];
         } catch (e) {
           // Una ficha rota no tira abajo el sitio: se omite y se avisa en el log.
           console.error(`[contenido] ${coleccion}/${f.slug}:`, e);
           return [];
         }
       });
-  const config = (slug: string) => filas.find((f) => f.coleccion === "configuracion" && f.slug === slug)?.datos;
+  const config = (slug: string) => {
+    const datos = filas.find((f) => f.coleccion === "configuracion" && f.slug === slug)?.datos;
+    return datos && localizarDatos(datos, idioma);
+  };
   const taxonomia = (config("categorias") ?? {}) as { categorias?: Categoria[]; etiquetas?: Etiqueta[] };
 
   return {
@@ -97,6 +113,8 @@ export const contenido = cache(async (): Promise<Contenido> => {
     etiquetas: (taxonomia.etiquetas ?? []).filter((e) => e?.id),
     sitio: { ...SITIO_VACIO, ...((config("sitio") ?? {}) as Partial<Sitio>) },
     conBorradores,
+    idioma,
+    sinTraducir,
   };
 });
 
@@ -161,18 +179,20 @@ export function agendaDestacada(c: Contenido, ahora = Date.now(), cuantas = 3) {
 
 /* ---- Catálogo ---- */
 
-export const CLASE_EVENTO: Record<Evento["clase"], string> = {
-  efemeride: "Fecha del calendario", festividad: "Festividad", espectaculo: "Espectáculo",
-  feria: "Feria", deportivo: "Evento deportivo", otro: "Evento",
-};
+/** "Festividad", "Festival", "Festa"… */
+export function claseEvento(clase: Evento["clase"], idioma: Idioma) {
+  const t = textos(idioma).comun.tipos;
+  return t.claseEvento[clase] ?? t.evento;
+}
 
-const MODALIDAD: Record<Experiencia["modalidad"], string> = { "a-pie": "A pie", bus: "En bus", bicicleta: "En bicicleta", libre: "Paseo libre" };
-
-export function etiquetaModalidad(e: Experiencia) {
-  return `${MODALIDAD[e.modalidad]}${e.guiada ? " · Guiada" : ""}`;
+/** "A pie · Guiada", "On foot · Guided"… */
+export function etiquetaModalidad(e: Experiencia, idioma: Idioma) {
+  const t = textos(idioma).comun.tipos;
+  return `${t.modalidadExperiencia[e.modalidad]}${e.guiada ? ` · ${t.guiada}` : ""}`;
 }
 
 export function catalogo(c: Contenido): ItemCatalogo[] {
+  const t = textos(c.idioma).comun;
   const capitalizar = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   return [
     ...c.lugares.map((l): ItemCatalogo => ({
@@ -183,19 +203,19 @@ export function catalogo(c: Contenido): ItemCatalogo[] {
     })),
     ...c.experiencias.map((e): ItemCatalogo => ({
       entidad: "experiencia", slug: e.slug, url: rutas.experiencia(e.slug), titulo: e.titulo, resumen: e.resumen,
-      meta: [etiquetaModalidad(e), e.duracion].filter(Boolean).join(" · "),
+      meta: [etiquetaModalidad(e, c.idioma), e.duracion].filter(Boolean).join(" · "),
       imagen: e.imagen, categorias: e.categorias, etiquetas: e.etiquetas,
       gratis: e.costo.modalidad === "gratis", borrador: e.estado === "borrador", fueraDeLaCiudad: false,
     })),
     ...c.recorridos.map((r): ItemCatalogo => ({
       entidad: "recorrido", slug: r.slug, url: rutas.recorrido(r.slug), titulo: r.titulo, resumen: r.resumen,
-      meta: [r.tipo === "itinerario" ? "Itinerario" : "Circuito", r.modalidad === "bus" ? "en bus" : "a pie", r.duracion].filter(Boolean).join(" · "),
+      meta: [r.tipo === "itinerario" ? t.tipos.itinerario : t.tipos.circuito, r.modalidad === "bus" ? t.tipos.enBus : t.tipos.aPie, r.duracion].filter(Boolean).join(" · "),
       imagen: r.imagen, categorias: r.categorias, etiquetas: r.etiquetas,
       gratis: r.etiquetas.includes("gratis"), borrador: r.estado === "borrador", fueraDeLaCiudad: false,
     })),
     ...c.eventos.map((e): ItemCatalogo => ({
       entidad: "evento", slug: e.slug, url: rutas.evento(e.slug), titulo: e.titulo, resumen: e.resumen,
-      meta: [CLASE_EVENTO[e.clase] ?? "Evento", e.fueraDeLaCiudad ? e.localidad || "Fuera de la ciudad" : e.sede].filter(Boolean).join(" · "),
+      meta: [claseEvento(e.clase, c.idioma), e.fueraDeLaCiudad ? e.localidad || t.ui.fueraDeLaCiudad : e.sede].filter(Boolean).join(" · "),
       imagen: e.imagen, categorias: e.categorias, etiquetas: e.etiquetas,
       gratis: e.costo.modalidad === "gratis", borrador: e.estado === "borrador", fueraDeLaCiudad: !!e.fueraDeLaCiudad,
     })),

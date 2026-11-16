@@ -21,23 +21,65 @@
   "paradas": [
     {
       "nombre": "Plaza Independencia",
-      "lugar": "plaza-independencia"
+      "lugar": "plaza-independencia",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Independencia"
+        },
+        "pt": {
+          "nombre": "Praça Independência"
+        }
+      }
     },
     {
       "nombre": "Museo Casa Histórica de la Independencia",
-      "lugar": "casa-historica"
+      "lugar": "casa-historica",
+      "traducciones": {
+        "en": {
+          "nombre": "Historic House of Independence Museum"
+        },
+        "pt": {
+          "nombre": "Museu Casa Histórica da Independência"
+        }
+      }
     },
     {
       "nombre": "Almuerzo con empanadas tucumanas",
-      "nota": "Pendiente: sumar zonas o establecimientos verificados."
+      "nota": "Pendiente: sumar zonas o establecimientos verificados.",
+      "traducciones": {
+        "en": {
+          "nombre": "Lunch with Tucumán-style empanadas",
+          "nota": "Pending: add verified areas or venues."
+        },
+        "pt": {
+          "nombre": "Almoço com empanadas tucumanas",
+          "nota": "Pendente: incluir zonas ou estabelecimentos verificados."
+        }
+      }
     },
     {
       "nombre": "Museo Casa Natal de Mercedes Sosa",
-      "lugar": "casa-natal-mercedes-sosa"
+      "lugar": "casa-natal-mercedes-sosa",
+      "traducciones": {
+        "en": {
+          "nombre": "Mercedes Sosa Birthplace Museum"
+        },
+        "pt": {
+          "nombre": "Museu Casa Natal de Mercedes Sosa"
+        }
+      }
     },
     {
       "nombre": "Plaza Independencia de noche",
-      "lugar": "plaza-independencia"
+      "lugar": "plaza-independencia",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Independencia by night"
+        },
+        "pt": {
+          "nombre": "Praça Independência à noite"
+        }
+      }
     }
   ],
   "experiencia": "",
@@ -52,5 +94,23 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "San Miguel in one day",
+      "resumen": "The historic center in the morning, Tucumán flavors at lunch and a cultural stroll in the afternoon.",
+      "duracion": "One day",
+      "inicio": "Plaza Independencia",
+      "fin": "Plaza Independencia by night",
+      "aviso": "Suggested itinerary. Times are approximate: check opening hours before you head out."
+    },
+    "pt": {
+      "titulo": "San Miguel em um dia",
+      "resumen": "Centro histórico pela manhã, sabores tucumanos no almoço e passeio cultural à tarde.",
+      "duracion": "Um dia",
+      "inicio": "Praça Independência",
+      "fin": "Praça Independência à noite",
+      "aviso": "Roteiro sugerido. Os horários são aproximados: confira o horário de funcionamento antes de sair."
+    }
   }
 }

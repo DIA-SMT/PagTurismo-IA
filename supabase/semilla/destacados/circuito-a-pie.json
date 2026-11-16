@@ -16,5 +16,17 @@
   },
   "desde": "",
   "hasta": "",
-  "orden": 2
+  "orden": 2,
+  "traducciones": {
+    "en": {
+      "titulo": "Guided walking tour of the historic center",
+      "etiqueta": "On foot",
+      "detalle": "It starts at the Historic House Museum and ends at the Jockey Club, with a refreshment before heading back to the square."
+    },
+    "pt": {
+      "titulo": "Circuito guiado pelo centro histórico",
+      "etiqueta": "A pé",
+      "detalle": "Sai do Museu Casa Histórica e termina no Jockey Club, com um refresco antes de voltar à praça."
+    }
+  }
 }

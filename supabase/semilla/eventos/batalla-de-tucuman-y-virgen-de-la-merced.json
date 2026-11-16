@@ -38,5 +38,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Battle of Tucumán and Our Lady of Mercy",
+      "resumen": "Provincial holiday: Belgrano's 1812 victory and the feast of Tucumán's patron saint."
+    },
+    "pt": {
+      "titulo": "Batalha de Tucumán e Virgem das Mercês",
+      "resumen": "Feriado provincial: a vitória de Belgrano em 1812 e a festa da padroeira de Tucumán."
+    }
   }
 }

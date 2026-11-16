@@ -7,11 +7,31 @@
   "secciones": [
     {
       "titulo": "Antes de viajar",
-      "texto": "Escribinos a turismo@smt.gob.ar contándonos qué necesitás y te ayudamos a planificar la visita."
+      "texto": "Escribinos a turismo@smt.gob.ar contándonos qué necesitás y te ayudamos a planificar la visita.",
+      "traducciones": {
+        "en": {
+          "titulo": "Before you travel",
+          "texto": "Email us at turismo@smt.gob.ar telling us what you need and we'll help you plan your visit."
+        },
+        "pt": {
+          "titulo": "Antes de viajar",
+          "texto": "Escreva para turismo@smt.gob.ar contando o que você precisa e ajudamos a planejar a visita."
+        }
+      }
     },
     {
       "titulo": "En cada lugar",
-      "texto": "Las condiciones de accesibilidad se informan en la ficha de cada lugar a medida que la Dirección de Turismo las verifica."
+      "texto": "Las condiciones de accesibilidad se informan en la ficha de cada lugar a medida que la Dirección de Turismo las verifica.",
+      "traducciones": {
+        "en": {
+          "titulo": "At each place",
+          "texto": "Accessibility conditions are listed on each place's page as the Tourism Office verifies them."
+        },
+        "pt": {
+          "titulo": "Em cada lugar",
+          "texto": "As condições de acessibilidade são informadas na ficha de cada lugar à medida que a Secretaria de Turismo as verifica."
+        }
+      }
     }
   ],
   "enlaces": [],
@@ -24,5 +44,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Accessibility",
+      "resumen": "If you need assistance during your visit, write to us before you arrive and we'll help you plan it."
+    },
+    "pt": {
+      "titulo": "Acessibilidade",
+      "resumen": "Se você precisar de assistência durante a visita, escreva para nós antes de chegar e ajudamos a planejá-la."
+    }
   }
 }

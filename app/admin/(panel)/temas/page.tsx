@@ -19,7 +19,7 @@ export default async function Temas() {
         inicial={ficha?.datos ?? {}}
         opciones={opcionesDeFormulario(filas)}
         rutaPublica="/que-hacer"
-        actualizado={ficha && <p className="adm-campo__ayuda">Último cambio: {fechaCorta(ficha.actualizado_at)}, por {ficha.actualizado_por_nombre ?? "la carga inicial"}.</p>}
+        ultimoCambio={ficha ? `Último cambio: ${fechaCorta(ficha.actualizado_at)}, por ${ficha.actualizado_por_nombre ?? "la carga inicial"}.` : undefined}
       />
     </>
   );

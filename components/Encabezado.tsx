@@ -1,13 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { Icono } from "./Iconos";
 import { LogoSMT } from "./LogoSMT";
 import { Tema } from "./Tema";
+import { SelectorIdioma } from "./i18n/SelectorIdioma";
+import { useIdioma, useTextos, Vinculo as Link } from "./i18n/Idioma";
 import { NAV } from "@/lib/contenido";
+import { localizarRuta } from "@/lib/i18n/config";
 
 /**
  * Barra del portal. La navegación lleva a las secciones (rutas propias) y
@@ -21,6 +23,8 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
   const [desplazado, setDesplazado] = useState(false);
   const [movil, setMovil] = useState(false);
   const ruta = usePathname();
+  const idioma = useIdioma();
+  const { comun: t } = useTextos();
 
   useEffect(() => {
     const alScrollear = () => setDesplazado(window.scrollY > 80);
@@ -32,23 +36,26 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
   // Al navegar a otra página se cierra el menú móvil.
   useEffect(() => setMovil(false), [ruta]);
 
-  const actual = (url: string) => ruta === url || ruta.startsWith(`${url}/`);
+  const actual = (url: string) => {
+    const publica = localizarRuta(url, idioma);
+    return ruta === publica || ruta.startsWith(`${publica}/`);
+  };
 
   return (
     <>
       <header className="header" data-compacto={desplazado ? "" : undefined}>
         <div className="contenedor header__inner">
-          <Link className="header__marca" href="/" aria-label="Turismo — Ciudad San Miguel de Tucumán, ir al inicio">
+          <Link className="header__marca" href="/" aria-label={t.sitio.irAlInicio}>
             <LogoSMT ancho={184} alto={60} alt="" prioritario />
-            <span className="header__turismo" aria-hidden="true">Turismo</span>
+            <span className="header__turismo" aria-hidden="true">{t.sitio.turismo}</span>
           </Link>
 
-          <nav className="nav" aria-label="Secciones">
+          <nav className="nav" aria-label={t.encabezado.secciones}>
             <ul>
               {NAV.map((e) => (
                 <li key={e.url}>
                   <Link className="nav__enlace" href={e.url} aria-current={actual(e.url) ? "page" : undefined}>
-                    {e.texto}
+                    {t.nav[e.clave]}
                   </Link>
                 </li>
               ))}
@@ -57,10 +64,11 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
 
           <div className="header__acciones">
             {clima}
+            <SelectorIdioma />
             <Tema />
             <Link className="boton-planificar" href="/que-hacer#buscar">
               <Icono nombre="buscar" tamano={18} />
-              Buscar
+              {t.encabezado.buscar}
             </Link>
             <button
               className="boton-menu"
@@ -70,7 +78,7 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
               onClick={() => setMovil(true)}
             >
               <Icono nombre="menu" tamano={20} />
-              Menú
+              {t.encabezado.menu}
             </button>
           </div>
         </div>
@@ -82,6 +90,7 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
 }
 
 function PanelMovil({ cerrar, actual }: { cerrar: () => void; actual: (url: string) => boolean }) {
+  const { comun: t } = useTextos();
   const caja = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -113,21 +122,21 @@ function PanelMovil({ cerrar, actual }: { cerrar: () => void; actual: (url: stri
   }, [cerrar]);
 
   return (
-    <div className="panel-movil" id="panel-movil" role="dialog" aria-modal="true" aria-label="Menú de secciones">
+    <div className="panel-movil" id="panel-movil" role="dialog" aria-modal="true" aria-label={t.encabezado.menuSecciones}>
       <button className="panel-movil__fondo" type="button" onClick={cerrar} tabIndex={-1} aria-hidden="true" />
       <div className="panel-movil__caja" ref={caja}>
         <div className="panel-movil__cierre">
           <LogoSMT ancho={130} alto={42} alt="" />
-          <button className="boton-redondo" type="button" onClick={cerrar} aria-label="Cerrar menú">
+          <button className="boton-redondo" type="button" onClick={cerrar} aria-label={t.encabezado.cerrarMenu}>
             <Icono nombre="cerrar" tamano={18} />
           </button>
         </div>
-        <nav aria-label="Secciones">
+        <nav aria-label={t.encabezado.secciones}>
           <ul>
             {NAV.map((e) => (
               <li key={e.url}>
                 <Link href={e.url} onClick={cerrar} aria-current={actual(e.url) ? "page" : undefined}>
-                  {e.texto}
+                  {t.nav[e.clave]}
                   <Icono nombre="flecha" tamano={18} />
                 </Link>
               </li>
@@ -135,8 +144,9 @@ function PanelMovil({ cerrar, actual }: { cerrar: () => void; actual: (url: stri
           </ul>
         </nav>
         <Link className="boton boton--primario panel-movil__cta" href="/que-hacer#buscar" onClick={cerrar}>
-          <Icono nombre="buscar" tamano={18} /> Buscar en el portal
+          <Icono nombre="buscar" tamano={18} /> {t.encabezado.buscarEnPortal}
         </Link>
+        <SelectorIdioma variante="panel" />
       </div>
     </div>
   );

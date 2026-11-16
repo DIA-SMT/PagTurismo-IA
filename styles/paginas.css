@@ -30,7 +30,7 @@
 .migas ol { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-2); margin-bottom: var(--sp-5); padding: 0; list-style: none; font-size: var(--fs-xs); }
 .migas li { display: inline-flex; align-items: center; gap: var(--sp-2); color: var(--c-ink-muted); }
 .migas li + li::before { content: "/"; color: var(--c-borde-campo); }
-.migas a { color: var(--c-azul-700); font-weight: var(--fw-semi); }
+.migas a { display: inline-block; padding-block: 0.3rem; color: var(--c-azul-700); font-weight: var(--fw-semi); }
 .migas [aria-current] { color: var(--c-ink-soft); }
 
 .marcas { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-4); }
@@ -258,7 +258,7 @@
 .ficha__principal .fuentes { margin-top: 0; }
 .fuentes h2 { margin-bottom: var(--sp-2); color: var(--c-ink); font-size: var(--fs-sm); font-weight: var(--fw-fuerte); }
 .fuentes ul { margin: 0 0 var(--sp-2); padding-left: var(--sp-5); }
-.fuentes a { color: var(--c-azul-700); }
+.fuentes a { display: inline-block; padding-block: 0.25rem; color: var(--c-azul-700); }
 
 @media (max-width: 64rem) {
   .ficha { grid-template-columns: minmax(0, 1fr); gap: var(--sp-6); }

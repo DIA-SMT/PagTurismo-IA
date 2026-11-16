@@ -6,9 +6,12 @@
  * Si la API no responde la landing se arma igual, sin el dato.
  */
 
+/** Qué tiempo hace, como clave de los textos (lib/i18n/textos/comun.ts → clima). */
+export type EstadoDelCielo = "despejado" | "algoNublado" | "nublado" | "niebla" | "tormenta" | "chaparrones" | "lluvia";
+
 export type Clima = {
   temperatura: number;
-  descripcion: string;
+  estado: EstadoDelCielo;
   icono: string;
 };
 
@@ -18,15 +21,15 @@ const URL_CLIMA =
   "&current=temperature_2m,weather_code,is_day&timezone=America%2FArgentina%2FTucuman";
 
 /** Códigos WMO agrupados en lo que alguien de visita necesita saber. */
-function describir(codigo: number, esDeDia: boolean): Pick<Clima, "descripcion" | "icono"> {
-  if (codigo === 0) return { descripcion: "Despejado", icono: esDeDia ? "sol" : "luna" };
-  if (codigo <= 2) return { descripcion: "Algo nublado", icono: "nube-sol" };
-  if (codigo === 3) return { descripcion: "Nublado", icono: "nube" };
-  if (codigo === 45 || codigo === 48) return { descripcion: "Niebla", icono: "niebla" };
-  if (codigo >= 95) return { descripcion: "Tormenta", icono: "tormenta" };
-  if (codigo >= 80) return { descripcion: "Chaparrones", icono: "lluvia" };
-  if (codigo >= 51) return { descripcion: "Lluvia", icono: "lluvia" };
-  return { descripcion: "Nublado", icono: "nube" };
+function describir(codigo: number, esDeDia: boolean): Pick<Clima, "estado" | "icono"> {
+  if (codigo === 0) return { estado: "despejado", icono: esDeDia ? "sol" : "luna" };
+  if (codigo <= 2) return { estado: "algoNublado", icono: "nube-sol" };
+  if (codigo === 3) return { estado: "nublado", icono: "nube" };
+  if (codigo === 45 || codigo === 48) return { estado: "niebla", icono: "niebla" };
+  if (codigo >= 95) return { estado: "tormenta", icono: "tormenta" };
+  if (codigo >= 80) return { estado: "chaparrones", icono: "lluvia" };
+  if (codigo >= 51) return { estado: "lluvia", icono: "lluvia" };
+  return { estado: "nublado", icono: "nube" };
 }
 
 export async function getClima(): Promise<Clima | null> {

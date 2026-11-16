@@ -22,7 +22,15 @@
   },
   "costo": {
     "modalidad": "gratis",
-    "detalle": "Las esculturas están al aire libre."
+    "detalle": "Las esculturas están al aire libre.",
+    "traducciones": {
+      "en": {
+        "detalle": "The sculptures are outdoors."
+      },
+      "pt": {
+        "detalle": "As esculturas ficam ao ar livre."
+      }
+    }
   },
   "duracion": "",
   "contacto": {},
@@ -37,5 +45,19 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Open-Air Sculpture Museum",
+      "clase": "open-air museum",
+      "resumen": "Fourteen neoclassical sculptures installed in 1928 along calle Ramón Paz Posse, in Parque 9 de Julio.",
+      "zona": "Parque 9 de Julio"
+    },
+    "pt": {
+      "titulo": "Museu Escultórico a Céu Aberto",
+      "clase": "museu a céu aberto",
+      "resumen": "Catorze esculturas neoclássicas instaladas em 1928 na calle Ramón Paz Posse, no Parque 9 de Julio.",
+      "zona": "Parque 9 de Julio"
+    }
   }
 }

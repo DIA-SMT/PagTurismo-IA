@@ -23,29 +23,85 @@
   "paradas": [
     {
       "nombre": "Plaza Independencia",
-      "lugar": "plaza-independencia"
+      "lugar": "plaza-independencia",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Independencia"
+        },
+        "pt": {
+          "nombre": "Praça Independência"
+        }
+      }
     },
     {
       "nombre": "Plaza Belgrano",
-      "lugar": "plaza-belgrano"
+      "lugar": "plaza-belgrano",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Belgrano"
+        },
+        "pt": {
+          "nombre": "Praça Belgrano"
+        }
+      }
     },
     {
       "nombre": "Mercado de Abasto",
-      "lugar": "mercado-de-abasto"
+      "lugar": "mercado-de-abasto",
+      "traducciones": {
+        "en": {
+          "nombre": "Abasto Market"
+        },
+        "pt": {
+          "nombre": "Mercado de Abasto"
+        }
+      }
     },
     {
       "nombre": "Teatro Municipal Rosita Ávila",
-      "lugar": "teatro-rosita-avila"
+      "lugar": "teatro-rosita-avila",
+      "traducciones": {
+        "en": {
+          "nombre": "Rosita Ávila Municipal Theater"
+        },
+        "pt": {
+          "nombre": "Teatro Municipal Rosita Ávila"
+        }
+      }
     },
     {
-      "nombre": "Facultad de Ciencias Naturales (legado Miguel Lillo)"
+      "nombre": "Facultad de Ciencias Naturales (legado Miguel Lillo)",
+      "traducciones": {
+        "en": {
+          "nombre": "School of Natural Sciences (Miguel Lillo legacy)"
+        },
+        "pt": {
+          "nombre": "Faculdade de Ciências Naturais (legado de Miguel Lillo)"
+        }
+      }
     },
     {
-      "nombre": "Cancha de San Martín"
+      "nombre": "Cancha de San Martín",
+      "traducciones": {
+        "en": {
+          "nombre": "San Martín soccer stadium"
+        },
+        "pt": {
+          "nombre": "Estádio do San Martín"
+        }
+      }
     },
     {
       "nombre": "Regreso a Plaza Independencia",
-      "lugar": "plaza-independencia"
+      "lugar": "plaza-independencia",
+      "traducciones": {
+        "en": {
+          "nombre": "Back to Plaza Independencia"
+        },
+        "pt": {
+          "nombre": "Retorno à Praça Independência"
+        }
+      }
     }
   ],
   "experiencia": "city-tour-bus-turistico",
@@ -55,7 +111,15 @@
     "src": "/fotos/san-miguel-de-tucuman.webp",
     "alt": "Vista del centro de San Miguel de Tucumán",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "View of downtown San Miguel de Tucumán"
+      },
+      "pt": {
+        "alt": "Vista do centro de San Miguel de Tucumán"
+      }
+    }
   },
   "fuentes": [
     {
@@ -71,5 +135,25 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "La Ciudadela Tour",
+      "resumen": "A ride with a strong historic and grassroots character.",
+      "duracion": "About 2 hours",
+      "inicio": "Plaza Independencia",
+      "fin": "Plaza Independencia",
+      "esfuerzo": "Low: the tour is by bus.",
+      "aviso": "The Tourist Bus may run other routes or change its itinerary. Before you go, check its website for current departures."
+    },
+    "pt": {
+      "titulo": "Circuito La Ciudadela",
+      "resumen": "Um passeio com forte identidade histórica e popular.",
+      "duracion": "Cerca de 2 horas",
+      "inicio": "Praça Independência",
+      "fin": "Praça Independência",
+      "esfuerzo": "Baixo: o percurso é feito de ônibus.",
+      "aviso": "O Ônibus Turístico pode ter outros circuitos ou mudanças de trajeto. Antes de ir, confira no site dele as saídas vigentes."
+    }
   }
 }

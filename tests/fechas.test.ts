@@ -6,8 +6,8 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import {
-  aInstante, dentroDeVentana, destacables, diaLocal, filtrarPorCuando, finDeOcurrencia,
-  formatearOcurrencia, ocurrenciasVigentes, rangoFinDeSemana,
+  aInstante, dentroDeVentana, destacables, diaLocal, fechaAnual, filtrarPorCuando, finDeOcurrencia,
+  formatearOcurrencia, mesCorto, nombreMes, ocurrenciasVigentes, partesDeFecha, rangoFinDeSemana,
 } from "../lib/fechas.ts";
 
 // Tucumán está en UTC-3 todo el año.
@@ -107,5 +107,28 @@ describe("formato", () => {
     const texto = formatearOcurrencia({ inicio: "2026-11-07T21:00", fin: "2026-11-07T23:00" });
     assert.match(texto, /7 de noviembre de 2026/);
     assert.match(texto, /21:00 h a 23:00 h/);
+  });
+
+  it("en inglés, con AM/PM y el rango que arma Intl", () => {
+    const texto = formatearOcurrencia({ inicio: "2026-11-07T21:00", fin: "2026-11-07T23:00" }, "en");
+    assert.match(texto, /^Saturday, November 7, 2026 · 9:00\s*–\s*11:00\sPM$/u);
+    assert.equal(formatearOcurrencia({ inicio: "2026-11-07" }, "en"), "Saturday, November 7, 2026");
+  });
+
+  it("en portugués, de 0 a 23 y con mayúscula inicial", () => {
+    const texto = formatearOcurrencia({ inicio: "2026-11-07T21:00", fin: "2026-11-07T23:00" }, "pt");
+    assert.match(texto, /^Sábado, 7 de novembro de 2026 · 21:00\s*–\s*23:00$/u);
+    assert.match(formatearOcurrencia({ inicio: "2026-11-07", fin: "2026-11-09" }, "pt"), /^Sábado, 7 de novembro\s*–\s*segunda-feira, 9 de novembro de 2026$/u);
+  });
+
+  it("partes de fecha y fechas anuales en cada idioma", () => {
+    assert.deepEqual(partesDeFecha("2026-11-07T21:00", "en"), { dia: "7", mes: "NOV" });
+    assert.deepEqual(partesDeFecha("2026-11-07T21:00", "pt"), { dia: "7", mes: "NOV" });
+    assert.equal(fechaAnual(7, 9), "9 de julio");
+    assert.equal(fechaAnual(7, 9, "en"), "July 9");
+    assert.equal(fechaAnual(7, 9, "pt"), "9 de julho");
+    assert.equal(fechaAnual(2, 29, "en"), "February 29");
+    assert.equal(nombreMes(9, "pt"), "setembro");
+    assert.equal(mesCorto(9, "en"), "SEP");
   });
 });

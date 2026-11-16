@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { Icono } from "./Iconos";
+import { useTextos } from "./i18n/Idioma";
 
 /**
  * Fila horizontal con scroll-snap y flechas, como el "Qué hacer" de
@@ -11,6 +12,7 @@ import { Icono } from "./Iconos";
  * lo empujan una tarjeta por vez. Cada flecha se apaga al llegar al borde.
  */
 export function Carrusel({ etiqueta, children }: { etiqueta: string; children: ReactNode }) {
+  const { comun: { controles: t } } = useTextos();
   const pista = useRef<HTMLUListElement>(null);
   const [bordes, setBordes] = useState({ inicio: true, fin: false });
 
@@ -45,10 +47,10 @@ export function Carrusel({ etiqueta, children }: { etiqueta: string; children: R
         {children}
       </ul>
       <div className="carrusel__flechas">
-        <button type="button" className="boton-redondo" onClick={() => mover(-1)} disabled={bordes.inicio} aria-label="Anteriores">
+        <button type="button" className="boton-redondo" onClick={() => mover(-1)} disabled={bordes.inicio} aria-label={t.anteriores}>
           <Icono nombre="flecha-izq" tamano={20} />
         </button>
-        <button type="button" className="boton-redondo" onClick={() => mover(1)} disabled={bordes.fin} aria-label="Siguientes">
+        <button type="button" className="boton-redondo" onClick={() => mover(1)} disabled={bordes.fin} aria-label={t.siguientes}>
           <Icono nombre="flecha" tamano={20} />
         </button>
       </div>

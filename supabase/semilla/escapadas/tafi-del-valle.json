@@ -12,5 +12,15 @@
   },
   "tono": 0,
   "url": "",
-  "orden": 2
+  "orden": 2,
+  "traducciones": {
+    "en": {
+      "titulo": "Tafí del Valle",
+      "detalle": "A high-altitude valley with La Angostura reservoir, artisan cheeses and the road through the yungas cloud forest."
+    },
+    "pt": {
+      "titulo": "Tafí del Valle",
+      "detalle": "Vale de altitude com a represa La Angostura, queijos artesanais e a estrada entre as yungas."
+    }
+  }
 }

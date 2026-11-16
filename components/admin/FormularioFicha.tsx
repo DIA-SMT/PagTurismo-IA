@@ -8,7 +8,9 @@ import { MensajeAccion } from "@/components/admin/Piezas";
 import { guardarConfiguracion, guardarFicha, subirFoto } from "@/app/admin/acciones";
 import { estadoInicial, type EstadoAccion } from "@/lib/admin/acciones";
 import { ESQUEMAS, ESQUEMA_SITIO, ESQUEMA_TEMAS, type Campo } from "@/lib/admin/esquemas";
-import { slugDe } from "@/lib/admin/limpiar";
+import { IDIOMAS_TRADUCCION, slugDe } from "@/lib/admin/limpiar";
+import { ponerTraduccion, textosTraducibles, traduccionDe, type TextoTraducible } from "@/lib/admin/traducibles";
+import { LOCALE, localizarRuta } from "@/lib/i18n/config";
 
 type Json = Record<string, unknown>;
 type Ruta = (string | number)[];
@@ -43,7 +45,7 @@ function escribirRuta(obj: unknown, ruta: Ruta, valor: unknown): unknown {
  *  - modo "ficha": colecciones con estado (borrador o publicado) y dirección (slug).
  *  - modo "configuracion": datos del sitio o temas y etiquetas.
  */
-export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuardado = "borrador", slugOriginal = "", opciones, rutaPublica, actualizado, lateralExtra }: {
+export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuardado = "borrador", slugOriginal = "", opciones, rutaPublica, ultimoCambio, lateralExtra }: {
   esquemaId: string;
   modo: "ficha" | "configuracion";
   inicial: Json;
@@ -51,7 +53,7 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
   slugOriginal?: string;
   opciones: Opciones;
   rutaPublica?: string;
-  actualizado?: ReactNode;
+  ultimoCambio?: string;
   lateralExtra?: ReactNode;
 }) {
   const esquema = esquemaPorId(esquemaId);
@@ -60,6 +62,8 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
   const [slug, setSlug] = useState(slugOriginal);
   const [slugTocado, setSlugTocado] = useState(!!slugOriginal);
   const [sucio, setSucio] = useState(false);
+  /** Qué se edita: el original en español o las traducciones a un idioma. */
+  const [vista, setVista] = useState<"es" | (typeof IDIOMAS_TRADUCCION)[number]>("es");
   const [resultado, enviar, enviando] = useActionState<EstadoAccion, FormData>(
     modo === "ficha" ? guardarFicha : guardarConfiguracion,
     estadoInicial,
@@ -108,7 +112,22 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
         <input type="hidden" name="datos" value={JSON.stringify(datos)} />
         {modo === "ficha" && <input type="hidden" name="estado" value={estado} />}
         {modo === "ficha" && nueva && <input type="hidden" name="slug" value={slug} />}
-        {esquema.secciones.map((s) => (
+        <PestanasIdioma esquemaId={esquemaId} datos={datos} vista={vista} cambiarVista={setVista} />
+        {vista !== "es" ? (
+          <EditorTraducciones
+            esquemaId={esquemaId}
+            datos={datos}
+            idioma={vista}
+            cambiar={(texto, valor) => {
+              setDatos((d) => {
+                const copia = structuredClone(d);
+                ponerTraduccion(copia, texto, vista, valor, false);
+                return copia;
+              });
+              setSucio(true);
+            }}
+          />
+        ) : esquema.secciones.map((s) => (
           <section className="adm-tarjeta" key={s.titulo}>
             <div className="adm-tarjeta__cabecera"><h2>{s.titulo}</h2></div>
             {s.descripcion && <p className="adm-tarjeta__descripcion">{s.descripcion}</p>}
@@ -155,11 +174,11 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
             </button>
             {sucio && !enviando && <span className="adm-campo__ayuda">Hay cambios sin guardar.</span>}
             {rutaPublica && (
-              <Link className="adm-boton adm-boton--secundario adm-boton--ancho" href={rutaPublica} target="_blank">
-                <Icono nombre="ojo" tamano={18} /> Ver en el sitio
+              <Link className="adm-boton adm-boton--secundario adm-boton--ancho" href={localizarRuta(rutaPublica, vista)} target="_blank">
+                <Icono nombre="ojo" tamano={18} /> {vista === "es" ? "Ver en el sitio" : `Ver en ${LOCALE[vista].nombre}`}
               </Link>
             )}
-            {actualizado}
+            {ultimoCambio && <p className="adm-campo__ayuda">{ultimoCambio}</p>}
           </div>
         </section>
         {lateralExtra}
@@ -491,3 +510,75 @@ export function FormularioBorrar({ coleccion, slug, accion }: {
   );
 }
 
+
+/* ---- Traducciones ---- */
+
+const NOMBRE_VISTA = { es: "Español", en: "English", pt: "Português" } as const;
+
+/**
+ * Pestañas sobre el formulario: el original en español y una por idioma, con cuántos textos
+ * ya están traducidos. Cambiar de pestaña no guarda ni pierde nada: todo va en el mismo envío.
+ */
+function PestanasIdioma({ esquemaId, datos, vista, cambiarVista }: {
+  esquemaId: string;
+  datos: Json;
+  vista: "es" | (typeof IDIOMAS_TRADUCCION)[number];
+  cambiarVista: (v: "es" | (typeof IDIOMAS_TRADUCCION)[number]) => void;
+}) {
+  const textos = textosTraducibles(esquemaPorId(esquemaId), datos);
+  if (!textos.length) return null;
+  return (
+    <div className="adm-idiomas" role="tablist" aria-label="Idioma que estás editando">
+      {(["es", ...IDIOMAS_TRADUCCION] as const).map((v) => {
+        const hechos = v === "es" ? 0 : textos.filter((t) => traduccionDe(datos, t, v).trim()).length;
+        return (
+          <button key={v} type="button" role="tab" aria-selected={vista === v} className="adm-idiomas__pestana" onClick={() => cambiarVista(v)}>
+            {NOMBRE_VISTA[v]}
+            {v === "es" ? <small>original</small> : (
+              <small className={hechos === textos.length ? "adm-idiomas__listo" : undefined}>{hechos}/{textos.length}</small>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Cada texto traducible con su original al lado. Lo que quede vacío se ve en español. */
+function EditorTraducciones({ esquemaId, datos, idioma, cambiar }: {
+  esquemaId: string;
+  datos: Json;
+  idioma: (typeof IDIOMAS_TRADUCCION)[number];
+  cambiar: (texto: TextoTraducible, valor: string) => void;
+}) {
+  const textos = textosTraducibles(esquemaPorId(esquemaId), datos);
+  const lang = LOCALE[idioma].lang;
+  return (
+    <section className="adm-tarjeta" role="tabpanel" aria-label={`Traducción al ${idioma === "en" ? "inglés" : "portugués"}`}>
+      <div className="adm-tarjeta__cabecera"><h2>Traducción: {NOMBRE_VISTA[idioma]}</h2></div>
+      <p className="adm-tarjeta__descripcion">
+        Lo que dejes vacío se muestra en español. Los datos que no se traducen (fechas, direcciones, enlaces, fotos)
+        se cargan en la pestaña Español y valen para los tres idiomas.
+      </p>
+      <div className="adm-lista">
+        {textos.map((t) => {
+          const id = `traduccion-${idioma}-${[...t.objeto, t.campo].join("-")}`;
+          const valor = traduccionDe(datos, t, idioma);
+          return (
+            <div className="adm-campo adm-traduccion" key={id}>
+              <label className="adm-campo__etiqueta" htmlFor={id}>{t.etiqueta}</label>
+              <p className="adm-traduccion__original" lang="es"><span className="adm-oculto">Original en español: </span>{t.original}</p>
+              {t.tipo === "parrafo" ? (
+                <textarea id={id} lang={lang} rows={Math.min(10, Math.max(2, Math.ceil(t.original.length / 90)))} value={valor}
+                  placeholder="Sin traducir: se muestra en español" onChange={(e) => cambiar(t, e.target.value)} />
+              ) : (
+                <input id={id} lang={lang} className="adm-input" value={valor}
+                  placeholder="Sin traducir: se muestra en español" onChange={(e) => cambiar(t, e.target.value)} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}

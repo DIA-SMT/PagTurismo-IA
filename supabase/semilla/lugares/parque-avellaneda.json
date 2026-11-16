@@ -22,7 +22,15 @@
   },
   "costo": {
     "modalidad": "gratis",
-    "detalle": "Espacio público de acceso libre."
+    "detalle": "Espacio público de acceso libre.",
+    "traducciones": {
+      "en": {
+        "detalle": "Public space, free admission."
+      },
+      "pt": {
+        "detalle": "Espaço público de acesso livre."
+      }
+    }
   },
   "duracion": "",
   "contacto": {},
@@ -37,5 +45,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Parque Avellaneda",
+      "clase": "park",
+      "resumen": "A green space for walking, sports and family time."
+    },
+    "pt": {
+      "titulo": "Parque Avellaneda",
+      "clase": "parque",
+      "resumen": "Espaço verde para caminhar, praticar esportes e curtir em família."
+    }
   }
 }

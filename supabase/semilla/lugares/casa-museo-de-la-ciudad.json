@@ -35,5 +35,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "City House Museum (Casa Museo de la Ciudad)",
+      "clase": "museum",
+      "resumen": "A space devoted to the history of San Miguel de Tucumán."
+    },
+    "pt": {
+      "titulo": "Casa Museu da Cidade",
+      "clase": "museu",
+      "resumen": "Um espaço dedicado à história de San Miguel de Tucumán."
+    }
   }
 }

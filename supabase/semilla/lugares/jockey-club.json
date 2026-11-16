@@ -33,5 +33,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Jockey Club",
+      "clase": "building",
+      "resumen": "An iconic downtown building where the walking tour ends."
+    },
+    "pt": {
+      "titulo": "Jockey Club",
+      "clase": "edifício",
+      "resumen": "Edifício emblemático do centro, onde termina o circuito a pé."
+    }
   }
 }

@@ -36,5 +36,15 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "National Empanada Festival",
+      "resumen": "The contest for the country's best empanada, half an hour from the city."
+    },
+    "pt": {
+      "titulo": "Festa Nacional da Empanada",
+      "resumen": "O concurso da melhor empanada do país, a meia hora da cidade."
+    }
   }
 }

@@ -35,5 +35,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Mercedes Sosa Birthplace Museum",
+      "clase": "museum",
+      "resumen": "The house where the Tucumán-born folk singer was born, now a museum."
+    },
+    "pt": {
+      "titulo": "Museu Casa Natal de Mercedes Sosa",
+      "clase": "museu",
+      "resumen": "A casa onde nasceu a cantora tucumana, hoje transformada em museu."
+    }
   }
 }

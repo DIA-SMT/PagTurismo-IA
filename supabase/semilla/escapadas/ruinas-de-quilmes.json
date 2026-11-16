@@ -12,5 +12,15 @@
   },
   "tono": 4,
   "url": "",
-  "orden": 3
+  "orden": 3,
+  "traducciones": {
+    "en": {
+      "titulo": "Quilmes Ruins",
+      "detalle": "The sacred city of the Quilmes people, in the Calchaquí Valleys."
+    },
+    "pt": {
+      "titulo": "Ruínas de Quilmes",
+      "detalle": "A cidade sagrada do povo quilmes, nos Vales Calchaquíes."
+    }
+  }
 }

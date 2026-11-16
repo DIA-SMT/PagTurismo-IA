@@ -36,5 +36,19 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Sugar Industry Museum",
+      "clase": "museum",
+      "resumen": "Inside Parque 9 de Julio, it tells the story of sugar in Tucumán.",
+      "zona": "Parque 9 de Julio"
+    },
+    "pt": {
+      "titulo": "Museu da Indústria Açucareira",
+      "clase": "museu",
+      "resumen": "Dentro do Parque 9 de Julio, conta a história do açúcar em Tucumán.",
+      "zona": "Parque 9 de Julio"
+    }
   }
 }

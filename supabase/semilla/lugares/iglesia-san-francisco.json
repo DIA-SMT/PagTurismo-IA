@@ -36,5 +36,17 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "San Francisco Church",
+      "clase": "church",
+      "resumen": "Franciscan church in the historic center, facing Plaza Independencia."
+    },
+    "pt": {
+      "titulo": "Igreja de San Francisco",
+      "clase": "templo",
+      "resumen": "Templo franciscano do centro histórico, em frente à Plaza Independencia."
+    }
   }
 }

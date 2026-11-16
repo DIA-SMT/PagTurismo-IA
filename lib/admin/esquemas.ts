@@ -9,9 +9,12 @@
 
 type Base = { nombre: string; etiqueta: string; ayuda?: string; requerido?: boolean; ancho?: "medio" };
 
+/** Texto que se puede cargar también en inglés y portugués (lib/i18n/contenido.ts). */
+type Traducible = { traducible?: boolean };
+
 export type Campo =
-  | (Base & { tipo: "texto" | "url" | "correo"; marcador?: string })
-  | (Base & { tipo: "parrafo"; filas?: number })
+  | (Base & Traducible & { tipo: "texto" | "url" | "correo"; marcador?: string })
+  | (Base & Traducible & { tipo: "parrafo"; filas?: number })
   | (Base & { tipo: "numero"; min?: number; max?: number })
   | (Base & { tipo: "booleano" })
   | (Base & { tipo: "opciones"; opciones: { valor: string; texto: string }[] })
@@ -39,9 +42,9 @@ export type Esquema = {
 
 /* ---- Piezas que se repiten ---- */
 
-const titulo: Campo = { tipo: "texto", nombre: "titulo", etiqueta: "Título", requerido: true };
+const titulo: Campo = { tipo: "texto", nombre: "titulo", etiqueta: "Título", traducible: true, requerido: true };
 const resumen: Campo = {
-  tipo: "parrafo", nombre: "resumen", etiqueta: "Resumen", requerido: true, filas: 2,
+  tipo: "parrafo", nombre: "resumen", etiqueta: "Resumen", traducible: true, requerido: true, filas: 2,
   ayuda: "Una o dos oraciones. Se usa en tarjetas, en el buscador y al compartir.",
 };
 const temas: Campo = { tipo: "temas", nombre: "categorias", etiqueta: "Temas" };
@@ -55,13 +58,13 @@ const costo: Campo = {
       { valor: "gratis", texto: "Gratis" },
       { valor: "pago", texto: "Pago" },
     ] },
-    { tipo: "texto", nombre: "detalle", etiqueta: "Detalle", ancho: "medio" },
+    { tipo: "texto", nombre: "detalle", etiqueta: "Detalle", traducible: true, ancho: "medio" },
   ],
 };
 
 const horario: Campo = {
   tipo: "grupo", nombre: "horario", etiqueta: "Horario", campos: [
-    { tipo: "texto", nombre: "texto", etiqueta: "Texto", marcador: "Martes a domingo de 9 a 18. Feriados, consultar." },
+    { tipo: "texto", nombre: "texto", etiqueta: "Texto", traducible: true, marcador: "Martes a domingo de 9 a 18. Feriados, consultar." },
     { tipo: "booleano", nombre: "confirmado", etiqueta: "Confirmado por el responsable", ayuda: "Si no está confirmado, el sitio pide consultar antes de ir." },
   ],
 };
@@ -94,28 +97,28 @@ export const ESQUEMAS: Esquema[] = [
     secciones: [
       { titulo: "Lo principal", campos: [
         titulo,
-        { tipo: "texto", nombre: "clase", etiqueta: "Tipo de lugar", requerido: true, ancho: "medio", marcador: "museo, plaza, parque, templo…" },
+        { tipo: "texto", nombre: "clase", etiqueta: "Tipo de lugar", traducible: true, requerido: true, ancho: "medio", marcador: "museo, plaza, parque, templo…" },
         { tipo: "booleano", nombre: "imperdible", etiqueta: "Imperdible", ancho: "medio", ayuda: "Aparece en Descubrí San Miguel." },
         resumen,
-        { tipo: "parrafo", nombre: "porQueIr", etiqueta: "Por qué ir", filas: 3 },
-        { tipo: "parrafo", nombre: "descripcion", etiqueta: "Descripción e historia", filas: 6, ayuda: "Separá los párrafos con una línea en blanco." },
+        { tipo: "parrafo", nombre: "porQueIr", etiqueta: "Por qué ir", traducible: true, filas: 3 },
+        { tipo: "parrafo", nombre: "descripcion", etiqueta: "Descripción e historia", traducible: true, filas: 6, ayuda: "Separá los párrafos con una línea en blanco." },
         temas, etiquetas, imagen,
       ] },
       { titulo: "Información práctica", descripcion: "Cargá solo datos confirmados. Lo que falte se muestra como «a confirmar».", campos: [
         { tipo: "texto", nombre: "direccion", etiqueta: "Dirección", ancho: "medio" },
-        { tipo: "texto", nombre: "zona", etiqueta: "Zona", ancho: "medio", marcador: "Centro, Parque 9 de Julio…" },
+        { tipo: "texto", nombre: "zona", etiqueta: "Zona", traducible: true, ancho: "medio", marcador: "Centro, Parque 9 de Julio…" },
         { tipo: "grupo", nombre: "coordenadas", etiqueta: "Coordenadas verificadas", campos: [
           { tipo: "numero", nombre: "lat", etiqueta: "Latitud", ancho: "medio", min: -90, max: 90 },
           { tipo: "numero", nombre: "lng", etiqueta: "Longitud", ancho: "medio", min: -180, max: 180 },
         ] },
         horario, costo,
-        { tipo: "texto", nombre: "duracion", etiqueta: "Duración orientativa de la visita" },
+        { tipo: "texto", nombre: "duracion", etiqueta: "Duración orientativa de la visita", traducible: true },
         { tipo: "grupo", nombre: "contacto", etiqueta: "Contacto", campos: [
           { tipo: "texto", nombre: "telefono", etiqueta: "Teléfono", ancho: "medio" },
           { tipo: "correo", nombre: "email", etiqueta: "Correo", ancho: "medio" },
           { tipo: "url", nombre: "web", etiqueta: "Sitio oficial" },
         ] },
-        { tipo: "parrafo", nombre: "accesibilidad", etiqueta: "Accesibilidad", filas: 3, ayuda: "Solo condiciones verificadas, por sector." },
+        { tipo: "parrafo", nombre: "accesibilidad", etiqueta: "Accesibilidad", traducible: true, filas: 3, ayuda: "Solo condiciones verificadas, por sector." },
       ] },
       fuentesYValidacion,
     ],
@@ -127,7 +130,7 @@ export const ESQUEMAS: Esquema[] = [
     secciones: [
       { titulo: "Lo principal", campos: [
         titulo, resumen,
-        { tipo: "parrafo", nombre: "descripcion", etiqueta: "Qué se hace", filas: 5 },
+        { tipo: "parrafo", nombre: "descripcion", etiqueta: "Qué se hace", traducible: true, filas: 5 },
         { tipo: "opciones", nombre: "modalidad", etiqueta: "Modalidad", requerido: true, ancho: "medio", opciones: [
           { valor: "a-pie", texto: "A pie" }, { valor: "bus", texto: "En bus" },
           { valor: "bicicleta", texto: "En bicicleta" }, { valor: "libre", texto: "Paseo libre" },
@@ -142,7 +145,7 @@ export const ESQUEMAS: Esquema[] = [
             { valor: "consultar", texto: "Consultar" }, { valor: "sin-inscripcion", texto: "Sin inscripción" },
             { valor: "sin-salidas", texto: "Sin salidas publicadas" },
           ] },
-          { tipo: "texto", nombre: "texto", etiqueta: "Texto del botón", requerido: true, ancho: "medio", marcador: "Ver salidas y reservar en Bus Turístico" },
+          { tipo: "texto", nombre: "texto", etiqueta: "Texto del botón", traducible: true, requerido: true, ancho: "medio", marcador: "Ver salidas y reservar en Bus Turístico" },
           { tipo: "url", nombre: "url", etiqueta: "Enlace", ayuda: "Obligatorio si el tipo es Reservar." },
         ] },
         { tipo: "lista", nombre: "salidas", etiqueta: "Próximas salidas", resumen: "inicio", textoAgregar: "Agregar salida",
@@ -154,17 +157,17 @@ export const ESQUEMAS: Esquema[] = [
               { valor: "suspendida", texto: "Suspendida" }, { valor: "cancelada", texto: "Cancelada" },
             ] },
             { tipo: "url", nombre: "urlReserva", etiqueta: "Enlace de reserva de esta salida", ancho: "medio" },
-            { tipo: "texto", nombre: "nota", etiqueta: "Nota" },
+            { tipo: "texto", nombre: "nota", etiqueta: "Nota", traducible: true },
           ] },
       ] },
       { titulo: "Información práctica", campos: [
-        { tipo: "texto", nombre: "duracion", etiqueta: "Duración", ancho: "medio" },
-        { tipo: "texto", nombre: "puntoEncuentro", etiqueta: "Punto de encuentro", ancho: "medio" },
+        { tipo: "texto", nombre: "duracion", etiqueta: "Duración", traducible: true, ancho: "medio" },
+        { tipo: "texto", nombre: "puntoEncuentro", etiqueta: "Punto de encuentro", traducible: true, ancho: "medio" },
         horario, costo,
         { tipo: "relacion", nombre: "lugares", etiqueta: "Lugares que visita", coleccion: "lugares", multiple: true },
-        { tipo: "parrafo", nombre: "incluye", etiqueta: "Qué incluye", filas: 2 },
-        { tipo: "parrafo", nombre: "requisitos", etiqueta: "Requisitos", filas: 2 },
-        { tipo: "texto", nombre: "politicaClima", etiqueta: "Si llueve", ancho: "medio" },
+        { tipo: "parrafo", nombre: "incluye", etiqueta: "Qué incluye", traducible: true, filas: 2 },
+        { tipo: "parrafo", nombre: "requisitos", etiqueta: "Requisitos", traducible: true, filas: 2 },
+        { tipo: "texto", nombre: "politicaClima", etiqueta: "Si llueve", traducible: true, ancho: "medio" },
         { tipo: "texto", nombre: "operador", etiqueta: "Operador o responsable", ancho: "medio" },
       ] },
       fuentesYValidacion,
@@ -184,7 +187,7 @@ export const ESQUEMAS: Esquema[] = [
         ] },
         { tipo: "booleano", nombre: "fueraDeLaCiudad", etiqueta: "Es fuera de San Miguel de Tucumán", ancho: "medio" },
         resumen,
-        { tipo: "parrafo", nombre: "descripcion", etiqueta: "Descripción permanente", filas: 4, ayuda: "Lo que no cambia de un año a otro. Cada edición va en las fechas." },
+        { tipo: "parrafo", nombre: "descripcion", etiqueta: "Descripción permanente", traducible: true, filas: 4, ayuda: "Lo que no cambia de un año a otro. Cada edición va en las fechas." },
         temas, etiquetas, imagen,
       ] },
       { titulo: "Fechas", descripcion: "Hora de Tucumán. Si una fecha se cancela, cambiá su estado: no la borres.", campos: [
@@ -196,7 +199,7 @@ export const ESQUEMAS: Esquema[] = [
             { valor: "suspendido", texto: "Suspendido" }, { valor: "cancelado", texto: "Cancelado" },
           ] },
           { tipo: "texto", nombre: "sede", etiqueta: "Sede de esta fecha", ancho: "medio" },
-          { tipo: "texto", nombre: "nota", etiqueta: "Nota" },
+          { tipo: "texto", nombre: "nota", etiqueta: "Nota", traducible: true },
         ] },
         { tipo: "grupo", nombre: "recurrente", etiqueta: "Fecha que se repite cada año",
           ayuda: "Para el calendario anual. No confirma que haya un evento ese día.", campos: [
@@ -210,7 +213,7 @@ export const ESQUEMAS: Esquema[] = [
         { tipo: "texto", nombre: "localidad", etiqueta: "Localidad", ancho: "medio", marcador: "Famaillá, a unos 35 km" },
         { tipo: "texto", nombre: "organizador", etiqueta: "Organizador", ancho: "medio" },
         costo,
-        { tipo: "texto", nombre: "inscripcion", etiqueta: "Entradas o inscripción", ancho: "medio" },
+        { tipo: "texto", nombre: "inscripcion", etiqueta: "Entradas o inscripción", traducible: true, ancho: "medio" },
         { tipo: "url", nombre: "urlOficial", etiqueta: "Sitio oficial", ancho: "medio" },
       ] },
       fuentesYValidacion,
@@ -232,27 +235,27 @@ export const ESQUEMAS: Esquema[] = [
         { tipo: "booleano", nombre: "guiado", etiqueta: "Guiado", ancho: "medio" },
         { tipo: "numero", nombre: "orden", etiqueta: "Orden en los listados", ancho: "medio", min: 1, ayuda: "1 aparece primero." },
         resumen,
-        { tipo: "parrafo", nombre: "descripcion", etiqueta: "Descripción", filas: 4 },
+        { tipo: "parrafo", nombre: "descripcion", etiqueta: "Descripción", traducible: true, filas: 4 },
         temas, etiquetas, imagen,
       ] },
       { titulo: "Paradas", descripcion: "En orden. Elegí la ficha del lugar cuando exista: la parada enlaza a ella.", campos: [
         { tipo: "lista", nombre: "paradas", etiqueta: "Paradas", resumen: "nombre", textoAgregar: "Agregar parada", requerido: true, campos: [
-          { tipo: "texto", nombre: "nombre", etiqueta: "Nombre", requerido: true, ancho: "medio" },
+          { tipo: "texto", nombre: "nombre", etiqueta: "Nombre", traducible: true, requerido: true, ancho: "medio" },
           { tipo: "relacion", nombre: "lugar", etiqueta: "Ficha del lugar", coleccion: "lugares", ancho: "medio" },
-          { tipo: "texto", nombre: "nota", etiqueta: "Nota", ancho: "medio" },
+          { tipo: "texto", nombre: "nota", etiqueta: "Nota", traducible: true, ancho: "medio" },
           { tipo: "numero", nombre: "dia", etiqueta: "Día (itinerarios de varios días)", ancho: "medio", min: 1 },
         ] },
       ] },
       { titulo: "Información práctica", campos: [
-        { tipo: "texto", nombre: "duracion", etiqueta: "Duración", ancho: "medio" },
+        { tipo: "texto", nombre: "duracion", etiqueta: "Duración", traducible: true, ancho: "medio" },
         { tipo: "texto", nombre: "distancia", etiqueta: "Distancia (solo si fue medida)", ancho: "medio" },
-        { tipo: "texto", nombre: "inicio", etiqueta: "Empieza en", ancho: "medio" },
-        { tipo: "texto", nombre: "fin", etiqueta: "Termina en", ancho: "medio" },
-        { tipo: "texto", nombre: "esfuerzo", etiqueta: "Esfuerzo", ancho: "medio" },
+        { tipo: "texto", nombre: "inicio", etiqueta: "Empieza en", traducible: true, ancho: "medio" },
+        { tipo: "texto", nombre: "fin", etiqueta: "Termina en", traducible: true, ancho: "medio" },
+        { tipo: "texto", nombre: "esfuerzo", etiqueta: "Esfuerzo", traducible: true, ancho: "medio" },
         { tipo: "relacion", nombre: "experiencia", etiqueta: "Experiencia que lo opera", coleccion: "experiencias", ancho: "medio",
           ayuda: "Para los guiados: de ahí salen las salidas y el botón de reserva." },
-        { tipo: "parrafo", nombre: "condiciones", etiqueta: "Condiciones", filas: 2 },
-        { tipo: "parrafo", nombre: "aviso", etiqueta: "Aviso destacado", filas: 2 },
+        { tipo: "parrafo", nombre: "condiciones", etiqueta: "Condiciones", traducible: true, filas: 2 },
+        { tipo: "parrafo", nombre: "aviso", etiqueta: "Aviso destacado", traducible: true, filas: 2 },
       ] },
       fuentesYValidacion,
     ],
@@ -269,11 +272,11 @@ export const ESQUEMAS: Esquema[] = [
       ] },
       { titulo: "Contenido", campos: [
         { tipo: "lista", nombre: "secciones", etiqueta: "Secciones", resumen: "titulo", textoAgregar: "Agregar sección", campos: [
-          { tipo: "texto", nombre: "titulo", etiqueta: "Título" },
-          { tipo: "parrafo", nombre: "texto", etiqueta: "Texto", requerido: true, filas: 4 },
+          { tipo: "texto", nombre: "titulo", etiqueta: "Título", traducible: true },
+          { tipo: "parrafo", nombre: "texto", etiqueta: "Texto", traducible: true, requerido: true, filas: 4 },
         ] },
         { tipo: "lista", nombre: "enlaces", etiqueta: "Enlaces útiles", resumen: "texto", textoAgregar: "Agregar enlace", campos: [
-          { tipo: "texto", nombre: "texto", etiqueta: "Texto", requerido: true, ancho: "medio" },
+          { tipo: "texto", nombre: "texto", etiqueta: "Texto", traducible: true, requerido: true, ancho: "medio" },
           { tipo: "url", nombre: "url", etiqueta: "Dirección", requerido: true, ancho: "medio" },
         ] },
       ] },
@@ -286,9 +289,9 @@ export const ESQUEMAS: Esquema[] = [
     secciones: [
       { titulo: "Tarjeta", campos: [
         titulo,
-        { tipo: "texto", nombre: "etiqueta", etiqueta: "Etiqueta", requerido: true, ancho: "medio", marcador: "Recorridos, Esta semana…" },
+        { tipo: "texto", nombre: "etiqueta", etiqueta: "Etiqueta", traducible: true, requerido: true, ancho: "medio", marcador: "Recorridos, Esta semana…" },
         { tipo: "numero", nombre: "orden", etiqueta: "Orden", ancho: "medio", min: 1 },
-        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", requerido: true, filas: 3 },
+        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", traducible: true, requerido: true, filas: 3 },
         { ...imagen, requerido: true },
       ] },
       { titulo: "Destino y vigencia", descripcion: "Si la ficha de destino no existe o está en borrador, el destacado no se muestra.", campos: [
@@ -312,7 +315,7 @@ export const ESQUEMAS: Esquema[] = [
     secciones: [
       { titulo: "Plato", campos: [
         titulo,
-        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", requerido: true, filas: 3 },
+        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", traducible: true, requerido: true, filas: 3 },
         { ...imagen, requerido: true },
         { tipo: "numero", nombre: "tono", etiqueta: "Tono de fondo (0 a 5)", ancho: "medio", min: 0, max: 5 },
         { tipo: "numero", nombre: "orden", etiqueta: "Orden", ancho: "medio", min: 1 },
@@ -325,7 +328,7 @@ export const ESQUEMAS: Esquema[] = [
     secciones: [
       { titulo: "Escapada", campos: [
         titulo,
-        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", requerido: true, filas: 3 },
+        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", traducible: true, requerido: true, filas: 3 },
         { tipo: "texto", nombre: "localidad", etiqueta: "Localidad", ancho: "medio" },
         { tipo: "texto", nombre: "distancia", etiqueta: "Distancia aproximada", ancho: "medio", marcador: "25 km" },
         { ...imagen, requerido: true },
@@ -344,17 +347,17 @@ export const ESQUEMA_SITIO: Esquema = {
   descripcion: "Textos de la portada, contacto, redes, teléfonos de emergencia e historia.",
   secciones: [
     { titulo: "Portada", campos: [{ tipo: "grupo", nombre: "hero", etiqueta: "Encabezado", campos: [
-      { tipo: "texto", nombre: "kicker", etiqueta: "Antetítulo" },
-      { tipo: "texto", nombre: "titulo", etiqueta: "Título", requerido: true, ancho: "medio" },
-      { tipo: "texto", nombre: "tituloAcento", etiqueta: "Título (parte resaltada)", ancho: "medio" },
-      { tipo: "parrafo", nombre: "bajada", etiqueta: "Bajada", filas: 2 },
+      { tipo: "texto", nombre: "kicker", etiqueta: "Antetítulo", traducible: true },
+      { tipo: "texto", nombre: "titulo", etiqueta: "Título", traducible: true, requerido: true, ancho: "medio" },
+      { tipo: "texto", nombre: "tituloAcento", etiqueta: "Título (parte resaltada)", traducible: true, ancho: "medio" },
+      { tipo: "parrafo", nombre: "bajada", etiqueta: "Bajada", traducible: true, filas: 2 },
     ] }] },
     { titulo: "Contacto", campos: [
       { tipo: "grupo", nombre: "turismo", etiqueta: "Dirección de Turismo", campos: [
-        { tipo: "texto", nombre: "area", etiqueta: "Área", requerido: true, ancho: "medio" },
+        { tipo: "texto", nombre: "area", etiqueta: "Área", traducible: true, requerido: true, ancho: "medio" },
         { tipo: "correo", nombre: "email", etiqueta: "Correo", requerido: true, ancho: "medio" },
         { tipo: "texto", nombre: "domicilio", etiqueta: "Domicilio" },
-        { tipo: "texto", nombre: "atencion", etiqueta: "Horario de atención (solo si está confirmado)" },
+        { tipo: "texto", nombre: "atencion", etiqueta: "Horario de atención (solo si está confirmado)", traducible: true },
       ] },
       { tipo: "grupo", nombre: "municipalidad", etiqueta: "Municipalidad", campos: [
         { tipo: "texto", nombre: "direccion", etiqueta: "Dirección" },
@@ -369,7 +372,7 @@ export const ESQUEMA_SITIO: Esquema = {
     ] },
     { titulo: "Emergencias", campos: [
       { tipo: "lista", nombre: "emergencias", etiqueta: "Teléfonos de emergencia", resumen: "nombre", textoAgregar: "Agregar teléfono", campos: [
-        { tipo: "texto", nombre: "nombre", etiqueta: "Nombre", requerido: true, ancho: "medio" },
+        { tipo: "texto", nombre: "nombre", etiqueta: "Nombre", traducible: true, requerido: true, ancho: "medio" },
         { tipo: "texto", nombre: "numero", etiqueta: "Número", requerido: true, ancho: "medio" },
         { tipo: "opciones", nombre: "icono", etiqueta: "Ícono", opciones: ["emergencia-cruz", "emergencia-escudo", "emergencia-fuego"].map((v) => ({ valor: v, texto: v })) },
       ] },
@@ -377,8 +380,8 @@ export const ESQUEMA_SITIO: Esquema = {
     { titulo: "Historia", campos: [
       { tipo: "lista", nombre: "historia", etiqueta: "Línea de tiempo", resumen: "anio", textoAgregar: "Agregar fecha", campos: [
         { tipo: "texto", nombre: "anio", etiqueta: "Año", requerido: true, ancho: "medio" },
-        { tipo: "texto", nombre: "titulo", etiqueta: "Título", requerido: true, ancho: "medio" },
-        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", filas: 2 },
+        { tipo: "texto", nombre: "titulo", etiqueta: "Título", traducible: true, requerido: true, ancho: "medio" },
+        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", traducible: true, filas: 2 },
       ] },
     ] },
   ],
@@ -391,8 +394,8 @@ export const ESQUEMA_TEMAS: Esquema = {
     { titulo: "Temas", descripcion: "No cambies el identificador de un tema existente: las fichas lo usan para relacionarse.", campos: [
       { tipo: "lista", nombre: "categorias", etiqueta: "Temas", resumen: "titulo", textoAgregar: "Agregar tema", campos: [
         { tipo: "texto", nombre: "id", etiqueta: "Identificador", requerido: true, ancho: "medio", marcador: "historia-y-patrimonio" },
-        { tipo: "texto", nombre: "titulo", etiqueta: "Nombre", requerido: true, ancho: "medio" },
-        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", filas: 2 },
+        { tipo: "texto", nombre: "titulo", etiqueta: "Nombre", traducible: true, requerido: true, ancho: "medio" },
+        { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", traducible: true, filas: 2 },
         { tipo: "texto", nombre: "imagen", etiqueta: "Imagen (ruta)", requerido: true, ancho: "medio", marcador: "/fotos/…" },
         { tipo: "numero", nombre: "tono", etiqueta: "Tono si es ilustración (0 a 5)", ancho: "medio", min: 0, max: 5 },
       ] },
@@ -400,7 +403,7 @@ export const ESQUEMA_TEMAS: Esquema = {
     { titulo: "Etiquetas", campos: [
       { tipo: "lista", nombre: "etiquetas", etiqueta: "Etiquetas", resumen: "titulo", textoAgregar: "Agregar etiqueta", campos: [
         { tipo: "texto", nombre: "id", etiqueta: "Identificador", requerido: true, ancho: "medio" },
-        { tipo: "texto", nombre: "titulo", etiqueta: "Nombre", requerido: true, ancho: "medio" },
+        { tipo: "texto", nombre: "titulo", etiqueta: "Nombre", traducible: true, requerido: true, ancho: "medio" },
       ] },
     ] },
   ],

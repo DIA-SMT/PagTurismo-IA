@@ -10,6 +10,7 @@
  * Sin dependencias: lo usan el servidor, el navegador y las pruebas.
  */
 
+import { LOCALE, type Idioma } from "./i18n/config.ts";
 import type { Evento, Ocurrencia } from "./tipos";
 
 export const ZONA = "America/Argentina/Tucuman";
@@ -157,28 +158,91 @@ export function dentroDeVentana(desde: string | undefined, hasta: string | undef
 
 /* ---- Formato ---- */
 
-const fmtDia = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, weekday: "long", day: "numeric", month: "long", year: "numeric" });
-const fmtHora = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
-const fmtMesCorto = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, month: "short" });
-const fmtDiaNumero = new Intl.DateTimeFormat("es-AR", { timeZone: ZONA, day: "numeric" });
+type Formato = "dia" | "hora" | "diaNumero" | "mesCorto";
 
-/** "sábado, 7 de noviembre de 2026 · 21:00 h" */
-export function formatearOcurrencia(o: Pick<Ocurrencia, "inicio" | "fin">): string {
+const OPCIONES: Record<Formato, (idioma: Idioma) => Intl.DateTimeFormatOptions> = {
+  dia: () => ({ weekday: "long", day: "numeric", month: "long", year: "numeric" }),
+  // En inglés, con AM/PM ("9:00 PM"); en español y portugués, de 0 a 23.
+  hora: (idioma) => (idioma === "en" ? { hour: "numeric", minute: "2-digit" } : { hour: "2-digit", minute: "2-digit", hourCycle: "h23" }),
+  diaNumero: () => ({ day: "numeric" }),
+  mesCorto: () => ({ month: "short" }),
+};
+
+const formatos = new Map<string, Intl.DateTimeFormat>();
+
+/** Formateadores en hora de Tucumán, uno por idioma y formato (crearlos cuesta). */
+function fmt(idioma: Idioma, formato: Formato): Intl.DateTimeFormat {
+  const clave = `${idioma}:${formato}`;
+  let f = formatos.get(clave);
+  if (!f) {
+    f = new Intl.DateTimeFormat(LOCALE[idioma].intl, { timeZone: ZONA, ...OPCIONES[formato](idioma) });
+    formatos.set(clave, f);
+  }
+  return f;
+}
+
+/**
+ * "Sábado, 7 de noviembre de 2026 · 21:00 h a 23:00 h"
+ * "Saturday, November 7, 2026 · 9:00 – 11:00 PM"
+ * "Sábado, 7 de novembro de 2026 · 21:00 – 23:00"
+ */
+export function formatearOcurrencia(o: Pick<Ocurrencia, "inicio" | "fin">, idioma: Idioma = "es"): string {
+  const dia = fmt(idioma, "dia");
+  const hora = fmt(idioma, "hora");
   const inicio = aInstante(o.inicio);
-  let texto = fmtDia.format(inicio);
-  if (!soloDia(o.inicio)) texto += ` · ${fmtHora.format(inicio)} h`;
-  if (o.fin && esFechaValida(o.fin)) {
-    const fin = aInstante(o.fin);
-    const mismoDia = diaLocal(fin) === diaLocal(inicio);
-    if (mismoDia && !soloDia(o.fin)) texto += ` a ${fmtHora.format(fin)} h`;
-    else if (!mismoDia) texto += ` al ${fmtDia.format(fin)}${soloDia(o.fin) ? "" : ` · ${fmtHora.format(fin)} h`}`;
+  const finLocal = o.fin && esFechaValida(o.fin) ? o.fin : undefined;
+  const fin = finLocal ? aInstante(finLocal) : undefined;
+  const mismoDia = fin !== undefined && diaLocal(fin) === diaLocal(inicio);
+  let texto = dia.format(inicio);
+
+  if (idioma === "es") {
+    // El texto de siempre, con sus conectores.
+    if (!soloDia(o.inicio)) texto += ` · ${hora.format(inicio)} h`;
+    if (finLocal && fin !== undefined) {
+      if (mismoDia && !soloDia(finLocal)) texto += ` a ${hora.format(fin)} h`;
+      else if (!mismoDia) texto += ` al ${dia.format(fin)}${soloDia(finLocal) ? "" : ` · ${hora.format(fin)} h`}`;
+    }
+  } else if (!finLocal || fin === undefined || (mismoDia && soloDia(finLocal))) {
+    if (!soloDia(o.inicio)) texto += ` · ${hora.format(inicio)}`;
+  } else if (mismoDia) {
+    // Mismo día: el rango de horas lo arma Intl ("9:00 – 11:00 PM").
+    texto += soloDia(o.inicio) ? ` – ${hora.format(fin)}` : ` · ${hora.formatRange(inicio, fin)}`;
+  } else if (soloDia(o.inicio) && soloDia(finLocal)) {
+    texto = dia.formatRange(inicio, fin);
+  } else {
+    const parte = (local: string, i: number) => (soloDia(local) ? dia.format(i) : `${dia.format(i)} · ${hora.format(i)}`);
+    texto = `${parte(o.inicio, inicio)} – ${parte(finLocal, fin)}`;
   }
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
 
-export function partesDeFecha(local: string): { dia: string; mes: string } {
+/** Para el cuadradito de fecha: { dia: "7", mes: "NOV" }. */
+export function partesDeFecha(local: string, idioma: Idioma = "es"): { dia: string; mes: string } {
   const i = aInstante(local);
-  return { dia: fmtDiaNumero.format(i), mes: fmtMesCorto.format(i).replace(".", "").toUpperCase() };
+  return { dia: fmt(idioma, "diaNumero").format(i), mes: fmt(idioma, "mesCorto").format(i).replace(".", "").toUpperCase() };
 }
 
+/** Los meses en español, en minúscula. Para cualquier idioma, `nombreMes`. */
 export const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+
+/** Un día del calendario que se repite cada año: sin año ni zona horaria. */
+function fechaSinAnio(mes: number, dia: number | undefined, idioma: Idioma): string {
+  const opciones: Intl.DateTimeFormatOptions = dia ? { timeZone: "UTC", day: "numeric", month: "long" } : { timeZone: "UTC", month: "long" };
+  // 2024 es bisiesto: así existe el 29 de febrero.
+  return new Intl.DateTimeFormat(LOCALE[idioma].intl, opciones).format(Date.UTC(2024, mes - 1, dia ?? 1));
+}
+
+/** Mes 1–12 → "noviembre", "November", "novembro". */
+export function nombreMes(mes: number, idioma: Idioma = "es"): string {
+  return idioma === "es" ? MESES[mes - 1] : fechaSinAnio(mes, undefined, idioma);
+}
+
+/** Mes 1–12 → "NOV", "SEP" (en portugués, "SET"). */
+export function mesCorto(mes: number, idioma: Idioma = "es"): string {
+  return nombreMes(mes, idioma).slice(0, 3).toUpperCase();
+}
+
+/** Fecha anual: "7 de noviembre", "November 7", "7 de novembro"; sin día, solo el mes. */
+export function fechaAnual(mes: number, dia?: number, idioma: Idioma = "es"): string {
+  return dia ? fechaSinAnio(mes, dia, idioma) : nombreMes(mes, idioma);
+}

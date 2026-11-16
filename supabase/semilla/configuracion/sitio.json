@@ -3,13 +3,35 @@
     "kicker": "San Miguel de Tucumán · Ciudad Histórica",
     "titulo": "Donde nació",
     "tituloAcento": "la Independencia",
-    "bajada": "Historia, sabores y naturaleza al pie del cerro San Javier. Viví la capital del Jardín de la República."
+    "bajada": "Historia, sabores y naturaleza al pie del cerro San Javier. Viví la capital del Jardín de la República.",
+    "traducciones": {
+      "en": {
+        "kicker": "San Miguel de Tucumán · Historic City",
+        "titulo": "Birthplace of",
+        "tituloAcento": "Argentine Independence",
+        "bajada": "History, flavors and nature at the foot of the San Javier hills. Experience the capital of the Garden of the Republic."
+      },
+      "pt": {
+        "kicker": "San Miguel de Tucumán · Cidade Histórica",
+        "titulo": "Onde nasceu",
+        "tituloAcento": "a Independência",
+        "bajada": "História, sabores e natureza aos pés do cerro San Javier. Viva a capital do Jardim da República."
+      }
+    }
   },
   "turismo": {
     "area": "Dirección de Turismo",
     "domicilio": "Congreso y Crisóstomo Álvarez, San Miguel de Tucumán",
     "email": "turismo@smt.gob.ar",
-    "atencion": ""
+    "atencion": "",
+    "traducciones": {
+      "en": {
+        "area": "Tourism Office"
+      },
+      "pt": {
+        "area": "Secretaria de Turismo"
+      }
+    }
   },
   "municipalidad": {
     "direccion": "9 de Julio 570, T4000 San Miguel de Tucumán",
@@ -42,44 +64,116 @@
     {
       "nombre": "Emergencia Salud",
       "numero": "107",
-      "icono": "emergencia-cruz"
+      "icono": "emergencia-cruz",
+      "traducciones": {
+        "en": {
+          "nombre": "Medical emergency"
+        },
+        "pt": {
+          "nombre": "Emergência de saúde"
+        }
+      }
     },
     {
       "nombre": "Emergencia Policial",
       "numero": "911",
-      "icono": "emergencia-escudo"
+      "icono": "emergencia-escudo",
+      "traducciones": {
+        "en": {
+          "nombre": "Police emergency"
+        },
+        "pt": {
+          "nombre": "Emergência policial"
+        }
+      }
     },
     {
       "nombre": "Bomberos",
       "numero": "100",
-      "icono": "emergencia-fuego"
+      "icono": "emergencia-fuego",
+      "traducciones": {
+        "en": {
+          "nombre": "Fire department"
+        },
+        "pt": {
+          "nombre": "Bombeiros"
+        }
+      }
     },
     {
       "nombre": "Defensa Civil",
       "numero": "103",
-      "icono": "emergencia-escudo"
+      "icono": "emergencia-escudo",
+      "traducciones": {
+        "en": {
+          "nombre": "Civil Defense"
+        },
+        "pt": {
+          "nombre": "Defesa Civil"
+        }
+      }
     }
   ],
   "historia": [
     {
       "anio": "1565",
       "titulo": "Primera fundación",
-      "detalle": "Diego de Villarroel funda San Miguel de Tucumán en Ibatín, el 31 de mayo."
+      "detalle": "Diego de Villarroel funda San Miguel de Tucumán en Ibatín, el 31 de mayo.",
+      "traducciones": {
+        "en": {
+          "titulo": "First founding",
+          "detalle": "Diego de Villarroel founds San Miguel de Tucumán in Ibatín on May 31."
+        },
+        "pt": {
+          "titulo": "Primeira fundação",
+          "detalle": "Diego de Villarroel funda San Miguel de Tucumán em Ibatín, em 31 de maio."
+        }
+      }
     },
     {
       "anio": "1685",
       "titulo": "Al pie del cerro",
-      "detalle": "La ciudad se traslada a su emplazamiento actual, frente al San Javier."
+      "detalle": "La ciudad se traslada a su emplazamiento actual, frente al San Javier.",
+      "traducciones": {
+        "en": {
+          "titulo": "At the foot of the hills",
+          "detalle": "The city moves to its current site, facing the San Javier hills."
+        },
+        "pt": {
+          "titulo": "Aos pés do cerro",
+          "detalle": "A cidade é transferida para o local atual, diante do San Javier."
+        }
+      }
     },
     {
       "anio": "1812",
       "titulo": "Batalla de Tucumán",
-      "detalle": "El 24 de septiembre, el ejército de Belgrano vence a las fuerzas realistas."
+      "detalle": "El 24 de septiembre, el ejército de Belgrano vence a las fuerzas realistas.",
+      "traducciones": {
+        "en": {
+          "titulo": "Battle of Tucumán",
+          "detalle": "On September 24, Belgrano's army defeats the royalist forces."
+        },
+        "pt": {
+          "titulo": "Batalha de Tucumán",
+          "detalle": "Em 24 de setembro, o exército de Belgrano vence as forças realistas."
+        }
+      }
     },
     {
       "anio": "1816",
       "titulo": "Independencia",
-      "detalle": "El 9 de julio, el Congreso declara la independencia en la Casa Histórica."
+      "detalle": "El 9 de julio, el Congreso declara la independencia en la Casa Histórica.",
+      "traducciones": {
+        "en": {
+          "titulo": "Independence",
+          "detalle": "On July 9, Congress declares independence at the Historic House."
+        },
+        "pt": {
+          "titulo": "Independência",
+          "detalle": "Em 9 de julho, o Congresso declara a independência na Casa Histórica."
+        }
+      }
     }
   ]
 }

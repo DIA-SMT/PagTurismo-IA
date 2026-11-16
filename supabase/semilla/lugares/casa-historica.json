@@ -29,7 +29,15 @@
     "src": "/fotos/museo-nacional-de-la-independencia.webp",
     "alt": "Fachada colonial blanca de la Casa Histórica de la Independencia",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "White colonial facade of the Historic House of Independence"
+      },
+      "pt": {
+        "alt": "Fachada colonial branca da Casa Histórica da Independência"
+      }
+    }
   },
   "fuentes": [
     {
@@ -45,5 +53,19 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Historic House of Independence Museum",
+      "clase": "museum",
+      "resumen": "The house where Congress declared Argentina's independence on July 9, 1816.",
+      "porQueIr": "It's the most symbolic place in Argentine history and the starting point of the walking tour through the historic center."
+    },
+    "pt": {
+      "titulo": "Museu Casa Histórica da Independência",
+      "clase": "museu",
+      "resumen": "A casa onde o Congresso declarou a independência em 9 de julho de 1816.",
+      "porQueIr": "É o lugar mais simbólico da história argentina e o ponto de partida do circuito a pé pelo centro histórico."
+    }
   }
 }

@@ -16,7 +16,15 @@
   "duracion": "",
   "horario": {
     "texto": "Salida a las 09:30",
-    "confirmado": false
+    "confirmado": false,
+    "traducciones": {
+      "en": {
+        "texto": "Departs at 09:30"
+      },
+      "pt": {
+        "texto": "Saída às 09:30"
+      }
+    }
   },
   "puntoEncuentro": "Museo Casa Histórica de la Independencia",
   "lugares": [
@@ -34,14 +42,30 @@
   "accion": {
     "tipo": "inscripcion",
     "texto": "Ver condiciones e inscribirse en smt.gob.ar",
-    "url": "https://smt.gob.ar/circuitosturisticospie"
+    "url": "https://smt.gob.ar/circuitosturisticospie",
+    "traducciones": {
+      "en": {
+        "texto": "See conditions and sign up at smt.gob.ar"
+      },
+      "pt": {
+        "texto": "Ver condições e se inscrever em smt.gob.ar"
+      }
+    }
   },
   "salidas": [],
   "imagen": {
     "src": "/fotos/museo-nacional-de-la-independencia.webp",
     "alt": "Fachada de la Casa Histórica, punto de partida del circuito",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "Facade of the Historic House, the tour's starting point"
+      },
+      "pt": {
+        "alt": "Fachada da Casa Histórica, ponto de partida do circuito"
+      }
+    }
   },
   "fuentes": [
     {
@@ -53,5 +77,23 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Guided walking tour of the historic center",
+      "resumen": "A guided visit to museums, churches and Tucumán's “city” financial district, from the Historic House Museum to the Jockey Club.",
+      "descripcion": "It starts at the Historic House Museum and ends at the Jockey Club, with a refreshment before heading back to the plaza.",
+      "puntoEncuentro": "Historic House of Independence Museum",
+      "incluye": "Guided tour and a refreshment at the end.",
+      "requisitos": "Advance registration required."
+    },
+    "pt": {
+      "titulo": "Circuito guiado a pé pelo centro histórico",
+      "resumen": "Visita guiada por museus, igrejas e a “city tucumana”, do Museu Casa Histórica até o Jockey Club.",
+      "descripcion": "Sai do Museu Casa Histórica e termina no Jockey Club, com um refresco antes de voltar à praça.",
+      "puntoEncuentro": "Museu Casa Histórica da Independência",
+      "incluye": "Visita guiada e um refresco no final.",
+      "requisitos": "Inscrição prévia."
+    }
   }
 }

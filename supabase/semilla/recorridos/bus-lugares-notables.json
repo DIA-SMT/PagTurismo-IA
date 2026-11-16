@@ -22,76 +22,236 @@
   "fin": "Plaza Independencia",
   "paradas": [
     {
-      "nombre": "Calles céntricas"
+      "nombre": "Calles céntricas",
+      "traducciones": {
+        "en": {
+          "nombre": "Downtown streets"
+        },
+        "pt": {
+          "nombre": "Ruas do centro"
+        }
+      }
     },
     {
-      "nombre": "Av. Sarmiento"
+      "nombre": "Av. Sarmiento",
+      "traducciones": {
+        "en": {
+          "nombre": "Av. Sarmiento"
+        },
+        "pt": {
+          "nombre": "Av. Sarmiento"
+        }
+      }
     },
     {
       "nombre": "Plaza Urquiza",
-      "lugar": "plaza-urquiza"
+      "lugar": "plaza-urquiza",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Urquiza"
+        },
+        "pt": {
+          "nombre": "Praça Urquiza"
+        }
+      }
     },
     {
       "nombre": "Teatro San Martín",
-      "lugar": "teatro-san-martin"
+      "lugar": "teatro-san-martin",
+      "traducciones": {
+        "en": {
+          "nombre": "San Martín Theater"
+        },
+        "pt": {
+          "nombre": "Teatro San Martín"
+        }
+      }
     },
     {
-      "nombre": "Colegio Nacional"
+      "nombre": "Colegio Nacional",
+      "traducciones": {
+        "en": {
+          "nombre": "Colegio Nacional (National High School)"
+        },
+        "pt": {
+          "nombre": "Colégio Nacional"
+        }
+      }
     },
     {
       "nombre": "Parque 9 de Julio",
-      "lugar": "parque-9-de-julio"
+      "lugar": "parque-9-de-julio",
+      "traducciones": {
+        "en": {
+          "nombre": "Parque 9 de Julio"
+        },
+        "pt": {
+          "nombre": "Parque 9 de Julio"
+        }
+      }
     },
     {
       "nombre": "Museo de la Industria Azucarera",
-      "lugar": "museo-industria-azucarera"
+      "lugar": "museo-industria-azucarera",
+      "traducciones": {
+        "en": {
+          "nombre": "Sugar Industry Museum"
+        },
+        "pt": {
+          "nombre": "Museu da Indústria Açucareira"
+        }
+      }
     },
     {
-      "nombre": "Reloj de Flores"
+      "nombre": "Reloj de Flores",
+      "traducciones": {
+        "en": {
+          "nombre": "Flower Clock"
+        },
+        "pt": {
+          "nombre": "Relógio de Flores"
+        }
+      }
     },
     {
       "nombre": "Palacio de los Deportes",
-      "lugar": "palacio-de-los-deportes"
+      "lugar": "palacio-de-los-deportes",
+      "traducciones": {
+        "en": {
+          "nombre": "Palacio de los Deportes (sports arena)"
+        },
+        "pt": {
+          "nombre": "Palácio dos Esportes"
+        }
+      }
     },
     {
-      "nombre": "Tribunales"
+      "nombre": "Tribunales",
+      "traducciones": {
+        "en": {
+          "nombre": "Courthouse"
+        },
+        "pt": {
+          "nombre": "Tribunais"
+        }
+      }
     },
     {
       "nombre": "Plaza San Martín",
-      "lugar": "plaza-san-martin"
+      "lugar": "plaza-san-martin",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza San Martín"
+        },
+        "pt": {
+          "nombre": "Praça San Martín"
+        }
+      }
     },
     {
       "nombre": "Plaza Belgrano",
-      "lugar": "plaza-belgrano"
+      "lugar": "plaza-belgrano",
+      "traducciones": {
+        "en": {
+          "nombre": "Plaza Belgrano"
+        },
+        "pt": {
+          "nombre": "Praça Belgrano"
+        }
+      }
     },
     {
-      "nombre": "Barrio La Ciudadela"
+      "nombre": "Barrio La Ciudadela",
+      "traducciones": {
+        "en": {
+          "nombre": "La Ciudadela neighborhood"
+        },
+        "pt": {
+          "nombre": "Bairro La Ciudadela"
+        }
+      }
     },
     {
       "nombre": "Ex Mercado de Abasto",
-      "lugar": "mercado-de-abasto"
+      "lugar": "mercado-de-abasto",
+      "traducciones": {
+        "en": {
+          "nombre": "Former Abasto Market"
+        },
+        "pt": {
+          "nombre": "Antigo Mercado de Abasto"
+        }
+      }
     },
     {
       "nombre": "Teatro Rosita Ávila",
-      "lugar": "teatro-rosita-avila"
+      "lugar": "teatro-rosita-avila",
+      "traducciones": {
+        "en": {
+          "nombre": "Rosita Ávila Theater"
+        },
+        "pt": {
+          "nombre": "Teatro Rosita Ávila"
+        }
+      }
     },
     {
-      "nombre": "Av. Mate de Luna"
+      "nombre": "Av. Mate de Luna",
+      "traducciones": {
+        "en": {
+          "nombre": "Av. Mate de Luna"
+        },
+        "pt": {
+          "nombre": "Av. Mate de Luna"
+        }
+      }
     },
     {
       "nombre": "Parque Avellaneda",
-      "lugar": "parque-avellaneda"
+      "lugar": "parque-avellaneda",
+      "traducciones": {
+        "en": {
+          "nombre": "Parque Avellaneda"
+        },
+        "pt": {
+          "nombre": "Parque Avellaneda"
+        }
+      }
     },
     {
       "nombre": "Monumento del Bicentenario",
-      "lugar": "monumento-al-bicentenario"
+      "lugar": "monumento-al-bicentenario",
+      "traducciones": {
+        "en": {
+          "nombre": "Bicentennial Monument"
+        },
+        "pt": {
+          "nombre": "Monumento do Bicentenário"
+        }
+      }
     },
     {
-      "nombre": "Cementerio del Oeste"
+      "nombre": "Cementerio del Oeste",
+      "traducciones": {
+        "en": {
+          "nombre": "West Cemetery"
+        },
+        "pt": {
+          "nombre": "Cemitério do Oeste"
+        }
+      }
     },
     {
       "nombre": "Regreso a Plaza Independencia",
-      "lugar": "plaza-independencia"
+      "lugar": "plaza-independencia",
+      "traducciones": {
+        "en": {
+          "nombre": "Back to Plaza Independencia"
+        },
+        "pt": {
+          "nombre": "Retorno à Praça Independência"
+        }
+      }
     }
   ],
   "experiencia": "city-tour-bus-turistico",
@@ -101,7 +261,15 @@
     "src": "/fotos/san-miguel-de-tucuman.webp",
     "alt": "Vista del centro de San Miguel de Tucumán",
     "credito": "Municipalidad de San Miguel de Tucumán",
-    "permiso": "Recurso oficial del portal smt.gob.ar"
+    "permiso": "Recurso oficial del portal smt.gob.ar",
+    "traducciones": {
+      "en": {
+        "alt": "View of downtown San Miguel de Tucumán"
+      },
+      "pt": {
+        "alt": "Vista do centro de San Miguel de Tucumán"
+      }
+    }
   },
   "fuentes": [
     {
@@ -117,5 +285,25 @@
     "fecha": "",
     "responsable": "",
     "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Landmarks Tour",
+      "resumen": "Architecture, parks and traditional neighborhoods.",
+      "duracion": "About 2 hours",
+      "inicio": "Plaza Independencia",
+      "fin": "Plaza Independencia",
+      "esfuerzo": "Low: the tour is by bus.",
+      "aviso": "The Tourist Bus may run other routes or change its itinerary. Before you go, check its website for current departures."
+    },
+    "pt": {
+      "titulo": "Circuito Lugares Notáveis",
+      "resumen": "Arquitetura, parques e bairros tradicionais.",
+      "duracion": "Cerca de 2 horas",
+      "inicio": "Praça Independência",
+      "fin": "Praça Independência",
+      "esfuerzo": "Baixo: o percurso é feito de ônibus.",
+      "aviso": "O Ônibus Turístico pode ter outros circuitos ou mudanças de trajeto. Antes de ir, confira no site dele as saídas vigentes."
+    }
   }
 }
