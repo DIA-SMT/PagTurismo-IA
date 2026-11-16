@@ -29,7 +29,15 @@ sudo -u "$APP" npm run db:migrar
 
 cd "$RAIZ"
 ln -sfn "$RAIZ/$VER" actual
-sudo -u "$APP" pm2 reload "$APP" --update-env
+# La configuración de pm2 y este mismo script se actualizan desde la versión desplegada.
+install -o "$APP" -g "$APP" -m 644 "$VER/deploy/ecosystem.config.cjs" "$RAIZ/ecosystem.config.cjs"
+install -o root -g root -m 750 "$VER/deploy/desplegar.sh" "$RAIZ/desplegar.sh"
+if sudo -u "$APP" pm2 describe "$APP" >/dev/null 2>&1; then
+  sudo -u "$APP" pm2 reload "$APP" --update-env
+else
+  sudo -u "$APP" pm2 start "$RAIZ/ecosystem.config.cjs"
+  sudo -u "$APP" pm2 save
+fi
 echo "== Listo: $(readlink actual)"
 
 # Solo las 3 últimas versiones (la viva y dos para volver atrás).
