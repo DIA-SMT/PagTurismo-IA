@@ -97,7 +97,7 @@ Protecciones (iguales a las de la subasta):
    | `SUPABASE_CA_CERT` | Opcional: certificado raíz de Supabase (PEM) para verificar la conexión. |
    | `SITIO_URL` | URL pública del sitio (Open Graph, sitemap). Opcional: en Vercel, si falta, se usa el dominio de producción del proyecto. |
    | `MOSTRAR_BORRADORES` | `1` solo en un despliegue de vista previa, para que se vean los borradores sin sesión. |
-   | `NEXT_PUBLIC_MIGUE_URL` | Backend de Migue (`https://migue.smt.gob.ar`). Sin esta variable no aparece el chat (ver «Migue, el asistente del sitio»). |
+   | `NEXT_PUBLIC_MIGUE_URL` | Opcional. Backend de Migue: en producción, si falta, se usa `https://migue.smt.gob.ar`; `no` apaga el chat (ver «Migue, el asistente del sitio»). |
 
 3. **Cargar el contenido inicial:**
 
@@ -173,8 +173,11 @@ pueden traer botones hacia páginas del sitio: Migue solo ofrece direcciones que
 contenido y el chat las lleva al idioma de la página. Es público (sin login): la charla vive en
 la pestaña. Los textos del chat están en `lib/i18n/textos/migue.ts`.
 
-Para prenderlo: `NEXT_PUBLIC_MIGUE_URL` en Vercel, y del lado de Migue, la dirección de este
-sitio en `TURISMO_SITIO_URL` y su dominio en `CHAT_ALLOWED_ORIGINS`.
+En una compilación de producción (`npm run build`) el chat aparece solo y habla con
+`https://migue.smt.gob.ar`: no hace falta configurar nada en el servidor. Para apuntarlo a otro
+backend, o apagarlo, está `NEXT_PUBLIC_MIGUE_URL` (se lee al compilar). En desarrollo no aparece
+salvo que se defina esa variable. Del lado de Migue ya están `turismo.smt.gob.ar` (y la dirección de
+Vercel) como origen permitido y como lugar de donde leer el contenido.
 
 | Archivo | Contenido |
 |---|---|

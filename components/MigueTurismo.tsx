@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { EVENTO_ABRIR_MIGUE } from "./AbrirMigue";
+import { EVENTO_ABRIR_MIGUE, MIGUE_URL } from "./AbrirMigue";
 import { useIdioma, useTextos, Vinculo } from "./i18n/Idioma";
 
 /**
@@ -19,11 +19,9 @@ import { useIdioma, useTextos, Vinculo } from "./i18n/Idioma";
  * Es público: no hay login. La charla se identifica con un id anónimo que vive en la pestaña
  * (sessionStorage) y se pierde al cerrarla.
  *
- * Se configura con NEXT_PUBLIC_MIGUE_URL (ej. https://migue.smt.gob.ar). Sin esa variable el
- * botón no aparece.
+ * La dirección del backend sale de MIGUE_URL (components/AbrirMigue): en producción es la de la
+ * Municipalidad salvo que NEXT_PUBLIC_MIGUE_URL diga otra cosa.
  */
-
-const MIGUE_URL = String(process.env.NEXT_PUBLIC_MIGUE_URL || "").replace(/\/+$/, "");
 
 type Accion = { tipo: "navegar"; ruta: string; etiqueta: string };
 type Mensaje = { rol: "usuario" | "migue"; texto: string; acciones?: Accion[]; error?: boolean };
