@@ -102,6 +102,12 @@ function limpiarCampo(campo: Campo, valor: unknown, ruta: string, ctx: Contexto,
       const traducciones = limpiarTraducciones([ALT_TRADUCIBLE], i.traducciones);
       return { src, alt: texto("alt"), credito: texto("credito"), permiso: texto("permiso"), ...(traducciones && { traducciones }) };
     }
+    case "rutaImagen": {
+      const t = typeof valor === "string" ? valor.trim() : "";
+      if (!t) return falta() ?? "";
+      if (!URL_VALIDA.test(t)) errores[ruta] = "Tiene que ser una ruta del sitio (/stickers/…, /fotos/…) o una dirección https.";
+      return t;
+    }
     case "fecha":
     case "fechaHora": {
       if (vacio(valor)) return falta() ?? "";

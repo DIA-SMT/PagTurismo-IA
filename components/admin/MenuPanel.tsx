@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import { Icono } from "@/components/Iconos";
+import { LogoSMT } from "@/components/LogoSMT";
 
 export type SeccionMenu = { href: string; texto: string; icono: string; separar?: boolean };
 
@@ -32,7 +33,7 @@ const suscribir = (f: () => void) => {
 };
 
 /**
- * Menú del panel en azul noche municipal. En la computadora es una columna fija que se pliega
+ * Menú del panel, con el logo y "Turismo" como el encabezado del sitio. En la computadora es una columna fija que se pliega
  * a íconos; en el celular y la tablet, un diálogo lateral que abre el botón «Menú» de la barra.
  */
 export function MenuPanel({ secciones }: { secciones: SeccionMenu[] }) {
@@ -64,8 +65,8 @@ export function MenuPanel({ secciones }: { secciones: SeccionMenu[] }) {
   const contenido = (movil: boolean) => (
     <nav className="adm-menu" aria-label="Panel">
       <Link className="adm-menu__logo" href="/admin" title={plegado && !movil ? "Tablero" : undefined}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/img/logo-smt-neg.png" alt="Ciudad San Miguel de Tucumán" width={184} height={60} />
+        <LogoSMT ancho={184} alto={60} alt="Ciudad San Miguel de Tucumán" />
+        <span className="adm-menu__turismo" aria-hidden="true">Turismo</span>
         <span className="adm-oculto">: ir al tablero</span>
       </Link>
       <ul className="adm-menu__lista">
@@ -126,7 +127,7 @@ export function MenuPanel({ secciones }: { secciones: SeccionMenu[] }) {
 /** Botón «Menú» de la barra superior (celular y tablet). */
 export function BotonMenuPanel() {
   return (
-    <button type="button" className="adm-boton-menu" onClick={() => window.dispatchEvent(new Event("panel:abrir-menu"))}>
+    <button type="button" className="adm-boton-menu" aria-label="Menú" onClick={() => window.dispatchEvent(new Event("panel:abrir-menu"))}>
       <Icono nombre="menu" tamano={22} />
       Menú
     </button>
