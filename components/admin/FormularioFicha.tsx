@@ -338,6 +338,8 @@ function CampoFormulario({ campo, ruta, ctx }: { campo: Campo; ruta: Ruta; ctx: 
     }
     case "imagen":
       return <CampoImagen campo={campo} ruta={ruta} ctx={ctx} />;
+    case "rutaImagen":
+      return <CampoRutaImagen campo={campo} ruta={ruta} ctx={ctx} />;
     case "fecha":
     case "fechaHora":
       return (
@@ -580,5 +582,64 @@ function EditorTraducciones({ esquemaId, datos, idioma, cambiar }: {
         })}
       </div>
     </section>
+  );
+}
+
+/**
+ * Imagen guardada solo como dirección (los temas): se sube con el botón o se escribe la ruta de
+ * un archivo que ya está en el sitio (/stickers/…, /fotos/…). Se ve entera, sin recortar, porque
+ * puede ser una ilustración.
+ */
+function CampoRutaImagen({ campo, ruta, ctx }: { campo: Campo; ruta: Ruta; ctx: Contexto }) {
+  const valor = leerRuta(ctx.datos, ruta);
+  const src = typeof valor === "string" ? valor : "";
+  const [subiendo, iniciar] = useTransition();
+  const [problema, setProblema] = useState("");
+  const archivo = useRef<HTMLInputElement>(null);
+  const id = idDe(ruta);
+  const error = ctx.errores[claveDe(ruta)];
+
+  const elegir = (f: File | undefined) => {
+    if (!f) return;
+    setProblema("");
+    const datos = new FormData();
+    datos.set("archivo", f);
+    datos.set("coleccion", ctx.coleccion);
+    iniciar(async () => {
+      const r = await subirFoto(datos);
+      if (r.error) setProblema(r.error);
+      else if (r.src) ctx.cambiar(ruta, r.src);
+      if (archivo.current) archivo.current.value = "";
+    });
+  };
+
+  return (
+    <div className="adm-campo">
+      <Etiqueta campo={campo} htmlFor={id} />
+      <div className="adm-imagen">
+        <div className="adm-imagen__vista adm-imagen__vista--entera">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          {src ? <img src={src} alt="" /> : <span className="adm-imagen__vacia"><Icono nombre="subir" tamano={28} /></span>}
+        </div>
+        <div className="adm-lista">
+          <div className="adm-imagen__acciones">
+            <label className="adm-boton adm-boton--secundario adm-boton--chico" style={{ cursor: subiendo ? "wait" : "pointer" }}>
+              <Icono nombre="subir" tamano={16} /> {subiendo ? "Subiendo…" : src ? "Cambiar imagen" : "Subir imagen"}
+              <input ref={archivo} type="file" accept="image/jpeg,image/png,image/webp" className="adm-oculto" disabled={subiendo}
+                onChange={(e) => elegir(e.target.files?.[0])} />
+            </label>
+            <span className="adm-campo__ayuda">JPG, PNG o WebP, hasta 4 MB. Un PNG con fondo transparente lo conserva.</span>
+          </div>
+          <input id={id} className="adm-input" value={src} placeholder="/stickers/… o /fotos/…"
+            aria-invalid={!!error} aria-describedby={`${id}-ayuda`}
+            onChange={(e) => ctx.cambiar(ruta, e.target.value)} />
+          {problema && <span className="adm-campo__error" role="alert">{problema}</span>}
+          <span className="adm-campo__ayuda" id={`${id}-ayuda`}>
+            {campo.ayuda} También podés escribir la ruta de una imagen que ya está en el sitio.
+          </span>
+          {error && <span className="adm-campo__error">{error}</span>}
+        </div>
+      </div>
+    </div>
   );
 }

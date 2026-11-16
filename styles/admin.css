@@ -492,3 +492,5 @@ a.adm-dato:hover { border-color: var(--c-azul-300); box-shadow: var(--a-sombra-a
 @media (prefers-reduced-motion: reduce) {
   .adm-menu, .adm-espaciador { transition: none; }
 }
+/* Imagen de un tema: se ve entera (puede ser una ilustración recortada). */
+.adm-imagen__vista--entera img { padding: 0.5rem; object-fit: contain; }

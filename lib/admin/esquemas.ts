@@ -21,6 +21,8 @@ export type Campo =
   | (Base & { tipo: "temas" | "etiquetas" })
   | (Base & { tipo: "relacion"; coleccion: string; multiple?: boolean })
   | (Base & { tipo: "imagen" })
+  /** Solo la dirección de una imagen (texto), con botón para subirla. La usan los temas. */
+  | (Base & { tipo: "rutaImagen" })
   | (Base & { tipo: "fecha" | "fechaHora" })
   | (Base & { tipo: "grupo"; campos: Campo[] })
   | (Base & { tipo: "lista"; campos: Campo[]; resumen?: string; textoAgregar: string });
@@ -396,8 +398,10 @@ export const ESQUEMA_TEMAS: Esquema = {
         { tipo: "texto", nombre: "id", etiqueta: "Identificador", requerido: true, ancho: "medio", marcador: "historia-y-patrimonio" },
         { tipo: "texto", nombre: "titulo", etiqueta: "Nombre", traducible: true, requerido: true, ancho: "medio" },
         { tipo: "parrafo", nombre: "detalle", etiqueta: "Texto", traducible: true, filas: 2 },
-        { tipo: "texto", nombre: "imagen", etiqueta: "Imagen (ruta)", requerido: true, ancho: "medio", marcador: "/fotos/…" },
-        { tipo: "numero", nombre: "tono", etiqueta: "Tono si es ilustración (0 a 5)", ancho: "medio", min: 0, max: 5 },
+        { tipo: "rutaImagen", nombre: "imagen", etiqueta: "Imagen", requerido: true,
+          ayuda: "Una foto, o una ilustración recortada (PNG con fondo transparente)." },
+        { tipo: "numero", nombre: "tono", etiqueta: "Color de fondo, solo si es ilustración", ancho: "medio", min: 0, max: 5,
+          ayuda: "0 verde · 1 azul · 2 rosa · 3 violeta · 4 ámbar · 5 celeste. Vacío si es una foto: ocupa toda la tarjeta." },
       ] },
     ] },
     { titulo: "Etiquetas", campos: [

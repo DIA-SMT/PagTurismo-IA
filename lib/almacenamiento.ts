@@ -5,7 +5,7 @@ import path from "node:path";
 
 import { modoLocal, supabase } from "@/lib/entorno";
 
-// Fotos que sube el equipo desde el panel. En Supabase van al bucket público "fotos" (las
+// Fotos e ilustraciones que sube el equipo desde el panel. En Supabase van al bucket público "fotos" (las
 // políticas de Storage exigen es_admin()); en modo local, a .local/subidas/ y se sirven desde
 // /subidas/. Las fotos que ya trae el sitio (/fotos, /stickers) siguen en public/.
 
@@ -20,8 +20,9 @@ export function urlPublica(ruta: string) {
 }
 
 /**
- * Normaliza y guarda una foto: corrige la orientación, la limita a 2000 px por lado, la
- * convierte a JPEG y descarta los metadatos (EXIF, ubicación GPS). Devuelve su dirección pública.
+ * Normaliza y guarda una foto: corrige la orientación, la limita a 2000 px por lado y descarta
+ * los metadatos (EXIF, ubicación GPS). Las fotos van en JPEG; una imagen con transparencia (una
+ * ilustración recortada) va en WebP para no perder el fondo transparente. Devuelve su dirección.
  */
 export async function guardarFoto(archivo: File, carpeta: string): Promise<{ src: string; ancho: number; alto: number }> {
   if (!TIPOS.has(archivo.type)) throw new Error("La foto tiene que ser JPG, PNG o WebP.");
@@ -29,20 +30,21 @@ export async function guardarFoto(archivo: File, carpeta: string): Promise<{ src
   if (!/^[a-z0-9-]+$/.test(carpeta)) throw new Error("Carpeta inválida.");
 
   const { default: sharp } = await import("sharp");
-  const { data, info } = await sharp(Buffer.from(await archivo.arrayBuffer()))
-    .rotate()
-    .resize({ width: 2000, height: 2000, fit: "inside", withoutEnlargement: true })
-    .jpeg({ quality: 84, mozjpeg: true })
+  const original = sharp(Buffer.from(await archivo.arrayBuffer()));
+  const { hasAlpha } = await original.metadata();
+  const ajustada = original.rotate().resize({ width: 2000, height: 2000, fit: "inside", withoutEnlargement: true });
+  const { data, info } = await (hasAlpha ? ajustada.webp({ quality: 86 }) : ajustada.jpeg({ quality: 84, mozjpeg: true }))
     .toBuffer({ resolveWithObject: true });
+  const extension = hasAlpha ? "webp" : "jpg";
 
-  const ruta = `${carpeta}/${crypto.randomUUID()}.jpg`;
+  const ruta = `${carpeta}/${crypto.randomUUID()}.${extension}`;
   if (modoLocal) {
     const destino = path.join(CARPETA_LOCAL, ruta);
     await fs.mkdir(path.dirname(destino), { recursive: true });
     await fs.writeFile(destino, data);
   } else {
     const { clienteSupabase } = await import("@/lib/auth/supabase");
-    const { error } = await (await clienteSupabase()).storage.from(BUCKET).upload(ruta, data, { contentType: "image/jpeg", upsert: false });
+    const { error } = await (await clienteSupabase()).storage.from(BUCKET).upload(ruta, data, { contentType: hasAlpha ? "image/webp" : "image/jpeg", upsert: false });
     if (error) throw new Error(`No se pudo subir la foto: ${error.message}`);
   }
   return { src: urlPublica(ruta), ancho: info.width, alto: info.height };
