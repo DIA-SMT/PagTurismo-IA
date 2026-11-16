@@ -66,14 +66,14 @@ try {
       await tx.unsafe(
         `insert into auth.users (id, email, email_confirmed_at, encrypted_password, created_at)
          select id, email, email_confirmed_at, encrypted_password, created_at
-         from json_populate_recordset(null::auth.users, $1::json)
+         from json_populate_recordset(null::auth.users, $1::text::json)
          on conflict (id) do update set email = excluded.email, encrypted_password = excluded.encrypted_password`,
         [cuentas],
       );
-      await tx.unsafe("insert into public.admins select * from json_populate_recordset(null::public.admins, $1::json)", [admins]);
-      await tx.unsafe("insert into public.contenidos select * from json_populate_recordset(null::public.contenidos, $1::json)", [contenidos]);
+      await tx.unsafe("insert into public.admins select * from json_populate_recordset(null::public.admins, $1::text::json)", [admins]);
+      await tx.unsafe("insert into public.contenidos select * from json_populate_recordset(null::public.contenidos, $1::text::json)", [contenidos]);
       await tx.unsafe(
-        "insert into public.auditoria overriding system value select * from json_populate_recordset(null::public.auditoria, $1::json)",
+        "insert into public.auditoria overriding system value select * from json_populate_recordset(null::public.auditoria, $1::text::json)",
         [auditoria],
       );
       // La próxima entrada de auditoría sigue después de la última copiada.
