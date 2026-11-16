@@ -2,13 +2,14 @@ import "server-only";
 import { connection } from "next/server";
 import { cache } from "react";
 
-import { modoLocal } from "@/lib/entorno";
+import { usaSupabase } from "@/lib/entorno";
 import { contrasenaCorrecta, permitirPruebaDeContrasena } from "./limites";
 import type { ResultadoAuth } from "./tipos";
 
 export type { ErrorAuth, ResultadoAuth, Usuario } from "./tipos";
 
-const impl = () => (modoLocal ? import("./local") : import("./supabase"));
+// Con Supabase, Supabase Auth; en local y en un servidor propio, el ingreso del portal (./local).
+const impl = () => (usaSupabase ? import("./supabase") : import("./local"));
 
 /** Usuario con sesión iniciada, o null. Se resuelve una vez por pedido. */
 export const usuarioActual = cache(async () => {

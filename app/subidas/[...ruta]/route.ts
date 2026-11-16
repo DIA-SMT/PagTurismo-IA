@@ -3,15 +3,15 @@ import path from "node:path";
 import { connection } from "next/server";
 
 import { CARPETA_LOCAL } from "@/lib/almacenamiento";
-import { modoLocal } from "@/lib/entorno";
+import { usaSupabase } from "@/lib/entorno";
 
-// Solo en modo local: sirve las fotos subidas desde el panel (.local/subidas/).
+// Sin Supabase (modo local o servidor propio): sirve las fotos subidas desde el panel.
 export async function GET(_pedido: Request, { params }: RouteContext<"/subidas/[...ruta]">) {
   await connection();
   const { ruta } = await params;
   const relativa = ruta.join("/");
   const tipo = relativa.match(/^[a-z0-9-]+\/[a-f0-9-]+\.(jpg|webp)$/)?.[1];
-  if (!modoLocal || !tipo) {
+  if (usaSupabase || !tipo) {
     return new Response("No encontrado", { status: 404 });
   }
   try {

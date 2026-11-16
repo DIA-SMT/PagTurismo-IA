@@ -6,8 +6,10 @@ import { cookies } from "next/headers";
 import { consultar } from "@/lib/db";
 import type { ResultadoAuth, Usuario } from "./tipos";
 
-// Ingreso al panel en el MODO LOCAL. Reemplaza a Supabase Auth solo para desarrollo: la
-// contraseña se compara contra auth.users de PGlite y la sesión es una cookie firmada.
+// Ingreso al panel sin Supabase: en el modo local (PGlite) y en un servidor propio (PostgreSQL de
+// la VPS). La contraseña se compara contra auth.users con bcrypt (pgcrypto), el mismo formato en
+// que Supabase guarda las suyas, así una cuenta migrada desde Supabase conserva su contraseña. La
+// sesión es una cookie firmada con HMAC. Las cuentas se manejan con `npm run cuentas`.
 
 const COOKIE = "turismo_sesion_local";
 const DURACION_S = 60 * 60 * 24 * 30;
@@ -18,6 +20,8 @@ const servicio = { rol: "servicio" } as const;
 const secretoEnMemoria = crypto.randomBytes(32).toString("hex");
 
 function secreto() {
+  // En un servidor propio es obligatorio (lo exige lib/entorno.ts): sobrevive a los despliegues.
+  if (process.env.SESION_SECRETO) return process.env.SESION_SECRETO;
   if (process.env.SESION_LOCAL_SECRETO) return process.env.SESION_LOCAL_SECRETO;
   if (process.env.VERCEL) return secretoEnMemoria;
   const archivo = path.join(process.cwd(), ".local", "secreto");
@@ -38,6 +42,8 @@ async function abrirSesion(uid: string) {
   (await cookies()).set(COOKIE, `${valor}.${firmar(valor)}`, {
     httpOnly: true,
     sameSite: "lax",
+    // En producción el sitio va por HTTPS: la cookie de sesión no viaja nunca sin cifrar.
+    secure: process.env.NODE_ENV === "production",
     path: "/",
     maxAge: DURACION_S,
   });

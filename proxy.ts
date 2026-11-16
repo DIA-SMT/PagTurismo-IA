@@ -27,7 +27,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(interna, { request: { headers: encabezados } });
   };
 
-  if (!process.env.DATABASE_URL) return seguir();
+  // Solo con Supabase hay sesión de Supabase que renovar (en local y en un servidor propio, no).
+  if (!process.env.DATABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_URL) return seguir();
 
   let respuesta = seguir();
   // Si @supabase/ssr escribe cookies más de una vez, la respuesta se vuelve a crear: se
