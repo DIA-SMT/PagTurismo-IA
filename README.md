@@ -97,6 +97,7 @@ Protecciones (iguales a las de la subasta):
    | `SUPABASE_CA_CERT` | Opcional: certificado raíz de Supabase (PEM) para verificar la conexión. |
    | `SITIO_URL` | URL pública del sitio (Open Graph, sitemap). Opcional: en Vercel, si falta, se usa el dominio de producción del proyecto. |
    | `MOSTRAR_BORRADORES` | `1` solo en un despliegue de vista previa, para que se vean los borradores sin sesión. |
+   | `NEXT_PUBLIC_MIGUE_URL` | Opcional. Backend de Migue: en producción, si falta, se usa `https://migue.smt.gob.ar`; `no` apaga el chat (ver «Migue, el asistente del sitio»). |
 
 3. **Cargar el contenido inicial:**
 
@@ -154,6 +155,36 @@ El español va sin prefijo; inglés y portugués llevan el idioma y la sección 
   `npm run traducciones -- aplicar <archivo>` los guarda en `supabase/semilla`; `npm run traducciones -- base`
   los copia a Supabase sin pisar lo que el equipo cambió en el panel.
 - **Buscadores:** cada página declara sus versiones (`hreflang`) y el sitemap lista los tres idiomas.
+
+## Migue, el asistente del sitio
+
+El botón de la esquina inferior derecha (y la burbuja «Soy Migue» de la portada) abre un chat
+con Migue, el asistente de la Municipalidad. Contesta con:
+
+- **Lo publicado en este sitio**, que lee de `GET /api/migue/contenido` (`lib/migue.ts`). Es el
+  mismo contenido que ve un visitante, en español y pasado a texto: **nunca incluye borradores**,
+  aunque quien pida tenga sesión en el panel. Lo que el equipo publica desde `/admin` le llega a
+  Migue en unos minutos.
+- Las fichas de la Oficina de Informes y del Bus Turístico y las preguntas frecuentes de la
+  Dirección de Turismo, que ya tiene Migue.
+
+Responde en el idioma en que le escriben (y, si no queda claro, en el del sitio). Sus respuestas
+pueden traer botones hacia páginas del sitio: Migue solo ofrece direcciones que figuran en ese
+contenido y el chat las lleva al idioma de la página. Es público (sin login): la charla vive en
+la pestaña. Los textos del chat están en `lib/i18n/textos/migue.ts`.
+
+En una compilación de producción (`npm run build`) el chat aparece solo y habla con
+`https://migue.smt.gob.ar`: no hace falta configurar nada en el servidor. Para apuntarlo a otro
+backend, o apagarlo, está `NEXT_PUBLIC_MIGUE_URL` (se lee al compilar). En desarrollo no aparece
+salvo que se defina esa variable. Del lado de Migue ya están `turismo.smt.gob.ar` (y la dirección de
+Vercel) como origen permitido y como lugar de donde leer el contenido.
+
+| Archivo | Contenido |
+|---|---|
+| `lib/migue.ts` | El contenido en texto para Migue. Pruebas en `tests/migue.test.ts`. |
+| `app/api/migue/contenido/route.ts` | La ruta que lee Migue. |
+| `components/MigueTurismo.tsx`, `styles/migue.css` | El chat. |
+| `components/AbrirMigue.tsx` | La burbuja de la portada que abre el chat. |
 
 ## Dónde está cada cosa
 

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ClimaActual } from "@/components/ClimaActual";
 import { Encabezado } from "@/components/Encabezado";
+import { MigueTurismo } from "@/components/MigueTurismo";
 import { ProveedorIdioma } from "@/components/i18n/Idioma";
 import { PieDePagina } from "@/components/PieDePagina";
 import { LOCALE, esIdioma } from "@/lib/i18n/config";
@@ -40,6 +41,7 @@ export default async function LayoutSitio({ children, params }: LayoutProps<"/[i
       <Encabezado clima={<ClimaActual />} />
       <main id="contenido" lang={LOCALE[idioma].lang}>{children}</main>
       <PieDePagina />
+      <MigueTurismo />
     </ProveedorIdioma>
   );
 }
