@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Icono } from "@/components/Iconos";
+import { Tema } from "@/components/Tema";
 import { BotonMenuPanel, MenuPanel, type SeccionMenu } from "@/components/admin/MenuPanel";
 import { ESQUEMAS } from "@/lib/admin/esquemas";
 import { requerirAdmin } from "@/lib/admin/sesion";
@@ -15,8 +16,8 @@ const SECCIONES: SeccionMenu[] = [
 ];
 
 /**
- * Estructura del panel: menú lateral en azul noche municipal, barra superior blanca con la
- * sesión y el contenido sobre blanco cálido. Primera barrera: sin sesión del equipo, redirige
+ * Estructura del panel, con el mismo estilo del sitio: menú lateral y barra superior como el
+ * encabezado público (con el cambio de tema claro/oscuro), y el contenido en tarjetas. Primera barrera: sin sesión del equipo, redirige
  * al ingreso. Cada página y cada acción vuelven a verificar con requerirAdmin().
  */
 export default async function LayoutPanel({ children }: { children: React.ReactNode }) {
@@ -32,6 +33,7 @@ export default async function LayoutPanel({ children }: { children: React.ReactN
               <strong>Turismo San Miguel</strong>
               <small>Panel de contenidos del portal</small>
             </Link>
+            <Tema />
             <Link className="adm-barra__enlace" href="/" target="_blank">
               <Icono nombre="ojo" tamano={18} /><span>Ver el sitio</span>
             </Link>
