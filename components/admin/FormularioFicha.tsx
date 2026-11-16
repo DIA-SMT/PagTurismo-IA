@@ -595,6 +595,9 @@ function CampoRutaImagen({ campo, ruta, ctx }: { campo: Campo; ruta: Ruta; ctx: 
   const src = typeof valor === "string" ? valor : "";
   const [subiendo, iniciar] = useTransition();
   const [problema, setProblema] = useState("");
+  const [nota, setNota] = useState("");
+  // El color de fondo (tono) es para ilustraciones recortadas: una foto ocupa toda la tarjeta.
+  const rutaTono = [...ruta.slice(0, -1), "tono"];
   const archivo = useRef<HTMLInputElement>(null);
   const id = idDe(ruta);
   const error = ctx.errores[claveDe(ruta)];
@@ -602,13 +605,21 @@ function CampoRutaImagen({ campo, ruta, ctx }: { campo: Campo; ruta: Ruta; ctx: 
   const elegir = (f: File | undefined) => {
     if (!f) return;
     setProblema("");
+    setNota("");
     const datos = new FormData();
     datos.set("archivo", f);
     datos.set("coleccion", ctx.coleccion);
     iniciar(async () => {
       const r = await subirFoto(datos);
       if (r.error) setProblema(r.error);
-      else if (r.src) ctx.cambiar(ruta, r.src);
+      else if (r.src) {
+        ctx.cambiar(ruta, r.src);
+        // Sin transparencia se guarda en JPG: es una foto, no una ilustración.
+        if (r.src.endsWith(".jpg") && leerRuta(ctx.datos, rutaTono) !== undefined) {
+          ctx.cambiar(rutaTono, undefined);
+          setNota("Es una foto: se quitó el color de fondo para que ocupe toda la tarjeta.");
+        }
+      }
       if (archivo.current) archivo.current.value = "";
     });
   };
@@ -634,6 +645,7 @@ function CampoRutaImagen({ campo, ruta, ctx }: { campo: Campo; ruta: Ruta; ctx: 
             aria-invalid={!!error} aria-describedby={`${id}-ayuda`}
             onChange={(e) => ctx.cambiar(ruta, e.target.value)} />
           {problema && <span className="adm-campo__error" role="alert">{problema}</span>}
+          {nota && <span className="adm-aviso adm-aviso--info" role="status">{nota}</span>}
           <span className="adm-campo__ayuda" id={`${id}-ayuda`}>
             {campo.ayuda} También podés escribir la ruta de una imagen que ya está en el sitio.
           </span>
