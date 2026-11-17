@@ -82,41 +82,22 @@ Protecciones (iguales a las de la subasta):
 - Límite propio de intentos de ingreso: 5 en 15 minutos por correo o por conexión.
 - La auditoría la escribe la base con un disparador; nadie puede editarla ni borrarla.
 
-## 3. Puesta en producción (Supabase + Vercel)
+## 3. Producción: la VPS municipal
 
-1. **Crear el proyecto en Supabase.** En *SQL Editor*, ejecutar en orden los archivos de
-   `supabase/migrations/`. Crean las tablas, los permisos, el bucket público `fotos` y los
-   límites de ingreso.
-2. **Variables en `.env.local`** (para cargar el contenido desde la computadora):
+El portal corre en la VPS de la Municipalidad (`/srv/portalturismo`, puerto 3007), sin Supabase ni
+Vercel: base en el PostgreSQL local, ingreso del equipo propio del portal y fotos en el disco. GitHub
+guarda el código; los despliegues se hacen a mano en el servidor, como en los otros proyectos:
 
-   | Variable | De dónde sale |
-   |---|---|
-   | `DATABASE_URL` | Supabase → *Connect* → *Transaction pooler* (puerto 6543), con la contraseña de la base. |
-   | `NEXT_PUBLIC_SUPABASE_URL` | Supabase → *Project Settings* → *API*. |
-   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → *Project Settings* → *API* (clave `anon`). |
-   | `SUPABASE_CA_CERT` | Opcional: certificado raíz de Supabase (PEM) para verificar la conexión. |
-   | `SITIO_URL` | URL pública del sitio (Open Graph, sitemap). Opcional: en Vercel, si falta, se usa el dominio de producción del proyecto. |
-   | `MOSTRAR_BORRADORES` | `1` solo en un despliegue de vista previa, para que se vean los borradores sin sesión. |
-   | `NEXT_PUBLIC_MIGUE_URL` | Opcional. Backend de Migue: en producción, si falta, se usa `https://migue.smt.gob.ar`; `no` apaga el chat (ver «Migue, el asistente del sitio»). |
+```bash
+/srv/portalturismo/desplegar.sh          # la última versión de main
+```
 
-3. **Cargar el contenido inicial:**
+Todo el procedimiento (variables, cuentas del panel, volver atrás, cómo se migró) está en
+[`deploy/README.md`](deploy/README.md).
 
-   ```bash
-   npm run db:semilla
-   ```
-
-4. **Cuentas del equipo.** En Supabase → *Authentication* → *Users* → *Add user*, crear cada
-   cuenta con correo y contraseña. Después, en *SQL Editor*:
-
-   ```sql
-   insert into public.admins (user_id, nombre)
-   select id, 'Nombre y apellido' from auth.users where email = 'persona@smt.gob.ar';
-   ```
-
-   Para quitarle el acceso a alguien: `update public.admins set activo = false where user_id = …`.
-5. **Vercel:** cargar las mismas variables en *Settings → Environment Variables* y desplegar.
-   Las funciones corren en São Paulo (`gru1`, en `vercel.json`), la misma región que la base
-   (`sa-east-1`). Si la base se muda, cambiar también esa región: cada página consulta la base.
+**Antes (hasta noviembre de 2026):** Supabase (base, Auth y Storage) y Vercel. El portal todavía
+sabe correr así —con `DATABASE_URL` y `NEXT_PUBLIC_SUPABASE_URL`, ver `lib/entorno.ts`—, pero ya no
+es la producción. `vercel.json` queda solo para ese modo.
 
 ## Rutas del sitio
 
@@ -176,8 +157,9 @@ la pestaña. Los textos del chat están en `lib/i18n/textos/migue.ts`.
 En una compilación de producción (`npm run build`) el chat aparece solo y habla con
 `https://migue.smt.gob.ar`: no hace falta configurar nada en el servidor. Para apuntarlo a otro
 backend, o apagarlo, está `NEXT_PUBLIC_MIGUE_URL` (se lee al compilar). En desarrollo no aparece
-salvo que se defina esa variable. Del lado de Migue ya están `turismo.smt.gob.ar` (y la dirección de
-Vercel) como origen permitido y como lugar de donde leer el contenido.
+salvo que se defina esa variable. Del lado de Migue (`WEB_CHAT_ALLOWED_ORIGINS` y la dirección de donde lee el contenido, en su propio
+`.env`) tiene que figurar el dominio del portal: `turismo.smt.gob.ar` y, mientras se use, el provisorio
+`portalturismo.195-35-42-168.sslip.io`. Si no, el chat no conecta.
 
 | Archivo | Contenido |
 |---|---|
