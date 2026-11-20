@@ -130,6 +130,11 @@
 .adm[data-plegado] .adm-menu__enlace { justify-content: center; padding-inline: 0; }
 .adm[data-plegado] .adm-menu__enlace span, .adm[data-plegado] .adm-menu__enlace::after { display: none; }
 .adm-menu__separador { height: 1px; margin: 0.5rem 0.75rem; background: var(--a-linea-suave); }
+/* Grupos del panel unificado (Turismo, Cultura, Buses, Migue, Sistema). Plegado: solo una línea. */
+.adm-menu__grupo { margin: 0.9rem 0.75rem 0.3rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--a-gris); }
+.adm-menu__lista > li:first-child .adm-menu__grupo { margin-top: 0.2rem; }
+.adm[data-plegado] .adm-menu__grupo { height: 1px; margin: 0.5rem 0.75rem; background: var(--a-linea-suave); }
+.adm[data-plegado] .adm-menu__grupo span { display: none; }
 .adm-menu__pie { display: flex; flex-direction: column; gap: 2px; padding: 0.75rem; border-top: 1px solid var(--a-linea-suave); }
 .adm-menu__pie button { width: 100%; border: 0; background: transparent; font: inherit; cursor: pointer; }
 .adm-menu__marca { display: none; }

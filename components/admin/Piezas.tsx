@@ -30,7 +30,7 @@ export function Banda({ titulo, bajada, acciones, migas }: {
             </ol>
           </nav>
         ) : (
-          <p className="adm-banda__rotulo">Panel de Turismo</p>
+          <p className="adm-banda__rotulo">Panel del portal</p>
         )}
         <h1>{titulo}</h1>
         {bajada && <p>{bajada}</p>}

@@ -8,7 +8,8 @@ import { fichasDe } from "@/lib/admin/datos";
 import { esquemaDe } from "@/lib/admin/esquemas";
 import { IDIOMAS_TRADUCCION } from "@/lib/admin/limpiar";
 import { avanceDeTraduccion } from "@/lib/admin/traducibles";
-import { requerirAdmin } from "@/lib/admin/sesion";
+import { exigirContenido, requerirAdmin } from "@/lib/admin/sesion";
+import { puedeContenido } from "@/lib/permisos";
 import { normalizar } from "@/lib/buscar";
 import { diaLocal } from "@/lib/fechas";
 
@@ -20,6 +21,8 @@ export default async function Listado({ params, searchParams }: PageProps<"/admi
   const admin = await requerirAdmin();
   const esquema = esquemaDe((await params).coleccion);
   if (!esquema) notFound();
+  exigirContenido(admin, esquema.id, "", "ver");
+  const puedeCrear = puedeContenido(admin, esquema.id, "", "editar");
   const sp = await searchParams;
   const estado = sp.estado === "publicado" || sp.estado === "borrador" ? sp.estado : "";
   const q = typeof sp.q === "string" ? sp.q.slice(0, 80) : "";
@@ -49,7 +52,7 @@ export default async function Listado({ params, searchParams }: PageProps<"/admi
       <Banda
         titulo={esquema.titulo}
         bajada={esquema.descripcion}
-        acciones={<Link className="adm-boton adm-boton--amarillo" href={`/admin/${esquema.id}/nueva`}><Icono nombre="mas" tamano={18} /> {esquema.nuevo}</Link>}
+        acciones={puedeCrear ? <Link className="adm-boton adm-boton--amarillo" href={`/admin/${esquema.id}/nueva`}><Icono nombre="mas" tamano={18} /> {esquema.nuevo}</Link> : undefined}
       />
 
       {sp.borrada === "1" && <Aviso tono="ok">La ficha se borró. El cambio quedó en la auditoría.</Aviso>}
@@ -72,7 +75,7 @@ export default async function Listado({ params, searchParams }: PageProps<"/admi
 
       {visibles.length === 0 ? (
         <Vacio titulo={todas.length ? "No hay fichas con ese filtro" : "Todavía no hay fichas"} icono={esquema.icono}
-          accion={<Link className="adm-boton adm-boton--primario" href={`/admin/${esquema.id}/nueva`}><Icono nombre="mas" tamano={18} /> {esquema.nuevo}</Link>}>
+          accion={puedeCrear ? <Link className="adm-boton adm-boton--primario" href={`/admin/${esquema.id}/nueva`}><Icono nombre="mas" tamano={18} /> {esquema.nuevo}</Link> : undefined}>
           {todas.length ? "Probá con otra búsqueda o con otra pestaña." : "Creá la primera con el botón de abajo."}
         </Vacio>
       ) : (

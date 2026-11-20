@@ -45,8 +45,10 @@ function escribirRuta(obj: unknown, ruta: Ruta, valor: unknown): unknown {
  *  - modo "ficha": colecciones con estado (borrador o publicado) y dirección (slug).
  *  - modo "configuracion": datos del sitio o temas y etiquetas.
  */
-export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuardado = "borrador", slugOriginal = "", opciones, rutaPublica, ultimoCambio, lateralExtra }: {
+export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuardado = "borrador", slugOriginal = "", opciones, rutaPublica, ultimoCambio, lateralExtra, permisos = { editar: true, publicar: true } }: {
   esquemaId: string;
+  /** Lo que la cuenta puede hacer con esta ficha. Solo cambia lo que se muestra: el servidor y la base lo vuelven a controlar. */
+  permisos?: { editar: boolean; publicar: boolean };
   modo: "ficha" | "configuracion";
   inicial: Json;
   estado?: string;
@@ -145,11 +147,17 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
             {modo === "ficha" && (
               <div className="adm-campo">
                 <label className="adm-campo__etiqueta" htmlFor={`${idFormulario}-estado`}>Estado</label>
-                <select id={`${idFormulario}-estado`} value={estado} onChange={(e) => { setEstado(e.target.value); setSucio(true); }}>
+                <select id={`${idFormulario}-estado`} value={estado} disabled={!permisos.publicar} onChange={(e) => { setEstado(e.target.value); setSucio(true); }}>
                   <option value="borrador">Borrador (no se ve en el sitio)</option>
                   <option value="publicado">Publicado</option>
                 </select>
-                <span className="adm-campo__ayuda">Dejala en borrador hasta confirmar los datos operativos.</span>
+                <span className="adm-campo__ayuda">
+                  {permisos.publicar
+                    ? "Dejala en borrador hasta confirmar los datos operativos."
+                    : estadoGuardado === "publicado"
+                      ? "Está publicada: tu rol no puede cambiarla. Pedile a un administrador del módulo."
+                      : "Tu rol guarda borradores; un administrador del módulo la publica."}
+                </span>
               </div>
             )}
             {modo === "ficha" && (
@@ -168,7 +176,8 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
               </div>
             )}
             <MensajeAccion estado={resultado} />
-            <button type="submit" form={idFormulario} className="adm-boton adm-boton--primario adm-boton--ancho" disabled={enviando}>
+            <button type="submit" form={idFormulario} className="adm-boton adm-boton--primario adm-boton--ancho"
+              disabled={enviando || !permisos.editar || (!permisos.publicar && estadoGuardado === "publicado")}>
               <Icono nombre="check" tamano={18} />
               {enviando ? "Guardando…" : modo === "ficha" && estado === "publicado" ? "Guardar y publicar" : "Guardar"}
             </button>

@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { cookies } from "next/headers";
 import { consultar } from "@/lib/db";
+import { esHashScrypt, verificarScrypt } from "./scrypt";
 import type { ResultadoAuth, Usuario } from "./tipos";
 
 // Ingreso al panel sin Supabase: en el modo local (PGlite) y en un servidor propio (PostgreSQL de
@@ -72,11 +73,29 @@ export async function usuarioActual(): Promise<Usuario | null> {
 }
 
 export async function ingresarConContrasena(email: string, contrasena: string): Promise<ResultadoAuth> {
+  // Cuentas importadas de Agenda Cultural: hash scrypt, que pgcrypto no conoce. Se verifica acá y,
+  // si es correcta, se reemplaza por bcrypt (después de esto la cuenta es una más).
+  const [importada] = await consultar<{ id: string; encrypted_password: string }>(
+    servicio,
+    "select id, encrypted_password from auth.users where lower(email) = lower($1) and encrypted_password like 'scrypt$%'",
+    [email],
+  );
+  if (importada && esHashScrypt(importada.encrypted_password)) {
+    if (!verificarScrypt(contrasena, importada.encrypted_password)) return { ok: false, error: "credenciales_invalidas" };
+    await consultar(servicio, "update auth.users set encrypted_password = extensions.crypt($2, extensions.gen_salt('bf', 10)) where id = $1", [
+      importada.id, contrasena,
+    ]);
+    await abrirSesion(importada.id);
+    return { ok: true, uid: importada.id };
+  }
+
   const [usuario] = await consultar<{ id: string }>(
     servicio,
     `select id from auth.users
      where lower(email) = lower($1) and encrypted_password is not null
-       and encrypted_password = extensions.crypt($2, encrypted_password)`,
+       -- CASE fija el orden: crypt() con un hash que no es bcrypt (scrypt importado) da error.
+       and case when encrypted_password like 'scrypt$%' then false
+                else encrypted_password = extensions.crypt($2, encrypted_password) end`,
     [email, contrasena],
   );
   if (!usuario) return { ok: false, error: "credenciales_invalidas" };

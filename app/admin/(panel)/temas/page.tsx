@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import { FormularioFicha } from "@/components/admin/FormularioFicha";
 import { Banda, fechaCorta } from "@/components/admin/Piezas";
 import { fichaDe, opcionesDeFormulario, todasLasFichas } from "@/lib/admin/datos";
-import { requerirAdmin } from "@/lib/admin/sesion";
+import { requerirPermiso } from "@/lib/admin/sesion";
 
 export const metadata: Metadata = { title: "Temas y etiquetas" };
 
 export default async function Temas() {
-  const admin = await requerirAdmin();
+  const admin = await requerirPermiso("turismo", "configurar");
   const [ficha, filas] = await Promise.all([fichaDe(admin, "configuracion", "categorias"), todasLasFichas(admin)]);
   return (
     <>

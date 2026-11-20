@@ -7,7 +7,8 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Icono } from "@/components/Iconos";
 import { LogoSMT } from "@/components/LogoSMT";
 
-export type SeccionMenu = { href: string; texto: string; icono: string; separar?: boolean };
+export type { SeccionMenu } from "@/lib/admin/menu";
+import type { SeccionMenu } from "@/lib/admin/menu";
 
 const esActiva = (ruta: string, href: string) => (href === "/admin" ? ruta === "/admin" : ruta === href || ruta.startsWith(`${href}/`));
 
@@ -72,7 +73,7 @@ export function MenuPanel({ secciones }: { secciones: SeccionMenu[] }) {
       <ul className="adm-menu__lista">
         {secciones.map((s) => (
           <li key={s.href}>
-            {s.separar && <div className="adm-menu__separador" aria-hidden="true" />}
+            {s.grupo && <div className="adm-menu__grupo"><span>{s.grupo}</span></div>}
             <Link
               className="adm-menu__enlace"
               href={s.href}
