@@ -10,6 +10,7 @@ import { normalizarExperiencia, normalizarLugar } from "../lib/normalizar.ts";
 const ctx: Contexto = {
   temas: new Set(["historia-y-patrimonio", "parques-y-aire-libre"]),
   etiquetas: new Set(["gratis", "a-pie"]),
+  rubros: new Set(["musica"]),
   fichas: { lugares: new Set(["plaza-independencia", "casa-historica"]), experiencias: new Set(["city-tour-bus-turistico"]) },
 };
 
@@ -89,6 +90,7 @@ describe("el contenido inicial pasa por los formularios sin perder nada", () => 
   const ctxReal: Contexto = {
     temas: new Set(taxonomia.categorias.map((c) => c.id)),
     etiquetas: new Set(taxonomia.etiquetas.map((e) => e.id)),
+    rubros: new Set(),
     fichas,
   };
 

@@ -1,4 +1,8 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { NextConfig } from "next";
+
+import { redireccionesHeredadas } from "./lib/redirecciones";
 
 const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL) : null;
 
@@ -25,6 +29,19 @@ const nextConfig: NextConfig = {
     remotePatterns: supabase
       ? [{ protocol: "https", hostname: supabase.hostname, pathname: "/storage/v1/object/public/**" }]
       : [],
+  },
+
+  // Rutas de los sitios que se integraron (Agenda Cultural, Bus Turístico): 308 para no romper
+  // enlaces compartidos, buscadores ni QR impresos. La tabla está en lib/redirecciones.ts.
+  async redirects() {
+    const espacios = ["espacios-culturales.json", "espacios-al-aire-libre.json"].flatMap((f) => {
+      try {
+        return JSON.parse(fs.readFileSync(path.join(process.cwd(), "datos", "cultura", f), "utf8")).espacios as { slug: string }[];
+      } catch {
+        return [];
+      }
+    });
+    return redireccionesHeredadas(espacios.map((e) => e.slug));
   },
 
   async headers() {

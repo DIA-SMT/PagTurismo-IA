@@ -67,7 +67,7 @@ describe("traducciones en el panel", () => {
       ...recorrido,
       tipo: "circuito", modalidad: "bus", orden: 1,
       traducciones: { en: { titulo: " Route ", orden: "1", inventado: "x" }, fr: { titulo: "Circuit" }, pt: {} },
-    }, { temas: new Set(), etiquetas: new Set(), fichas: { lugares: new Set(["plaza-belgrano"]) } });
+    }, { temas: new Set(), etiquetas: new Set(), rubros: new Set(), fichas: { lugares: new Set(["plaza-belgrano"]) } });
     assert.deepEqual(datos.traducciones, { en: { titulo: "Route" } });
     assert.deepEqual((datos.paradas as Record<string, unknown>[])[0].traducciones, { en: { nombre: "Downtown streets" } });
   });

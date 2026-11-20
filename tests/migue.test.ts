@@ -32,6 +32,7 @@ const contenido = {
   destacados: [],
   categorias: (config("categorias") as Contenido).categorias ?? [],
   etiquetas: (config("categorias") as Contenido).etiquetas ?? [],
+  categoriasAgenda: ((config("categorias-agenda") as { categorias?: Contenido["categoriasAgenda"] }).categorias ?? []).map((k) => ({ ...k, tono: k.tono ?? 0 })),
   sitio: config("sitio") as Contenido["sitio"],
   conBorradores: false,
   idioma: "es",

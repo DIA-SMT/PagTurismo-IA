@@ -16,6 +16,8 @@ export const IDIOMAS_TRADUCCION = ["en", "pt"] as const;
 export type Contexto = {
   temas: Set<string>;
   etiquetas: Set<string>;
+  /** Categorías de la agenda cultural. */
+  rubros: Set<string>;
   /** Slugs existentes por colección, para los campos de relación. */
   fichas: Record<string, Set<string>>;
 };
@@ -70,8 +72,9 @@ function limpiarCampo(campo: Campo, valor: unknown, ruta: string, ctx: Contexto,
       return valor;
     }
     case "temas":
-    case "etiquetas": {
-      const validos = campo.tipo === "temas" ? ctx.temas : ctx.etiquetas;
+    case "etiquetas":
+    case "rubros": {
+      const validos = campo.tipo === "temas" ? ctx.temas : campo.tipo === "rubros" ? ctx.rubros : ctx.etiquetas;
       const lista = Array.isArray(valor) ? valor.filter((v): v is string => typeof v === "string" && validos.has(v)) : [];
       if (!lista.length && campo.requerido) errores[ruta] = `Elegí al menos uno en «${campo.etiqueta}».`;
       return [...new Set(lista)];
@@ -194,7 +197,7 @@ function reglasDeColeccion(esquema: Esquema, d: Json, errores: Record<string, st
       errores.hasta = "«Hasta» es anterior a «Desde».";
     }
   }
-  if (esquema.id === "temas") {
+  if (esquema.id === "temas" || esquema.id === "categorias-agenda") {
     const ids = (lista: unknown, nombre: string) => {
       const vistos = new Set<string>();
       (Array.isArray(lista) ? (lista as Json[]) : []).forEach((t, i) => {

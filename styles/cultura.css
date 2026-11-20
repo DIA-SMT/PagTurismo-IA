@@ -1,0 +1,142 @@
+/* ============================================================
+   Portal unificado — piezas compartidas por los módulos nuevos
+   (semáforo de estados, tonos) y la agenda cultural.
+   Solo consumen tokens de tokens.css: ningún color propio de módulo.
+   ============================================================ */
+
+/* ---- Semáforo de estados: pastilla con fondo pastel y punto ---- */
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 1.6rem;
+  padding: 0.15rem 0.65rem;
+  border-radius: var(--r-full);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-fuerte);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.estado::before { content: ""; flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: currentColor; }
+.estado--ok { background: var(--c-estado-ok-fondo); color: var(--c-estado-ok-texto); }
+.estado--medio { background: var(--c-estado-medio-fondo); color: var(--c-estado-medio-texto); }
+.estado--aviso { background: var(--c-estado-aviso-fondo); color: var(--c-estado-aviso-texto); }
+.estado--mal { background: var(--c-estado-mal-fondo); color: var(--c-estado-mal-texto); }
+.estado--otro { background: var(--c-estado-otro-fondo); color: var(--c-estado-otro-texto); }
+
+/* ---- Tonos decorativos (categorías) ---- */
+.tono {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: var(--r-full);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+}
+.tono--0 { background: var(--c-tono-azul-fondo); color: var(--c-tono-azul-texto); }
+.tono--1 { background: var(--c-tono-verde-fondo); color: var(--c-tono-verde-texto); }
+.tono--2 { background: var(--c-tono-amarillo-fondo); color: var(--c-tono-amarillo-texto); }
+.tono--3 { background: var(--c-tono-violeta-fondo); color: var(--c-tono-violeta-texto); }
+
+.marca--destacado { display: inline-flex; align-items: center; gap: 4px; background: var(--c-amarillo-100); color: var(--c-amarillo-700); }
+
+/* ---- Agenda: barra de cuándo y vista ---- */
+.agenda-barra { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; justify-content: space-between; }
+.agenda-barra .segmentado--grande { flex: 1 1 28rem; }
+.agenda-barra__vista { flex: 0 0 auto; }
+.agenda-barra__vista span { gap: 6px; }
+
+/* ---- Agenda: buscador y filtros ---- */
+.agenda-buscador { grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)) auto; margin-top: var(--sp-5); }
+.agenda-buscador__q input[type="search"] { padding-left: 2.75rem; }
+.agenda-buscador__abrir { display: none; position: relative; margin-top: var(--sp-4); }
+.agenda-buscador__punto { position: absolute; top: 8px; right: 10px; width: 9px; height: 9px; border-radius: 50%; background: var(--c-acento); }
+.agenda-buscador--movil { display: none; }
+@media (max-width: 56rem) {
+  .agenda-buscador { grid-template-columns: minmax(0, 1fr); }
+  .agenda-buscador--amplio { display: none; }
+  .agenda-buscador__abrir { display: inline-flex; }
+  .agenda-buscador--movil { display: grid; }
+}
+
+/* ---- Agenda: renglón con categorías y foto ---- */
+.agenda-item__rubros { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.agenda-item__foto { flex: none; width: 6rem; height: 6rem; margin-left: auto; border-radius: var(--r-md); object-fit: cover; }
+@media (max-width: 37.5rem) { .agenda-item__foto { display: none; } }
+
+/* ---- Calendario mensual ---- */
+.calendario-mes {
+  margin-top: var(--sp-5);
+  padding: var(--sp-5);
+  border: 1px solid var(--c-borde-objeto);
+  border-radius: 20px;
+  background: var(--c-blanco);
+  box-shadow: var(--sombra-1);
+}
+.calendario-mes__cabecera { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); margin-bottom: var(--sp-4); }
+.calendario-mes__cabecera h2 { font-size: var(--fs-lg); }
+.calendario-mes__tabla { width: 100%; border-collapse: separate; border-spacing: 4px; table-layout: fixed; }
+.calendario-mes__tabla th { padding-bottom: var(--sp-1); color: var(--c-ink-muted); font-size: var(--fs-xs); font-weight: var(--fw-fuerte); text-align: center; }
+.calendario-mes__tabla td { padding: 0; }
+.calendario-mes__dia {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 4.25rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--c-borde-suave);
+  border-radius: var(--r-md);
+  background: var(--c-blanco);
+  color: var(--c-ink);
+  font: inherit;
+  cursor: pointer;
+  transition: transform var(--t-rapida), box-shadow var(--t-rapida), border-color var(--t-rapida);
+}
+.calendario-mes__dia:disabled { cursor: default; color: var(--c-ink-muted); }
+.calendario-mes__dia:not(:disabled):hover { transform: translateY(-2px); box-shadow: var(--sombra-2); border-color: var(--c-acento); }
+.calendario-mes__dia--1 { background: var(--c-acento-suave); }
+.calendario-mes__dia--2 { background: color-mix(in srgb, var(--c-acento) 22%, var(--c-blanco)); }
+.calendario-mes__dia--3 { background: color-mix(in srgb, var(--c-acento) 38%, var(--c-blanco)); }
+.calendario-mes__dia[aria-pressed="true"] { border: 2px solid var(--c-acento); box-shadow: var(--sombra-2); }
+.calendario-mes__dia[data-hoy] .calendario-mes__numero { display: inline-grid; place-items: center; min-width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--c-azul-600); color: #fff; }
+.calendario-mes__numero { font-weight: var(--fw-fuerte); font-size: var(--fs-sm); }
+.calendario-mes__cantidad { align-self: flex-end; font-size: var(--fs-xs); font-weight: var(--fw-fuerte); color: var(--c-ink); }
+.calendario-mes__puntos { position: absolute; bottom: 0.45rem; left: 0.5rem; display: flex; gap: 3px; }
+.calendario-mes__puntos .tono { width: 0.5rem; min-height: 0; height: 0.5rem; padding: 0; border-radius: 50%; }
+.calendario-mes__puntos .tono--0 { background: var(--c-azul-500); }
+.calendario-mes__puntos .tono--1 { background: var(--c-exito); }
+.calendario-mes__puntos .tono--2 { background: var(--c-amarillo-400); }
+.calendario-mes__puntos .tono--3 { background: #7C3AED; }
+.calendario-mes__ayuda { margin-top: var(--sp-3); color: var(--c-ink-soft); font-size: var(--fs-sm); }
+@media (max-width: 37.5rem) {
+  .calendario-mes { padding: var(--sp-3); }
+  .calendario-mes__tabla { border-spacing: 2px; }
+  .calendario-mes__dia { min-height: 3rem; padding: 0.3rem; align-items: center; }
+  .calendario-mes__cantidad, .calendario-mes__puntos { display: none; }
+}
+
+/* ---- Compartir ---- */
+.compartir { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+/* ---- Lugares: listado y galería ---- */
+.galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: var(--sp-3); padding: 0; list-style: none; }
+.galeria figure { margin: 0; }
+.galeria__marco { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: var(--r-md); background: var(--c-fondo-alt); }
+.galeria__marco img { object-fit: cover; }
+.galeria figcaption { margin-top: 4px; color: var(--c-ink-muted); font-size: var(--fs-xs); }
+.mapa-embebido { overflow: hidden; border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); }
+.mapa-embebido iframe { display: block; width: 100%; height: 18rem; border: 0; }
+.lista-servicios { display: flex; flex-wrap: wrap; gap: var(--sp-2); padding: 0; list-style: none; }
+.lista-servicios li { padding: 0.2rem 0.75rem; border-radius: var(--r-full); background: var(--c-fondo-alt); font-size: var(--fs-sm); }
+
+/* Segmentado con enlaces (filtros que cambian de página, como el tipo de lugar). */
+.segmentado__enlace { display: flex; flex: 1 1 auto; text-decoration: none; }
+.segmentado__enlace span { flex: 1; }
+.segmentado__enlace[aria-current="page"] span { background: #0066FF; color: #fff; box-shadow: 0 4px 12px #0066ff40; }
+.segmentado__enlace:hover:not([aria-current]) span { color: var(--c-azul-700); }
+.segmentado__enlace:focus-visible { outline: none; }
+.segmentado__enlace:focus-visible span { outline: 3px solid var(--foco-exterior); outline-offset: 2px; box-shadow: 0 0 0 2px var(--foco-interior); }

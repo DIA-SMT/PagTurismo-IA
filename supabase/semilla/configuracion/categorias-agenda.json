@@ -1,0 +1,19 @@
+{
+  "categorias": [
+    { "id": "arte", "titulo": "Arte", "tono": 3 },
+    { "id": "charla", "titulo": "Charlas", "tono": 0 },
+    { "id": "cine", "titulo": "Cine", "tono": 3 },
+    { "id": "danza", "titulo": "Danza", "tono": 3 },
+    { "id": "deportes", "titulo": "Deportes", "tono": 1 },
+    { "id": "familia", "titulo": "En familia", "tono": 2 },
+    { "id": "ferias-artesanos", "titulo": "Ferias de artesanos", "tono": 2 },
+    { "id": "ferias-gastronomicas", "titulo": "Ferias gastronómicas", "tono": 2 },
+    { "id": "folklore", "titulo": "Folklore", "tono": 0 },
+    { "id": "fotografia", "titulo": "Fotografía", "tono": 3 },
+    { "id": "historia", "titulo": "Historia", "tono": 0 },
+    { "id": "literatura", "titulo": "Literatura", "tono": 3 },
+    { "id": "musica", "titulo": "Música", "tono": 0 },
+    { "id": "teatro", "titulo": "Teatro", "tono": 3 },
+    { "id": "turismo", "titulo": "Turismo", "tono": 1 }
+  ]
+}

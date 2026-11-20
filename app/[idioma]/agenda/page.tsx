@@ -20,12 +20,17 @@ export default async function Agenda() {
   const t = textos.agenda;
   const ahora = Date.now();
   const lugares = lugaresPorSlug(c);
-  const ocurrencias: OcurrenciaAgenda[] = agenda(c, ahora).map((o) => ({
-    evento: o.evento, inicio: o.inicio, fin: o.fin, estado: o.estado, sede: o.sede ?? o.datos.sede, nota: o.nota, enCurso: o.enCurso,
-    titulo: o.datos.titulo, url: rutas.evento(o.evento),
-    lugar: o.datos.lugar ? lugares.get(o.datos.lugar)?.titulo : undefined,
-    fueraDeLaCiudad: !!o.datos.fueraDeLaCiudad,
-  }));
+  const ocurrencias: OcurrenciaAgenda[] = agenda(c, ahora).map((o) => {
+    const lugar = o.datos.lugar ? lugares.get(o.datos.lugar) : undefined;
+    return {
+      evento: o.evento, inicio: o.inicio, fin: o.fin, estado: o.estado, sede: o.sede ?? o.datos.sede, nota: o.nota, enCurso: o.enCurso,
+      titulo: o.datos.titulo, url: rutas.evento(o.evento), resumen: o.datos.resumen,
+      lugar: lugar?.titulo ?? o.datos.sede, lugarSlug: lugar?.slug,
+      rubros: o.datos.rubros, gratis: o.datos.costo.modalidad === "gratis", destacado: o.datos.destacado,
+      fueraDeLaCiudad: !!o.datos.fueraDeLaCiudad,
+      imagen: o.datos.imagen ? { src: o.datos.imagen.src, alt: "" } : undefined,
+    };
+  });
 
   // Calendario anual: fechas que se repiten. No son eventos confirmados.
   const calendario = c.eventos
@@ -43,7 +48,7 @@ export default async function Agenda() {
 
       <div className="contenedor bloque-interno">
         <Suspense fallback={null}>
-          <AgendaFiltrable ocurrencias={ocurrencias} ahoraServidor={ahora} />
+          <AgendaFiltrable ocurrencias={ocurrencias} categorias={c.categoriasAgenda} ahoraServidor={ahora} />
         </Suspense>
 
         <section className="grupo calendario-anual" id="calendario" aria-labelledby="calendario-titulo">

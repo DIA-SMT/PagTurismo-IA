@@ -41,6 +41,23 @@ function costo(v: unknown) {
   return { modalidad, detalle: opcional(c.detalle) } as Lugar["costo"];
 }
 
+function coordenadas(v: unknown) {
+  const c = v as { lat?: unknown; lng?: unknown } | undefined;
+  if (!c || c.lat === "" || c.lng === "" || c.lat == null || c.lng == null) return undefined;
+  const lat = Number(c.lat), lng = Number(c.lng);
+  return Number.isFinite(lat) && Number.isFinite(lng) && Math.abs(lat) <= 90 && Math.abs(lng) <= 180 ? { lat, lng } : undefined;
+}
+
+/** Galería: lista de { foto: Imagen } (formulario) o de Imagen (importadores). */
+function galeria(v: unknown) {
+  return lista<Record<string, unknown>>(v).map((g) => imagen(g?.foto ?? g)).filter((i): i is NonNullable<typeof i> => !!i);
+}
+
+function legado(v: unknown) {
+  const l = v as Record<string, unknown> | undefined;
+  return l && texto(l.origen) && texto(l.id) ? { origen: texto(l.origen), id: texto(l.id), url: opcional(l.url) } : undefined;
+}
+
 function confirmable(v: unknown) {
   const d = v as Record<string, unknown> | undefined;
   if (!d || !texto(d.texto)) return undefined;
@@ -65,6 +82,14 @@ export const normalizarLugar = (c: Record<string, unknown>, slug: string): Lugar
     contacto: { telefono: opcional(contacto.telefono), email: opcional(contacto.email), web: opcional(contacto.web) },
     accesibilidad: opcional(c.accesibilidad),
     imperdible: c.imperdible === true,
+    tipoEspacio: c.tipoEspacio === "cultural" || c.tipoEspacio === "aire-libre" ? c.tipoEspacio : undefined,
+    servicios: texto(c.servicios).split(/\n+/).map((s) => s.trim()).filter(Boolean),
+    redes: (() => {
+      const r = (c.redes ?? {}) as Record<string, unknown>;
+      return { instagram: opcional(r.instagram), facebook: opcional(r.facebook), entradas: opcional(r.entradas) };
+    })(),
+    galeria: galeria(c.galeria),
+    legado: legado(c.legado),
   };
 };
 
@@ -125,6 +150,23 @@ export const normalizarEvento = (c: Record<string, unknown>, slug: string): Even
       sede: opcional(o.sede),
       nota: opcional(o.nota),
     })),
+    rubros: textos(c.rubros),
+    destacado: c.destacado === true,
+    lugarManual: (() => {
+      const m = (c.lugarManual ?? {}) as Record<string, unknown>;
+      const coord = coordenadas(m);
+      return opcional(m.direccion) || coord ? { direccion: opcional(m.direccion), coordenadas: coord } : undefined;
+    })(),
+    entradas: opcional(c.entradas),
+    capacidad: Number(c.capacidad) > 0 ? Number(c.capacidad) : undefined,
+    accesibilidad: opcional(c.accesibilidad),
+    requisitos: opcional(c.requisitos),
+    contacto: (() => {
+      const k = (c.contacto ?? {}) as Record<string, unknown>;
+      return opcional(k.telefono) || opcional(k.email) ? { telefono: opcional(k.telefono), email: opcional(k.email) } : undefined;
+    })(),
+    galeria: galeria(c.galeria),
+    legado: legado(c.legado),
   };
 };
 

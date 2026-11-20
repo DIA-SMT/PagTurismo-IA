@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 import { mensajeDeErrorDb, type EstadoAccion } from "@/lib/admin/acciones";
 import { contextoDeLimpieza, referenciasA, todasLasFichas } from "@/lib/admin/datos";
-import { ESQUEMA_SITIO, ESQUEMA_TEMAS, esquemaDe } from "@/lib/admin/esquemas";
+import { ESQUEMA_CATEGORIAS_AGENDA, ESQUEMA_SITIO, ESQUEMA_TEMAS, esquemaDe } from "@/lib/admin/esquemas";
 import { SLUG_VALIDO, limpiarFicha, slugDe } from "@/lib/admin/limpiar";
 import { comoAdmin, requerirAdmin, type Admin } from "@/lib/admin/sesion";
 import { MODULOS, puede, puedeContenido, type Modulo } from "@/lib/permisos";
@@ -93,7 +93,7 @@ function permisoDeGuardado(admin: Admin, coleccion: string, original: string, es
 }
 
 /** Módulo dueño de cada configuración. */
-const MODULO_CONFIGURACION: Record<string, Modulo> = { sitio: "turismo", categorias: "turismo" };
+const MODULO_CONFIGURACION: Record<string, Modulo> = { sitio: "turismo", categorias: "turismo", "categorias-agenda": "cultura" };
 
 /** Configuración del sitio o temas y etiquetas (una sola ficha cada una, siempre vigente). */
 export async function guardarConfiguracion(_previo: EstadoAccion, form: FormData): Promise<EstadoAccion> {
@@ -101,7 +101,7 @@ export async function guardarConfiguracion(_previo: EstadoAccion, form: FormData
   const cual = String(form.get("slugOriginal") ?? "");
   const modulo = MODULO_CONFIGURACION[cual];
   if (modulo && !puede(admin, modulo, "configurar")) return { error: "Tu usuario no puede cambiar esta configuración." };
-  const esquema = cual === "sitio" ? ESQUEMA_SITIO : cual === "categorias" ? ESQUEMA_TEMAS : null;
+  const esquema = cual === "sitio" ? ESQUEMA_SITIO : cual === "categorias" ? ESQUEMA_TEMAS : cual === "categorias-agenda" ? ESQUEMA_CATEGORIAS_AGENDA : null;
   if (!esquema) return { error: "Configuración desconocida." };
   const crudo = leerDatos(form);
   if (!crudo) return { error: "No se pudieron leer los datos del formulario. Recargá la página." };
@@ -129,6 +129,19 @@ export async function guardarConfiguracion(_previo: EstadoAccion, form: FormData
         const detalle = [...faltan].map(([id, usan]) => `«${id}» (${usan.slice(0, 3).join(", ")}${usan.length > 3 ? ` y ${usan.length - 3} más` : ""})`).join("; ");
         errores[tipo] = `No se puede quitar porque todavía lo usan: ${detalle}. Sacalo de esas fichas primero.`;
       }
+    }
+  }
+  if (cual === "categorias-agenda") {
+    // Una categoría que todavía usa algún evento no se puede quitar.
+    const quedan = new Set(((datos.categorias ?? []) as { id: string }[]).map((c) => c.id));
+    const usadas = new Map<string, string[]>();
+    for (const f of filas.filter((x) => x.coleccion === "eventos")) {
+      for (const id of Array.isArray(f.datos.rubros) ? (f.datos.rubros as string[]) : []) {
+        if (!quedan.has(id)) usadas.set(id, [...(usadas.get(id) ?? []), String(f.datos.titulo ?? f.slug)]);
+      }
+    }
+    if (usadas.size) {
+      errores.categorias = `No se puede quitar porque la usan eventos: ${[...usadas].map(([id, ev]) => `«${id}» (${ev.slice(0, 3).join(", ")}${ev.length > 3 ? ` y ${ev.length - 3} más` : ""})`).join("; ")}.`;
     }
   }
   if (Object.keys(errores).length) return { error: "Revisá los campos marcados.", errores };

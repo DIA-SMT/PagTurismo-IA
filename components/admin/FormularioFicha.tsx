@@ -7,7 +7,7 @@ import { Icono } from "@/components/Iconos";
 import { MensajeAccion } from "@/components/admin/Piezas";
 import { guardarConfiguracion, guardarFicha, subirFoto } from "@/app/admin/acciones";
 import { estadoInicial, type EstadoAccion } from "@/lib/admin/acciones";
-import { ESQUEMAS, ESQUEMA_SITIO, ESQUEMA_TEMAS, type Campo } from "@/lib/admin/esquemas";
+import { ESQUEMAS, ESQUEMA_CATEGORIAS_AGENDA, ESQUEMA_SITIO, ESQUEMA_TEMAS, type Campo } from "@/lib/admin/esquemas";
 import { IDIOMAS_TRADUCCION, slugDe } from "@/lib/admin/limpiar";
 import { ponerTraduccion, textosTraducibles, traduccionDe, type TextoTraducible } from "@/lib/admin/traducibles";
 import { LOCALE, localizarRuta } from "@/lib/i18n/config";
@@ -18,9 +18,14 @@ export type Opciones = {
   fichas: Record<string, { slug: string; titulo: string; estado: string }[]>;
   temas: { id: string; titulo: string }[];
   etiquetas: { id: string; titulo: string }[];
+  rubros: { id: string; titulo: string }[];
 };
 
-const esquemaPorId = (id: string) => (id === "sitio" ? ESQUEMA_SITIO : id === "categorias" ? ESQUEMA_TEMAS : ESQUEMAS.find((e) => e.id === id)!);
+const esquemaPorId = (id: string) =>
+  id === "sitio" ? ESQUEMA_SITIO
+    : id === "categorias" ? ESQUEMA_TEMAS
+      : id === "categorias-agenda" ? ESQUEMA_CATEGORIAS_AGENDA
+        : ESQUEMAS.find((e) => e.id === id)!;
 
 function leerRuta(obj: unknown, ruta: Ruta): unknown {
   return ruta.reduce<unknown>((o, k) => (o && typeof o === "object" ? (o as Json)[k as string] : undefined), obj);
@@ -284,8 +289,9 @@ function CampoFormulario({ campo, ruta, ctx }: { campo: Campo; ruta: Ruta; ctx: 
         </div>
       );
     case "temas":
-    case "etiquetas": {
-      const lista = campo.tipo === "temas" ? ctx.opciones.temas : ctx.opciones.etiquetas;
+    case "etiquetas":
+    case "rubros": {
+      const lista = campo.tipo === "temas" ? ctx.opciones.temas : campo.tipo === "rubros" ? ctx.opciones.rubros : ctx.opciones.etiquetas;
       const elegidos = Array.isArray(valor) ? (valor as string[]) : [];
       return (
         <fieldset className={`${clase} adm-grupo`} style={{ background: "transparent", border: 0, padding: 0 }}>

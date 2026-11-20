@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BotonAccion, Dato, JsonLd, textoCosto } from "@/components/Ficha";
+import { Compartir, Galeria, MapaEmbebido } from "@/components/cultura/Piezas";
 import { Vinculo as Link } from "@/components/i18n/Idioma";
 import { Icono } from "@/components/Iconos";
 import { AvisoBorrador, Aviso, AvisoSinTraducir, EncabezadoPagina, FotoFicha, Fuentes, Marca, Parrafos } from "@/components/Ui";
@@ -65,6 +66,18 @@ export default async function FichaEvento({ params }: PageProps<"/[idioma]/agend
   const sede = e.fueraDeLaCiudad ? e.localidad || e.sede : lugar?.titulo ?? e.sede;
   const r = e.recurrente;
   const confirmadaConSede = proximas.find((o) => o.estado === "confirmado" && (o.sede || sede));
+  const tc = textos.cultura;
+  const rubros = e.rubros.map((id) => c.categoriasAgenda.find((k) => k.id === id)).filter((k) => !!k);
+  const coordenadas = lugar?.coordenadas ?? e.lugarManual?.coordenadas;
+  const direccion = lugar?.direccion ?? e.lugarManual?.direccion;
+  const primera = proximas.find((o) => o.estado === "confirmado" || o.estado === "reprogramado");
+  const google = primera ? (() => {
+    const utc = (i: number) => new Date(i).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const ini = aInstante(primera.inicio);
+    const fin = primera.fin && esFechaValida(primera.fin) ? aInstante(primera.fin) : ini + 2 * 3_600_000;
+    const p = new URLSearchParams({ action: "TEMPLATE", text: e.titulo, dates: `${utc(ini)}/${utc(fin)}`, details: e.resumen, location: [sede, direccion].filter(Boolean).join(", ") });
+    return `https://calendar.google.com/calendar/render?${p}`;
+  })() : undefined;
 
   return (
     <>
@@ -76,7 +89,9 @@ export default async function FichaEvento({ params }: PageProps<"/[idioma]/agend
           description: e.resumen,
           startDate: new Date(aInstante(confirmadaConSede.inicio)).toISOString(),
           ...(confirmadaConSede.fin && esFechaValida(confirmadaConSede.fin) ? { endDate: new Date(aInstante(confirmadaConSede.fin)).toISOString() } : {}),
-          eventStatus: "https://schema.org/EventScheduled",
+          eventStatus: `https://schema.org/${confirmadaConSede.estado === "reprogramado" ? "EventRescheduled" : "EventScheduled"}`,
+          ...(e.imagen ? { image: [e.imagen.src] } : {}),
+          isAccessibleForFree: e.costo.modalidad === "gratis",
           location: { "@type": "Place", name: confirmadaConSede.sede || sede, address: { "@type": "PostalAddress", addressLocality: e.fueraDeLaCiudad ? e.localidad : "San Miguel de Tucumán", addressCountry: "AR" } },
           ...(e.organizador ? { organizer: { "@type": "Organization", name: e.organizador } } : {}),
         }} />
@@ -89,8 +104,10 @@ export default async function FichaEvento({ params }: PageProps<"/[idioma]/agend
         bajada={e.resumen}
       >
         <div className="marcas">
+          {e.destacado && <span className="marca marca--destacado"><Icono nombre="estrella" tamano={12} /> {tc.destacado}</span>}
           {e.fueraDeLaCiudad && <Marca tipo="alerta">{t.fueraDeSmt}</Marca>}
           {e.costo.modalidad === "gratis" && <Marca tipo="exito">{textos.comun.ui.gratis}</Marca>}
+          {rubros.map((k) => <Link key={k.id} className={`tono tono--${k.tono}`} href={`/agenda?categoria=${k.id}`}>{k.titulo}</Link>)}
         </div>
       </EncabezadoPagina>
 
@@ -138,12 +155,23 @@ export default async function FichaEvento({ params }: PageProps<"/[idioma]/agend
             )}
           </section>
 
+          {proximas.length > 0 && (
+            <section aria-labelledby="compartir-titulo">
+              <h2 id="compartir-titulo">{tc.compartir.titulo}</h2>
+              <Compartir titulo={e.titulo} ics={`/api/agenda/${e.slug}/ics`} google={google} />
+            </section>
+          )}
+
+          <Galeria fotos={e.galeria} />
+          {coordenadas && !e.fueraDeLaCiudad && <MapaEmbebido lat={coordenadas.lat} lng={coordenadas.lng} nombre={sede ?? e.titulo} />}
+
           {pasadas.length > 0 && (
             <section aria-labelledby="pasadas">
               <h2 id="pasadas">{t.fechasAnteriores}</h2>
               <ul className="lista-simple">
-                {pasadas.map((o) => <li key={o.inicio}>{formatear(t.finalizado, { fecha: formatearOcurrencia(o, c.idioma) })}</li>)}
+                {pasadas.slice(-6).reverse().map((o) => <li key={o.inicio}>{formatear(t.finalizado, { fecha: formatearOcurrencia(o, c.idioma) })}</li>)}
               </ul>
+              {pasadas.length > 6 && <p className="texto-suave">{formatear(tc.fechasAnterioresMas, { n: pasadas.length - 6 })}</p>}
             </section>
           )}
         </div>
@@ -160,11 +188,23 @@ export default async function FichaEvento({ params }: PageProps<"/[idioma]/agend
               )}
               {e.organizador && <Dato icono="info" titulo={t.organiza}>{e.organizador}</Dato>}
               <Dato icono="ticket" titulo={t.costo}>{textoCosto(e.costo, c.idioma)}</Dato>
+              {direccion && !e.fueraDeLaCiudad && <Dato icono="mapa" titulo={textos.fichas.dato.direccion}>{direccion}</Dato>}
               {e.inscripcion && <Dato icono="ticket" titulo={t.entradas}>{e.inscripcion}</Dato>}
+              {e.capacidad && <Dato icono="personas" titulo={textos.fichas.dato.capacidad}>{e.capacidad}</Dato>}
+              {e.accesibilidad && <Dato icono="accesibilidad" titulo={textos.fichas.dato.accesibilidad}>{e.accesibilidad}</Dato>}
+              {e.requisitos && <Dato icono="info" titulo={textos.fichas.dato.requisitos}>{e.requisitos}</Dato>}
+              {e.contacto && (
+                <Dato icono="telefono" titulo={textos.fichas.dato.contacto}>
+                  {e.contacto.telefono && <a href={`tel:${e.contacto.telefono.replace(/[^\d+]/g, "")}`}>{e.contacto.telefono}</a>}
+                  {e.contacto.telefono && e.contacto.email && <br />}
+                  {e.contacto.email && <a href={`mailto:${e.contacto.email}`}>{e.contacto.email}</a>}
+                </Dato>
+              )}
             </dl>
             <div className="panel-practico__acciones">
-              {e.urlOficial && <BotonAccion url={e.urlOficial} texto={t.sitioOficial} />}
-              <BotonAccion url="/agenda" texto={t.volver} primario={!e.urlOficial} />
+              {e.entradas && <BotonAccion url={e.entradas} texto={t.entradas} />}
+              {e.urlOficial && <BotonAccion url={e.urlOficial} texto={t.sitioOficial} primario={!e.entradas} />}
+              <BotonAccion url="/agenda" texto={t.volver} primario={!e.urlOficial && !e.entradas} />
             </div>
           </div>
         </aside>

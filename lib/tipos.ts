@@ -40,6 +40,9 @@ export type DatoConfirmable = { texto: string; confirmado: boolean };
 
 export type Enlace = { texto: string; url: string };
 
+/** De dónde vino una ficha que trajo un importador (Agenda Cultural, WordPress viejo). */
+export type Legado = { origen: string; id: string; url?: string };
+
 type Comun = {
   slug: string;
   estado: Estado;
@@ -66,6 +69,12 @@ export type Lugar = Comun & {
   contacto?: { telefono?: string; email?: string; web?: string };
   accesibilidad?: string;
   imperdible?: boolean;
+  /** Espacio de la agenda cultural: cultural (museo, teatro…) o al aire libre (plaza, parque). */
+  tipoEspacio?: "cultural" | "aire-libre";
+  servicios: string[];
+  redes: { instagram?: string; facebook?: string; entradas?: string };
+  galeria: Imagen[];
+  legado?: Legado;
 };
 
 export type TipoAccion = "reservar" | "inscripcion" | "consultar" | "sin-inscripcion" | "sin-salidas";
@@ -126,7 +135,23 @@ export type Evento = Comun & {
   inscripcion?: string;
   urlOficial?: string;
   ocurrencias: Ocurrencia[];
+  /** Categorías de la agenda cultural (configuracion/categorias-agenda). */
+  rubros: string[];
+  destacado: boolean;
+  /** Lugar sin ficha: dirección y coordenadas para el mapa. */
+  lugarManual?: { direccion?: string; coordenadas?: { lat: number; lng: number } };
+  /** Enlace para comprar entradas o inscribirse. */
+  entradas?: string;
+  capacidad?: number;
+  accesibilidad?: string;
+  requisitos?: string;
+  contacto?: { telefono?: string; email?: string };
+  galeria: Imagen[];
+  legado?: Legado;
 };
+
+/** Categoría de la agenda cultural. `tono`: 0 azul, 1 verde, 2 amarillo, 3 violeta (decorativo). */
+export type CategoriaAgenda = { id: string; titulo: string; tono: number };
 
 export type Parada = { nombre: string; lugar?: string; nota?: string; dia?: number };
 

@@ -14,7 +14,8 @@
     "traducciones": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/traducciones.ts",
     "db:migrar": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/migrar.ts",
     "db:copiar-desde-supabase": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/copiar-desde-supabase.ts",
-    "cuentas": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/cuentas.ts"
+    "cuentas": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/cuentas.ts",
+    "cultura": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --env-file-if-exists=.env --env-file-if-exists=.env.local scripts/cultura.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

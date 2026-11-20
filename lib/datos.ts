@@ -28,7 +28,7 @@ import {
 } from "./normalizar";
 import { rutas } from "./rutas";
 import type {
-  Categoria, Destacado, Escapada, Etiqueta, Evento, Experiencia, Guia, ItemCatalogo, Lugar, Plato, Recorrido, Sitio,
+  Categoria, CategoriaAgenda, Destacado, Escapada, Etiqueta, Evento, Experiencia, Guia, ItemCatalogo, Lugar, Plato, Recorrido, Sitio,
 } from "./tipos";
 
 export type Contenido = {
@@ -42,6 +42,8 @@ export type Contenido = {
   destacados: Destacado[];
   categorias: Categoria[];
   etiquetas: Etiqueta[];
+  /** Categorías de la agenda cultural. */
+  categoriasAgenda: CategoriaAgenda[];
   sitio: Sitio;
   /** Si este pedido ve borradores. */
   conBorradores: boolean;
@@ -120,6 +122,10 @@ export async function leerContenido(conBorradores: boolean, idioma: Idioma): Pro
     destacados: de("destacados", normalizarDestacado).sort(porOrden),
     categorias: (taxonomia.categorias ?? []).filter((c) => c?.id),
     etiquetas: (taxonomia.etiquetas ?? []).filter((e) => e?.id),
+    categoriasAgenda: (((config("categorias-agenda") ?? {}) as { categorias?: Partial<CategoriaAgenda>[] }).categorias ?? [])
+      .filter((k): k is CategoriaAgenda => !!k?.id && !!k?.titulo)
+      .map((k) => ({ id: k.id, titulo: k.titulo, tono: Number.isInteger(k.tono) ? Math.min(3, Math.max(0, Number(k.tono))) : 0 }))
+      .sort((a, b) => a.titulo.localeCompare(b.titulo, "es")),
     sitio: { ...SITIO_VACIO, ...((config("sitio") ?? {}) as Partial<Sitio>) },
     conBorradores,
     idioma,

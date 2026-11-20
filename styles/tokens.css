@@ -359,3 +359,59 @@
   --foco-exterior: rgba(0, 0, 0, 0.65);
 
 }
+
+/* ============================================================
+   PORTAL UNIFICADO: semáforo de estados y tonos por módulo
+   ============================================================
+   Vienen de la estética municipal de CIMBA Ciudadano (misma paleta oficial),
+   expresados como tokens del portal. Dos usos que NO se mezclan:
+   - Semáforo (--c-estado-*): significado. Programada/confirmada, completa,
+     suspendida, cancelada, pendiente. Pastilla con fondo pastel y punto.
+     Texto oscurecido para llegar a 4,5:1 sobre su fondo.
+   - Tonos (--c-tono-*): decoración por categoría o módulo. Nunca un estado.
+   ============================================================ */
+:root {
+  --c-estado-ok-texto: #0E7340;   --c-estado-ok-fondo: #E7F6EE;   --c-estado-ok-punto: #15803D;
+  --c-estado-medio-texto: #7A5600; --c-estado-medio-fondo: #FDF3D3; --c-estado-medio-punto: #C08A00;
+  --c-estado-aviso-texto: #A63D06; --c-estado-aviso-fondo: #FDEADF; --c-estado-aviso-punto: #E8590C;
+  --c-estado-mal-texto: #B42318;  --c-estado-mal-fondo: #FDEBEA;  --c-estado-mal-punto: #D42D20;
+  --c-estado-otro-texto: #6D28D9; --c-estado-otro-fondo: #F1EBFE; --c-estado-otro-punto: #7C3AED;
+
+  --c-tono-azul-fondo: #E6F0FF;    --c-tono-azul-texto: #0A3D91;
+  --c-tono-verde-fondo: #E7F6EE;   --c-tono-verde-texto: #0E5F37;
+  --c-tono-amarillo-fondo: #FFF7CC; --c-tono-amarillo-texto: #5E4A00;
+  --c-tono-violeta-fondo: #F0ECFD; --c-tono-violeta-texto: #4C2A9E;
+
+  /* Acento de cada módulo: lo cambia data-modulo en el contenedor de la página. */
+  --c-acento: var(--c-azul-600);
+  --c-acento-suave: var(--c-tinte-azul);
+}
+[data-modulo="cultura"] { --c-acento: #7C3AED; --c-acento-suave: var(--c-tono-violeta-fondo); }
+[data-modulo="buses"] { --c-acento: var(--c-celeste-600); --c-acento-suave: var(--c-celeste-50); }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-estado-ok-texto: #86E0AE;   --c-estado-ok-fondo: #13402B;
+    --c-estado-medio-texto: #F5CF6B; --c-estado-medio-fondo: #45360E;
+    --c-estado-aviso-texto: #FFB38A; --c-estado-aviso-fondo: #4A2412;
+    --c-estado-mal-texto: #FFA8A1;  --c-estado-mal-fondo: #4D1A17;
+    --c-estado-otro-texto: #CDB8FF; --c-estado-otro-fondo: #33215E;
+    --c-tono-azul-fondo: #16324C;    --c-tono-azul-texto: #B3D2FF;
+    --c-tono-verde-fondo: #13402B;   --c-tono-verde-texto: #9BE3BC;
+    --c-tono-amarillo-fondo: #3D3412; --c-tono-amarillo-texto: #F2DE7A;
+    --c-tono-violeta-fondo: #2C2150; --c-tono-violeta-texto: #CDB8FF;
+  }
+  :root:not([data-theme="light"]) [data-modulo="cultura"] { --c-acento: #A78BFA; }
+}
+:root[data-theme="dark"] {
+  --c-estado-ok-texto: #86E0AE;   --c-estado-ok-fondo: #13402B;
+  --c-estado-medio-texto: #F5CF6B; --c-estado-medio-fondo: #45360E;
+  --c-estado-aviso-texto: #FFB38A; --c-estado-aviso-fondo: #4A2412;
+  --c-estado-mal-texto: #FFA8A1;  --c-estado-mal-fondo: #4D1A17;
+  --c-estado-otro-texto: #CDB8FF; --c-estado-otro-fondo: #33215E;
+  --c-tono-azul-fondo: #16324C;    --c-tono-azul-texto: #B3D2FF;
+  --c-tono-verde-fondo: #13402B;   --c-tono-verde-texto: #9BE3BC;
+  --c-tono-amarillo-fondo: #3D3412; --c-tono-amarillo-texto: #F2DE7A;
+  --c-tono-violeta-fondo: #2C2150; --c-tono-violeta-texto: #CDB8FF;
+}
+:root[data-theme="dark"] [data-modulo="cultura"] { --c-acento: #A78BFA; }
