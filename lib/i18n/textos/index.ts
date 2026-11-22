@@ -1,6 +1,7 @@
 import type { Idioma } from "../config";
 import { agenda } from "./agenda";
 import { catalogo } from "./catalogo";
+import { buses } from "./buses";
 import { comun } from "./comun";
 import { cultura } from "./cultura";
 import { fichas } from "./fichas";
@@ -10,7 +11,7 @@ import { portada } from "./portada";
 import { recorridos } from "./recorridos";
 
 /** Todas las secciones de textos. Cada archivo define la suya en los tres idiomas. */
-const SECCIONES = { comun, portada, paginas, catalogo, agenda, cultura, fichas, recorridos, migue };
+const SECCIONES = { comun, portada, paginas, catalogo, agenda, cultura, buses, fichas, recorridos, migue };
 
 export type Textos = { [K in keyof typeof SECCIONES]: (typeof SECCIONES)[K]["es"] };
 

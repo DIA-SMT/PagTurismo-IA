@@ -60,6 +60,39 @@ export function SpriteIconos() {
         <symbol id="i-lista" viewBox="0 0 24 24" {...T}>
           <path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" />
         </symbol>
+        <symbol id="i-refrescar" viewBox="0 0 24 24" {...T}>
+          <path d="M20 11a8 8 0 0 0-14.6-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20v-4h-4" />
+        </symbol>
+        <symbol id="i-guardar" viewBox="0 0 24 24" {...T}>
+          <path d="M5 3h11l3 3v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" /><path d="M8 3v5h7V3M8 21v-7h8v7" />
+        </symbol>
+        <symbol id="i-filtro" viewBox="0 0 24 24" {...T}>
+          <path d="M3 5h18l-7 8v6l-4 2v-8z" />
+        </symbol>
+        <symbol id="i-play" viewBox="0 0 24 24" {...T}>
+          <path d="M7 4v16l13-8z" />
+        </symbol>
+        <symbol id="i-qr" viewBox="0 0 24 24" {...T}>
+          <rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3" />
+        </symbol>
+        <symbol id="i-globo" viewBox="0 0 24 24" {...T}>
+          <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+        </symbol>
+        <symbol id="i-prohibido" viewBox="0 0 24 24" {...T}>
+          <circle cx="12" cy="12" r="9" /><path d="m5.6 5.6 12.8 12.8" />
+        </symbol>
+        <symbol id="i-tendencia" viewBox="0 0 24 24" {...T}>
+          <path d="m3 17 6-6 4 4 8-8M15 7h6v6" />
+        </symbol>
+        <symbol id="i-chispas" viewBox="0 0 24 24" {...T}>
+          <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" />
+        </symbol>
+        <symbol id="i-interruptor-si" viewBox="0 0 24 24" {...T}>
+          <rect x="2" y="7" width="20" height="10" rx="5" /><circle cx="17" cy="12" r="2.5" />
+        </symbol>
+        <symbol id="i-interruptor-no" viewBox="0 0 24 24" {...T}>
+          <rect x="2" y="7" width="20" height="10" rx="5" /><circle cx="7" cy="12" r="2.5" />
+        </symbol>
         <symbol id="i-copiar" viewBox="0 0 24 24" {...T}>
           <rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" />
         </symbol>

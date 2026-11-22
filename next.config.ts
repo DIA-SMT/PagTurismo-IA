@@ -11,11 +11,11 @@ const nextConfig: NextConfig = {
   // carpeta de compilación de la que ya está corriendo.
   distDir: process.env.DIRECTORIO_NEXT || ".next",
   // PGlite (base local) carga un .wasm desde node_modules.
-  serverExternalPackages: ["@electric-sql/pglite"],
+  serverExternalPackages: ["@electric-sql/pglite", "@electric-sql/pglite-socket"],
   // Sin Supabase (modo local, o una vista previa sin DATABASE_URL) la base se arma con las
   // migraciones y el contenido inicial: tienen que viajar con las funciones.
   outputFileTracingIncludes: {
-    "/**": ["./supabase/migrations/*.sql", "./supabase/local/*.sql", "./supabase/semilla/**/*.json"],
+    "/**": ["./supabase/migrations/*.sql", "./supabase/local/*.sql", "./supabase/semilla/**/*.json", "./lib/buses/sql/**/*.sql", "./datos/cultura/*.json"],
   },
   experimental: {
     // Fotos que sube el equipo desde el panel. Vercel corta en 4,5 MB.
