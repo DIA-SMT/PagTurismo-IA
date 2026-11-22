@@ -6,6 +6,8 @@ import { Banda, Chip, Dato, Tarjeta, fechaCorta } from "@/components/admin/Pieza
 import { camposCambiados, describirCambio, humanizar, todasLasFichas, ultimosCambios } from "@/lib/admin/datos";
 import { ESQUEMAS } from "@/lib/admin/esquemas";
 import { requerirAdmin } from "@/lib/admin/sesion";
+import { indicadoresBuses } from "@/lib/buses/indicadores";
+import { NOMBRE_MODULO, esModulo, puedeContenido, ve } from "@/lib/permisos";
 import { formatearOcurrencia, ocurrenciasVigentes } from "@/lib/fechas";
 import { normalizarEvento } from "@/lib/normalizar";
 import { validarFilas } from "@/lib/validar";
@@ -22,9 +24,20 @@ function existeImagen(src: string) {
   return fs.existsSync(path.join(process.cwd(), "public", src));
 }
 
-export default async function Tablero() {
+const fechaSalida = (fecha: string, hora: string) =>
+  `${new Intl.DateTimeFormat("es-AR", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${fecha}T12:00:00Z`))} · ${hora} h`;
+
+export default async function Tablero({ searchParams }: PageProps<"/admin">) {
   const admin = await requerirAdmin();
-  const [filas, cambios] = await Promise.all([todasLasFichas(admin), ultimosCambios(admin, { limite: 8 })]);
+  const sinPermiso = (await searchParams)["sin-permiso"];
+  const veContenido = ve(admin, "turismo") || ve(admin, "cultura");
+  const veBuses = ve(admin, "buses");
+  const veMigue = ve(admin, "migue");
+  const [filas, cambios, buses] = await Promise.all([
+    veContenido ? todasLasFichas(admin) : Promise.resolve([]),
+    ultimosCambios(admin, { limite: 8 }),
+    veBuses || veMigue ? indicadoresBuses() : Promise.resolve(null),
+  ]);
   const ahora = Date.now();
 
   const fichas = filas.filter((f) => f.coleccion !== "configuracion");
@@ -40,10 +53,81 @@ export default async function Tablero() {
     <>
       <Banda
         titulo="Tablero"
-        bajada="Cómo está el contenido del portal. Los números se calculan cada vez que abrís esta página."
+        bajada="Cómo está el portal: contenido, agenda, buses y Migue. Los números se calculan cada vez que abrís esta página."
         acciones={<Link className="adm-boton adm-boton--claro" href="/" target="_blank"><Icono nombre="ojo" tamano={18} /> Ver el sitio</Link>}
       />
 
+      {sinPermiso && (
+        <p className="adm-aviso adm-aviso--error" role="alert"><span className="adm-aviso__icono" aria-hidden="true">!</span>
+          Tu usuario no tiene permiso para entrar a «{esModulo(sinPermiso) ? NOMBRE_MODULO[sinPermiso] : String(sinPermiso)}». Si lo necesitás, pedíselo a un superadministrador.
+        </p>
+      )}
+
+      {buses && (veBuses || veMigue) && (
+        buses.estado === "ok" ? (
+          <>
+            {veBuses && (
+              <dl className="adm-datos">
+                <Dato icono="bus-linea" etiqueta="Salidas en 7 días" valor={buses.salidas7dias}
+                  detalle={`${buses.personas7dias} personas reservadas, ${buses.lugaresLibres7dias} lugares libres.`} href="/admin/buses" />
+                <Dato icono="ticket" etiqueta="Reservas en 7 días" valor={buses.reservas7dias}
+                  detalle={`${buses.reservasUltimas24h} nuevas en las últimas 24 horas.`} href="/admin/buses" />
+                <Dato icono="escuela" tono={buses.solicitudesPendientes ? "amarillo" : "azul"} etiqueta="Solicitudes educativas" valor={buses.solicitudesPendientes}
+                  detalle="Pendientes de respuesta." href="/admin/buses/educativo" />
+                <Dato icono="camara" etiqueta="Books de fotos" valor={buses.booksVigentes} detalle="Vigentes (vencen a los 7 días)." href="/admin/buses/fotos" />
+              </dl>
+            )}
+            <div className="adm-grilla">
+              {veBuses && (
+                <Tarjeta titulo="Próximas salidas del Bus Turístico" icono="bus-linea"
+                  acciones={<Link href="/admin/buses" className="adm-boton adm-boton--secundario adm-boton--chico">Ver salidas</Link>}>
+                  {buses.proximas.length === 0 ? <p>No hay salidas activas en los próximos 7 días.</p> : (
+                    <ul className="adm-renglones">
+                      {buses.proximas.map((s) => {
+                        const libres = s.cupo - s.reservadas;
+                        return (
+                          <li key={s.id}>
+                            <span className={`adm-renglones__punto${libres <= 2 ? " adm-renglones__punto--rojo" : " adm-renglones__punto--azul"}`} aria-hidden="true" />
+                            <span>
+                              <strong>{s.titulo}</strong>
+                              <small>{fechaSalida(s.fecha, s.hora)} · {s.reservadas} de {s.cupo} · {libres > 0 ? `${libres} libres` : "completa"}</small>
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </Tarjeta>
+              )}
+              <Tarjeta titulo="Alertas operativas" icono="alerta">
+                {buses.casiCompletas.length === 0 && !buses.solicitudesPendientes ? <p>Sin alertas.</p> : (
+                  <ul className="adm-renglones">
+                    {veBuses && buses.casiCompletas.map((s) => (
+                      <li key={s.id}><span className="adm-renglones__punto adm-renglones__punto--rojo" aria-hidden="true" />
+                        <span>Salida casi completa: <strong>{s.titulo}</strong><small>{fechaSalida(s.fecha, s.hora)} · quedan {Math.max(0, s.cupo - s.reservadas)}</small></span></li>
+                    ))}
+                    {veBuses && buses.solicitudesPendientes > 0 && (
+                      <li><span className="adm-renglones__punto" aria-hidden="true" />
+                        <span><Link href="/admin/buses/educativo">{buses.solicitudesPendientes} solicitudes del Bus Educativo</Link> esperan respuesta.</span></li>
+                    )}
+                  </ul>
+                )}
+                {veMigue && buses.consultasMigue7dias !== null && (
+                  <p style={{ marginTop: "0.75rem" }}><Link href="/admin/migue/interacciones">Migue respondió {buses.consultasMigue7dias} consultas</Link> en los últimos 7 días.</p>
+                )}
+              </Tarjeta>
+            </div>
+          </>
+        ) : (
+          <p className="adm-aviso adm-aviso--error" role="alert"><span className="adm-aviso__icono" aria-hidden="true">!</span>
+            {buses.estado === "sin-configurar"
+              ? "El módulo de buses no está conectado (falta BUSES_DATABASE_URL): las reservas y salidas no se pueden ver ni administrar."
+              : `Error de integración: ${buses.mensaje} Las reservas públicas pueden estar afectadas.`}
+          </p>
+        )
+      )}
+
+      {veContenido && (<>
       <dl className="adm-datos">
         <Dato icono="check" etiqueta="Fichas publicadas" valor={publicadas} detalle={`De ${fichas.length} fichas cargadas.`} />
         <Dato icono="lapiz" tono="amarillo" etiqueta="Borradores" valor={borradores}
@@ -103,7 +187,7 @@ export default async function Tablero() {
             <table className="adm-tabla" style={{ minWidth: 0 }}>
               <thead><tr><th scope="col">Sección</th><th scope="col">Publicadas</th><th scope="col">Borradores</th><th scope="col"><span className="adm-oculto">Acciones</span></th></tr></thead>
               <tbody>
-                {ESQUEMAS.map((e) => (
+                {ESQUEMAS.filter((e) => puedeContenido(admin, e.id, "", "ver")).map((e) => (
                   <tr key={e.id}>
                     <th scope="row" style={{ background: "transparent", textTransform: "none", letterSpacing: 0, fontSize: "0.95rem", color: "var(--a-tinta)" }}>
                       <Link className="adm-tabla__titulo" href={`/admin/${e.id}`}>{e.titulo}</Link>
@@ -136,6 +220,7 @@ export default async function Tablero() {
           )}
         </Tarjeta>
       </div>
+      </>)}
     </>
   );
 }

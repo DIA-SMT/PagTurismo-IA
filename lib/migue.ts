@@ -12,7 +12,7 @@
  */
 
 import type { Contenido } from "./datos";
-import { formatearOcurrencia, MESES, ocurrenciasVigentes } from "./fechas.ts";
+import { aInstante, formatearOcurrencia, MESES, ocurrenciasVigentes } from "./fechas.ts";
 import { rutas } from "./rutas.ts";
 import type { Costo, DatoConfirmable } from "./tipos";
 
@@ -34,7 +34,15 @@ export const PAGINAS_GENERALES: FichaMigue[] = [
   { tipo: "página", titulo: "Sabores", url: "/sabores", texto: "Comidas típicas tucumanas." },
   { tipo: "página", titulo: "Escapadas", url: "/escapadas", texto: "Paseos cerca de la ciudad." },
   { tipo: "página", titulo: "Planificá tu viaje", url: "/planifica", texto: "Cómo llegar, cómo moverse, accesibilidad, datos útiles y dónde dormir." },
+  { tipo: "página", titulo: "Lugares y espacios", url: "/lugares", texto: "Museos, teatros, centros culturales, plazas y parques, con su ficha, horarios y mapa." },
+  { tipo: "página", titulo: "Bus Turístico", url: "/bus-turistico", texto: "Circuitos del Bus Turístico, próximas salidas con cupos y reserva gratuita en línea." },
+  { tipo: "página", titulo: "Bus Educativo", url: "/bus-educativo", texto: "Turnos para que escuelas e instituciones recorran la ciudad en el Bus Educativo. Se pide con un formulario." },
+  { tipo: "página", titulo: "Fotos de los recorridos", url: "/galeria", texto: "Fotos de cada salida del Bus Turístico, disponibles durante 7 días." },
 ];
+
+/** Eventos de la agenda que Migue conoce: con fechas en los próximos 120 días o que se repiten cada año. */
+const DIAS_AGENDA_MIGUE = 120;
+const MAX_FECHAS_POR_EVENTO = 6;
 
 const COSTO: Record<Costo["modalidad"], string> = { gratis: "Gratis", pago: "Pago", consultar: "Consultar antes de ir" };
 const MODALIDAD: Record<string, string> = { "a-pie": "a pie", bus: "en bus", bicicleta: "en bicicleta", libre: "paseo libre", mixto: "mixto" };
@@ -66,6 +74,8 @@ export function paraMigue(c: Contenido, ahora = Date.now()): ContenidoMigue {
         linea("Horario", horario(l.horario)), linea("Costo", costo(l.costo)), linea("Tiempo de visita", l.duracion),
         linea("Teléfono", l.contacto?.telefono), linea("Correo", l.contacto?.email), linea("Web", l.contacto?.web),
         linea("Accesibilidad", l.accesibilidad), l.imperdible ? "Es uno de los imperdibles de la ciudad." : "",
+        l.tipoEspacio ? linea("Espacio", l.tipoEspacio === "cultural" ? "espacio cultural de la agenda" : "espacio al aire libre") : "",
+        linea("Servicios", l.servicios.join(", ")), linea("Venta de entradas", l.redes.entradas),
         linea("Temas", nombresTemas(l.categorias)), linea("Etiquetas", nombresEtiquetas(l.etiquetas)),
       ]),
     })),
@@ -100,20 +110,23 @@ export function paraMigue(c: Contenido, ahora = Date.now()): ContenidoMigue {
         linea("Temas", nombresTemas(r.categorias)),
       ]),
     })),
-    ...c.eventos.map((e) => {
+    ...c.eventos.filter((e) => e.recurrente || vigentes.some((o) => o.evento === e.slug && aInstante(o.inicio) <= ahora + DIAS_AGENDA_MIGUE * 86_400_000)).map((e) => {
       const fechas = vigentes
-        .filter((o) => o.evento === e.slug)
+        .filter((o) => o.evento === e.slug && aInstante(o.inicio) <= ahora + DIAS_AGENDA_MIGUE * 86_400_000)
+        .slice(0, MAX_FECHAS_POR_EVENTO)
         .map((o) => `${formatearOcurrencia(o)}${ESTADO_FECHA[o.estado] ? ` (${ESTADO_FECHA[o.estado]})` : ""}${o.sede ? ` en ${limpio(o.sede)}` : ""}${o.nota ? ` — ${limpio(o.nota)}` : ""}`);
       const anual = e.recurrente ? `todos los años, ${e.recurrente.dia ? `el ${e.recurrente.dia} de ` : "en "}${MESES[e.recurrente.mes - 1] ?? ""}` : "";
       return {
         tipo: "evento", titulo: e.titulo, url: rutas.evento(e.slug),
         texto: unir([
-          limpio(e.resumen), linea("Descripción", e.descripcion),
+          limpio(e.resumen), linea("Descripción", limpio(e.descripcion).slice(0, 700)),
+          linea("Categorías", e.rubros.map((r) => c.categoriasAgenda.find((k) => k.id === r)?.titulo).filter(Boolean).join(", ")),
           linea("Próximas fechas", fechas.join("; ") || (anual ? "" : "sin fechas confirmadas por ahora")),
           linea("Fecha", anual), linea("Dónde", nombreLugar(e.lugar) ?? e.sede),
           e.fueraDeLaCiudad ? linea("Fuera de la ciudad", e.localidad || "sí") : "",
           linea("Organiza", e.organizador), linea("Costo", costo(e.costo)), linea("Inscripción", e.inscripcion),
-          linea("Sitio oficial", e.urlOficial), linea("Temas", nombresTemas(e.categorias)),
+          linea("Sitio oficial", e.urlOficial), linea("Entradas", e.entradas), linea("Accesibilidad", e.accesibilidad),
+          linea("Temas", nombresTemas(e.categorias)),
         ]),
       };
     }),
@@ -148,4 +161,40 @@ export function paraMigue(c: Contenido, ahora = Date.now()): ContenidoMigue {
   }
 
   return { version: 1, generado: new Date(ahora).toISOString(), general, fichas };
+}
+
+/* ---- Bus Turístico ---- */
+
+export type CircuitoMigue = { slug: string; nombre: string; modalidad: string; horario?: string | null; duracion?: string | null; resumen?: string | null };
+export type SalidaMigue = { circuito: string | null; titulo: string; fecha: string; hora: string; cupo: number; reservadas: number; punto?: string | null; bicis?: number | null; bicisReservadas?: number };
+
+const MODALIDAD_BUS: Record<string, string> = { bus: "en bus", walking: "a pie, guiado", bike: "en bicicleta" };
+
+/**
+ * Circuitos y próximas salidas del Bus Turístico, con los cupos que tiene la base EN ESTE MOMENTO.
+ * Solo cantidades: nunca nombres, correos ni teléfonos de quienes reservaron. Migue no reserva:
+ * ofrece la página /bus-turistico, que es la única que escribe reservas.
+ */
+export function fichasDelBus(circuitos: CircuitoMigue[], salidas: SalidaMigue[], ahora = Date.now()): FichaMigue[] {
+  const sello = new Intl.DateTimeFormat("es-AR", { timeZone: "America/Argentina/Tucuman", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(ahora);
+  const fecha = (s: SalidaMigue) =>
+    `${new Intl.DateTimeFormat("es-AR", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }).format(new Date(`${s.fecha}T12:00:00Z`))} a las ${s.hora.slice(0, 5)} h`;
+  const cupo = (s: SalidaMigue) => {
+    const libres = Math.max(0, s.cupo - s.reservadas);
+    const bicis = s.bicis != null ? `, ${Math.max(0, s.bicis - (s.bicisReservadas ?? 0))} bicis municipales libres` : "";
+    return libres ? `${libres} lugares libres${bicis}` : "SIN LUGAR";
+  };
+  return circuitos.map((k) => {
+    const propias = salidas.filter((s) => s.circuito === k.slug).slice(0, 8);
+    return {
+      tipo: "circuito del Bus Turístico", titulo: k.nombre, url: "/bus-turistico",
+      texto: unir([
+        limpio(k.resumen), linea("Modalidad", MODALIDAD_BUS[k.modalidad] ?? k.modalidad), linea("Horario habitual", k.horario), linea("Duración", k.duracion),
+        "Es gratuito con reserva previa en el portal (/bus-turistico). Migue no puede reservar: indicá la página.",
+        propias.length
+          ? linea(`Próximas salidas (cupos al ${sello})`, propias.map((s) => `${fecha(s)}: ${cupo(s)}${s.punto ? `, sale de ${limpio(s.punto)}` : ""}`).join("; "))
+          : "No hay salidas publicadas en los próximos días para este circuito.",
+      ]),
+    };
+  });
 }
