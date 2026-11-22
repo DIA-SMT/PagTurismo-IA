@@ -7,7 +7,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 export function Select({ hasError, className, children, ...props }: SelectProps) {
   return (
-    <select {...props} className={`${styles.control} ${hasError ? styles.controlError : ''} ${className || ''}`.trim()}>
+    <select aria-invalid={hasError || undefined} {...props} className={`${styles.control} ${hasError ? styles.controlError : ''} ${className || ''}`.trim()}>
       {children}
     </select>
   )

@@ -72,6 +72,7 @@ npm run db:local:reiniciar
 |---|---|
 | `npm run dev` | Sitio y panel en desarrollo. |
 | `npm test` | Pruebas: base de datos y permisos, formularios, agenda, catálogo y contenido inicial. |
+| `npm run test:e2e` | Pruebas de punta a punta (Playwright) de los flujos críticos. Levantan su propio servidor con una base aparte (`.local-e2e`). La primera vez: `npx playwright install chromium`. |
 | `npm run typecheck` | Revisión de tipos. |
 | `npm run validar` | Revisa el contenido inicial (`supabase/semilla`). |
 | `npm run db:semilla` | Carga el contenido inicial en Supabase (ver 3). |

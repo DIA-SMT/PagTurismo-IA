@@ -6,5 +6,5 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 }
 
 export function Textarea({ hasError, className, ...props }: TextareaProps) {
-  return <textarea {...props} className={`${styles.textarea} ${hasError ? styles.controlError : ''} ${className || ''}`.trim()} />
+  return <textarea aria-invalid={hasError || undefined} {...props} className={`${styles.textarea} ${hasError ? styles.controlError : ''} ${className || ''}`.trim()} />
 }

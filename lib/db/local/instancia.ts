@@ -10,7 +10,8 @@ const global = globalThis as typeof globalThis & { __turismoBaseLocal?: Promise<
 export function baseLocal() {
   // En una vista previa de Vercel sin Supabase (sin DATABASE_URL) el disco es de solo lectura:
   // la base vive en memoria con el contenido inicial. Sirve para mirar, no guarda cambios.
-  const carpeta = process.env.VERCEL ? undefined : path.join(process.cwd(), ".local", "pgdata");
+  // CARPETA_LOCAL permite otra base local al lado de la de desarrollo (las pruebas e2e usan .local-e2e).
+  const carpeta = process.env.VERCEL ? undefined : path.join(process.env.CARPETA_LOCAL || path.join(process.cwd(), ".local"), "pgdata");
   if (!carpeta) console.warn("Sin DATABASE_URL en Vercel: base en memoria, los cambios del panel no se guardan.");
   global.__turismoBaseLocal ??= crearBaseLocal({ carpeta });
   return global.__turismoBaseLocal;

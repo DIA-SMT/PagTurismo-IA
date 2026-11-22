@@ -40,7 +40,7 @@ function puertoLocal(): Promise<number> {
   globalLocal.busesPuertoLocal ??= (async () => {
     const { crearBaseBuses } = await import('./local/preparar')
     const { PGLiteSocketServer } = await import('@electric-sql/pglite-socket')
-    const db = await crearBaseBuses({ carpeta: path.join(process.cwd(), '.local', 'buses') })
+    const db = await crearBaseBuses({ carpeta: path.join(process.env.CARPETA_LOCAL || path.join(process.cwd(), '.local'), 'buses') })
     const inicial = Number(process.env.BUSES_PUERTO_LOCAL) || 54330
     for (let puerto = inicial; puerto < inicial + 40; puerto++) {
       const servidor = new PGLiteSocketServer({ db, port: puerto, host: '127.0.0.1', maxConnections: 1 })

@@ -46,3 +46,7 @@ next-env.d.ts
 /.next-pruebas/
 /.next-build/
 importacion-*.json
+/.local-e2e/
+/.next-e2e/
+/playwright-report/
+/test-results/

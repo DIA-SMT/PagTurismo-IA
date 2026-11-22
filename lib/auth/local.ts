@@ -25,7 +25,7 @@ function secreto() {
   if (process.env.SESION_SECRETO) return process.env.SESION_SECRETO;
   if (process.env.SESION_LOCAL_SECRETO) return process.env.SESION_LOCAL_SECRETO;
   if (process.env.VERCEL) return secretoEnMemoria;
-  const archivo = path.join(process.cwd(), ".local", "secreto");
+  const archivo = path.join(process.env.CARPETA_LOCAL || path.join(process.cwd(), ".local"), "secreto");
   if (!fs.existsSync(archivo)) {
     fs.mkdirSync(path.dirname(archivo), { recursive: true });
     fs.writeFileSync(archivo, crypto.randomBytes(32).toString("hex"));

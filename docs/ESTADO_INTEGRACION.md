@@ -17,7 +17,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | E — Buses | 🟡 | Reserva real contra la función atómica; panel con permisos | `tests/buses-base.test.ts`, `tests/buses-reglas.test.ts`; flujo completo en navegador (local). Falta: staging contra copia de la base `turismo`, SMTP real |
 | F — Panel unificado | ✅ | Tablero con datos reales; usuarios y permisos | Tablero, `/admin/usuarios`, menú por permisos (verificado con 3 roles) |
 | G — Migue | ✅ | Un widget; contenido con agenda y cupos reales | `tests/migue-bus.test.ts`; `/api/migue/contenido` sin datos personales (verificado) |
-| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 138/138 tests, `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px en las páginas nuevas. Falta: Playwright y auditoría WCAG automatizada |
+| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 138/138 tests unitarios, **31/31 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
 | I — Despliegue | 🟡 | Guía de despliegue, rollback y verificación | `deploy/README.md`, `deploy/sql/`, `.env.example`. Falta: ensayo en staging |
 
 ## Qué está implementado
@@ -73,14 +73,14 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | Pruebas originales de PagTurismo | 81 de la línea base, todas verdes |
 | En el navegador (local) | Reserva por la interfaz; sin cupo; duplicado; salida ya partida; «Mi reserva» y cancelación que libera el cupo; cupo que no baja; editor sin publicar ni borrar; cuenta de buses sin acceso a turismo; tablero con datos reales; agenda y calendario con 386 eventos; responsive 375 px |
 | Build | `next build` sin errores (3 avisos de rastreo de archivos en `lib/buses/archivos.ts`, ver riesgos) |
+| Punta a punta (Playwright, `npm run test:e2e`) | 31 pruebas en `e2e/` contra un servidor con base propia (`.local-e2e`): agenda (filtros, calendario, ficha, `.ics`, borradores ocultos, redirecciones, idiomas), reservas (formulario completo, validación, cupo, duplicado, ráfagas, regla de 24 h, cancelación que libera el lugar, enlaces viejos), panel (ingreso, contraseña equivocada, superadmin crea cuentas, editor sin publicar ni borrar, cultura publica y despublica, cultura y consulta sin acceso a buses por pantalla y por API, cupo que no baja, auditoría, tablero), Migue sin datos personales, y celular sin desborde |
 
 ## Qué falta
 
 | Pendiente | Prioridad | Nota |
 |---|---|---|
 | Ensayo en **staging** contra una copia de `turismo` y de `portalturismo` | P0 | Antes del corte (PLAN_MIGRACION §4) |
-| Pruebas **Playwright** de los flujos críticos (reserva, cancelación, agenda, panel por rol) | P1 | No hay navegadores de Playwright instalados en este equipo; los flujos se verificaron a mano en el navegador |
-| Auditoría WCAG 2.2 AA automatizada (axe) en las pantallas portadas del bus | P1 | Lo nuevo tiene etiquetas, foco visible y `aria-live`; las pantallas del panel del bus no se auditaron una por una |
+| Auditoría WCAG 2.2 AA automatizada (axe) en las pantallas portadas del bus | P1 | Lo nuevo tiene etiquetas, foco visible y `aria-live`. Playwright encontró y se corrigió que los campos con error del bus no se marcaban como inválidos (`aria-invalid`); las pantallas del panel del bus no se auditaron una por una |
 | Páginas fijas de la Agenda (nuestra ciudad, patrimonio, ferias, gastronomía, guías, oficinas, FAQ, murales, museo a cielo abierto) | P2 | Pasarlas a fichas editables de Planificá / Qué hacer |
 | Biblioteca de multimedia central (referencias, protección de borrado) | P2 | Hoy cada ficha guarda su foto con texto alternativo, crédito y permiso |
 | Menús, SEO y módulos configurables desde el panel | P2 | Hoy: configuración del sitio existente |
@@ -104,6 +104,7 @@ compatibles de la estética municipal (sin Plus Jakarta Sans ni marca CIMBA).
 | Bus Educativo: `blockedUntil` por defecto ya vencido y carga manual con adjunto inexistente | Original del bus; no rompe nada, pendiente de limpiar |
 | Webhook de WhatsApp sin firma si falta `WHATSAPP_APP_SECRET`; `curl` a la agenda externa; `bot_chat_messages` sin retención | En el repo del bot (fuera del portal). Informado |
 | El portal carga todas las fichas de `contenidos` por pedido (ahora ~420 con la agenda) | Medido en local sin problema; vigilar al crecer (filtrar eventos viejos en SQL si hiciera falta) |
+| Un aviso de hidratación de React apareció una vez en una corrida completa de Playwright (en modo desarrollo) | No se reproduce revisando cada página por separado; React lo corrige solo en el navegador. Vigilar |
 | Aviso de build: `lib/buses/archivos.ts` hace que el rastreo de archivos incluya todo el proyecto | Solo agranda el bundle del servidor; no afecta la ejecución |
 | Índice antiduplicado: si la base real ya tiene duplicados no se crea | La API igual frena duplicados nuevos; revisar los existentes |
 

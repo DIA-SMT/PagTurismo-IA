@@ -6,5 +6,5 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input({ hasError, className, ...props }: InputProps) {
-  return <input {...props} className={`${styles.control} ${hasError ? styles.controlError : ''} ${className || ''}`.trim()} />
+  return <input aria-invalid={hasError || undefined} {...props} className={`${styles.control} ${hasError ? styles.controlError : ''} ${className || ''}`.trim()} />
 }

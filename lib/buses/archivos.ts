@@ -23,7 +23,7 @@ export function isArchiveBucket(value: string): value is ArchiveBucket {
 
 function archivesRoot() {
   // Portal: en desarrollo van a .local/archivos (fuera de git), como las demás cosas locales.
-  return path.resolve(process.env.ARCHIVOS_DIR || path.join(process.cwd(), '.local', 'archivos'))
+  return path.resolve(process.env.ARCHIVOS_DIR || path.join(process.env.CARPETA_LOCAL || path.join(process.cwd(), '.local'), 'archivos'))
 }
 
 // Ruta absoluta del objeto, sin dejar salir del bucket (nada de "..", ni
