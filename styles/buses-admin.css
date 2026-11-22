@@ -1230,3 +1230,6 @@
   .mod-buses .page-header { margin: 0 0 var(--sp-4); padding: var(--sp-4); }
   .mod-buses .page-body { padding: 0; }
 }
+/* Las acciones del encabezado bajan de renglón en pantallas chicas en vez de desbordar. */
+.mod-buses .page-header > * { min-width: 0; }
+.mod-buses .page-header .flex { flex-wrap: wrap; }

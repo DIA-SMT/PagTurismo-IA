@@ -557,3 +557,9 @@
     width: 100%;
   }
 }
+
+/* Portal unificado: los hijos de la grilla no pueden ensancharla (el carrusel desbordaba en el celular). */
+.departuresSection > *,
+.carouselWrap {
+  min-width: 0;
+}

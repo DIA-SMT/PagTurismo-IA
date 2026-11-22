@@ -14,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const c = await contenido();
   const base = urlDelSitio();
   const publicado = <T extends { estado: string }>(e: T) => e.estado === "publicado";
-  const fijas = ["/", "/descubri", "/que-hacer", "/recorridos", "/agenda", "/planifica", "/sabores", "/escapadas"];
+  const fijas = ["/", "/descubri", "/que-hacer", "/recorridos", "/agenda", "/lugares", "/bus-turistico", "/bus-educativo", "/galeria", "/planifica", "/sabores", "/escapadas"];
   const urls = [
     ...fijas,
     ...c.categorias.map((c) => rutas.categoria(c.id)),

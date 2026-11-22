@@ -1177,3 +1177,8 @@
     flex-direction: column;
   }
 }
+
+/* Portal unificado: nada de esta página puede generar desplazamiento horizontal. */
+.page {
+  overflow-x: clip;
+}

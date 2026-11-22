@@ -140,3 +140,10 @@
 .segmentado__enlace:hover:not([aria-current]) span { color: var(--c-azul-700); }
 .segmentado__enlace:focus-visible { outline: none; }
 .segmentado__enlace:focus-visible span { outline: 3px solid var(--foco-exterior); outline-offset: 2px; box-shadow: 0 0 0 2px var(--foco-interior); }
+
+/* ---- Portada: próximas salidas del Bus Turístico ---- */
+.salidas-portada { display: grid; gap: var(--sp-2); margin: var(--sp-3) 0 var(--sp-4); padding: 0; list-style: none; }
+.salidas-portada li { display: grid; grid-template-columns: 1fr auto; gap: 2px var(--sp-3); align-items: center; padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md); background: rgb(255 255 255 / 0.08); }
+.salidas-portada strong { grid-column: 1; font-size: var(--fs-sm); }
+.salidas-portada span:not(.estado) { grid-column: 1; font-size: var(--fs-xs); opacity: 0.85; }
+.salidas-portada .estado { grid-column: 2; grid-row: 1 / span 2; }

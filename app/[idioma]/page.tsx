@@ -8,9 +8,11 @@ import { Vinculo as Link } from "@/components/i18n/Idioma";
 import { Icono } from "@/components/Iconos";
 import { Cabecera, Enlace, Marca } from "@/components/Ui";
 import { getClima } from "@/lib/clima";
+import { datosDelBusParaMigue } from "@/lib/buses/migue";
 import { BUS_TURISTICO, MAPA } from "@/lib/contenido";
 import { contenido, destacadosVigentes, agendaDestacada } from "@/lib/datos";
 import { diaLocal, formatearOcurrencia, nombreMes, partesDeFecha } from "@/lib/fechas";
+import { LOCALE } from "@/lib/i18n/config";
 import { formatear } from "@/lib/i18n/definir";
 import { alternativas, rutaLocal, textosActuales } from "@/lib/i18n/servidor";
 import type { Textos } from "@/lib/i18n/textos";
@@ -39,7 +41,15 @@ function proximasFechasDelCalendario(eventos: Evento[], ahora: number, cuantas: 
 }
 
 export default async function Portada() {
-  const [c, textosPagina, clima, buscarEn] = await Promise.all([contenido(), textosActuales(), getClima(), rutaLocal("/que-hacer")]);
+  const [c, textosPagina, clima, buscarEn, bus] = await Promise.all([
+    contenido(), textosActuales(), getClima(), rutaLocal("/que-hacer"), datosDelBusParaMigue(),
+  ]);
+  // Próximas salidas reales del Bus Turístico (con cupo), para la sección de recorridos.
+  const salidasBus = (bus?.salidas ?? []).slice(0, 3).map((s) => ({
+    ...s,
+    nombre: bus?.circuitos.find((k) => k.slug === s.circuito)?.nombre ?? s.titulo,
+    libres: Math.max(0, s.cupo - s.reservadas),
+  }));
   const { comun: tc, portada: t } = textosPagina;
   const accesos = [
     { titulo: tc.nav.agenda, detalle: t.accesos.agendaDetalle, url: "/agenda", icono: "calendario" },
@@ -210,10 +220,24 @@ export default async function Portada() {
                 <li><Icono nombre="ticket" tamano={16} /> {t.recorridos.gratuito}</li>
               </ul>
               <div className="inscripcion">
-                <h3>{t.recorridos.salidasTitulo}</h3>
-                <p>{t.recorridos.salidasTexto}</p>
+                <h3>{salidasBus.length ? textosPagina.buses.proximasSalidas : t.recorridos.salidasTitulo}</h3>
+                {salidasBus.length ? (
+                  <ul className="salidas-portada">
+                    {salidasBus.map((s) => (
+                      <li key={`${s.circuito}-${s.fecha}-${s.hora}`}>
+                        <strong>{s.nombre}</strong>
+                        <span>{new Intl.DateTimeFormat(LOCALE[c.idioma].intl, { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${s.fecha}T12:00:00Z`))} · {s.hora.slice(0, 5)}</span>
+                        <span className={`estado estado--${s.libres === 0 ? "mal" : s.libres <= 3 ? "medio" : "ok"}`}>
+                          {s.libres === 0 ? textosPagina.buses.completa : s.libres === 1 ? textosPagina.buses.ultimoLugar : formatear(textosPagina.buses.lugares, { n: s.libres })}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{t.recorridos.salidasTexto}</p>
+                )}
                 <Enlace className="boton boton--amarillo" href={BUS_TURISTICO}>
-                  <Icono nombre="bus-linea" tamano={18} /> {t.recorridos.reservar} <Icono nombre="externo" tamano={16} />
+                  <Icono nombre="bus-linea" tamano={18} /> {t.recorridos.reservar} <Icono nombre="flecha" tamano={16} />
                 </Enlace>
               </div>
             </div>
