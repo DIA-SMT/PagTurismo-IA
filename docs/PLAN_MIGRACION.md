@@ -92,7 +92,7 @@ Previo (sin impacto):
    y correr la lista de verificación del §8.
 
 Corte (ventana corta, idealmente fuera del horario de reservas):
-1. `pm2 stop turismo-web` (solo el sitio Next del bus; **el bot sigue andando**).
+1. `pm2 stop <sitio-del-bus>` (solo el sitio Next del bus, ver `pm2 ls`; **el bot sigue andando**).
 2. Desplegar el portal con el módulo de buses activo.
 3. nginx de `busturistico.smt.gob.ar` → `return 308 https://turismo.smt.gob.ar$uri_mapeada` con la tabla
    de redirecciones (ARQUITECTURA §3). Mantener la ruta de la API vieja `/api/tourist-bus/*` también
@@ -100,7 +100,7 @@ Corte (ventana corta, idealmente fuera del horario de reservas):
 4. Crontab de limpieza de books → apuntar al puerto del portal (3007).
 5. Verificación del §8.
 
-Vuelta atrás: `pm2 start turismo-web`, restaurar el nginx del bus y `ln -sfn` del portal a la versión
+Vuelta atrás: `pm2 start <sitio-del-bus>`, restaurar el nginx del bus y `ln -sfn` del portal a la versión
 anterior. Como ambos usan la misma base y la misma función de reserva, no hay datos que reconciliar.
 
 ## 5. Archivos

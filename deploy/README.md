@@ -67,3 +67,84 @@ La contraseña se pide por teclado y no se ve. Las cuentas que vinieron de Supab
 4. pm2 + systemd y nginx + certbot como en la guía (`deploy/ecosystem.config.cjs`, `deploy/nginx-portalturismo.conf`).
 5. Verificar: página 200, CSS 200, y `/.env` `/.env.local` `/.git/config` `/package.json` 404. Después recorrer el sitio en
    los tres idiomas y entrar al panel.
+
+---
+
+## Portal unificado (Turismo + Agenda Cultural + Bus Turístico)
+
+Desde la rama `integracion/portal-unificado` el portal también sirve la agenda cultural, el Bus
+Turístico, el Bus Educativo, los books de fotos, BiciTour y el panel de Migue. Sigue siendo **un solo
+proceso** (`portalturismo`, puerto 3007). El bot de Migue (Express :3000 y Telegram) sigue igual.
+Arquitectura y decisiones: `docs/ARQUITECTURA_UNIFICADA.md`. Pasos con datos reales:
+`docs/PLAN_MIGRACION.md`.
+
+### Variables nuevas en `compartido/.env`
+
+Todas están explicadas en `.env.example`. Mínimo para el módulo de buses:
+
+```
+BUSES_DATABASE_URL="postgresql://portal_buses:LA_CLAVE@127.0.0.1:5432/turismo"
+ARCHIVOS_DIR="/srv/turismo/compartido/archivos"
+ARCHIVOS_SECRETO="…"     # el mismo valor que AUTH_SECRET del sitio del bus
+CRON_SECRET="…"
+SMTP_HOST=… SMTP_PORT=… SMTP_USER=… SMTP_PASS=… SMTP_FROM=…
+SITIO_URL="https://turismo.smt.gob.ar"
+```
+
+### Una sola vez, antes del primer despliegue del portal unificado
+
+1. Respaldos verificados:
+   ```bash
+   sudo -u postgres pg_dump -Fc portalturismo > /root/respaldos/portalturismo-$(date +%F).dump
+   sudo -u postgres pg_dump -Fc turismo > /root/respaldos/turismo-$(date +%F).dump
+   pg_restore --list /root/respaldos/turismo-$(date +%F).dump > /dev/null && echo respaldo OK
+   ```
+2. Rol del portal en la base del bus (no toca datos): `sudo -u postgres psql -d turismo -f deploy/sql/turismo-rol-portal.sql`
+   y la clave con `alter role portal_buses with password '…'` en una sesión de `psql` (no en la línea de comandos).
+3. Mejora antiduplicado (aditiva, idempotente): `sudo -u postgres psql -d turismo -f deploy/sql/turismo-mejoras.sql`.
+   Si avisa que hay duplicados, no crea el índice: revisarlos con el equipo del bus.
+4. Archivos: el usuario `portalturismo` tiene que leer y escribir `/srv/turismo/compartido/archivos`
+   (`setfacl -R -m u:portalturismo:rwX -m d:u:portalturismo:rwX /srv/turismo/compartido/archivos`).
+5. nginx del portal: `client_max_body_size 20M;` (fotos de books hasta 15 MB).
+6. Cuentas: `npm run cuentas -- importar --desde bus` (prueba en seco) y después con `--escribir`.
+   Lo mismo `--desde agenda` con `AGENDA_DATABASE_URL`. Asignar roles: `npm run cuentas -- permisos …`.
+
+### El corte (una ventana corta)
+
+```bash
+sudo -u turismo -H pm2 ls                           # anotar el nombre real del proceso del sitio Next del bus
+sudo -u turismo -H pm2 stop <sitio-del-bus>         # solo el sitio; el bot de Migue sigue andando
+/srv/portalturismo/desplegar.sh integracion/portal-unificado
+```
+
+Después, nginx de `busturistico.smt.gob.ar` → `deploy/nginx-busturistico-redireccion.conf`, y el cron
+de limpieza de books al puerto del portal:
+
+```cron
+15 3 * * * . /srv/portalturismo/compartido/.env && curl -fsS -m 120 -H "Authorization: Bearer $CRON_SECRET" http://127.0.0.1:3007/api/cron/photo-books-cleanup > /dev/null
+```
+
+### Cultura (contenido)
+
+```bash
+cd /srv/portalturismo/actual
+sudo -u portalturismo npm run cultura -- espacios                # prueba en seco
+sudo -u portalturismo npm run cultura -- espacios --escribir --fotos
+sudo -u portalturismo npm run cultura -- eventos --desde-base --escribir --fotos   # con AGENDA_DATABASE_URL
+sudo -u portalturismo npm run cultura -- eventos --desde-wordpress --escribir --fotos
+```
+
+Los espacios nuevos entran en **borrador**: un administrador de cultura los revisa y publica.
+
+### Verificación posterior
+
+Lista completa en `docs/PLAN_MIGRACION.md` §8: páginas en es/en/pt, reserva y cancelación de
+prueba, enlace `/reserva/<token>` viejo, QR `/fotos/<token>` viejo, solicitud educativa con adjunto,
+ingreso con cuentas importadas, permisos por rol (en el servidor), bot de WhatsApp, auditoría.
+
+### Vuelta atrás
+
+- Portal: `ln -sfn /srv/portalturismo/versiones/LA_ANTERIOR /srv/portalturismo/actual` y `pm2 reload portalturismo`.
+  La migración de roles es aditiva: la versión anterior funciona con la base migrada.
+- Bus: `sudo -u turismo -H pm2 start <sitio-del-bus>` y restaurar el nginx anterior de `busturistico.smt.gob.ar`.
+  Ambos usan la misma base y la misma función de reserva: no hay datos que reconciliar.

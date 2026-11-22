@@ -1,4 +1,4 @@
-import { createHmac, timingSafeEqual } from 'crypto'
+import { createHmac, randomBytes, timingSafeEqual } from 'crypto'
 import { mkdir, readdir, readFile, rm, writeFile } from 'fs/promises'
 import path from 'path'
 
@@ -22,7 +22,8 @@ export function isArchiveBucket(value: string): value is ArchiveBucket {
 }
 
 function archivesRoot() {
-  return path.resolve(process.env.ARCHIVOS_DIR || path.join(process.cwd(), 'archivos'))
+  // Portal: en desarrollo van a .local/archivos (fuera de git), como las demás cosas locales.
+  return path.resolve(process.env.ARCHIVOS_DIR || path.join(process.cwd(), '.local', 'archivos'))
 }
 
 // Ruta absoluta del objeto, sin dejar salir del bucket (nada de "..", ni
@@ -79,9 +80,15 @@ export async function listArchives(bucket: ArchiveBucket, folder: string) {
 
 type SignedOperation = 'read' | 'write'
 
+// En el modo local del portal (sin DATABASE_URL) alcanza un secreto por proceso.
+const secretoLocal = randomBytes(32).toString('hex')
+
 function signingSecret() {
-  const secret = process.env.AUTH_SECRET
-  if (!secret || secret.length < 32) throw new Error('Missing AUTH_SECRET (mínimo 32 caracteres)')
+  // ARCHIVOS_SECRETO en el portal; AUTH_SECRET es el nombre que tenía en el sitio del bus. Con el
+  // mismo valor, las URLs firmadas que ya circulan siguen valiendo después del corte.
+  const secret = process.env.ARCHIVOS_SECRETO || process.env.AUTH_SECRET
+  if (!secret && !process.env.DATABASE_URL) return secretoLocal
+  if (!secret || secret.length < 32) throw new Error('Falta ARCHIVOS_SECRETO (mínimo 32 caracteres)')
   return secret
 }
 
