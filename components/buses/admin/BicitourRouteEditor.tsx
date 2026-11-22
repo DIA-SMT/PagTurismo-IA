@@ -86,7 +86,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
 
   const fetchDetail = useCallback(async () => {
     try {
-      const response = await fetch(`/api/admin/bicitour/routes/${routeId}`, { cache: 'no-store' })
+      const response = await fetch(`/api/admin/buses/bicitour/routes/${routeId}`, { cache: 'no-store' })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'No se pudo cargar el recorrido.')
       setRoute(payload.data.route)
@@ -110,7 +110,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     setBusy(true)
     setFeedback(null)
     try {
-      const response = await fetch(`/api/admin/bicitour/routes/${routeId}`, {
+      const response = await fetch(`/api/admin/buses/bicitour/routes/${routeId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -141,7 +141,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     setCreatingStop(true)
     setFeedback(null)
     try {
-      const response = await fetch('/api/admin/bicitour/stops', {
+      const response = await fetch('/api/admin/buses/bicitour/stops', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ routeId, title: pendingStopName.trim(), lat: pendingStop.lat, lng: pendingStop.lng }),
@@ -177,7 +177,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     setBusy(true)
     setFeedback(null)
     try {
-      const response = await fetch(`/api/admin/bicitour/stops/${stop.id}`, {
+      const response = await fetch(`/api/admin/buses/bicitour/stops/${stop.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -211,12 +211,12 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     setBusy(true)
     try {
       await Promise.all([
-        fetch(`/api/admin/bicitour/stops/${stop.id}`, {
+        fetch(`/api/admin/buses/bicitour/stops/${stop.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ position: other.position }),
         }),
-        fetch(`/api/admin/bicitour/stops/${other.id}`, {
+        fetch(`/api/admin/buses/bicitour/stops/${other.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ position: stop.position }),
@@ -232,7 +232,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     if (!window.confirm(`¿Eliminar la parada "${stop.title}" y sus preguntas?`)) return
     setBusy(true)
     try {
-      const response = await fetch(`/api/admin/bicitour/stops/${stop.id}`, { method: 'DELETE' })
+      const response = await fetch(`/api/admin/buses/bicitour/stops/${stop.id}`, { method: 'DELETE' })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'No se pudo eliminar.')
       await fetchDetail()
@@ -254,7 +254,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
           : form.options
               .map((label, index) => ({ key: OPTION_KEYS[index], label: label.trim() }))
               .filter((option) => option.label)
-      const response = await fetch('/api/admin/bicitour/questions', {
+      const response = await fetch('/api/admin/buses/bicitour/questions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -287,7 +287,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     setGeneratingAi(stop.id)
     setFeedback(null)
     try {
-      const response = await fetch(`/api/admin/bicitour/stops/${stop.id}/ai-proposals`, {
+      const response = await fetch(`/api/admin/buses/bicitour/stops/${stop.id}/ai-proposals`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -334,7 +334,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
                   : proposal.options.map((option, index) => ({ key: option.key, label: draft.optionLabels[index] || option.label })),
             }
           : { action }
-      const response = await fetch(`/api/admin/bicitour/proposals/${proposal.id}`, {
+      const response = await fetch(`/api/admin/buses/bicitour/proposals/${proposal.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -355,7 +355,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     setBusy(true)
     try {
       for (const proposal of stopProposals) {
-        await fetch(`/api/admin/bicitour/proposals/${proposal.id}`, {
+        await fetch(`/api/admin/buses/bicitour/proposals/${proposal.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'reject' }),
@@ -371,7 +371,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     setSuggestingHint(stop.id)
     setFeedback(null)
     try {
-      const response = await fetch(`/api/admin/bicitour/stops/${stop.id}/ai-hint`, { method: 'POST' })
+      const response = await fetch(`/api/admin/buses/bicitour/stops/${stop.id}/ai-hint`, { method: 'POST' })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'No se pudo sugerir una pista.')
       const draft = draftFor(stop)
@@ -388,7 +388,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     if (!window.confirm('¿Eliminar esta pregunta?')) return
     setBusy(true)
     try {
-      const response = await fetch(`/api/admin/bicitour/questions/${question.id}`, { method: 'DELETE' })
+      const response = await fetch(`/api/admin/buses/bicitour/questions/${question.id}`, { method: 'DELETE' })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'No se pudo eliminar.')
       await fetchDetail()
@@ -413,7 +413,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
     return (
       <div className="table-container" style={{ padding: 18 }}>
         <p className="td-muted">{feedback || 'Recorrido no encontrado.'}</p>
-        <Link className="btn btn-secondary" href="/admin/bicitour" style={{ display: 'inline-flex', marginTop: 10 }}>
+        <Link className="btn btn-secondary" href="/admin/buses/bicitour" style={{ display: 'inline-flex', marginTop: 10 }}>
           ← Volver
         </Link>
       </div>
@@ -425,7 +425,7 @@ export default function BicitourRouteEditor({ routeId }: { routeId: number }) {
   return (
     <div style={{ display: 'grid', gap: 16 }}>
       <div className="flex items-center gap-2" style={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
-        <Link className="btn btn-secondary" href="/admin/bicitour">
+        <Link className="btn btn-secondary" href="/admin/buses/bicitour">
           ← Recorridos
         </Link>
         <div className="flex items-center gap-2">

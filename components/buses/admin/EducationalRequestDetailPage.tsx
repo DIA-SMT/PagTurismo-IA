@@ -94,7 +94,7 @@ export default function EducationalRequestDetailPage({ requestId }: { requestId:
       const result = await response.json()
       if (!response.ok) throw new Error(result.error || 'No se pudo actualizar la solicitud.')
       setRequest(result.data)
-      router.push('/admin/solicitudes?saved=1')
+      router.push('/admin/buses/educativo?saved=1')
       router.refresh()
     } catch (error) {
       setFeedback(error instanceof Error ? error.message : 'No se pudo actualizar la solicitud.')
@@ -107,7 +107,7 @@ export default function EducationalRequestDetailPage({ requestId }: { requestId:
     <>
       <div className="page-header">
         <div>
-          <Link href="/admin/solicitudes" className="btn btn-secondary" style={{ marginBottom: 16 }}>
+          <Link href="/admin/buses/educativo" className="btn btn-secondary" style={{ marginBottom: 16 }}>
             <ArrowLeft size={14} />
             Volver al listado
           </Link>

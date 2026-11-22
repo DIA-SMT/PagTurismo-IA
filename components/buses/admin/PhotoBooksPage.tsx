@@ -282,7 +282,7 @@ export default function PhotoBooksPage() {
   }
 
   const showShare = async (book: Pick<Book, 'title' | 'access_token'>) => {
-    const url = `${window.location.origin}/fotos/${book.access_token}`
+    const url = `${window.location.origin}/galeria/${book.access_token}`
     const qrDataUrl = await QRCode.toDataURL(url, {
       width: 360,
       margin: 2,
@@ -693,7 +693,7 @@ export default function PhotoBooksPage() {
                     {!expired ? (
                       <>
                         <button className="btn btn-primary" onClick={() => showShare(book)}><QrCode size={15} /> QR y enlace</button>
-                        <a className="btn btn-secondary" href={`/fotos/${book.access_token}`} target="_blank" rel="noreferrer"><ExternalLink size={15} /> Ver</a>
+                        <a className="btn btn-secondary" href={`/galeria/${book.access_token}`} target="_blank" rel="noreferrer"><ExternalLink size={15} /> Ver</a>
                       </>
                     ) : null}
                     <button className="btn btn-danger" onClick={() => deleteBook(book)}><Trash2 size={15} /> Eliminar</button>

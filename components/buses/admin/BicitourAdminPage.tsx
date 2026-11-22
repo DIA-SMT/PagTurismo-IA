@@ -52,8 +52,8 @@ export default function BicitourAdminPage() {
     setLoading(true)
     try {
       const [routesResponse, sessionsResponse] = await Promise.all([
-        fetch('/api/admin/bicitour/routes', { cache: 'no-store' }),
-        fetch('/api/admin/bicitour/sessions', { cache: 'no-store' }),
+        fetch('/api/admin/buses/bicitour/routes', { cache: 'no-store' }),
+        fetch('/api/admin/buses/bicitour/sessions', { cache: 'no-store' }),
       ])
       const routesPayload = await routesResponse.json()
       const sessionsPayload = await sessionsResponse.json()
@@ -75,14 +75,14 @@ export default function BicitourAdminPage() {
     setBusy(true)
     setFeedback(null)
     try {
-      const response = await fetch('/api/admin/bicitour/routes', {
+      const response = await fetch('/api/admin/buses/bicitour/routes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: newTitle }),
       })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'No se pudo crear.')
-      router.push(`/admin/bicitour/${payload.data.id}`)
+      router.push(`/admin/buses/bicitour/${payload.data.id}`)
     } catch (error) {
       setFeedback(error instanceof Error ? error.message : 'No se pudo crear el recorrido.')
     } finally {
@@ -93,7 +93,7 @@ export default function BicitourAdminPage() {
   const duplicateRoute = async (routeId: number) => {
     setBusy(true)
     try {
-      const response = await fetch(`/api/admin/bicitour/routes/${routeId}/duplicate`, { method: 'POST' })
+      const response = await fetch(`/api/admin/buses/bicitour/routes/${routeId}/duplicate`, { method: 'POST' })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'No se pudo duplicar.')
       setFeedback('Recorrido duplicado como borrador.')
@@ -109,7 +109,7 @@ export default function BicitourAdminPage() {
     if (!window.confirm(`¿Eliminar "${route.title}"? Esta acción no se puede deshacer.`)) return
     setBusy(true)
     try {
-      const response = await fetch(`/api/admin/bicitour/routes/${route.id}`, { method: 'DELETE' })
+      const response = await fetch(`/api/admin/buses/bicitour/routes/${route.id}`, { method: 'DELETE' })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'No se pudo eliminar.')
       await fetchAll()
@@ -128,14 +128,14 @@ export default function BicitourAdminPage() {
     setBusy(true)
     setFeedback(null)
     try {
-      const response = await fetch('/api/admin/bicitour/sessions', {
+      const response = await fetch('/api/admin/buses/bicitour/sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ routeId: route.id }),
       })
       const payload = await response.json()
       if (!response.ok) throw new Error(payload.error || 'No se pudo crear la sesión.')
-      router.push(`/admin/bicitour/sesion/${payload.data.id}`)
+      router.push(`/admin/buses/bicitour/sesion/${payload.data.id}`)
     } catch (error) {
       setFeedback(error instanceof Error ? error.message : 'No se pudo crear la sesión.')
     } finally {
@@ -251,7 +251,7 @@ export default function BicitourAdminPage() {
                             <button className="btn btn-primary" style={{ height: 32, padding: '0 10px', fontSize: 13 }} onClick={() => startSession(route)} disabled={busy}>
                               <Play size={13} /> Iniciar sesión
                             </button>
-                            <Link className="btn btn-secondary" style={{ height: 32, padding: '0 10px', fontSize: 13, display: 'inline-flex', alignItems: 'center', gap: 6 }} href={`/admin/bicitour/${route.id}`}>
+                            <Link className="btn btn-secondary" style={{ height: 32, padding: '0 10px', fontSize: 13, display: 'inline-flex', alignItems: 'center', gap: 6 }} href={`/admin/buses/bicitour/${route.id}`}>
                               <Pencil size={13} /> Editar
                             </Link>
                             <button className="btn btn-secondary" style={{ height: 32, padding: '0 10px', fontSize: 13 }} onClick={() => duplicateRoute(route.id)} disabled={busy}>
@@ -320,7 +320,7 @@ export default function BicitourAdminPage() {
                       </td>
                       <td>{session.averageScore}</td>
                       <td>
-                        <Link className="btn btn-secondary" style={{ height: 32, padding: '0 10px', fontSize: 13, display: 'inline-flex', alignItems: 'center' }} href={`/admin/bicitour/sesion/${session.id}`}>
+                        <Link className="btn btn-secondary" style={{ height: 32, padding: '0 10px', fontSize: 13, display: 'inline-flex', alignItems: 'center' }} href={`/admin/buses/bicitour/sesion/${session.id}`}>
                           Abrir panel
                         </Link>
                       </td>

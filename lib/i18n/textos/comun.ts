@@ -22,6 +22,7 @@ export const comun = definir({
       queHacer: "Qué hacer",
       recorridos: "Recorridos",
       agenda: "Agenda",
+      busTuristico: "Bus Turístico",
       planifica: "Planificá tu visita",
     },
     encabezado: {
@@ -159,6 +160,7 @@ export const comun = definir({
       queHacer: "Things to do",
       recorridos: "Tours",
       agenda: "Events",
+      busTuristico: "Tourist Bus",
       planifica: "Plan your visit",
     },
     encabezado: {
@@ -296,6 +298,7 @@ export const comun = definir({
       queHacer: "O que fazer",
       recorridos: "Roteiros",
       agenda: "Agenda",
+      busTuristico: "Ônibus Turístico",
       planifica: "Planeje sua visita",
     },
     encabezado: {

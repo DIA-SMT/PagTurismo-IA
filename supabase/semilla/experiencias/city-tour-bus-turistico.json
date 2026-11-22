@@ -34,7 +34,7 @@
   "accion": {
     "tipo": "reservar",
     "texto": "Ver salidas y reservar en Bus Turístico",
-    "url": "https://busturistico.smt.gob.ar/",
+    "url": "/bus-turistico",
     "traducciones": {
       "en": {
         "texto": "See departures and book on the Tourist Bus site"

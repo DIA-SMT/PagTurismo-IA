@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({
     data: {
       ...book,
-      access_url: `${request.nextUrl.origin}/fotos/${book.access_token}`,
+      access_url: `${request.nextUrl.origin}/galeria/${book.access_token}`,
     },
     uploads,
   }, { status: 201 })

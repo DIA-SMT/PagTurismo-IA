@@ -37,6 +37,22 @@ export function seccionesDelMenu(p: Permisos): SeccionMenu[] {
       ],
     },
     {
+      grupo: "Buses y circuitos",
+      secciones: [
+        ve(p, "buses") && { href: "/admin/buses", texto: "Salidas y reservas", icono: "bus-linea" },
+        ve(p, "buses") && { href: "/admin/buses/educativo", texto: "Bus Educativo", icono: "escuela" },
+        ve(p, "buses") && { href: "/admin/buses/fotos", texto: "Books de fotos", icono: "camara" },
+        ve(p, "buses") && { href: "/admin/buses/bicitour", texto: "BiciTour", icono: "bici" },
+      ],
+    },
+    {
+      grupo: "Migue",
+      secciones: [
+        ve(p, "migue") && { href: "/admin/migue", texto: "Preguntas frecuentes", icono: "chat" },
+        ve(p, "migue") && { href: "/admin/migue/interacciones", texto: "Interacciones", icono: "tendencia" },
+      ],
+    },
+    {
       grupo: "Sistema",
       secciones: [
         esSuperadmin(p) && { href: "/admin/usuarios", texto: "Usuarios y permisos", icono: "persona" },

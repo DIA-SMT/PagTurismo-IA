@@ -130,7 +130,7 @@
   background: var(--brand-blue-strong);
   font-size: 0.86rem;
   font-weight: 800;
-  var(--c-blanco)-space: nowrap;
+  white-space: nowrap;
 }
 
 .headerAction:hover {
@@ -447,7 +447,7 @@
   background: var(--brand-blue-soft);
   font-size: 0.82rem;
   font-weight: 800;
-  var(--c-blanco)-space: nowrap;
+  white-space: nowrap;
 }
 
 .grid {
@@ -1024,7 +1024,7 @@
 
   /* Cada ítem en una sola línea: el menú se desliza de costado, no se apila. */
   .nav a {
-    var(--c-blanco)-space: nowrap;
+    white-space: nowrap;
     padding: 4px 0;
   }
 

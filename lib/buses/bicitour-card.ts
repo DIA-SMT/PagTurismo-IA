@@ -207,7 +207,7 @@ export function drawBicitourMemoryCard(
   ctx.fillText('¡Completé el Bicitour de San Miguel de Tucumán!', CARD_WIDTH / 2, 1230)
   ctx.fillStyle = SKY
   ctx.font = font('400', 28)
-  ctx.fillText('busturistico.smt.gob.ar · @turismosmt', CARD_WIDTH / 2, 1280)
+  ctx.fillText('turismo.smt.gob.ar · @turismosmt', CARD_WIDTH / 2, 1280)
 }
 
 export async function loadCardLogo(src = '/buses/logoMuni-sm.png'): Promise<HTMLImageElement | null> {

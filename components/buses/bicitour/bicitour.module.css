@@ -42,7 +42,7 @@
 
 .headerTitle strong {
   font-size: 0.98rem;
-  var(--c-blanco)-space: nowrap;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -391,7 +391,7 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  var(--c-blanco)-space: nowrap;
+  white-space: nowrap;
 }
 
 .rankTeam {

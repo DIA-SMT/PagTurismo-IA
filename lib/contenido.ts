@@ -13,7 +13,7 @@
 export const PORTAL = "https://smt.gob.ar";
 
 /** Sitios propios: los enlaces van ahí y no a una sección del portal. */
-export const BUS_TURISTICO = "https://busturistico.smt.gob.ar/";
+export const BUS_TURISTICO = "/bus-turistico";
 export const PALACIO = "https://palacio.smt.gob.ar/";
 export const MAPA = "https://mapa.smt.gob.ar/";
 
@@ -31,6 +31,7 @@ export const NAV: { clave: ClaveNav; url: string }[] = [
   { clave: "queHacer", url: "/que-hacer" },
   { clave: "recorridos", url: "/recorridos" },
   { clave: "agenda", url: "/agenda" },
+  { clave: "busTuristico", url: "/bus-turistico" },
   { clave: "planifica", url: "/planifica" },
 ];
 
@@ -65,7 +66,7 @@ export const PIE: { columna: keyof TextosComun["pie"]["columnas"]; enlaces: Enla
     columna: "recorridos",
     enlaces: [
       { clave: "todosLosRecorridos", url: "/recorridos" },
-      { clave: "busTuristico", url: BUS_TURISTICO, externo: true },
+      { clave: "busTuristico", url: "/bus-turistico" },
       { clave: "circuitoAPie", url: `${PORTAL}/circuitosturisticospie`, externo: true },
       { clave: "mapa", url: MAPA, externo: true },
     ],

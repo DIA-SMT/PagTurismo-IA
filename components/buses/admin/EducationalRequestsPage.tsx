@@ -841,7 +841,7 @@ export default function EducationalRequestsPage() {
                                 Adjunto
                               </a>
                             ) : null}
-                            <Link href={`/admin/solicitudes/${request.id}`} className="btn btn-secondary" style={{ height: 32, padding: '0 10px', fontSize: 13 }}>
+                            <Link href={`/admin/buses/educativo/${request.id}`} className="btn btn-secondary" style={{ height: 32, padding: '0 10px', fontSize: 13 }}>
                               <Eye size={14} />
                               Ver detalle
                             </Link>
@@ -901,7 +901,7 @@ export default function EducationalRequestsPage() {
                         <p className="td-muted">{request.contact_name}</p>
                         <p className="td-muted">{getInstitutionTypeLabel(request.institution_type)}</p>
                         {request.guides ? <p className="td-muted">Guías: {request.guides}</p> : null}
-                        <Link href={`/admin/solicitudes/${request.id}`} className="btn btn-secondary" style={{ marginTop: 14, width: '100%', justifyContent: 'center' }}>
+                        <Link href={`/admin/buses/educativo/${request.id}`} className="btn btn-secondary" style={{ marginTop: 14, width: '100%', justifyContent: 'center' }}>
                           <Eye size={14} />
                           Abrir detalle
                         </Link>

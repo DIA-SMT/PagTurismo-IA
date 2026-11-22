@@ -87,7 +87,7 @@ export function GuidePanel({ sessionId }: { sessionId: number }) {
   const fetchState = useCallback(async () => {
     try {
       const params = versionRef.current > 0 ? `?since=${versionRef.current}` : ''
-      const response = await fetch(`/api/admin/bicitour/sessions/${sessionId}${params}`, { cache: 'no-store' })
+      const response = await fetch(`/api/admin/buses/bicitour/sessions/${sessionId}${params}`, { cache: 'no-store' })
       if (!response.ok) throw new Error('estado no disponible')
       const payload = (await response.json()) as GuideState
       setOffline(false)
@@ -118,7 +118,7 @@ export function GuidePanel({ sessionId }: { sessionId: number }) {
       setBusy(true)
       setFeedback(null)
       try {
-        const response = await fetch(`/api/admin/bicitour/sessions/${sessionId}/action`, {
+        const response = await fetch(`/api/admin/buses/bicitour/sessions/${sessionId}/action`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action, ...extra }),
@@ -143,7 +143,7 @@ export function GuidePanel({ sessionId }: { sessionId: number }) {
     const points = pendingPointsRef.current.splice(0)
     if (points.length === 0) return
     try {
-      await fetch(`/api/admin/bicitour/sessions/${sessionId}/track`, {
+      await fetch(`/api/admin/buses/bicitour/sessions/${sessionId}/track`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ points }),
@@ -323,7 +323,7 @@ export function GuidePanel({ sessionId }: { sessionId: number }) {
           ) : null}
           <div style={{ fontSize: '2rem', fontWeight: 800, letterSpacing: 8 }}>{session.code}</div>
           <p className="td-muted" style={{ fontSize: 13 }}>
-            busturistico.smt.gob.ar/bicitour/{session.code}
+            {typeof window !== "undefined" ? window.location.host : "turismo.smt.gob.ar"}/bicitour/{session.code}
           </p>
           <div className="badge" style={{ background: 'rgba(16,185,129,0.15)', color: 'var(--c-exito)', fontSize: 14 }}>
             👥 {state.participants.length} inscriptos · {state.connectedCount} conectados

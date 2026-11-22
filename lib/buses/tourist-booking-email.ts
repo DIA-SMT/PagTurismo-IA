@@ -148,7 +148,7 @@ function brandedEmailShell(options: { accent: string; bodyHtml: string; language
             ${office.hours.map((line) => escapeHtml(line)).join('<br/>')}<br/>
             ✉️ <a href="mailto:turismo@smt.gob.ar" style="color:#126ff5;text-decoration:none;">turismo@smt.gob.ar</a>
             · 📲 <a href="https://instagram.com/turismosmt" style="color:#126ff5;text-decoration:none;">@turismosmt</a><br/>
-            <a href="${publicSiteUrl()}" style="color:#126ff5;text-decoration:none;font-weight:bold;">busturistico.smt.gob.ar</a>
+            <a href="${publicSiteUrl()}" style="color:#126ff5;text-decoration:none;font-weight:bold;">${new URL(publicSiteUrl()).host}</a>
           </p>
           <p style="margin:10px 0 0;font-size:11px;color:#8a94a0;">Municipalidad de San Miguel de Tucumán</p>
         </td>

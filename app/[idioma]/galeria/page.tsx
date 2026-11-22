@@ -102,7 +102,7 @@ export default async function GalleryPage({ searchParams }: { searchParams: Prom
                   <p className={styles.date}>{new Intl.DateTimeFormat('es-AR', { dateStyle: 'long' }).format(new Date(`${book.tour_date}T12:00:00`))}</p>
                   <h3>{book.title}</h3>
                   {book.description ? <p className={styles.description}>{book.description}</p> : null}
-                  <Link href={`/fotos/${book.access_token}`} className={styles.open}>Ver mis fotos</Link>
+                  <Link href={`/galeria/${book.access_token}`} className={styles.open}>Ver mis fotos</Link>
                 </div>
               </article>
             ))}

@@ -133,7 +133,25 @@ export function camposCambiados(c: Cambio): string[] {
 }
 
 /** Cómo mostrar un cambio de la auditoría: título legible, sección y enlace a la ficha. */
+const OPERACIONES_BUSES: [RegExp, string, string][] = [
+  [/tourist-bookings/, "Reserva del Bus Turístico", "/admin/buses"],
+  [/tourist-departures\/batch/, "Salidas por lote", "/admin/buses"],
+  [/tourist-departures/, "Salida del Bus Turístico", "/admin/buses"],
+  [/tourist-circuits/, "Circuito del Bus Turístico", "/admin/buses"],
+  [/educational-settings/, "Configuración del Bus Educativo", "/admin/buses/educativo"],
+  [/educational/, "Bus Educativo", "/admin/buses/educativo"],
+  [/photo-books/, "Book de fotos", "/admin/buses/fotos"],
+  [/bicitour/, "BiciTour", "/admin/buses/bicitour"],
+  [/faqs/, "Pregunta frecuente de Migue", "/admin/migue"],
+];
+const VERBO: Record<string, string> = { POST: "alta", PATCH: "cambio", PUT: "cambio", DELETE: "baja", GET: "descarga" };
+
 export function describirCambio(c: Cambio): { titulo: string; seccion: string; href?: string } {
+  if (c.tabla === "buses") {
+    const [metodo = "", ruta = ""] = (c.registro_id ?? "").split(" ");
+    const [, titulo, href] = OPERACIONES_BUSES.find(([re]) => re.test(ruta)) ?? [null, ruta, undefined];
+    return { titulo: `${titulo} (${VERBO[metodo] ?? metodo.toLowerCase()})`, seccion: /faqs/.test(ruta) ? "Migue" : "Buses y circuitos", href };
+  }
   if (c.tabla === "admins") {
     const nombre = (c.despues ?? c.antes) as { nombre?: string } | null;
     return { titulo: `Cuenta del equipo: ${nombre?.nombre ?? "sin nombre"}`, seccion: "Equipo" };
