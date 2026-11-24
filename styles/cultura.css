@@ -324,9 +324,9 @@
 .talleres-dias { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-4); }
 .talleres-filtrables .filtros__check { margin-top: var(--sp-2); }
 .talleres-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--sp-4); margin-top: var(--sp-3); padding: 0; list-style: none; }
-.taller { position: relative; display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4) var(--sp-5); border: 1px solid var(--c-borde-objeto); border-radius: 1rem; background: var(--c-blanco); box-shadow: 0 8px 24px rgb(7 31 61 / 0.06); }
+.taller { position: relative; display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4) var(--sp-5); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); box-shadow: var(--sombra-2); }
 .taller > .tono { align-self: flex-start; }
-.taller__titulo { font-size: 1.15rem; line-height: 1.2; letter-spacing: -0.01em; }
+.taller__titulo { font-size: 1.15rem; line-height: 1.2; letter-spacing: var(--ls-titular); }
 .taller__detalle, .taller__prof { color: var(--c-ink-soft); font-size: var(--fs-sm); }
 .taller__horarios { display: grid; gap: 2px; padding: 0; list-style: none; font-size: var(--fs-sm); }
 .taller__horarios strong { display: inline-block; min-width: 2.4rem; color: var(--c-azul-700); }
@@ -334,7 +334,7 @@
 .taller__centro { display: flex; gap: 6px; align-items: flex-start; margin-top: auto; padding-top: var(--sp-2); border-top: 1px solid var(--c-borde-suave); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
 .taller__centro svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
 .taller__municipal { position: absolute; top: var(--sp-4); right: var(--sp-4); }
-.talleres-inscripcion { position: sticky; top: 6rem; padding: var(--sp-5); border-radius: 1rem; background: var(--c-azul-50); }
+.talleres-inscripcion { position: sticky; top: 6rem; padding: var(--sp-5); border-radius: var(--r-lg); background: var(--c-azul-50); }
 .talleres-inscripcion h2 { font-size: var(--fs-md); }
 .talleres-inscripcion > p { margin-top: var(--sp-2); color: var(--c-ink-soft); font-size: var(--fs-sm); }
 .talleres-inscripcion ul { display: grid; gap: var(--sp-4); margin-top: var(--sp-4); padding: 0; list-style: none; }

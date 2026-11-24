@@ -1,8 +1,8 @@
-# Borrador: estética Applaza
+# Estética Applaza
 
 Capturas del portal antes y después de aplicarle la piel de Applaza
-(`C:\Repos\Applaza`, `app/globals.css`). Es un borrador para evaluar: vive en la
-rama `borrador/estetica-applaza` y no debe mezclarse con la integración.
+(repo Applaza, `app/globals.css`). Empezó como borrador en la rama
+`borrador/estetica-applaza` y se adoptó para el portal en noviembre de 2026.
 
 Las capturas se tomaron con Playwright contra el modo local (PGlite) en tres modos:
 1366 × 860 claro, 1366 × 860 oscuro y 375 × 760 en celular. El panel se ve con la
@@ -17,4 +17,4 @@ cuenta de prueba `admin@ejemplo.test`.
 | /admin | [claro](antes/admin-claro.jpg) · [oscuro](antes/admin-oscuro.jpg) · [celular](antes/admin-celular.jpg) | [claro](despues/admin-claro.jpg) · [oscuro](despues/admin-oscuro.jpg) · [celular](despues/admin-celular.jpg) |
 
 Las decisiones de estilo están en la descripción del PR y en los comentarios de
-`styles/tokens.css`. Para descartar el borrador alcanza con no mergear la rama.
+`styles/tokens.css`. Las capturas de "antes" son el portal con la piel anterior (Encode Sans).
