@@ -8,7 +8,8 @@
 import { Icono } from "@/components/Iconos";
 import { Vinculo as Link, useIdioma, useTextos } from "@/components/i18n/Idioma";
 import type { DiaSemana, OcurrenciaAgenda } from "@/lib/cultura/agenda";
-import { formatearOcurrencia, partesDeFecha } from "@/lib/fechas";
+import { emojiDeCategoria } from "@/lib/cultura/emojis";
+import { fechaDeTarjeta, horaDeTarjeta } from "@/lib/fechas";
 import { LOCALE } from "@/lib/i18n/config";
 import { formatear } from "@/lib/i18n/definir";
 import type { CategoriaAgenda } from "@/lib/tipos";
@@ -17,7 +18,13 @@ const ESTADO_TONO: Record<OcurrenciaAgenda["estado"], "ok" | "medio" | "aviso" |
   confirmado: null, reprogramado: "medio", suspendido: "aviso", cancelado: "mal",
 };
 
-/** Tarjeta grande de un evento: foto (o un fondo con el color de su categoría), fecha, lugar y categorías. */
+/** Si el evento no tiene foto ni la tiene su lugar (la misma de Agenda Cultural). */
+export const IMAGEN_PREDETERMINADA = "/img/cultura/evento-predeterminado.jpg";
+
+/**
+ * Tarjeta de un evento, igual a la de Agenda Cultural (event-card): foto con la etiqueta de acceso y la de
+ * destacado, fecha y hora, categorías, título, lugar con su dirección y «Ver evento».
+ */
 export function TarjetaEvento({ o, categorias, titulo: Titulo = "h3" }: {
   o: OcurrenciaAgenda;
   categorias: Map<string, CategoriaAgenda>;
@@ -25,43 +32,44 @@ export function TarjetaEvento({ o, categorias, titulo: Titulo = "h3" }: {
 }) {
   const idioma = useIdioma();
   const { cultura: t, agenda: ta, comun } = useTextos();
-  const { dia, mes } = partesDeFecha(o.inicio, idioma);
   const rubros = o.rubros.map((r) => categorias.get(r)).filter((k): k is CategoriaAgenda => !!k);
-  const tono = rubros[0]?.tono ?? 0;
   const estado = ESTADO_TONO[o.estado];
+  const hora = horaDeTarjeta(o.inicio, idioma);
+  const modalidad = o.costo?.modalidad ?? (o.gratis ? "gratis" : "consultar");
+  const acceso = modalidad === "gratis" ? t.gratis : modalidad === "pago" ? o.costo?.detalle || t.tarjeta.pago : t.tarjeta.consultar;
   return (
     <Link className={`tarjeta-evento${o.estado === "cancelado" ? " tarjeta-evento--apagada" : ""}`} href={o.url}>
-      <span className={`tarjeta-evento__foto tarjeta-evento__foto--tono-${tono}`}>
-        {o.imagen ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={o.imagen.src} alt="" loading="lazy" />
-        ) : (
-          <span className="tarjeta-evento__sin-foto" aria-hidden="true">
-            <Icono nombre="calendario" tamano={40} />
-            {rubros[0]?.titulo}
-          </span>
-        )}
-        <span className="tarjeta-evento__fecha" aria-hidden="true">
-          <span>{mes}</span>
-          <strong>{dia}</strong>
-        </span>
+      <span className="tarjeta-evento__foto">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={o.imagen?.src ?? IMAGEN_PREDETERMINADA} alt="" loading="lazy" />
+        <span className="tarjeta-evento__acceso">{acceso}</span>
+        {o.destacado && <span className="tarjeta-evento__destacado">{t.destacado}</span>}
       </span>
       <span className="tarjeta-evento__cuerpo">
-        <span className="tarjeta-evento__marcas">
-          {o.destacado && <span className="marca marca--destacado"><Icono nombre="estrella" tamano={12} /> {t.destacado}</span>}
-          {estado && <span className={`estado estado--${estado}`}>{ta.estado[o.estado]}</span>}
-          {o.enCurso && o.estado !== "cancelado" && <span className="estado estado--ok">{ta.estado.enCurso}</span>}
-          {o.gratis && <span className="marca marca--exito">{t.gratis}</span>}
-          {o.fueraDeLaCiudad && <span className="marca marca--alerta">{comun.ui.fueraDeLaCiudad}</span>}
+        <span className="tarjeta-evento__meta">
+          <strong>{fechaDeTarjeta(o.inicio, idioma)}</strong>
+          {hora && <span><Icono nombre="reloj" tamano={15} /> {hora}</span>}
         </span>
-        <Titulo className="tarjeta-evento__titulo">{o.titulo}</Titulo>
-        <span className="tarjeta-evento__cuando"><Icono nombre="reloj" tamano={15} /> {formatearOcurrencia(o, idioma)}</span>
-        {(o.sede || o.lugar) && <span className="tarjeta-evento__lugar"><Icono nombre="ubicacion" tamano={15} /> {o.sede || o.lugar}</span>}
-        {rubros.length > 0 && (
-          <span className="tarjeta-evento__rubros">
-            {rubros.slice(0, 3).map((k) => <span key={k.id} className={`tono tono--${k.tono}`}>{k.titulo}</span>)}
+        {(estado || o.enCurso || o.fueraDeLaCiudad) && (
+          <span className="tarjeta-evento__marcas">
+            {estado && <span className={`estado estado--${estado}`}>{ta.estado[o.estado]}</span>}
+            {o.enCurso && o.estado !== "cancelado" && <span className="estado estado--ok">{ta.estado.enCurso}</span>}
+            {o.fueraDeLaCiudad && <span className="marca marca--alerta">{comun.ui.fueraDeLaCiudad}</span>}
           </span>
         )}
+        {rubros.length > 0 && (
+          <span className="tarjeta-evento__rubros">
+            {rubros.map((k) => <span key={k.id}>{k.titulo}</span>)}
+          </span>
+        )}
+        <Titulo className="tarjeta-evento__titulo">{o.titulo}</Titulo>
+        {(o.sede || o.lugar) && (
+          <span className="tarjeta-evento__lugar">
+            <Icono nombre="ubicacion" tamano={17} />
+            <span>{o.sede || o.lugar}{o.direccion && <small>{o.direccion}</small>}</span>
+          </span>
+        )}
+        <span className="tarjeta-evento__ver">{t.tarjeta.verEvento} <Icono nombre="flecha-diagonal" tamano={18} /></span>
       </span>
     </Link>
   );
@@ -117,7 +125,10 @@ export function SemanaAgenda({ dias, categorias }: { dias: DiaSemana[]; categori
   );
 }
 
-/** Las categorías con más actividades por venir, como accesos a la agenda filtrada. */
+/**
+ * Las categorías con más actividades por venir, como en la portada de Agenda Cultural: un «sticker» con el
+ * emoji de la categoría sobre un cuadrado de color, un poco torcido. Va sobre la franja azul oscura.
+ */
 export function CategoriasAgenda({ populares, categorias }: { populares: { id: string; eventos: number }[]; categorias: CategoriaAgenda[] }) {
   const { cultura: t } = useTextos();
   const mapa = new Map(categorias.map((k) => [k.id, k]));
@@ -127,10 +138,13 @@ export function CategoriasAgenda({ populares, categorias }: { populares: { id: s
     <ul className="categorias-agenda">
       {items.map(({ id, eventos, k }) => (
         <li key={id}>
-          <Link className={`categoria-agenda categoria-agenda--tono-${k!.tono}`} href={`/agenda?categoria=${id}`}>
-            <strong>{k!.titulo}</strong>
-            <small>{eventos === 1 ? t.categorias.unaPorVenir : formatear(t.categorias.porVenir, { n: eventos })}</small>
-            <Icono nombre="flecha" tamano={18} />
+          <Link className="categoria-agenda" href={`/agenda?categoria=${id}`}>
+            <span className="categoria-agenda__sticker" aria-hidden="true">{emojiDeCategoria(id)}</span>
+            <span className="categoria-agenda__texto">
+              <strong>{k!.titulo}</strong>
+              <small>{eventos === 1 ? t.categorias.unaPorVenir : formatear(t.categorias.porVenir, { n: eventos })}</small>
+            </span>
+            <Icono nombre="flecha" tamano={24} className="categoria-agenda__flecha" />
           </Link>
         </li>
       ))}

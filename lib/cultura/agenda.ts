@@ -28,6 +28,10 @@ export type OcurrenciaAgenda = OcurrenciaDeEvento & {
   destacado: boolean;
   fueraDeLaCiudad: boolean;
   imagen?: { src: string; alt: string };
+  /** Dirección del lugar, debajo del nombre en la tarjeta. */
+  direccion?: string;
+  /** Gratis, con precio o a consultar (la etiqueta sobre la foto de la tarjeta). */
+  costo?: { modalidad: "gratis" | "pago" | "consultar"; detalle?: string };
 };
 
 export type FiltrosAgenda = {

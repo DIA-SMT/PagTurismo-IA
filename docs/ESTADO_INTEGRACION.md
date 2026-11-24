@@ -38,9 +38,9 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 - `/agenda`: búsqueda, categoría, lugar, gratis, hoy / fin de semana / fecha, **calendario mensual** con
   intensidad por día, destacados primero. Además (de la portada de Agenda Cultural): «Para no perderse» con los
   destacados, «La semana en la agenda», atajos por categoría, eventos en **tarjetas con foto** de a 24 (la vista de lista se quitó; quedan tarjetas y calendario) y día anterior/siguiente.
-- Portada: la agenda sube antes de «Qué hacer» con tarjetas, la semana y «Explorá por categoría». `/agenda/[slug]`: compartir, todas las fechas en `.ics`, Google
+- Portada igual a la de Agenda Cultural: «Próximos eventos» con su tarjeta (foto del evento, o la del lugar, o la imagen por defecto de la Agenda; acceso, destacado, fecha, hora, categorías, lugar y dirección), la semana y la franja oscura «Explorá por categoría» con los stickers de emoji de la Agenda. `/agenda/[slug]`: compartir, todas las fechas en `.ics`, Google
   Calendar, galería y mapa OpenStreetMap. `/lugares` nuevo con filtro por tipo.
-- `npm run cultura` (espacios, base de la Agenda, WordPress viejo) con legado, fusión sin pisar lo editado,
+- `npm run cultura` (espacios, base de la Agenda, WordPress viejo, `completar-lugares` sin red) con legado, fusión sin pisar lo editado,
   fechas en hora de Tucumán y categorías nuevas. El mapeo EventON de la Agenda se reutiliza tal cual.
 - Redirecciones 308 de las rutas de la Agenda (`/eventos/x`, `/espacios-culturales`, espacios en la raíz…).
 
@@ -88,6 +88,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | Menús, SEO y módulos configurables desde el panel | P2 | Hoy: configuración del sitio existente |
 | Portugués del Bus Turístico y Bus Educativo | P2 | Los textos del bus existen en es/en; en pt se muestra español con aviso |
 | Auditoría con diferencias campo por campo en operaciones del bus | P3 | Hoy se registra persona, operación y ruta (se anota al pedirla: incluye intentos rechazados) |
+| Fotos de los eventos en la base local | P3 | `npm run cultura -- eventos --desde-wordpress --escribir --actualizar --fotos` completa la foto vacía; el 24/11 agendaculturalsmt.com no respondía. Sin foto, la tarjeta usa la del lugar o la imagen por defecto de la Agenda |
 | Lint (ESLint) | P3 | PagTurismo no tenía linter configurado |
 
 ## Decisiones tomadas

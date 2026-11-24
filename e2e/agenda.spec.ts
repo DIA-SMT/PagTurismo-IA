@@ -17,10 +17,15 @@ test.describe("Agenda cultural", () => {
   test("la portada da protagonismo a la agenda: tarjetas, semana y categorías @celular", async ({ page }) => {
     await page.goto("/");
     const seccion = page.locator("#agenda");
-    await expect(seccion.getByRole("heading", { name: "Qué pasa en la ciudad" })).toBeVisible();
-    await expect(seccion.locator(".tarjeta-evento").first()).toBeVisible();
+    await expect(seccion.getByRole("heading", { name: "Próximos eventos" })).toBeVisible();
+    const tarjeta = seccion.locator(".tarjeta-evento").first();
+    await expect(tarjeta).toBeVisible();
+    await expect(tarjeta.locator(".tarjeta-evento__acceso")).toHaveText(/^(Gratis|Consultar|Pago|\$.+)$/);
+    await expect(tarjeta.getByText("Ver evento")).toBeVisible();
     await expect(seccion.locator(".semana-agenda__dia")).toHaveCount(7);
-    await expect(seccion.locator(".categoria-agenda", { hasText: "Música" })).toBeVisible();
+    const franja = page.locator(".franja-categorias");
+    await expect(franja.getByRole("heading", { name: "Explorá por categoría" })).toBeVisible();
+    await expect(franja.locator(".categoria-agenda", { hasText: "Música" }).locator(".categoria-agenda__sticker")).toHaveText("🎵");
     await sinDesbordeHorizontal(page);
     await seccion.locator(".semana-agenda__dia").nth(1).click();
     await expect(page).toHaveURL(/\/agenda\?cuando=fecha&fecha=\d{4}-\d{2}-\d{2}/);

@@ -117,6 +117,9 @@ export function SpriteIconos() {
         <symbol id="i-calendario" viewBox="0 0 24 24" {...T}>
           <rect x="4" y="5" width="16" height="16" rx="2" /><path d="M8 3v4m8-4v4M4 10h16M8 14h1m3 0h1m3 0h1M8 17h1m3 0h1m3 0h1" />
         </symbol>
+        <symbol id="i-flecha-diagonal" viewBox="0 0 24 24" {...T}>
+          <path d="M7 17 17 7M7 7h10v10" />
+        </symbol>
         <symbol id="i-reloj" viewBox="0 0 24 24" {...T}>
           <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
         </symbol>

@@ -226,10 +226,15 @@ function claseDe(categorias: string[]): string {
 }
 
 /** Evento de origen → datos de un evento del portal. `lugares` traduce el espacio de Agenda al lugar del portal. */
-export function eventoAContenido(e: EventoOrigen, lugares: Map<string, string>, nombresDeEspacios?: Map<string, string>): Json {
+export function eventoAContenido(
+  e: EventoOrigen,
+  lugares: Map<string, string>,
+  nombresDeEspacios?: Map<string, string>,
+  direccionesDeEspacios?: Map<string, string>,
+): Json {
   const lugar = e.lugarAgenda ? lugares.get(e.lugarAgenda) : undefined;
   // Con ficha de lugar igual se guarda el nombre como sede: si esa ficha está en borrador, el
-  // evento publicado sigue diciendo dónde es.
+  // evento publicado sigue diciendo dónde es. Lo mismo con la dirección, que la tarjeta muestra debajo.
   const sede = (lugar && e.lugarAgenda ? nombresDeEspacios?.get(e.lugarAgenda) : undefined) ?? e.sede?.trim();
   const lat = e.lat == null ? NaN : Number(e.lat);
   const lng = e.lng == null ? NaN : Number(e.lng);
@@ -245,7 +250,9 @@ export function eventoAContenido(e: EventoOrigen, lugares: Map<string, string>, 
     etiquetas: [],
     lugar,
     sede: sede || undefined,
-    lugarManual: lugar ? undefined : limpiarVacios({ direccion: e.direccion?.trim() || undefined, lat: Number.isFinite(lat) ? lat : undefined, lng: Number.isFinite(lng) ? lng : undefined }),
+    lugarManual: lugar
+      ? limpiarVacios({ direccion: (e.lugarAgenda ? direccionesDeEspacios?.get(e.lugarAgenda)?.trim() : undefined) || undefined })
+      : limpiarVacios({ direccion: e.direccion?.trim() || undefined, lat: Number.isFinite(lat) ? lat : undefined, lng: Number.isFinite(lng) ? lng : undefined }),
     organizador: e.organizador?.trim() || undefined,
     costo: {
       modalidad: e.acceso === "free" ? "gratis" : e.acceso === "paid" ? "pago" : "consultar",
@@ -306,6 +313,21 @@ export function sumarFechas(existente: Json, nuevo: Json): { datos: Json; agrega
   if (!agregar.length) return { datos: existente, agregadas: 0 };
   const ocurrencias = [...actuales, ...agregar].sort((a, b) => String(a.inicio).localeCompare(String(b.inicio)));
   return { datos: { ...existente, ocurrencias }, agregadas: agregar.length };
+}
+
+/**
+ * Completa un evento ya importado con lo que le falta: el nombre del lugar (sede), la dirección y la
+ * foto, solo si están vacíos. Sirve para eventos importados antes de guardar esos datos o sin fotos;
+ * lo cargado en el panel no se pisa.
+ */
+export function completarVacios(existente: Json, nuevo: Json): { datos: Json; completado: boolean } {
+  let datos = existente;
+  if (!existente.sede && nuevo.sede) datos = { ...datos, sede: nuevo.sede };
+  const manual = (existente.lugarManual as Json | undefined) ?? {};
+  const direccion = (nuevo.lugarManual as Json | undefined)?.direccion;
+  if (!manual.direccion && direccion) datos = { ...datos, lugarManual: { ...manual, direccion } };
+  if (!existente.imagen && nuevo.imagen) datos = { ...datos, imagen: nuevo.imagen };
+  return { datos, completado: datos !== existente };
 }
 
 /** Categorías nuevas para configuracion/categorias-agenda (las que ya están no se tocan). */

@@ -254,7 +254,10 @@ export function ocurrenciasDeAgenda(c: Contenido, ahora = Date.now()): Ocurrenci
       lugar: lugar?.titulo ?? o.datos.sede, lugarSlug: lugar?.slug,
       rubros: o.datos.rubros, gratis: o.datos.costo.modalidad === "gratis", destacado: o.datos.destacado,
       fueraDeLaCiudad: !!o.datos.fueraDeLaCiudad,
-      imagen: o.datos.imagen ? { src: o.datos.imagen.src, alt: "" } : undefined,
+      // Como en Agenda Cultural: la foto del evento o, si no tiene, la del lugar.
+      imagen: o.datos.imagen ? { src: o.datos.imagen.src, alt: "" } : lugar?.imagen ? { src: lugar.imagen.src, alt: "" } : undefined,
+      direccion: lugar?.direccion ?? o.datos.lugarManual?.direccion,
+      costo: o.datos.costo,
     };
   });
 }

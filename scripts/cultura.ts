@@ -10,6 +10,10 @@
  *   npm run cultura -- eventos --desde-wordpress [--escribir] [--actualizar] [--fotos]
  *       Los eventos del WordPress viejo (agendaculturalsmt.com, API pública) → eventos.
  *
+ *   npm run cultura -- completar-lugares [--escribir]
+ *       Sin red: a cada evento enlazado a una ficha de lugar le copia el nombre (sede) y la dirección de
+ *       esa ficha si los tiene vacíos. Así el evento publicado dice dónde es aunque la ficha siga en borrador.
+ *
  *   --actualizar  a un evento ya importado solo le suma fechas nuevas (nunca cambia el estado de
  *                 una fecha ni los textos: lo editado en el panel manda).
  *   --fotos       baja las fotos a la carpeta de subidas (CARPETA_SUBIDAS o .local/subidas) y las
@@ -29,7 +33,7 @@ import postgres from "postgres";
 import { opcionesScript } from "../lib/db/conexion.ts";
 import {
   buscarLugar, buscarPorLegado, categoriasNuevas, desdeEventOn, espacioALugar, eventoAContenido, fusionarLugar, slugLibre,
-  sumarFechas, type EspacioAgenda, type EventoOrigen, type FichaExistente,
+  completarVacios, sumarFechas, type EspacioAgenda, type EventoOrigen, type FichaExistente,
 } from "../lib/cultura/importar.ts";
 import { buildPlan } from "../lib/cultura/eventon.mjs";
 
@@ -243,6 +247,7 @@ async function importarEventos(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) 
   // Espacio de la Agenda → lugar del portal (por legado, alias, slug o nombre; ver lib/cultura/importar.ts).
   const mapaLugares = new Map<string, string>();
   const nombres = new Map(leerEspacios().map((e) => [e.slug, e.name]));
+  const direcciones = new Map(leerEspacios().flatMap((e) => (e.address ? [[e.slug, e.address] as [string, string]] : [])));
   for (const e of leerEspacios()) {
     const { slug } = buscarLugar(e, lugares);
     if (slug) mapaLugares.set(e.slug, slug);
@@ -252,14 +257,16 @@ async function importarEventos(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) 
   const escrituras: { sql: string; params: unknown[] }[] = [];
 
   for (const o of origenes) {
-    const nuevo = await fotosLocales(eventoAContenido(o, mapaLugares, nombres), `eventos-${o.origen}-${o.id}`.toLowerCase().replace(/[^a-z0-9-]/g, ""), informe.fotosConError);
+    const nuevo = await fotosLocales(eventoAContenido(o, mapaLugares, nombres, direcciones), `eventos-${o.origen}-${o.id}`.toLowerCase().replace(/[^a-z0-9-]/g, ""), informe.fotosConError);
     if (!nuevo.lugar && o.sede) informe.sinLugar[o.sede] = (informe.sinLugar[o.sede] ?? 0) + 1;
     const ya = buscarPorLegado(eventos, o);
     if (ya) {
       if (!actualizar) { informe.salteados.push(ya.slug); continue; }
-      const { datos, agregadas } = sumarFechas(ya.datos, nuevo);
-      if (!agregadas) { informe.salteados.push(ya.slug); continue; }
-      informe.actualizados.push(`${ya.slug} (+${agregadas} fechas)`);
+      const conFechas = sumarFechas(ya.datos, nuevo);
+      const { datos, completado } = completarVacios(conFechas.datos, nuevo);
+      const agregadas = conFechas.agregadas;
+      if (!agregadas && !completado) { informe.salteados.push(ya.slug); continue; }
+      informe.actualizados.push(`${ya.slug} (${[agregadas ? `+${agregadas} fechas` : "", completado ? "datos vacíos completados" : ""].filter(Boolean).join(", ")})`);
       escrituras.push({ sql: "update public.contenidos set datos = $3::text::jsonb where coleccion = $1 and slug = $2", params: ["eventos", ya.slug, JSON.stringify(datos)] });
       continue;
     }
@@ -288,6 +295,28 @@ async function importarEventos(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) 
   return informe;
 }
 
+/* ---- completar lugares (sin red) ---- */
+
+async function completarLugares(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) => Promise<T>) {
+  const [eventos, lugares] = await Promise.all([fichas(q, "eventos"), fichas(q, "lugares")]);
+  const porSlug = new Map(lugares.map((l) => [l.slug, l.datos]));
+  const informe = { completados: [] as string[], sinFicha: [] as string[] };
+  const escrituras: { sql: string; params: unknown[] }[] = [];
+  for (const e of eventos) {
+    const slugLugar = e.datos.lugar as string | undefined;
+    if (!slugLugar) continue;
+    const lugar = porSlug.get(slugLugar);
+    if (!lugar) { informe.sinFicha.push(`${e.slug} → ${slugLugar}`); continue; }
+    const { datos, completado } = completarVacios(e.datos, { sede: lugar.titulo, lugarManual: { direccion: lugar.direccion } });
+    if (!completado) continue;
+    informe.completados.push(e.slug);
+    escrituras.push({ sql: "update public.contenidos set datos = $3::text::jsonb where coleccion = $1 and slug = $2", params: ["eventos", e.slug, JSON.stringify(datos)] });
+  }
+  console.log(`Eventos con el lugar completado: ${informe.completados.length}. Enlazados a una ficha que no existe: ${informe.sinFicha.length}.`);
+  if (escribir) await transaccion(async (tx) => { for (const w of escrituras) await tx(w.sql, w.params); });
+  return informe;
+}
+
 /* ---- principal ---- */
 
 const base = await abrirBase();
@@ -295,8 +324,9 @@ try {
   let resultado: unknown;
   if (comando === "espacios") resultado = await importarEspacios(base.q, base.transaccion);
   else if (comando === "eventos") resultado = await importarEventos(base.q, base.transaccion);
+  else if (comando === "completar-lugares") resultado = await completarLugares(base.q, base.transaccion);
   else {
-    console.error("Uso: npm run cultura -- espacios | eventos --desde-base | eventos --desde-wordpress  [--escribir] [--actualizar] [--fotos]");
+    console.error("Uso: npm run cultura -- espacios | eventos --desde-base | eventos --desde-wordpress | completar-lugares  [--escribir] [--actualizar] [--fotos]");
     process.exitCode = 1;
   }
   if (resultado) {

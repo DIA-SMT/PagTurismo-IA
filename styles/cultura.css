@@ -152,52 +152,66 @@
 @media (max-width: 64rem) { .tarjetas-evento { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 37.5rem) { .tarjetas-evento { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); } }
 
+/* Tarjeta de evento: la event-card de Agenda Cultural con los colores del portal. */
 .tarjeta-evento {
   display: flex;
   flex: 1;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid var(--c-borde-objeto);
-  border-radius: 20px;
+  border: 1px solid var(--c-borde-suave);
+  border-radius: 1rem;
   background: var(--c-blanco);
   color: var(--c-ink);
   text-decoration: none;
-  box-shadow: var(--sombra-1);
-  transition: transform var(--t-media), box-shadow var(--t-media);
+  box-shadow: 0 8px 24px rgb(7 31 61 / 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.tarjeta-evento:hover { color: var(--c-ink); transform: translateY(-3px); box-shadow: var(--sombra-3); }
+.tarjeta-evento:hover, .tarjeta-evento:focus-visible { color: var(--c-ink); transform: translateY(-4px); box-shadow: 0 16px 45px rgb(7 31 61 / 0.1); }
 .tarjeta-evento--apagada { opacity: 0.75; }
 .tarjeta-evento--apagada .tarjeta-evento__titulo { text-decoration: line-through; }
-.tarjeta-evento__foto { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 10; overflow: hidden; }
-.tarjeta-evento__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-/* Sin foto: el color de la primera categoría, con el ícono de calendario. */
-.tarjeta-evento__foto--tono-0 { background: linear-gradient(140deg, var(--c-tono-azul-fondo), var(--c-celeste-50)); color: var(--c-tono-azul-texto); }
-.tarjeta-evento__foto--tono-1 { background: linear-gradient(140deg, var(--c-tono-verde-fondo), var(--c-celeste-50)); color: var(--c-tono-verde-texto); }
-.tarjeta-evento__foto--tono-2 { background: linear-gradient(140deg, var(--c-tono-amarillo-fondo), var(--c-amarillo-100)); color: var(--c-tono-amarillo-texto); }
-.tarjeta-evento__foto--tono-3 { background: linear-gradient(140deg, var(--c-tono-violeta-fondo), var(--c-azul-50)); color: var(--c-tono-violeta-texto); }
-.tarjeta-evento__fecha {
+.tarjeta-evento__foto { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--c-borde-suave); }
+.tarjeta-evento__foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.35s ease; }
+.tarjeta-evento:hover .tarjeta-evento__foto img { transform: scale(1.035); }
+.tarjeta-evento__acceso, .tarjeta-evento__destacado {
   position: absolute;
-  top: var(--sp-3);
-  left: var(--sp-3);
-  display: grid;
-  place-items: center;
-  min-width: 3.4rem;
-  padding: 0.35rem 0.6rem 0.45rem;
-  border-radius: 14px;
-  background: #0066FF;
-  color: #fff;
-  box-shadow: 0 6px 16px rgb(0 40 120 / 0.28);
-  line-height: 1;
+  z-index: 1;
+  top: 0.85rem;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.4;
 }
-.tarjeta-evento__fecha span { font-size: 0.72rem; font-weight: var(--fw-fuerte); letter-spacing: 0.08em; }
-.tarjeta-evento__fecha strong { margin-top: 2px; font-size: 1.55rem; font-weight: var(--fw-titular); }
-.tarjeta-evento__cuerpo { display: flex; flex: 1; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4) var(--sp-5) var(--sp-5); }
-.tarjeta-evento__marcas { display: flex; flex-wrap: wrap; gap: 6px; }
-.tarjeta-evento__marcas:empty { display: none; }
-.tarjeta-evento__titulo { font-size: 1.2rem; font-weight: var(--fw-fuerte); line-height: 1.25; letter-spacing: -0.02em; }
-.tarjeta-evento__cuando, .tarjeta-evento__lugar { display: flex; gap: 6px; align-items: flex-start; color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.4; }
-.tarjeta-evento__cuando svg, .tarjeta-evento__lugar svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
-.tarjeta-evento__rubros { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: var(--sp-2); }
+/* Sobre la foto: los mismos colores en tema claro y oscuro. */
+.tarjeta-evento__acceso { left: 0.85rem; background: #fff; color: #09345f; }
+.tarjeta-evento__destacado { right: 0.85rem; background: #f4c430; color: #071f3d; }
+.tarjeta-evento__cuerpo { display: flex; flex: 1; flex-direction: column; padding: 1.1rem 1.15rem 1.3rem; }
+.tarjeta-evento__meta { display: flex; justify-content: space-between; gap: 1rem; color: var(--c-azul-700); }
+.tarjeta-evento__meta strong { font-weight: 800; }
+.tarjeta-evento__meta strong::first-letter { text-transform: uppercase; }
+.tarjeta-evento__meta span { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--c-ink-soft); white-space: nowrap; }
+.tarjeta-evento__marcas { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.6rem; }
+.tarjeta-evento__rubros { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; margin: 0.9rem 0 0.4rem; }
+.tarjeta-evento__rubros span { color: var(--c-azul-700); font-size: 0.72rem; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; }
+.tarjeta-evento__titulo { margin: 0.35rem 0 0.8rem; font-size: 1.35rem; font-weight: 500; line-height: 1.18; letter-spacing: -0.02em; }
+.tarjeta-evento__lugar { display: flex; align-items: flex-start; gap: 0.45rem; margin-bottom: 1rem; color: var(--c-ink-soft); }
+.tarjeta-evento__lugar svg { flex: 0 0 auto; margin-top: 0.2rem; }
+.tarjeta-evento__lugar small { display: block; font-size: 0.8rem; }
+.tarjeta-evento__ver {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--c-borde-suave);
+  color: var(--c-azul-700);
+  font-weight: 800;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta-evento, .tarjeta-evento__foto img { transition: none; }
+  .tarjeta-evento:hover, .tarjeta-evento:focus-visible { transform: none; }
+  .tarjeta-evento:hover .tarjeta-evento__foto img { transform: none; }
+}
 
 /* ---- La semana ---- */
 .semana-agenda { margin-top: var(--sp-6); padding: var(--sp-5); border: 1px solid var(--c-borde-objeto); border-radius: 20px; background: var(--c-blanco); box-shadow: var(--sombra-1); }
@@ -239,29 +253,61 @@
   .semana-agenda li { flex: 0 0 6.5rem; scroll-snap-align: start; }
 }
 
-/* ---- Categorías ---- */
-.agenda-portada__categorias { margin-top: var(--sp-6); }
-.agenda-portada__categorias h3 { margin-bottom: var(--sp-4); font-size: var(--fs-md); }
-.categorias-agenda { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-3); padding: 0; list-style: none; }
+/* ---- Franja «Explorá por categoría» (la category-section de Agenda Cultural) ---- */
+.franja-categorias { overflow: hidden; padding-block: 5.5rem; background: #071f3d; color: #fff; }
+.franja-categorias .kicker { color: #83d2f4; }
+.franja-categorias h2 { color: #fff; }
+.categorias-agenda { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
+/* Cada categoría lleva un «sticker»: emoji sobre un cuadrado de color con borde blanco, un poco torcido. */
+.categorias-agenda li:nth-child(4n + 1) { --sticker: #ffe58a; --inclinacion: -7deg; }
+.categorias-agenda li:nth-child(4n + 2) { --sticker: #bfe9fb; --inclinacion: 6deg; }
+.categorias-agenda li:nth-child(4n + 3) { --sticker: #ffc9b8; --inclinacion: 5deg; }
+.categorias-agenda li:nth-child(4n + 4) { --sticker: #c9f0d9; --inclinacion: -6deg; }
 .categoria-agenda {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 2px var(--sp-3);
+  gap: 1.4rem;
   height: 100%;
-  padding: var(--sp-4) var(--sp-5);
-  border-radius: 18px;
+  padding: 1.35rem 1.6rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 1.6rem;
+  background: rgb(255 255 255 / 0.05);
+  color: #fff;
   text-decoration: none;
-  transition: transform var(--t-media), box-shadow var(--t-media);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
-.categoria-agenda:hover { transform: translateY(-2px); box-shadow: var(--sombra-2); }
-.categoria-agenda strong { grid-column: 1; font-size: var(--fs-base); }
-.categoria-agenda small { grid-column: 1; font-size: var(--fs-xs); font-weight: var(--fw-semi); opacity: 0.9; }
-.categoria-agenda svg { grid-column: 2; grid-row: 1 / span 2; }
-.categoria-agenda--tono-0, .categoria-agenda--tono-0:hover { background: var(--c-tono-azul-fondo); color: var(--c-tono-azul-texto); }
-.categoria-agenda--tono-1, .categoria-agenda--tono-1:hover { background: var(--c-tono-verde-fondo); color: var(--c-tono-verde-texto); }
-.categoria-agenda--tono-2, .categoria-agenda--tono-2:hover { background: var(--c-tono-amarillo-fondo); color: var(--c-tono-amarillo-texto); }
-.categoria-agenda--tono-3, .categoria-agenda--tono-3:hover { background: var(--c-tono-violeta-fondo); color: var(--c-tono-violeta-texto); }
+.categoria-agenda:hover, .categoria-agenda:focus-visible { border-color: rgb(255 255 255 / 0.28); background: rgb(255 255 255 / 0.1); color: #fff; transform: translateY(-3px); }
+.categoria-agenda__sticker {
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  border: 4px solid #fff;
+  border-radius: 24px;
+  background: var(--sticker);
+  box-shadow: 0 12px 24px rgb(0 0 0 / 0.35);
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-size: 2.4rem;
+  line-height: 1;
+  transform: rotate(var(--inclinacion));
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.categoria-agenda:hover .categoria-agenda__sticker { transform: rotate(0deg) scale(1.1); }
+.categoria-agenda__texto strong { display: block; font-size: clamp(1.45rem, 2.4vw, 2rem); line-height: 1.1; letter-spacing: -0.02em; }
+.categoria-agenda__texto small { display: block; margin-top: 0.3rem; color: #83d2f4; font-size: 0.95rem; }
+.categoria-agenda__flecha { transition: transform 0.2s, color 0.2s; }
+.categoria-agenda:hover .categoria-agenda__flecha { color: #f4c430; transform: translateX(6px); }
+@media (prefers-reduced-motion: reduce) {
+  .categoria-agenda, .categoria-agenda__sticker, .categoria-agenda__flecha { transition: none; }
+  .categoria-agenda:hover { transform: none; }
+}
+@media (max-width: 47.5rem) {
+  .franja-categorias { padding-block: 3.8rem; }
+  .categorias-agenda { grid-template-columns: minmax(0, 1fr); gap: 0.75rem; }
+  .categoria-agenda { gap: 1rem; padding: 1rem 1.1rem; }
+  .categoria-agenda__sticker { width: 60px; height: 60px; border-width: 3px; border-radius: 18px; font-size: 1.85rem; }
+}
 
 /* ---- /agenda: destacados, atajos de categoría y navegación por día ---- */
 .agenda-destacados { margin-bottom: var(--sp-7); }
@@ -271,6 +317,3 @@
 .agenda-rapidas button[aria-pressed="true"] { outline: 2px solid currentColor; outline-offset: 2px; }
 .agenda-dia-nav { display: flex; align-items: center; gap: var(--sp-3); margin-top: var(--sp-4); }
 .agenda-dia-nav strong { font-size: var(--fs-md); }
-@media (max-width: 56rem) { .categorias-agenda { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 37.5rem) { .categorias-agenda { grid-template-columns: minmax(0, 1fr); } }
-.tarjeta-evento__sin-foto { display: grid; justify-items: center; gap: var(--sp-2); font-size: var(--fs-sm); font-weight: var(--fw-fuerte); text-align: center; }

@@ -5,7 +5,7 @@ import { describe, it } from "node:test";
 
 import {
   aHoraLocal, buscarLugar, buscarPorLegado, categoriasNuevas, desdeEventOn, espacioALugar, eventoAContenido, fusionarLugar,
-  slugLibre, sumarFechas, type EspacioAgenda, type EventoOrigen, type FichaExistente,
+  completarVacios, slugLibre, sumarFechas, type EspacioAgenda, type EventoOrigen, type FichaExistente,
 } from "../lib/cultura/importar.ts";
 import { buildPlan } from "../lib/cultura/eventon.mjs";
 import { leerSemilla } from "../lib/db/semilla.ts";
@@ -95,6 +95,25 @@ describe("eventos → contenidos", () => {
     assert.equal(d.lugar, undefined);
     assert.equal(d.sede, "Club X");
     assert.deepEqual(d.lugarManual, { direccion: "Calle 1", coordenadas: { lat: -26.8, lng: -65.2 } });
+  });
+
+  it("con ficha de lugar igual guarda nombre y dirección (por si la ficha sigue en borrador)", () => {
+    const d = eventoAContenido(origen, new Map([["teatro-rosita-avila", "teatro-rosita-avila"]]),
+      new Map([["teatro-rosita-avila", "Teatro Rosita Ávila"]]), new Map([["teatro-rosita-avila", "Las Piedras 1550"]]));
+    assert.equal(d.lugar, "teatro-rosita-avila");
+    assert.equal(d.sede, "Teatro Rosita Ávila");
+    assert.deepEqual(d.lugarManual, { direccion: "Las Piedras 1550" });
+  });
+
+  it("al actualizar completa el lugar vacío y no pisa lo editado", () => {
+    const nuevo = { sede: "Teatro Rosita Ávila", lugarManual: { direccion: "Las Piedras 1550" } };
+    const vacio = completarVacios({ titulo: "x", lugar: "teatro-rosita-avila" }, nuevo);
+    assert.ok(vacio.completado);
+    assert.equal(vacio.datos.sede, "Teatro Rosita Ávila");
+    assert.deepEqual(vacio.datos.lugarManual, { direccion: "Las Piedras 1550" });
+    const editado = completarVacios({ sede: "Sala Mayor", lugarManual: { direccion: "Otra 1" } }, nuevo);
+    assert.equal(editado.completado, false);
+    assert.equal(editado.datos.sede, "Sala Mayor");
   });
 
   it("reconoce lo ya importado por su legado y busca un slug libre", () => {

@@ -67,7 +67,7 @@ export default async function Portada() {
   const ocurrenciasAgenda = ocurrenciasDeAgenda(c, ahora);
   const proximosAgenda = proximosEventos(ocurrenciasAgenda, ahora, 3);
   const semanaAgenda = proximosDias(ocurrenciasAgenda, diaLocal(ahora));
-  const categoriasConFechas = categoriasPopulares(ocurrenciasAgenda, ahora, 6);
+  const categoriasConFechas = categoriasPopulares(ocurrenciasAgenda, ahora, 4);
   const calendario = agenda.length ? [] : proximasFechasDelCalendario(c.eventos, ahora, 3);
   const recorridos = c.recorridos;
   const circuitosBus = recorridos.filter((r) => r.modalidad === "bus");
@@ -143,20 +143,24 @@ export default async function Portada() {
         </section>
       )}
 
-      {/* ---- Agenda cultural (con protagonismo: tarjetas, semana y categorías, como en Agenda Cultural) ---- */}
+      {/* ---- Agenda cultural, como en la portada de Agenda Cultural: próximos eventos, la semana y la franja de categorías ---- */}
       {proximosAgenda.length > 0 ? (
-        <section className="bloque contenedor agenda-portada" id="agenda" aria-labelledby="agenda-titulo" data-modulo="cultura">
-          <Cabecera id="agenda-titulo" kicker={textosPagina.cultura.portada.kicker} titulo={textosPagina.cultura.portada.titulo}
-            bajada={textosPagina.cultura.portada.bajada} enlace={{ texto: textosPagina.cultura.portada.verAgenda, url: "/agenda" }} />
-          <GrillaEventos ocurrencias={proximosAgenda} categorias={c.categoriasAgenda} />
-          <SemanaAgenda dias={semanaAgenda} categorias={c.categoriasAgenda} />
+        <>
+          <section className="bloque contenedor agenda-portada" id="agenda" aria-labelledby="agenda-titulo" data-modulo="cultura">
+            <Cabecera id="agenda-titulo" kicker={textosPagina.cultura.portada.kicker} titulo={textosPagina.cultura.portada.titulo}
+              enlace={{ texto: textosPagina.cultura.portada.verAgenda, url: "/agenda" }} />
+            <GrillaEventos ocurrencias={proximosAgenda} categorias={c.categoriasAgenda} />
+            <SemanaAgenda dias={semanaAgenda} categorias={c.categoriasAgenda} />
+          </section>
           {categoriasConFechas.length > 0 && (
-            <div className="agenda-portada__categorias">
-              <h3>{textosPagina.cultura.categorias.titulo}</h3>
-              <CategoriasAgenda populares={categoriasConFechas} categorias={c.categoriasAgenda} />
-            </div>
+            <section className="franja-categorias" aria-labelledby="categorias-titulo" data-modulo="cultura">
+              <div className="contenedor">
+                <Cabecera id="categorias-titulo" kicker={textosPagina.cultura.categorias.kicker} titulo={textosPagina.cultura.categorias.titulo} />
+                <CategoriasAgenda populares={categoriasConFechas} categorias={c.categoriasAgenda} />
+              </div>
+            </section>
           )}
-        </section>
+        </>
       ) : (
         <section className="bloque contenedor" id="agenda" aria-labelledby="agenda-titulo">
           <Cabecera id="agenda-titulo" kicker={tc.nav.agenda} titulo={agenda.length ? t.agenda.tituloSemana : t.agenda.tituloCalendario}
