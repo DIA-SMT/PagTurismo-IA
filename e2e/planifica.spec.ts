@@ -14,10 +14,23 @@ test.describe("Planificá tu visita", () => {
     const planificador = page.locator(".planificador");
     await expect(planificador.getByRole("heading", { name: "Armá tu visita con inteligencia artificial" })).toBeVisible();
 
-    await planificador.getByRole("radio", { name: "Sí, es la primera" }).check({ force: true });
-    await planificador.getByLabel("¿Cuánto tiempo te quedás?").selectOption("2");
-    await planificador.getByRole("checkbox", { name: "Historia y patrimonio", exact: true }).check({ force: true });
-    await planificador.getByLabel("Contanos tus gustos").fill("Me gusta la historia y comer rico.");
+    // Una pregunta por vez: las de una respuesta avanzan solas; el foco va a la pregunta nueva.
+    const pregunta = planificador.locator(".planificador__pregunta");
+    await expect(planificador.getByText("Paso 1 de 7")).toBeVisible();
+    await planificador.getByRole("button", { name: "Sí, es la primera" }).click();
+    await expect(pregunta).toHaveText("¿Cuánto tiempo te quedás?");
+    await expect(pregunta).toBeFocused();
+    await planificador.getByRole("button", { name: "Tres días" }).click();
+    await planificador.getByRole("button", { name: "Atrás" }).click();
+    await expect(planificador.getByRole("button", { name: "Tres días" })).toHaveAttribute("aria-pressed", "true");
+    await planificador.getByRole("button", { name: "Dos días" }).click();
+    await planificador.getByRole("button", { name: "Hoy" }).click();
+    await planificador.getByRole("button", { name: "En pareja" }).click();
+    await planificador.getByRole("button", { name: "Normal" }).click();
+    await planificador.getByRole("button", { name: "Historia y patrimonio", exact: true }).click();
+    await planificador.getByRole("button", { name: "Seguir" }).click();
+    await expect(pregunta).toHaveText("¿Algo más? Contanos tus gustos");
+    await planificador.getByRole("textbox", { name: "¿Algo más? Contanos tus gustos" }).fill("Me gusta la historia y comer rico.");
     await sinDesbordeHorizontal(page);
     await planificador.getByRole("button", { name: "Armar mi visita" }).click();
 
@@ -33,7 +46,7 @@ test.describe("Planificá tu visita", () => {
     await page.reload();
     await expect(page.locator(".planificador--plan .planificador__dia")).toHaveCount(2);
     await page.getByRole("button", { name: "Cambiar mis respuestas" }).click();
-    await expect(page.getByLabel("Contanos tus gustos")).toHaveValue("Me gusta la historia y comer rico.");
+    await expect(page.getByRole("textbox", { name: "¿Algo más? Contanos tus gustos" })).toHaveValue("Me gusta la historia y comer rico.");
   });
 
   test("la API valida el pedido y no inventa: solo enlaces del portal", async ({ request }) => {

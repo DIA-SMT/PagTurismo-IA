@@ -17,26 +17,42 @@ const ICONO_TIPO: Record<string, string> = {
   lugar: "ubicacion", experiencia: "estrella", recorrido: "caminata", sabor: "plato", escapada: "brujula", evento: "calendario", bus: "bus-linea",
 };
 const GUARDADO = "turismo-plan-visita";
+/** Espacios especiales de Intl (cambian según el motor): se pasan a espacios comunes. */
+const ESPACIOS = new RegExp(`[${String.fromCharCode(0xa0, 0x2009, 0x202f)}]`, "g");
+
+/** Una pregunta por paso; las de una sola respuesta avanzan solas al elegir. */
+const PASOS = ["primera", "dias", "llegada", "compania", "ritmo", "intereses", "gustos"] as const;
+type Paso = (typeof PASOS)[number];
 
 type Respuestas = {
   primeraVez: boolean | null; dias: number; llegada: string; compania: Compania; ritmo: Ritmo;
   intereses: string[]; gustos: string; movilidadReducida: boolean;
 };
 
+const sumarDia = (dia: string, n: number) => {
+  const [a, m, d] = dia.split("-").map(Number);
+  return new Date(Date.UTC(a, m - 1, d) + n * 86_400_000).toISOString().slice(0, 10);
+};
+
 /**
- * Planificador de la visita (Planificá tu visita): un formulario corto y el itinerario que devuelve
- * /api/planifica/itinerario. El último plan queda en este navegador para no perderlo al recargar.
+ * Planificador de la visita (Planificá tu visita): una pregunta por vez en una tarjeta compacta y el
+ * itinerario que devuelve /api/planifica/itinerario. El último plan queda en este navegador.
  */
 export function PlanificadorVisita({ t, temas, hoy }: { t: Textos; temas: { id: string; titulo: string }[]; hoy: string }) {
   const idioma = useIdioma();
   const id = useId();
+  const manana = sumarDia(hoy, 1);
   const [r, setR] = useState<Respuestas>({
     primeraVez: null, dias: 2, llegada: hoy, compania: "pareja", ritmo: "normal", intereses: [], gustos: "", movilidadReducida: false,
   });
+  const [paso, setPaso] = useState(0);
+  const [otraFecha, setOtraFecha] = useState(false);
   const [estado, setEstado] = useState<"formulario" | "cargando" | "plan">("formulario");
   const [error, setError] = useState("");
   const [plan, setPlan] = useState<Plan | null>(null);
   const titulo = useRef<HTMLHeadingElement>(null);
+  const pregunta = useRef<HTMLHeadingElement>(null);
+  const movio = useRef(false);
 
   // Si ya había armado una visita en este navegador, se la mostramos.
   useEffect(() => {
@@ -44,7 +60,7 @@ export function PlanificadorVisita({ t, temas, hoy }: { t: Textos; temas: { id: 
       const guardado = JSON.parse(localStorage.getItem(GUARDADO) ?? "null") as { plan: Plan; respuestas: Respuestas } | null;
       if (guardado?.plan?.dias?.length && guardado.plan.dias.at(-1)!.fecha >= hoy) {
         setPlan(guardado.plan);
-        setR(guardado.respuestas);
+        setR({ ...guardado.respuestas, llegada: guardado.respuestas.llegada < hoy ? hoy : guardado.respuestas.llegada });
         setEstado("plan");
       }
     } catch { /* sin almacenamiento: no pasa nada */ }
@@ -54,7 +70,14 @@ export function PlanificadorVisita({ t, temas, hoy }: { t: Textos; temas: { id: 
     if (estado === "plan") titulo.current?.focus();
   }, [estado]);
 
+  // Al cambiar de paso, el foco va a la pregunta nueva (salvo al cargar la página).
+  useEffect(() => {
+    if (movio.current) pregunta.current?.focus();
+  }, [paso]);
+
   const cambiar = (parcial: Partial<Respuestas>) => setR((x) => ({ ...x, ...parcial }));
+  const irA = (n: number) => { movio.current = true; setPaso(Math.max(0, Math.min(PASOS.length - 1, n))); };
+  const elegir = (parcial: Partial<Respuestas>) => { cambiar(parcial); irA(paso + 1); };
   const alternarInteres = (tema: string) =>
     cambiar({ intereses: r.intereses.includes(tema) ? r.intereses.filter((x) => x !== tema) : [...r.intereses, tema] });
 
@@ -85,7 +108,7 @@ export function PlanificadorVisita({ t, temas, hoy }: { t: Textos; temas: { id: 
 
   const fechaLarga = (dia: string) =>
     new Intl.DateTimeFormat(LOCALE[idioma].intl, { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" })
-      .format(new Date(`${dia}T12:00:00Z`)).replace(/[   ]/g, " ");
+      .format(new Date(`${dia}T12:00:00Z`)).replace(ESPACIOS, " ");
 
   if (estado === "plan" && plan) {
     return (
@@ -97,7 +120,7 @@ export function PlanificadorVisita({ t, temas, hoy }: { t: Textos; temas: { id: 
             {plan.resumen && <p>{plan.resumen}</p>}
           </div>
           <div className="planificador__acciones">
-            <button type="button" className="boton boton--claro" onClick={() => setEstado("formulario")}>
+            <button type="button" className="boton boton--claro" onClick={() => { setEstado("formulario"); setPaso(PASOS.length - 1); }}>
               <Icono nombre="lapiz" tamano={18} /> {t.otraVez}
             </button>
             <button type="button" className="boton boton--claro" onClick={() => window.print()}>
@@ -152,90 +175,88 @@ export function PlanificadorVisita({ t, temas, hoy }: { t: Textos; temas: { id: 
     );
   }
 
+  const actual: Paso = PASOS[paso];
+  const opcion = (clave: string, texto: string, elegida: boolean, alElegir: () => void) => (
+    <button key={clave} type="button" className="planificador__opcion" aria-pressed={elegida} onClick={alElegir}>{texto}</button>
+  );
+  const preguntas: Record<Paso, string> = {
+    primera: t.primeraVez, dias: t.dias, llegada: t.llegada, compania: t.compania, ritmo: t.ritmo, intereses: t.intereses, gustos: t.gustos,
+  };
+
   return (
-    <section className="planificador" aria-labelledby={`${id}-titulo`}>
+    <section className="planificador planificador--pasos" aria-labelledby={`${id}-titulo`}>
       <div className="planificador__intro">
         <p className="kicker">{t.kicker}</p>
         <h2 id={`${id}-titulo`}>{t.titulo}</h2>
         <p>{t.bajada}</p>
       </div>
 
-      <form className="planificador__form" onSubmit={armar} aria-busy={estado === "cargando"}>
-        <fieldset>
-          <legend>{t.primeraVez}</legend>
-          <div className="segmentado" role="radiogroup">
-            {([true, false] as const).map((v) => (
-              <label key={String(v)}>
-                <input type="radio" name={`${id}-primera`} checked={r.primeraVez === v} onChange={() => cambiar({ primeraVez: v })} />
-                <span>{v ? t.si : t.no}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+      <form className="planificador__paso" onSubmit={armar} aria-busy={estado === "cargando"}>
+        <div className="planificador__progreso">
+          {paso > 0 ? (
+            <button type="button" className="planificador__atras" onClick={() => irA(paso - 1)}>
+              <Icono nombre="flecha-izq" tamano={16} /> {t.atras}
+            </button>
+          ) : <span><Icono nombre="chispas" tamano={16} /> {t.kicker}</span>}
+          <span aria-live="polite">{formatear(t.pasoDe, { n: paso + 1, total: PASOS.length })}</span>
+        </div>
+        <div className="planificador__barra" aria-hidden="true"><span style={{ width: `${((paso + 1) / PASOS.length) * 100}%` }} /></div>
 
-        <div className="planificador__fila">
-          <div className="filtros__campo">
-            <label htmlFor={`${id}-dias`}>{t.dias}</label>
-            <select id={`${id}-dias`} value={r.dias} onChange={(e) => cambiar({ dias: Number(e.target.value) })}>
-              {t.opcionesDias.map((texto, i) => <option key={texto} value={i + 1}>{texto}</option>)}
-            </select>
-          </div>
-          <div className="filtros__campo">
-            <label htmlFor={`${id}-llegada`}>{t.llegada}</label>
-            <input id={`${id}-llegada`} type="date" min={hoy} value={r.llegada} onChange={(e) => cambiar({ llegada: e.target.value || hoy })} />
-          </div>
-          <div className="filtros__campo">
-            <label htmlFor={`${id}-compania`}>{t.compania}</label>
-            <select id={`${id}-compania`} value={r.compania} onChange={(e) => cambiar({ compania: e.target.value as Compania })}>
-              {COMPANIAS.map((c) => <option key={c} value={c}>{t.companias[c]}</option>)}
-            </select>
-          </div>
+        <h3 className="planificador__pregunta" ref={pregunta} tabIndex={-1} id={`${id}-pregunta`}>{preguntas[actual]}</h3>
+
+        <div className="planificador__opciones" role="group" aria-labelledby={`${id}-pregunta`}>
+          {actual === "primera" && [
+            opcion("si", t.si, r.primeraVez === true, () => elegir({ primeraVez: true })),
+            opcion("no", t.no, r.primeraVez === false, () => elegir({ primeraVez: false })),
+          ]}
+          {actual === "dias" && t.opcionesDias.map((texto, i) => opcion(String(i), texto, r.dias === i + 1, () => elegir({ dias: i + 1 })))}
+          {actual === "llegada" && (
+            <>
+              {opcion("hoy", t.hoy, !otraFecha && r.llegada === hoy, () => { setOtraFecha(false); elegir({ llegada: hoy }); })}
+              {opcion("manana", t.manana, !otraFecha && r.llegada === manana, () => { setOtraFecha(false); elegir({ llegada: manana }); })}
+              {opcion("otra", t.otraFecha, otraFecha || (r.llegada !== hoy && r.llegada !== manana), () => setOtraFecha(true))}
+              {(otraFecha || (r.llegada !== hoy && r.llegada !== manana)) && (
+                <div className="planificador__fecha">
+                  <label htmlFor={`${id}-fecha`} className="visualmente-oculto">{t.llegada}</label>
+                  <input id={`${id}-fecha`} type="date" min={hoy} value={r.llegada} onChange={(e) => cambiar({ llegada: e.target.value || hoy })} />
+                  <button type="button" className="boton boton--primario" onClick={() => irA(paso + 1)}>{t.seguir}</button>
+                </div>
+              )}
+            </>
+          )}
+          {actual === "compania" && COMPANIAS.map((c) => opcion(c, t.companias[c], r.compania === c, () => elegir({ compania: c })))}
+          {actual === "ritmo" && RITMOS.map((v) => opcion(v, t.ritmos[v], r.ritmo === v, () => elegir({ ritmo: v })))}
+          {actual === "intereses" && (
+            <>
+              {[...temas, { id: "agenda", titulo: t.interesesExtra.agenda }, { id: "bus", titulo: t.interesesExtra.bus }]
+                .map((k) => opcion(k.id, k.titulo, r.intereses.includes(k.id), () => alternarInteres(k.id)))}
+              <p className="planificador__ayuda">{t.variosIntereses}</p>
+              <div className="planificador__siguiente">
+                <button type="button" className="boton boton--primario" onClick={() => irA(paso + 1)}>
+                  {r.intereses.length ? t.seguir : t.saltar} <Icono nombre="flecha" tamano={16} />
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
-        <fieldset>
-          <legend>{t.ritmo}</legend>
-          <div className="segmentado" role="radiogroup">
-            {RITMOS.map((v) => (
-              <label key={v}>
-                <input type="radio" name={`${id}-ritmo`} checked={r.ritmo === v} onChange={() => cambiar({ ritmo: v })} />
-                <span>{t.ritmos[v]}</span>
-              </label>
-            ))}
+        {actual === "gustos" && (
+          <div className="planificador__final">
+            <label htmlFor={`${id}-gustos`} className="visualmente-oculto">{t.gustos}</label>
+            <textarea id={`${id}-gustos`} rows={3} maxLength={500} value={r.gustos} placeholder={t.gustosEjemplo}
+              aria-describedby={`${id}-gustos-ayuda`} onChange={(e) => cambiar({ gustos: e.target.value })} />
+            <small id={`${id}-gustos-ayuda`} className="planificador__ayuda">{t.gustosAyuda} <span aria-hidden="true">({r.gustos.length}/500)</span></small>
+            <label className="filtros__check">
+              <input type="checkbox" checked={r.movilidadReducida} onChange={(e) => cambiar({ movilidadReducida: e.target.checked })} />
+              {t.movilidad}
+            </label>
+            {error && <p className="planificador__error" role="alert">{error}</p>}
+            <button type="submit" className="boton boton--primario" disabled={estado === "cargando"}>
+              <Icono nombre="chispas" tamano={18} /> {estado === "cargando" ? t.armando : t.armar}
+            </button>
+            <p aria-live="polite" className="planificador__cargando">{estado === "cargando" ? t.armandoDetalle : ""}</p>
           </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>{t.intereses}</legend>
-          <div className="planificador__intereses">
-            {[...temas, { id: "agenda", titulo: t.interesesExtra.agenda }, { id: "bus", titulo: t.interesesExtra.bus }].map((k) => (
-              <label key={k.id} className="planificador__interes">
-                <input type="checkbox" checked={r.intereses.includes(k.id)} onChange={() => alternarInteres(k.id)} />
-                <span>{k.titulo}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-
-        <div className="filtros__campo">
-          <label htmlFor={`${id}-gustos`}>{t.gustos}</label>
-          <textarea id={`${id}-gustos`} rows={3} maxLength={500} value={r.gustos} aria-describedby={`${id}-gustos-ayuda`}
-            onChange={(e) => cambiar({ gustos: e.target.value })} />
-          <small id={`${id}-gustos-ayuda`} className="planificador__ayuda">{t.gustosAyuda} <span aria-hidden="true">({r.gustos.length}/500)</span></small>
-        </div>
-
-        <label className="filtros__check">
-          <input type="checkbox" checked={r.movilidadReducida} onChange={(e) => cambiar({ movilidadReducida: e.target.checked })} />
-          {t.movilidad}
-        </label>
-
-        {error && <p className="planificador__error" role="alert">{error}</p>}
-
-        <div className="planificador__enviar">
-          <button type="submit" className="boton boton--primario" disabled={estado === "cargando"}>
-            <Icono nombre="chispas" tamano={18} /> {estado === "cargando" ? t.armando : t.armar}
-          </button>
-          <p aria-live="polite" className="planificador__cargando">{estado === "cargando" ? t.armandoDetalle : ""}</p>
-        </div>
+        )}
       </form>
     </section>
   );

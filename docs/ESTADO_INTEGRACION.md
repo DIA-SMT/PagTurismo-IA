@@ -58,8 +58,8 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 - CSS del bus convertido a tokens del portal (tema claro y oscuro); íconos con el sprite del portal.
 
 ### Planificador de la visita con IA
-- En Planificá tu visita: primera vez o no, días y fecha de llegada, con quién, ritmo, intereses, gustos en texto libre y
-  movilidad reducida → itinerario día por día (mañana, mediodía, tarde, noche) con enlaces a las fichas.
+- En Planificá tu visita, una pregunta por vez en una tarjeta compacta: primera vez o no, días y fecha de llegada, con quién,
+  ritmo, intereses, gustos en texto libre y movilidad reducida → itinerario día por día (mañana, mediodía, tarde, noche) con enlaces a las fichas.
 - `POST /api/planifica/itinerario` (lib/planificador.ts): la IA (OpenRouter, misma clave del traductor del bus; modelo
   `PLANIFICADOR_MODELO`) solo elige de un catálogo con lo **publicado**, los eventos de las fechas del viaje (sin talleres para
   vecinos salvo que los pida) y las salidas del bus con cupo. Toda referencia fuera del catálogo se descarta; lo que escribe la
