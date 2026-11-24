@@ -10,6 +10,9 @@
  *   npm run cultura -- eventos --desde-wordpress [--escribir] [--actualizar] [--fotos]
  *       Los eventos del WordPress viejo (agendaculturalsmt.com, API pública) → eventos.
  *
+ *   npm run cultura -- talleres --desde-planilla "HORARIO TALLERES ANUALES 2026.xlsx" [--escribir]
+ *       La planilla de talleres anuales de Gestión Cultural → datos/cultura/talleres.json (sin base). Lista los
+ *       errores de la planilla (horarios imposibles, una O en lugar de un cero, talleres sin profesor…).
  *   npm run cultura -- completar-lugares [--escribir]
  *       Sin red: a cada evento enlazado a una ficha de lugar le copia el nombre (sede) y la dirección de
  *       esa ficha si los tiene vacíos. Así el evento publicado dice dónde es aunque la ficha siga en borrador.
@@ -36,6 +39,8 @@ import {
   completarVacios, sumarFechas, type EspacioAgenda, type EventoOrigen, type FichaExistente,
 } from "../lib/cultura/importar.ts";
 import { buildPlan } from "../lib/cultura/eventon.mjs";
+import { leerXlsx } from "../lib/cultura/planilla.ts";
+import { talleresDeLaPlanilla, type ArchivoTalleres } from "../lib/cultura/talleres.ts";
 
 const args = process.argv.slice(2);
 const [comando] = args;
@@ -317,7 +322,47 @@ async function completarLugares(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>)
   return informe;
 }
 
+/* ---- talleres anuales (planilla de Gestión Cultural, sin base) ---- */
+
+/**
+ * La planilla .xlsx → datos/cultura/talleres.json. No toca la base: el archivo se revisa y se versiona.
+ * En prueba en seco solo muestra qué leyó y los problemas de la planilla.
+ */
+function importarTalleres() {
+  const i = args.indexOf("--desde-planilla");
+  const archivo = i >= 0 ? args[i + 1] : undefined;
+  if (!archivo || !fs.existsSync(archivo)) throw new Error("Indicá la planilla: --desde-planilla \"ruta/al/archivo.xlsx\".");
+  const { talleres, problemas } = talleresDeLaPlanilla(leerXlsx(fs.readFileSync(archivo)));
+  const porCentro = Object.entries(Object.groupBy(talleres, (t) => t.centro)).map(([c, l]) => `${c} (${l?.length ?? 0})`);
+  console.log(`Talleres: ${talleres.length} → ${porCentro.join(", ")}.`);
+  if (problemas.length) {
+    console.log(`Problemas de la planilla para corregir (${problemas.length}):`);
+    for (const p of problemas) console.log(`  - ${p.centro} · ${p.taller}: ${p.problema}`);
+  }
+  if (escribir) {
+    const datos: ArchivoTalleres = {
+      fuente: `Planilla «${path.basename(archivo)}» de la Dirección de Gestión Cultural`,
+      actualizado: new Date().toISOString().slice(0, 10),
+      talleres,
+    };
+    fs.writeFileSync(path.join(process.cwd(), "datos", "cultura", "talleres.json"), `${JSON.stringify(datos, null, 2)}\n`);
+  }
+  return { talleres: talleres.length, problemas };
+}
+
 /* ---- principal ---- */
+
+if (comando === "talleres") {
+  try {
+    const resultado = importarTalleres();
+    fs.writeFileSync(reporte, JSON.stringify({ generado: new Date().toISOString(), modo: escribir ? "escritura" : "prueba en seco", comando: args, resultado }, null, 2));
+    console.log(escribir ? `Listo: datos/cultura/talleres.json. Informe: ${reporte}` : `PRUEBA EN SECO: no se escribió nada. Informe: ${reporte}. Para guardar, repetí con --escribir.`);
+  } catch (e) {
+    console.error(e instanceof Error ? e.message : e);
+    process.exitCode = 1;
+  }
+  process.exit();
+}
 
 const base = await abrirBase();
 try {
@@ -326,7 +371,7 @@ try {
   else if (comando === "eventos") resultado = await importarEventos(base.q, base.transaccion);
   else if (comando === "completar-lugares") resultado = await completarLugares(base.q, base.transaccion);
   else {
-    console.error("Uso: npm run cultura -- espacios | eventos --desde-base | eventos --desde-wordpress | completar-lugares  [--escribir] [--actualizar] [--fotos]");
+    console.error("Uso: npm run cultura -- espacios | eventos --desde-base | eventos --desde-wordpress | completar-lugares | talleres --desde-planilla X  [--escribir] [--actualizar] [--fotos]");
     process.exitCode = 1;
   }
   if (resultado) {

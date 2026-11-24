@@ -15,6 +15,7 @@ import type { Contenido } from "./datos";
 import { aInstante, formatearOcurrencia, MESES, ocurrenciasVigentes } from "./fechas.ts";
 import { rutas } from "./rutas.ts";
 import type { Costo, DatoConfirmable } from "./tipos";
+import type { Taller } from "./cultura/talleres.ts";
 
 export type FichaMigue = { tipo: string; titulo: string; url: string; texto: string };
 
@@ -194,6 +195,36 @@ export function fichasDelBus(circuitos: CircuitoMigue[], salidas: SalidaMigue[],
         propias.length
           ? linea(`Próximas salidas (cupos al ${sello})`, propias.map((s) => `${fecha(s)}: ${cupo(s)}${s.punto ? `, sale de ${limpio(s.punto)}` : ""}`).join("; "))
           : "No hay salidas publicadas en los próximos días para este circuito.",
+      ]),
+    };
+  });
+}
+
+const DIA_TALLER = ["", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+
+/**
+ * Los talleres anuales de cada centro cultural, en una ficha por centro: qué talleres hay, qué días y a qué
+ * hora, y cómo inscribirse. Así Migue contesta «¿hay tango los sábados?» sin inventar horarios.
+ */
+export function fichasDeTalleres(
+  talleres: Pick<Taller, "titulo" | "detalle" | "centro" | "horarios" | "paraChicos">[],
+  centros: { slug: string; nombre: string; direccion?: string; horario?: string; telefono?: string }[],
+): FichaMigue[] {
+  return centros.map((k) => {
+    const propios = talleres.filter((t) => t.centro === k.slug);
+    const lineas = propios.map((t) => {
+      const horarios = t.horarios.map((h) => `${DIA_TALLER[h.dia]} ${h.desde}${h.hasta ? ` a ${h.hasta}` : ""}${h.nota ? ` (${h.nota.toLowerCase()})` : ""}`).join(", ");
+      return `${t.titulo}${t.detalle ? ` (${t.detalle})` : ""}: ${horarios}`;
+    });
+    return {
+      tipo: "talleres de un centro cultural",
+      titulo: `Talleres en ${k.nombre}`,
+      url: `/talleres?centro=${k.slug}`,
+      texto: unir([
+        `Talleres anuales 2026 (clases semanales todo el año) en ${k.nombre}.`,
+        linea("Dirección", k.direccion), linea("Atención", k.horario), linea("Teléfono", k.telefono ? `(0381) ${k.telefono}` : ""),
+        "Inscripción: personal, en el centro cultural. Cupos, requisitos y costo: consultar en el centro.",
+        ...lineas,
       ]),
     };
   });

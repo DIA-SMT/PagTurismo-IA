@@ -10,9 +10,10 @@ import { paginas } from "./paginas";
 import { planificador } from "./planificador";
 import { portada } from "./portada";
 import { recorridos } from "./recorridos";
+import { talleres } from "./talleres";
 
 /** Todas las secciones de textos. Cada archivo define la suya en los tres idiomas. */
-const SECCIONES = { comun, portada, paginas, catalogo, agenda, cultura, buses, fichas, recorridos, migue, planificador };
+const SECCIONES = { comun, portada, paginas, catalogo, agenda, cultura, buses, fichas, recorridos, migue, planificador, talleres };
 
 export type Textos = { [K in keyof typeof SECCIONES]: (typeof SECCIONES)[K]["es"] };
 

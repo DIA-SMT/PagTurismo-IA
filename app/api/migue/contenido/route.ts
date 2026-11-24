@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 
 import { datosDelBusParaMigue } from "@/lib/buses/migue";
 import { leerContenido } from "@/lib/datos";
-import { fichasDelBus, paraMigue } from "@/lib/migue";
+import { CENTROS_TALLERES, TALLERES } from "@/lib/cultura/datos-talleres";
+import { fichasDeTalleres, fichasDelBus, paraMigue } from "@/lib/migue";
 
 /**
  * GET /api/migue/contenido — el contenido publicado del sitio, en texto, para Migue (el
@@ -22,6 +23,8 @@ export async function GET() {
   // En español: Migue contesta en el idioma en que le escriben, y el chat traduce los botones.
   const [contenido, bus] = await Promise.all([leerContenido(false, "es"), datosDelBusParaMigue()]);
   const datos = paraMigue(contenido);
+  datos.fichas.push(...fichasDeTalleres(TALLERES.talleres, CENTROS_TALLERES));
+  datos.fichas.push({ tipo: "página", titulo: "Talleres en los centros culturales", url: "/talleres", texto: "Los talleres anuales de los cuatro centros culturales, con filtros por centro, día y disciplina, y dónde inscribirse." });
   if (bus) {
     datos.fichas.push(...fichasDelBus(bus.circuitos, bus.salidas));
   } else {

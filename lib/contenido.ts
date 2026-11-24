@@ -60,6 +60,7 @@ export const PIE: { columna: keyof TextosComun["pie"]["columnas"]; enlaces: Enla
       { clave: "parques", url: "/que-hacer/parques-y-aire-libre" },
       { clave: "sabores", url: "/sabores" },
       { clave: "escapadas", url: "/escapadas" },
+      { clave: "talleres", url: "/talleres" },
     ],
   },
   {

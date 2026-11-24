@@ -47,6 +47,10 @@ export default async function Agenda() {
           </section>
         )}
         {ocurrencias.length > 0 && <SemanaAgenda dias={proximosDias(ocurrencias, diaLocal(ahora))} categorias={c.categoriasAgenda} />}
+        <p className="agenda-talleres">
+          <span>{textos.talleres.enLaAgenda}</span>
+          <Link className="enlace-flecha" href="/talleres">{textos.talleres.verTalleres} <Icono nombre="flecha" tamano={16} /></Link>
+        </p>
         <Suspense fallback={null}>
           <AgendaFiltrable ocurrencias={ocurrencias} categorias={c.categoriasAgenda} populares={populares} ahoraServidor={ahora} />
         </Suspense>

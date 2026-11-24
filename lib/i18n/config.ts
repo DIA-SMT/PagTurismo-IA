@@ -28,6 +28,7 @@ const SECCIONES: Record<string, Record<Exclude<Idioma, "es">, string>> = {
   experiencias: { en: "experiences", pt: "experiencias" },
   recorridos: { en: "tours", pt: "roteiros" },
   agenda: { en: "events", pt: "agenda" },
+  talleres: { en: "workshops", pt: "oficinas" },
   planifica: { en: "plan-your-visit", pt: "planeje-sua-visita" },
   descubri: { en: "discover", pt: "descubra" },
   sabores: { en: "food-and-drink", pt: "sabores" },

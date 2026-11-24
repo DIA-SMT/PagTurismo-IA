@@ -151,6 +151,10 @@ export default async function Portada() {
               enlace={{ texto: textosPagina.cultura.portada.verAgenda, url: "/agenda" }} />
             <GrillaEventos ocurrencias={proximosAgenda} categorias={c.categoriasAgenda} />
             <SemanaAgenda dias={semanaAgenda} categorias={c.categoriasAgenda} />
+            <p className="agenda-talleres">
+              <span>{textosPagina.talleres.portadaTexto}</span>
+              <Link className="enlace-flecha" href="/talleres">{textosPagina.talleres.verTalleres} <Icono nombre="flecha" tamano={16} /></Link>
+            </p>
           </section>
           {categoriasConFechas.length > 0 && (
             <section className="franja-categorias" aria-labelledby="categorias-titulo" data-modulo="cultura">

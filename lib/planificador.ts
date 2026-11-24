@@ -15,6 +15,7 @@
  */
 
 import type { OcurrenciaAgenda } from "./cultura/agenda";
+import { esTaller } from "./cultura/talleres.ts";
 import { diaLocal, soloDia } from "./fechas.ts";
 import type { Idioma } from "./i18n/config";
 import { rutas } from "./rutas.ts";
@@ -173,7 +174,7 @@ const costoTexto = (c?: Costo) => (c ? (c.modalidad === "gratis" ? "gratis" : c.
 const unir = (partes: (string | null | undefined | false)[]) => partes.filter(Boolean).join(" · ");
 
 /** Clases o talleres que se repiten (la mayoría de la agenda): son para vecinos, no paseos. */
-export const esTaller = (o: Pick<OcurrenciaAgenda, "titulo" | "resumen">) => /(^|[^a-z0-9áéíóúñü])(taller(es)?|clases?|cursos?)($|[^a-z0-9áéíóúñü])/i.test(`${o.titulo} ${o.resumen ?? ""}`);
+export { esTaller };
 
 /** ¿Un lugar donde se come? (por su tipo o su nombre: bar, peña, mercado, restaurante, confitería…). */
 export const esParaComer = (texto: string) =>
