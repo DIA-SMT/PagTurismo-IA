@@ -11,6 +11,7 @@ import {
   opcionesConFechas, semanasDelMes, sumarMeses, type FiltrosAgenda, type OcurrenciaAgenda,
 } from "@/lib/cultura/agenda";
 import { formatear } from "@/lib/i18n/definir";
+import { GrillaEventos } from "@/components/cultura/Agenda";
 import { LOCALE } from "@/lib/i18n/config";
 import { aInstante, diaLocal, formatearOcurrencia, partesDeFecha, soloDia, type OcurrenciaDeEvento } from "@/lib/fechas";
 import type { CategoriaAgenda } from "@/lib/tipos";
@@ -25,21 +26,33 @@ const ESTADO: Record<OcurrenciaDeEvento["estado"], "ok" | "medio" | "aviso" | "m
   cancelado: "mal",
 };
 
-type Vista = "lista" | "calendario";
+type Vista = "lista" | "tarjetas" | "calendario";
+const VISTAS: Vista[] = ["lista", "tarjetas", "calendario"];
+const ICONO_VISTA: Record<Vista, string> = { lista: "lista", tarjetas: "tablero", calendario: "calendario" };
+const POR_PAGINA_TARJETAS = 24;
+
+/** Día local `AAAA-MM-DD` más `n` días. */
+const moverDia = (dia: string, n: number) => {
+  const [a, m, d] = dia.split("-").map(Number);
+  return new Date(Date.UTC(a, m - 1, d) + n * 86_400_000).toISOString().slice(0, 10);
+};
 
 /**
  * Agenda cultural. El servidor entrega las ocurrencias vigentes; el navegador filtra con su
  * propio reloj (siempre en hora de Tucumán) para que «Hoy» no quede desactualizado. Los filtros
  * y la vista quedan en la URL, así una búsqueda se comparte y se recupera al volver de una ficha.
  */
-export function AgendaFiltrable({ ocurrencias, categorias, ahoraServidor }: {
+export function AgendaFiltrable({ ocurrencias, categorias, populares = [], ahoraServidor }: {
+  /** Categorías con más actividades por venir: atajos arriba del buscador. */
+  populares?: { id: string; eventos: number }[];
   ocurrencias: OcurrenciaAgenda[];
   categorias: CategoriaAgenda[];
   ahoraServidor: number;
 }) {
   const params = useSearchParams();
   const [f, setF] = useState<FiltrosAgenda>(() => leerFiltrosAgenda(params));
-  const [vista, setVista] = useState<Vista>(params.get("vista") === "calendario" ? "calendario" : "lista");
+  const [vista, setVista] = useState<Vista>(() => (VISTAS as string[]).includes(params.get("vista") ?? "") ? (params.get("vista") as Vista) : "lista");
+  const [limiteTarjetas, setLimiteTarjetas] = useState(POR_PAGINA_TARJETAS);
   const [ahora, setAhora] = useState(ahoraServidor);
   const hoy = diaLocal(ahora);
   const [mes, setMes] = useState(() => (esMes(params.get("mes")) ? params.get("mes")! : mesDe(diaLocal(ahoraServidor))));
@@ -53,7 +66,7 @@ export function AgendaFiltrable({ ocurrencias, categorias, ahoraServidor }: {
 
   // Los filtros a la URL, sin recargar ni sumar entradas al historial.
   useEffect(() => {
-    const s = filtrosAUrl(f, vista === "calendario" ? { vista, mes } : {});
+    const s = filtrosAUrl(f, vista === "calendario" ? { vista, mes } : vista === "tarjetas" ? { vista } : {});
     window.history.replaceState(null, "", `${window.location.pathname}${s ? `?${s}` : ""}`);
   }, [f, vista, mes]);
 
@@ -125,20 +138,49 @@ export function AgendaFiltrable({ ocurrencias, categorias, ahoraServidor }: {
           ))}
         </div>
         <div className="segmentado agenda-barra__vista" role="radiogroup" aria-label={tc.vista.etiqueta}>
-          {(["lista", "calendario"] as const).map((v) => (
+          {VISTAS.map((v) => (
             <label key={v}>
               <input type="radio" name={`${id}-vista`} value={v} checked={vista === v} onChange={() => setVista(v)} />
-              <span><Icono nombre={v === "lista" ? "lista" : "calendario"} tamano={16} /> {tc.vista[v]}</span>
+              <span><Icono nombre={ICONO_VISTA[v]} tamano={16} /> {tc.vista[v]}</span>
             </label>
           ))}
         </div>
       </div>
 
+      {populares.length > 0 && (
+        <ul className="agenda-rapidas" aria-label={tc.categorias.rapidas}>
+          {populares.map((p) => {
+            const k = nombreRubro.get(p.id);
+            if (!k) return null;
+            const activa = f.rubro === p.id;
+            return (
+              <li key={p.id}>
+                <button type="button" className={`tono tono--${k.tono}`} aria-pressed={activa}
+                  onClick={() => cambiar({ rubro: activa ? "" : p.id })}>
+                  {k.titulo} · {p.eventos}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
       {f.cuando === "fecha" && (
         <div className="filtros__campo agenda-filtrable__fecha">
           <label htmlFor={`${id}-fecha`}>{t.filtro.campoFecha}</label>
-          <input id={`${id}-fecha`} type="date" value={soloDia(f.fecha) ? f.fecha : hoy} min={hoy}
-            onChange={(e) => { cambiar({ fecha: e.target.value }); if (soloDia(e.target.value)) setMes(mesDe(e.target.value)); }} />
+          <div className="agenda-dia-nav">
+            <button type="button" className="boton-redondo" aria-label={tc.dia.anterior}
+              disabled={!soloDia(f.fecha) || f.fecha <= hoy}
+              onClick={() => { const d = moverDia(f.fecha, -1); cambiar({ fecha: d }); setMes(mesDe(d)); }}>
+              <Icono nombre="flecha-izq" tamano={18} />
+            </button>
+            <input id={`${id}-fecha`} type="date" value={soloDia(f.fecha) ? f.fecha : hoy} min={hoy}
+              onChange={(e) => { cambiar({ fecha: e.target.value }); if (soloDia(e.target.value)) setMes(mesDe(e.target.value)); }} />
+            <button type="button" className="boton-redondo" aria-label={tc.dia.siguiente}
+              onClick={() => { const d = moverDia(soloDia(f.fecha) ? f.fecha : hoy, 1); cambiar({ fecha: d }); setMes(mesDe(d)); }}>
+              <Icono nombre="flecha" tamano={18} />
+            </button>
+          </div>
         </div>
       )}
 
@@ -174,7 +216,18 @@ export function AgendaFiltrable({ ocurrencias, categorias, ahoraServidor }: {
         )}
       </p>
 
-      {lista.length > 0 ? (
+      {lista.length > 0 && vista === "tarjetas" ? (
+        <>
+          <GrillaEventos ocurrencias={lista.slice(0, limiteTarjetas)} categorias={categorias} titulo="h2" />
+          {lista.length > limiteTarjetas && (
+            <div className="vacio__acciones" style={{ justifyContent: "center", marginTop: "var(--sp-5)" }}>
+              <button type="button" className="boton boton--claro" onClick={() => setLimiteTarjetas((n) => n + POR_PAGINA_TARJETAS)}>
+                {t.vacio.verTodas} ({lista.length - limiteTarjetas})
+              </button>
+            </div>
+          )}
+        </>
+      ) : lista.length > 0 ? (
         <ul className="agenda-lista">
           {lista.map((o) => {
             const { dia, mes: m } = partesDeFecha(o.inicio, idioma);

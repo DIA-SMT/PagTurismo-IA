@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-import { AgendaFiltrable, type OcurrenciaAgenda } from "@/components/AgendaFiltrable";
+import { AgendaFiltrable } from "@/components/AgendaFiltrable";
+import { GrillaEventos, SemanaAgenda } from "@/components/cultura/Agenda";
 import { Vinculo as Link } from "@/components/i18n/Idioma";
 import { Icono } from "@/components/Iconos";
 import { EncabezadoPagina, Marca } from "@/components/Ui";
-import { contenido, lugaresPorSlug, agenda } from "@/lib/datos";
-import { fechaAnual, mesCorto } from "@/lib/fechas";
+import { contenido, ocurrenciasDeAgenda } from "@/lib/datos";
+import { categoriasPopulares, proximosDias, proximosEventos } from "@/lib/cultura/agenda";
+import { diaLocal, fechaAnual, mesCorto } from "@/lib/fechas";
 import { alternativas, textosActuales } from "@/lib/i18n/servidor";
 import { rutas } from "@/lib/rutas";
 
@@ -19,18 +21,9 @@ export default async function Agenda() {
   const [c, textos] = await Promise.all([contenido(), textosActuales()]);
   const t = textos.agenda;
   const ahora = Date.now();
-  const lugares = lugaresPorSlug(c);
-  const ocurrencias: OcurrenciaAgenda[] = agenda(c, ahora).map((o) => {
-    const lugar = o.datos.lugar ? lugares.get(o.datos.lugar) : undefined;
-    return {
-      evento: o.evento, inicio: o.inicio, fin: o.fin, estado: o.estado, sede: o.sede ?? o.datos.sede, nota: o.nota, enCurso: o.enCurso,
-      titulo: o.datos.titulo, url: rutas.evento(o.evento), resumen: o.datos.resumen,
-      lugar: lugar?.titulo ?? o.datos.sede, lugarSlug: lugar?.slug,
-      rubros: o.datos.rubros, gratis: o.datos.costo.modalidad === "gratis", destacado: o.datos.destacado,
-      fueraDeLaCiudad: !!o.datos.fueraDeLaCiudad,
-      imagen: o.datos.imagen ? { src: o.datos.imagen.src, alt: "" } : undefined,
-    };
-  });
+  const ocurrencias = ocurrenciasDeAgenda(c, ahora);
+  const destacados = proximosEventos(ocurrencias.filter((o) => o.destacado), ahora, 3);
+  const populares = categoriasPopulares(ocurrencias, ahora, 8);
 
   // Calendario anual: fechas que se repiten. No son eventos confirmados.
   const calendario = c.eventos
@@ -46,9 +39,16 @@ export default async function Agenda() {
         bajada={t.encabezado.bajada}
       />
 
-      <div className="contenedor bloque-interno">
+      <div className="contenedor bloque-interno" data-modulo="cultura">
+        {destacados.length > 0 && (
+          <section className="agenda-destacados" aria-labelledby="destacados-agenda">
+            <h2 id="destacados-agenda">{textos.cultura.portada.destacados}</h2>
+            <GrillaEventos ocurrencias={destacados} categorias={c.categoriasAgenda} />
+          </section>
+        )}
+        {ocurrencias.length > 0 && <SemanaAgenda dias={proximosDias(ocurrencias, diaLocal(ahora))} categorias={c.categoriasAgenda} />}
         <Suspense fallback={null}>
-          <AgendaFiltrable ocurrencias={ocurrencias} categorias={c.categoriasAgenda} ahoraServidor={ahora} />
+          <AgendaFiltrable ocurrencias={ocurrencias} categorias={c.categoriasAgenda} populares={populares} ahoraServidor={ahora} />
         </Suspense>
 
         <section className="grupo calendario-anual" id="calendario" aria-labelledby="calendario-titulo">

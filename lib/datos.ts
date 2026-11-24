@@ -26,6 +26,7 @@ import {
   normalizarDestacado, normalizarEscapada, normalizarEvento, normalizarExperiencia, normalizarGuia,
   normalizarLugar, normalizarPlato, normalizarRecorrido,
 } from "./normalizar";
+import type { OcurrenciaAgenda } from "./cultura/agenda";
 import { rutas } from "./rutas";
 import type {
   Categoria, CategoriaAgenda, Destacado, Escapada, Etiqueta, Evento, Experiencia, Guia, ItemCatalogo, Lugar, Plato, Recorrido, Sitio,
@@ -238,3 +239,22 @@ export function catalogo(c: Contenido): ItemCatalogo[] {
 }
 
 export const categoriaPorId = (c: Contenido, id: string) => c.categorias.find((k) => k.id === id);
+
+/**
+ * Las fechas vigentes de la agenda listas para filtrar y mostrar (lib/cultura/agenda.ts). Las usan
+ * la portada y /agenda: viajan al navegador, así que solo lo necesario.
+ */
+export function ocurrenciasDeAgenda(c: Contenido, ahora = Date.now()): OcurrenciaAgenda[] {
+  const lugares = lugaresPorSlug(c);
+  return agenda(c, ahora).map((o) => {
+    const lugar = o.datos.lugar ? lugares.get(o.datos.lugar) : undefined;
+    return {
+      evento: o.evento, inicio: o.inicio, fin: o.fin, estado: o.estado, sede: o.sede ?? o.datos.sede, nota: o.nota, enCurso: o.enCurso,
+      titulo: o.datos.titulo, url: rutas.evento(o.evento), resumen: o.datos.resumen,
+      lugar: lugar?.titulo ?? o.datos.sede, lugarSlug: lugar?.slug,
+      rubros: o.datos.rubros, gratis: o.datos.costo.modalidad === "gratis", destacado: o.datos.destacado,
+      fueraDeLaCiudad: !!o.datos.fueraDeLaCiudad,
+      imagen: o.datos.imagen ? { src: o.datos.imagen.src, alt: "" } : undefined,
+    };
+  });
+}

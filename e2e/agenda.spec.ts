@@ -13,22 +13,53 @@ test.describe("Agenda cultural", () => {
     await sinDesbordeHorizontal(page);
   });
 
+
+  test("la portada da protagonismo a la agenda: tarjetas, semana y categorías @celular", async ({ page }) => {
+    await page.goto("/");
+    const seccion = page.locator("#agenda");
+    await expect(seccion.getByRole("heading", { name: "Qué pasa en la ciudad" })).toBeVisible();
+    await expect(seccion.locator(".tarjeta-evento").first()).toBeVisible();
+    await expect(seccion.locator(".semana-agenda__dia")).toHaveCount(7);
+    await expect(seccion.locator(".categoria-agenda", { hasText: "Música" })).toBeVisible();
+    await sinDesbordeHorizontal(page);
+    await seccion.locator(".semana-agenda__dia").nth(1).click();
+    await expect(page).toHaveURL(/\/agenda\?cuando=fecha&fecha=\d{4}-\d{2}-\d{2}/);
+  });
+
+  test("en /agenda: destacados, atajos de categoría, vista de tarjetas y día siguiente", async ({ page }) => {
+    await page.goto("/agenda");
+    await expect(page.getByRole("heading", { name: "Para no perderse" })).toBeVisible();
+    await page.getByRole("button", { name: /^Ferias de artesanos · \d+/ }).click();
+    await expect(page).toHaveURL(/categoria=ferias-artesanos/);
+    await expect(page.getByText("Concierto de prueba E2E")).toHaveCount(1); // solo en los destacados
+    await page.getByRole("button", { name: /^Ferias de artesanos · \d+/ }).click();
+    await page.getByRole("radio", { name: "Tarjetas" }).check({ force: true });
+    await expect(page).toHaveURL(/vista=tarjetas/);
+    await expect(page.locator(".agenda-filtrable .tarjeta-evento").first()).toBeVisible();
+    await page.getByRole("radio", { name: "Elegir fecha" }).check({ force: true });
+    const fecha = page.locator('.agenda-filtrable__fecha input[type="date"]');
+    const antes = await fecha.inputValue();
+    await page.getByRole("button", { name: "Día siguiente" }).click();
+    await expect(fecha).not.toHaveValue(antes);
+  });
+
   test("busca sin tildes y filtra por categoría y gratuidad", async ({ page }) => {
     await page.goto("/agenda");
+    const lista = page.locator(".agenda-filtrable");
     await page.getByLabel("Buscar en la agenda").first().fill("concierto");
-    await expect(page.getByText("Feria de artesanos E2E")).toHaveCount(0);
-    await expect(page.getByText("Concierto de prueba E2E").first()).toBeVisible();
+    await expect(lista.getByText("Feria de artesanos E2E")).toHaveCount(0);
+    await expect(lista.getByText("Concierto de prueba E2E").first()).toBeVisible();
     await expect(page).toHaveURL(/q=concierto/);
 
     await page.getByLabel("Buscar en la agenda").first().fill("");
-    await page.getByLabel("Categoría").first().selectOption("ferias-artesanos");
-    await expect(page.getByText("Concierto de prueba E2E")).toHaveCount(0);
-    await expect(page.getByText("Feria de artesanos E2E").first()).toBeVisible();
+    await page.getByLabel("Categoría", { exact: true }).first().selectOption("ferias-artesanos");
+    await expect(lista.getByText("Concierto de prueba E2E")).toHaveCount(0);
+    await expect(lista.getByText("Feria de artesanos E2E").first()).toBeVisible();
 
-    await page.getByLabel("Categoría").first().selectOption("");
+    await page.getByLabel("Categoría", { exact: true }).first().selectOption("");
     await page.getByLabel("Solo gratis").first().check();
-    await expect(page.getByText("Feria de artesanos E2E")).toHaveCount(0);
-    await expect(page.getByText("Concierto de prueba E2E").first()).toBeVisible();
+    await expect(lista.getByText("Feria de artesanos E2E")).toHaveCount(0);
+    await expect(lista.getByText("Concierto de prueba E2E").first()).toBeVisible();
   });
 
   test("el calendario mensual cuenta las actividades del día y filtra al elegirlo", async ({ page }) => {

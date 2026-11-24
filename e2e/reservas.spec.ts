@@ -4,7 +4,7 @@
  */
 import { expect, test } from "@playwright/test";
 
-import { reservarPorApi, salidas, sinDesbordeHorizontal } from "./ayudas";
+import { CUENTAS, ingresar, reservarPorApi, salidas, sinDesbordeHorizontal } from "./ayudas";
 
 test.describe.configure({ mode: "serial" });
 
@@ -83,8 +83,18 @@ test.describe("Bus Turístico", () => {
   const enDosDiasOMas = (fecha: string) => fecha >= new Date(Date.now() + 2 * 86_400_000).toISOString().slice(0, 10);
 
   test("«Mi reserva» no deja cancelar a menos de 24 horas de la salida", async ({ page }) => {
-    const s = (await salidas(page.request)).find((x) => !enDosDiasOMas(x.departure_date) && x.remaining > 1)!;
-    const { cuerpo } = await reservarPorApi(page.request, { departureId: s.id, email: "tarde-e2e@ejemplo.test" });
+    // Una salida a menos de 24 horas: mañana, una hora antes que ahora (en hora de Tucumán).
+    const partes = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "America/Argentina/Tucuman", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" })
+      .formatToParts(new Date(Date.now() + 23 * 3_600_000)).map((p) => [p.type, p.value]));
+    await ingresar(page, CUENTAS.buses);
+    const alta = await page.request.post("/api/admin/tourist-departures", {
+      data: { circuitSlug: "historico-cultural", departureDate: `${partes.year}-${partes.month}-${partes.day}`, departureTime: `${partes.hour}:00`, capacity: 10 },
+    });
+    expect(alta.status(), await alta.text()).toBeLessThan(300);
+    const salida = (await alta.json()).data;
+    await page.context().clearCookies();
+
+    const { cuerpo } = await reservarPorApi(page.request, { departureId: salida.id, email: "tarde-e2e@ejemplo.test" });
     await page.goto(`/reserva/${cuerpo.data.booking.cancel_token}`);
     await expect(page.getByText("Persona de Prueba E2E")).toBeVisible();
     await expect(page.getByRole("button", { name: "Cancelar mi reserva" })).toHaveCount(0);

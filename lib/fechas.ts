@@ -213,6 +213,9 @@ export function formatearOcurrencia(o: Pick<Ocurrencia, "inicio" | "fin">, idiom
     const parte = (local: string, i: number) => (soloDia(local) ? dia.format(i) : `${dia.format(i)} · ${hora.format(i)}`);
     texto = `${parte(o.inicio, inicio)} – ${parte(finLocal, fin)}`;
   }
+  // Intl usa espacios especiales (fino U+2009, angosto U+202F) que cambian según la versión de ICU: el
+  // servidor (Node) y el navegador armaban textos distintos y React avisaba que no coincidían.
+  texto = texto.replace(/[\u00A0\u2009\u202F]/g, " ");
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
 

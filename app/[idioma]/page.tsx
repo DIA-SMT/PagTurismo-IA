@@ -10,7 +10,9 @@ import { Cabecera, Enlace, Marca } from "@/components/Ui";
 import { getClima } from "@/lib/clima";
 import { datosDelBusParaMigue } from "@/lib/buses/migue";
 import { BUS_TURISTICO, MAPA } from "@/lib/contenido";
-import { contenido, destacadosVigentes, agendaDestacada } from "@/lib/datos";
+import { contenido, destacadosVigentes, agendaDestacada, ocurrenciasDeAgenda } from "@/lib/datos";
+import { CategoriasAgenda, GrillaEventos, SemanaAgenda } from "@/components/cultura/Agenda";
+import { categoriasPopulares, proximosDias, proximosEventos } from "@/lib/cultura/agenda";
 import { diaLocal, formatearOcurrencia, nombreMes, partesDeFecha } from "@/lib/fechas";
 import { LOCALE } from "@/lib/i18n/config";
 import { formatear } from "@/lib/i18n/definir";
@@ -62,6 +64,10 @@ export default async function Portada() {
   const destacados = destacadosVigentes(c, ahora);
   const categorias = c.categorias;
   const agenda = agendaDestacada(c, ahora, 3);
+  const ocurrenciasAgenda = ocurrenciasDeAgenda(c, ahora);
+  const proximosAgenda = proximosEventos(ocurrenciasAgenda, ahora, 3);
+  const semanaAgenda = proximosDias(ocurrenciasAgenda, diaLocal(ahora));
+  const categoriasConFechas = categoriasPopulares(ocurrenciasAgenda, ahora, 6);
   const calendario = agenda.length ? [] : proximasFechasDelCalendario(c.eventos, ahora, 3);
   const recorridos = c.recorridos;
   const circuitosBus = recorridos.filter((r) => r.modalidad === "bus");
@@ -137,6 +143,71 @@ export default async function Portada() {
         </section>
       )}
 
+      {/* ---- Agenda cultural (con protagonismo: tarjetas, semana y categorías, como en Agenda Cultural) ---- */}
+      {proximosAgenda.length > 0 ? (
+        <section className="bloque contenedor agenda-portada" id="agenda" aria-labelledby="agenda-titulo" data-modulo="cultura">
+          <Cabecera id="agenda-titulo" kicker={textosPagina.cultura.portada.kicker} titulo={textosPagina.cultura.portada.titulo}
+            bajada={textosPagina.cultura.portada.bajada} enlace={{ texto: textosPagina.cultura.portada.verAgenda, url: "/agenda" }} />
+          <GrillaEventos ocurrencias={proximosAgenda} categorias={c.categoriasAgenda} />
+          <SemanaAgenda dias={semanaAgenda} categorias={c.categoriasAgenda} />
+          {categoriasConFechas.length > 0 && (
+            <div className="agenda-portada__categorias">
+              <h3>{textosPagina.cultura.categorias.titulo}</h3>
+              <CategoriasAgenda populares={categoriasConFechas} categorias={c.categoriasAgenda} />
+            </div>
+          )}
+        </section>
+      ) : (
+        <section className="bloque contenedor" id="agenda" aria-labelledby="agenda-titulo">
+          <Cabecera id="agenda-titulo" kicker={tc.nav.agenda} titulo={agenda.length ? t.agenda.tituloSemana : t.agenda.tituloCalendario}
+            bajada={agenda.length ? t.agenda.bajadaSemana : t.agenda.bajadaCalendario}
+            enlace={{ texto: t.agenda.verCompleta, url: "/agenda" }} />
+          <ul className="agenda">
+            {agenda.map((o) => {
+              const { dia, mes } = partesDeFecha(o.inicio, c.idioma);
+              return (
+                <li key={`${o.evento}-${o.inicio}`}>
+                  <Link className="evento evento--enlace" href={rutas.evento(o.evento)}>
+                    <div className="evento__fecha" aria-hidden="true">
+                      <span className="evento__mes">{mes}</span>
+                      <span className="evento__dia">{dia}</span>
+                    </div>
+                    <h3>{o.datos.titulo}</h3>
+                    {o.enCurso && <Marca tipo="exito">{t.agenda.enCurso}</Marca>}
+                    <p className="evento__cuando">{formatearOcurrencia(o, c.idioma)}</p>
+                    {(o.sede || o.datos.sede) && <p className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{o.sede || o.datos.sede}</p>}
+                  </Link>
+                </li>
+              );
+            })}
+            {calendario.map((e) => {
+              const r = e.recurrente!;
+              const mes = nombreMes(r.mes, c.idioma);
+              return (
+                <li key={e.slug}>
+                  <Link className="evento evento--enlace" href={rutas.evento(e.slug)}>
+                    <div className={`evento__fecha${r.dia ? "" : " evento__fecha--mes"}`} aria-hidden="true">
+                      <span className="evento__mes">{mes.slice(0, 3).toUpperCase()}</span>
+                      {r.dia && <span className="evento__dia">{r.dia}</span>}
+                    </div>
+                    <h3>
+                      <span className="visualmente-oculto">
+                        {r.dia ? formatear(t.agenda.cadaDia, { dia: r.dia, mes }) : formatear(t.agenda.cadaMes, { mes })}
+                      </span>
+                      {e.titulo}
+                    </h3>
+                    {e.fueraDeLaCiudad && <Marca tipo="alerta">{tc.ui.fueraDeLaCiudad}</Marca>}
+                    <p className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{e.fueraDeLaCiudad ? e.localidad || e.sede : e.sede}</p>
+                    <p>{e.resumen}</p>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+  
+      )}
+
       {/* ---- Qué hacer ---- */}
       <section className="bloque contenedor" id="que-hacer" aria-labelledby="que-hacer-titulo">
         <Cabecera id="que-hacer-titulo" kicker={tc.nav.queHacer} titulo={t.temas.titulo} bajada={t.temas.bajada}
@@ -154,55 +225,6 @@ export default async function Portada() {
             </li>
           ))}
         </Carrusel>
-      </section>
-
-      {/* ---- Agenda ---- */}
-      <section className="bloque contenedor" id="agenda" aria-labelledby="agenda-titulo">
-        <Cabecera id="agenda-titulo" kicker={tc.nav.agenda} titulo={agenda.length ? t.agenda.tituloSemana : t.agenda.tituloCalendario}
-          bajada={agenda.length ? t.agenda.bajadaSemana : t.agenda.bajadaCalendario}
-          enlace={{ texto: t.agenda.verCompleta, url: "/agenda" }} />
-        <ul className="agenda">
-          {agenda.map((o) => {
-            const { dia, mes } = partesDeFecha(o.inicio, c.idioma);
-            return (
-              <li key={`${o.evento}-${o.inicio}`}>
-                <Link className="evento evento--enlace" href={rutas.evento(o.evento)}>
-                  <div className="evento__fecha" aria-hidden="true">
-                    <span className="evento__mes">{mes}</span>
-                    <span className="evento__dia">{dia}</span>
-                  </div>
-                  <h3>{o.datos.titulo}</h3>
-                  {o.enCurso && <Marca tipo="exito">{t.agenda.enCurso}</Marca>}
-                  <p className="evento__cuando">{formatearOcurrencia(o, c.idioma)}</p>
-                  {(o.sede || o.datos.sede) && <p className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{o.sede || o.datos.sede}</p>}
-                </Link>
-              </li>
-            );
-          })}
-          {calendario.map((e) => {
-            const r = e.recurrente!;
-            const mes = nombreMes(r.mes, c.idioma);
-            return (
-              <li key={e.slug}>
-                <Link className="evento evento--enlace" href={rutas.evento(e.slug)}>
-                  <div className={`evento__fecha${r.dia ? "" : " evento__fecha--mes"}`} aria-hidden="true">
-                    <span className="evento__mes">{mes.slice(0, 3).toUpperCase()}</span>
-                    {r.dia && <span className="evento__dia">{r.dia}</span>}
-                  </div>
-                  <h3>
-                    <span className="visualmente-oculto">
-                      {r.dia ? formatear(t.agenda.cadaDia, { dia: r.dia, mes }) : formatear(t.agenda.cadaMes, { mes })}
-                    </span>
-                    {e.titulo}
-                  </h3>
-                  {e.fueraDeLaCiudad && <Marca tipo="alerta">{tc.ui.fueraDeLaCiudad}</Marca>}
-                  <p className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{e.fueraDeLaCiudad ? e.localidad || e.sede : e.sede}</p>
-                  <p>{e.resumen}</p>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
       </section>
 
       {/* ---- Recorridos ---- */}

@@ -127,3 +127,30 @@ describe("exportación al calendario", () => {
     assert.equal(lineas.map((l, i) => (i ? l.slice(1) : l)).join(""), larga);
   });
 });
+
+describe("portada de la agenda", () => {
+  // Importado acá para no tocar los de arriba.
+  it("la semana cuenta los próximos 7 días, aunque cambie el mes", async () => {
+    const { proximosDias } = await import("../lib/cultura/agenda.ts");
+    const semana = proximosDias(LISTA, "2026-11-28");
+    assert.equal(semana.length, 7);
+    assert.equal(semana[0].dia, "2026-11-28");
+    assert.equal(semana[6].dia, "2026-12-04");
+    assert.ok(semana.every((d) => d.eventos >= 1), "la muestra cubre toda la semana");
+  });
+
+  it("las categorías populares no cuentan lo cancelado ni lo pasado", async () => {
+    const { categoriasPopulares } = await import("../lib/cultura/agenda.ts");
+    const populares = categoriasPopulares(LISTA, AHORA);
+    assert.deepEqual(populares.find((p) => p.id === "musica"), { id: "musica", eventos: 1 });
+    assert.ok(!populares.some((p) => p.eventos === 0));
+  });
+
+  it("los próximos eventos dan una fecha por evento, destacados primero, sin cancelados", async () => {
+    const { proximosEventos } = await import("../lib/cultura/agenda.ts");
+    const r = proximosEventos(LISTA, AHORA, 4);
+    assert.equal(r[0].evento, "feria");
+    assert.equal(new Set(r.map((o) => o.evento)).size, r.length);
+    assert.ok(!r.some((o) => o.estado === "cancelado" || o.evento === "pasado"));
+  });
+});

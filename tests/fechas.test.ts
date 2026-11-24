@@ -132,3 +132,13 @@ describe("formato", () => {
     assert.equal(mesCorto(9, "en"), "SEP");
   });
 });
+
+describe("formato igual en el servidor y en el navegador", () => {
+  it("no usa espacios Unicode que cambian según la versión de ICU", async () => {
+    const { formatearOcurrencia } = await import("../lib/fechas.ts");
+    for (const idioma of ["es", "en", "pt"] as const) {
+      const t = formatearOcurrencia({ inicio: "2026-11-25T21:00", fin: "2026-11-25T23:00" }, idioma);
+      assert.doesNotMatch(t, /[   ]/, idioma);
+    }
+  });
+});

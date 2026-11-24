@@ -189,3 +189,39 @@ export function contarPorDia(ocurrencias: OcurrenciaAgenda[], mes: string): Map<
 export function intensidad(eventos: number): 0 | 1 | 2 | 3 {
   return eventos <= 0 ? 0 : eventos <= 2 ? 1 : eventos <= 5 ? 2 : 3;
 }
+
+/* ---- Portada y cabecera de la agenda (de Agenda Cultural: semana, categorías populares, destacados) ---- */
+
+export type DiaSemana = { dia: string; eventos: number; rubros: string[] };
+
+/** Los próximos `n` días desde `hoy` con cuántas actividades distintas tiene cada uno. */
+export function proximosDias(ocurrencias: OcurrenciaAgenda[], hoy: string, n = 7): DiaSemana[] {
+  const dias = Array.from({ length: n }, (_, i) => sumarDias(hoy, i));
+  const conteos = new Map<string, DiaCalendario>();
+  for (const mes of new Set(dias.map(mesDe))) for (const [d, v] of contarPorDia(ocurrencias, mes)) conteos.set(d, v);
+  return dias.map((dia) => ({ dia, eventos: conteos.get(dia)?.eventos ?? 0, rubros: conteos.get(dia)?.rubros ?? [] }));
+}
+
+/**
+ * Las categorías con más eventos por venir (eventos distintos, sin contar fechas canceladas). Así
+ * ningún acceso de la portada lleva a una agenda vacía.
+ */
+export function categoriasPopulares(ocurrencias: OcurrenciaAgenda[], ahora: number, max = 6): { id: string; eventos: number }[] {
+  const porRubro = new Map<string, Set<string>>();
+  for (const o of ocurrencias) {
+    if (o.estado === "cancelado" || finDeOcurrencia(o) < ahora) continue;
+    for (const r of o.rubros) (porRubro.get(r) ?? porRubro.set(r, new Set()).get(r)!).add(o.evento);
+  }
+  return [...porRubro].map(([id, eventos]) => ({ id, eventos: eventos.size }))
+    .sort((a, b) => b.eventos - a.eventos || a.id.localeCompare(b.id)).slice(0, max);
+}
+
+/** Una fecha por evento, la próxima confirmada; los destacados primero y después por cercanía. */
+export function proximosEventos(ocurrencias: OcurrenciaAgenda[], ahora: number, max = 3): OcurrenciaAgenda[] {
+  const vistos = new Set<string>();
+  return ocurrencias
+    .filter((o) => (o.estado === "confirmado" || o.estado === "reprogramado") && finDeOcurrencia(o) >= ahora)
+    .sort((a, b) => Number(b.destacado) - Number(a.destacado) || aInstante(a.inicio) - aInstante(b.inicio))
+    .filter((o) => !vistos.has(o.evento) && !!vistos.add(o.evento))
+    .slice(0, max);
+}

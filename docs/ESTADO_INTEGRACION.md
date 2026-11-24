@@ -17,7 +17,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | E — Buses | 🟡 | Reserva real contra la función atómica; panel con permisos | `tests/buses-base.test.ts`, `tests/buses-reglas.test.ts`; flujo completo en navegador (local). Falta: staging contra copia de la base `turismo`, SMTP real |
 | F — Panel unificado | ✅ | Tablero con datos reales; usuarios y permisos | Tablero, `/admin/usuarios`, menú por permisos (verificado con 3 roles) |
 | G — Migue | ✅ | Un widget; contenido con agenda y cupos reales | `tests/migue-bus.test.ts`; `/api/migue/contenido` sin datos personales (verificado) |
-| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 138/138 tests unitarios, **31/31 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
+| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 142/142 tests unitarios, **34/34 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
 | I — Despliegue | 🟡 | Guía de despliegue, rollback y verificación | `deploy/README.md`, `deploy/sql/`, `.env.example`. Falta: ensayo en staging |
 
 ## Qué está implementado
@@ -36,7 +36,9 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 - Eventos y lugares ampliados (categorías de la agenda, destacado, galería, lugar sin ficha, entradas,
   capacidad, accesibilidad, requisitos, contacto, legado; tipo de espacio, servicios y redes).
 - `/agenda`: búsqueda, categoría, lugar, gratis, hoy / fin de semana / fecha, **calendario mensual** con
-  intensidad por día, destacados primero. `/agenda/[slug]`: compartir, todas las fechas en `.ics`, Google
+  intensidad por día, destacados primero. Además (de la portada de Agenda Cultural): «Para no perderse» con los
+  destacados, «La semana en la agenda», atajos por categoría, vista de **tarjetas con foto** y día anterior/siguiente.
+- Portada: la agenda sube antes de «Qué hacer» con tarjetas, la semana y «Explorá por categoría». `/agenda/[slug]`: compartir, todas las fechas en `.ics`, Google
   Calendar, galería y mapa OpenStreetMap. `/lugares` nuevo con filtro por tipo.
 - `npm run cultura` (espacios, base de la Agenda, WordPress viejo) con legado, fusión sin pisar lo editado,
   fechas en hora de Tucumán y categorías nuevas. El mapeo EventON de la Agenda se reutiliza tal cual.
@@ -104,7 +106,6 @@ compatibles de la estética municipal (sin Plus Jakarta Sans ni marca CIMBA).
 | Bus Educativo: `blockedUntil` por defecto ya vencido y carga manual con adjunto inexistente | Original del bus; no rompe nada, pendiente de limpiar |
 | Webhook de WhatsApp sin firma si falta `WHATSAPP_APP_SECRET`; `curl` a la agenda externa; `bot_chat_messages` sin retención | En el repo del bot (fuera del portal). Informado |
 | El portal carga todas las fichas de `contenidos` por pedido (ahora ~420 con la agenda) | Medido en local sin problema; vigilar al crecer (filtrar eventos viejos en SQL si hiciera falta) |
-| Un aviso de hidratación de React apareció una vez en una corrida completa de Playwright (en modo desarrollo) | No se reproduce revisando cada página por separado; React lo corrige solo en el navegador. Vigilar |
 | Aviso de build: `lib/buses/archivos.ts` hace que el rastreo de archivos incluya todo el proyecto | Solo agranda el bundle del servidor; no afecta la ejecución |
 | Índice antiduplicado: si la base real ya tiene duplicados no se crea | La API igual frena duplicados nuevos; revisar los existentes |
 

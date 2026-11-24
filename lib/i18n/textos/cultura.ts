@@ -23,6 +23,7 @@ export const cultura = definir({
     vista: {
       etiqueta: "Ver como",
       lista: "Lista",
+      tarjetas: "Tarjetas",
       calendario: "Calendario",
     },
     mes: {
@@ -39,6 +40,30 @@ export const cultura = definir({
     destacado: "Destacado",
     gratis: "Gratis",
     fechasAnterioresMas: "Y {n} fechas anteriores más.",
+    portada: {
+      kicker: "Agenda cultural",
+      titulo: "Qué pasa en la ciudad",
+      bajada: "Música, teatro, ferias, talleres y muestras en los espacios de San Miguel de Tucumán.",
+      verAgenda: "Ver la agenda completa",
+      destacados: "Para no perderse",
+    },
+    semana: {
+      titulo: "La semana en la agenda",
+      verCalendario: "Ver el calendario del mes",
+      hoy: "Hoy",
+      manana: "Mañana",
+      sinActividades: "Sin actividades",
+      unaActividad: "1 actividad",
+      actividades: "{n} actividades",
+    },
+    categorias: {
+      titulo: "Explorá por categoría",
+      kicker: "Encontrá tu plan",
+      unaPorVenir: "1 actividad por venir",
+      porVenir: "{n} actividades por venir",
+      rapidas: "Categorías con más actividades",
+    },
+    dia: { anterior: "Día anterior", siguiente: "Día siguiente" },
     compartir: {
       titulo: "Compartir",
       whatsapp: "Enviar por WhatsApp",
@@ -86,6 +111,7 @@ export const cultura = definir({
     vista: {
       etiqueta: "View as",
       lista: "List",
+      tarjetas: "Cards",
       calendario: "Calendar",
     },
     mes: {
@@ -102,6 +128,30 @@ export const cultura = definir({
     destacado: "Featured",
     gratis: "Free",
     fechasAnterioresMas: "And {n} more past dates.",
+    portada: {
+      kicker: "Arts & culture",
+      titulo: "What's on in the city",
+      bajada: "Music, theater, fairs, workshops and exhibitions at San Miguel de Tucumán's venues.",
+      verAgenda: "See all events",
+      destacados: "Don't miss",
+    },
+    semana: {
+      titulo: "The week ahead",
+      verCalendario: "See the monthly calendar",
+      hoy: "Today",
+      manana: "Tomorrow",
+      sinActividades: "No activities",
+      unaActividad: "1 activity",
+      actividades: "{n} activities",
+    },
+    categorias: {
+      titulo: "Browse by category",
+      kicker: "Find your plan",
+      unaPorVenir: "1 upcoming activity",
+      porVenir: "{n} upcoming activities",
+      rapidas: "Categories with the most activities",
+    },
+    dia: { anterior: "Previous day", siguiente: "Next day" },
     compartir: {
       titulo: "Share",
       whatsapp: "Send via WhatsApp",
@@ -149,6 +199,7 @@ export const cultura = definir({
     vista: {
       etiqueta: "Ver como",
       lista: "Lista",
+      tarjetas: "Cartões",
       calendario: "Calendário",
     },
     mes: {
@@ -165,6 +216,30 @@ export const cultura = definir({
     destacado: "Destaque",
     gratis: "Grátis",
     fechasAnterioresMas: "E mais {n} datas anteriores.",
+    portada: {
+      kicker: "Agenda cultural",
+      titulo: "O que acontece na cidade",
+      bajada: "Música, teatro, feiras, oficinas e exposições nos espaços de San Miguel de Tucumán.",
+      verAgenda: "Ver a agenda completa",
+      destacados: "Para não perder",
+    },
+    semana: {
+      titulo: "A semana na agenda",
+      verCalendario: "Ver o calendário do mês",
+      hoy: "Hoje",
+      manana: "Amanhã",
+      sinActividades: "Sem atividades",
+      unaActividad: "1 atividade",
+      actividades: "{n} atividades",
+    },
+    categorias: {
+      titulo: "Explore por categoria",
+      kicker: "Encontre seu programa",
+      unaPorVenir: "1 atividade programada",
+      porVenir: "{n} atividades programadas",
+      rapidas: "Categorias com mais atividades",
+    },
+    dia: { anterior: "Dia anterior", siguiente: "Próximo dia" },
     compartir: {
       titulo: "Compartilhar",
       whatsapp: "Enviar pelo WhatsApp",
