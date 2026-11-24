@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import {
-  armarCatalogo, armarPrompt, esTaller, leerPedido, pedirAlModelo, planSinIA, sinIds, validarRespuesta,
+  armarCatalogo, armarPrompt, esParaComer, esTaller, leerPedido, nombraElPlato, pedirAlModelo, planSinIA, sinIds, validarRespuesta,
   type FuentesCatalogo, type PedidoPlan,
 } from "../lib/planificador.ts";
 import type { OcurrenciaAgenda } from "../lib/cultura/agenda.ts";
@@ -19,11 +19,12 @@ const ocurrencia = (o: Partial<OcurrenciaAgenda> & Pick<OcurrenciaAgenda, "event
 
 const fuentes: FuentesCatalogo = {
   lugares: [
-    { ...comun, slug: "casa-historica", titulo: "Casa Histórica", resumen: "Donde se declaró la Independencia.", categorias: ["historia-y-patrimonio"], clase: "museo", costo, imperdible: true },
+    { ...comun, slug: "casa-historica", titulo: "Casa Histórica", resumen: "Donde se declaró la Independencia.", categorias: ["historia-y-patrimonio"], clase: "museo", costo, imperdible: true, zona: "Centro" },
+    { ...comun, slug: "ex-mercado", titulo: "Ex Mercado de Abasto", resumen: "Edificio histórico.", categorias: ["historia-y-patrimonio"], clase: "edificio", costo },
     { ...comun, slug: "parque-9", titulo: "Parque 9 de Julio", resumen: "El gran parque.", categorias: ["parques-y-aire-libre"], clase: "parque", costo },
   ] as never,
   experiencias: [
-    { ...comun, slug: "a-pie", titulo: "Circuito a pie", resumen: "Casco histórico.", categorias: ["historia-y-patrimonio"], modalidad: "a-pie", guiada: true, lugares: [], costo, accion: {} as never, salidas: [] },
+    { ...comun, slug: "a-pie", titulo: "Circuito a pie", resumen: "Casco histórico.", categorias: ["historia-y-patrimonio"], modalidad: "a-pie", guiada: true, lugares: [], costo, accion: {} as never, salidas: [], puntoEncuentro: "Plaza Independencia" },
   ] as never,
   recorridos: [],
   platos: [{ slug: "empanada", estado: "publicado", titulo: "Empanada tucumana", detalle: "Cortada a cuchillo.", imagen: {} as never, tono: 0, orden: 1 }],
@@ -33,6 +34,7 @@ const fuentes: FuentesCatalogo = {
     ocurrencia({ evento: "tejido", titulo: "Tejido", resumen: "Talleres Culturales Anuales", inicio: "2026-11-24T09:00" }),
     ocurrencia({ evento: "lejos", titulo: "Concierto lejano", inicio: "2026-12-20T21:00", rubros: ["musica"] }),
     ocurrencia({ evento: "cancelado", titulo: "Obra cancelada", inicio: "2026-11-25T20:00", estado: "cancelado" }),
+    ocurrencia({ evento: "feria", titulo: "Feria de sabores", inicio: "2026-11-25T12:30", rubros: ["ferias-gastronomicas"], sede: "Plaza Urquiza" }),
   ],
   salidas: [{ circuito: "historico", titulo: "Histórico", fecha: "2026-11-25", hora: "10:00:00", cupo: 20, reservadas: 5, punto: "Plaza Independencia" }],
   circuitos: new Map([["historico", "Histórico Cultural"]]),
@@ -126,6 +128,31 @@ describe("Planificador: la respuesta de la IA", () => {
     assert.equal(plan.dias[1].fecha, "2026-11-25");
   });
 
+  it("una comida con un sabor lleva el título del modelo solo si nombra el plato", () => {
+    assert.ok(nombraElPlato("Almuerzo de empanadas por el Parque 9 de Julio", "Empanada tucumana"));
+    assert.ok(nombraElPlato("Un sánguche al paso en el centro", "Sánguche de milanesa"));
+    assert.ok(!nombraElPlato("Almuerzo en El Rincón de Pepe", "Empanada tucumana"));
+    const texto = JSON.stringify({ dias: [{ actividades: [
+      { momento: "manana", ref: id("Casa Histórica"), titulo: "x", detalle: "Historia." },
+      { momento: "mediodia", ref: id("Empanada tucumana"), titulo: "Almuerzo de empanadas por el centro", detalle: "Buscá un horno de barro." },
+    ] }] });
+    const plan = validarRespuesta(texto, pedido, catalogo)!;
+    assert.equal(plan.dias[0].actividades[1].titulo, "Almuerzo de empanadas por el centro");
+    const inventado = JSON.stringify({ dias: [{ actividades: [
+      { momento: "mediodia", ref: id("Empanada tucumana"), titulo: "Almuerzo en El Rincón de Pepe", detalle: "x" },
+    ] }] });
+    assert.equal(validarRespuesta(inventado, pedido, catalogo)!.dias[0].actividades[0].titulo, "Empanada tucumana");
+  });
+
+  it("marca para comer los lugares por su tipo o tema, no por el nombre, y las ferias gastronómicas", () => {
+    assert.ok(esParaComer("peña"));
+    assert.ok(esParaComer("restaurante"));
+    assert.ok(!esParaComer("museo"));
+    assert.ok(!catalogo.find((x) => x.titulo === "Ex Mercado de Abasto")!.comida);
+    assert.ok(catalogo.find((x) => x.titulo === "Feria de sabores")!.comida);
+    assert.match(armarPrompt(pedido, catalogo, new Map()), /Feria de sabores \| 2026-11-25 12:30 \| PARA COMER \| zona: Plaza Urquiza/);
+  });
+
   it("saca los ids del catálogo que el modelo cita en los textos", () => {
     assert.equal(sinIds("Reservá el Bus Turístico (b1), tiene cupo."), "Reservá el Bus Turístico, tiene cupo.");
     assert.equal(sinIds("Probá la empanada (s1, s2) y el circuito x1."), "Probá la empanada y el circuito.");
@@ -167,6 +194,15 @@ describe("Planificador: sin IA", () => {
     assert.ok(dia2.actividades.some((a) => a.tipo === "bus" && a.hora === "10:00"));
     const urls = plan.dias.flatMap((d) => d.actividades.map((a) => a.url));
     assert.equal(new Set(urls.filter((u) => u !== "/bus-turistico")).size, urls.filter((u) => u !== "/bus-turistico").length, "sin repetir");
+  });
+
+  it("al mediodía propone dónde comer: la feria del día o el sabor cerca de la zona de la mañana", () => {
+    const pedido = pedidoBase({ intereses: ["historia-y-patrimonio"] });
+    const [dia1, dia2] = planSinIA(pedido, armarCatalogo(fuentes, pedido)).dias;
+    const almuerzo1 = dia1.actividades.find((a) => a.momento === "mediodia")!;
+    assert.equal(almuerzo1.tipo, "sabor");
+    assert.match(almuerzo1.detalle, /cerca de (Centro|Plaza Independencia)/);
+    assert.equal(dia2.actividades.find((a) => a.momento === "mediodia")?.titulo, "Feria de sabores");
   });
 
   it("a ritmo tranquilo propone menos actividades", () => {

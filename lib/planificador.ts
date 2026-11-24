@@ -95,6 +95,10 @@ export type ItemCatalogo = {
   texto: string;
   temas: string[];
   imperdible?: boolean;
+  /** Zona o punto de encuentro: para sugerir dónde comer cerca. */
+  zona?: string;
+  /** Un lugar o una feria para comer (se ofrece al mediodía y a la noche). */
+  comida?: boolean;
   gratis?: boolean;
   /** Salidas del bus: el circuito (para no repetirlo dos días). */
   circuito?: string;
@@ -142,6 +146,14 @@ export function sinIds(texto: string): string {
     .trim();
 }
 
+const sinTildes = (t: string) => t.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+
+/** ¿El título nombra el plato? Basta la primera palabra larga del plato, en singular o plural ("empanada" → "empanadas"). */
+export function nombraElPlato(titulo: string, plato: string): boolean {
+  const clave = sinTildes(plato).split(/[^a-z]+/).find((p) => p.length >= 4);
+  return !!clave && sinTildes(titulo).includes(clave.replace(/s$/, ""));
+}
+
 /** Texto del modelo listo para mostrar: sin ids del catálogo, sin espacios de más y con un largo máximo. */
 const delModelo = (t: unknown, max: number) => limpio(sinIds(limpio(t, max + 40)), max);
 const costoTexto = (c?: Costo) => (c ? (c.modalidad === "gratis" ? "gratis" : c.modalidad === "pago" ? `pago${c.detalle ? ` (${limpio(c.detalle, 60)})` : ""}` : "consultar costo") : "");
@@ -149,6 +161,10 @@ const unir = (partes: (string | null | undefined | false)[]) => partes.filter(Bo
 
 /** Clases o talleres que se repiten (la mayoría de la agenda): son para vecinos, no paseos. */
 export const esTaller = (o: Pick<OcurrenciaAgenda, "titulo" | "resumen">) => /(^|[^a-z0-9áéíóúñü])(taller(es)?|clases?|cursos?)($|[^a-z0-9áéíóúñü])/i.test(`${o.titulo} ${o.resumen ?? ""}`);
+
+/** ¿Un lugar donde se come? (por su tipo o su nombre: bar, peña, mercado, restaurante, confitería…). */
+export const esParaComer = (texto: string) =>
+  /(gastronom|restaur|resto|parrill|peña|bodeg[oó]n|confiter|caf[eé]|bar(es)?($|[^a-z])|mercado|comedor|patio de comidas|feria gastron)/i.test(texto);
 
 export function horaLocal(local: string): string | undefined {
   return soloDia(local) ? undefined : local.slice(11, 16);
@@ -177,18 +193,20 @@ export function armarCatalogo(f: FuentesCatalogo, pedido: PedidoPlan): ItemCatal
 
   agregar("l", f.lugares.map((l) => ({
     tipo: "lugar" as const, titulo: l.titulo, url: rutas.lugar(l.slug), temas: l.categorias, imperdible: l.imperdible, gratis: l.costo?.modalidad === "gratis",
+    // Para comer, por su tipo o su tema (no por el nombre: «Ex Mercado de Abasto» es un edificio histórico).
+    zona: l.zona ? limpio(l.zona, 60) : undefined, comida: esParaComer(l.clase) || l.categorias.includes("sabores-tucumanos"),
     texto: unir([limpio(l.resumen), l.zona && `zona ${limpio(l.zona, 60)}`, l.horario?.texto && `horario ${limpio(l.horario.texto, 90)}${l.horario.confirmado ? "" : " (a confirmar)"}`, l.duracion && `visita ${limpio(l.duracion, 40)}`, costoTexto(l.costo), l.accesibilidad && `accesibilidad: ${limpio(l.accesibilidad, 90)}`]),
   })));
   agregar("x", f.experiencias.map((x) => ({
     tipo: "experiencia" as const, titulo: x.titulo, url: rutas.experiencia(x.slug), temas: x.categorias, gratis: x.costo?.modalidad === "gratis",
+    zona: x.puntoEncuentro ? limpio(x.puntoEncuentro, 60) : undefined,
     texto: unir([limpio(x.resumen), x.modalidad, x.guiada && "guiada", x.duracion && `dura ${limpio(x.duracion, 40)}`, x.horario?.texto && `horario ${limpio(x.horario.texto, 90)}`, costoTexto(x.costo)]),
   })));
   agregar("r", f.recorridos.map((r) => ({
     tipo: "recorrido" as const, titulo: r.titulo, url: rutas.recorrido(r.slug), temas: r.categorias,
     texto: unir([limpio(r.resumen), r.modalidad, r.duracion && `dura ${limpio(r.duracion, 40)}`, r.esfuerzo && `esfuerzo ${limpio(r.esfuerzo, 40)}`, `${r.paradas.length} paradas`]),
   })));
-  agregar("s", f.platos.map((p) => ({ tipo: "sabor" as const, titulo: p.titulo, url: "/sabores", temas: ["sabores-tucumanos"], texto: limpio(p.detalle) })));
-  // Una escapada ocupa un día entero: solo para viajes de dos días o más.
+  agregar("s", f.platos.map((p) => ({ tipo: "sabor" as const, titulo: p.titulo, url: "/sabores", temas: ["sabores-tucumanos"], texto: limpio(p.detalle) })));  // Una escapada ocupa un día entero: solo para viajes de dos días o más.
   if (pedido.dias >= 2) {
     agregar("p", f.escapadas.map((p) => ({
       tipo: "escapada" as const, titulo: p.titulo, url: p.url ?? "/escapadas", temas: ["parques-y-aire-libre"],
@@ -211,6 +229,7 @@ export function armarCatalogo(f: FuentesCatalogo, pedido: PedidoPlan): ItemCatal
     .sort((a, b) => a.inicio.localeCompare(b.inicio));
   agregar("e", eventos.map((o) => ({
     tipo: "evento" as const, titulo: o.titulo, url: o.url, temas: temasEvento(o), gratis: o.gratis, dia: o.inicio.slice(0, 10), hora: horaLocal(o.inicio),
+    zona: o.sede || o.lugar ? limpio(o.sede || o.lugar, 60) : undefined, comida: o.rubros.includes("ferias-gastronomicas"),
     texto: unir([o.resumen && limpio(o.resumen, 140), (o.sede || o.lugar) && `en ${limpio(o.sede || o.lugar, 80)}`, o.gratis ? "gratis" : costoTexto(o.costo)]),
   })));
 
@@ -248,12 +267,20 @@ const RITMO_TEXTO: Record<Ritmo, string> = { tranquilo: "tranquilo (2 actividade
 export function armarPrompt(pedido: PedidoPlan, catalogo: ItemCatalogo[], nombresTemas: Map<string, string>): string {
   const fechas = Array.from({ length: pedido.dias }, (_, i) => sumarDias(pedido.llegada, i));
   const temas = pedido.intereses.map((t) => (t === "agenda" ? "eventos de la agenda cultural" : t === "bus" ? "Bus Turístico" : nombresTemas.get(t) ?? t));
-  const lineas = catalogo.map((x) => `${x.id} | ${x.tipo} | ${x.titulo}${x.dia ? ` | ${x.dia}${x.hora ? ` ${x.hora}` : ""}` : ""}${x.imperdible ? " | IMPERDIBLE" : ""} | ${x.texto}`);
+  const lineas = catalogo.map((x) =>
+    `${x.id} | ${x.tipo} | ${x.titulo}${x.dia ? ` | ${x.dia}${x.hora ? ` ${x.hora}` : ""}` : ""}${x.imperdible ? " | IMPERDIBLE" : ""}${x.comida ? " | PARA COMER" : ""}${x.zona ? ` | zona: ${x.zona}` : ""} | ${x.texto}`);
   return [
     "Sos el planificador de visitas del portal oficial de turismo de la Municipalidad de San Miguel de Tucumán (Argentina).",
     "Armá un itinerario día por día usando EXCLUSIVAMENTE las opciones del CATÁLOGO. Reglas:",
     "- Cada actividad lleva el id del catálogo en \"ref\". Nunca inventes lugares, comercios, restaurantes, horarios, precios ni datos que no estén en el catálogo.",
-    "- Podés agregar como máximo una actividad libre por día sin ref (por ejemplo, almorzar o descansar), sin nombrar comercios ni lugares concretos.",
+    "- Podés agregar como máximo una actividad libre por día sin ref (por ejemplo, descansar), sin nombrar comercios ni lugares concretos.",
+    "- COMIDAS: al mediodía (y a la noche si el ritmo lo permite) proponé dónde y qué comer, siempre concreto:",
+    "  1) si ese día hay un ítem PARA COMER del catálogo (un lugar o una feria gastronómica), usalo con su ref;",
+    "  2) si no, una actividad con ref al sabor típico (s…) que más le convenga. Su \"titulo\" dice la comida y la zona, con el nombre del plato",
+    "     (\"Almuerzo de empanadas por el Parque 9 de Julio\"); su \"detalle\" dice en qué tipo de lugar se consigue según el texto del sabor",
+    "     (un carrito para el sánguche de milanesa, una peña o un bodegón para el locro) y por qué conviene ahí.",
+    "  La zona sale de las \"zona:\" del catálogo de las actividades de ese mismo día (la de antes o la de después de comer).",
+    "  Nunca nombres un restaurante, bar, peña ni comercio que no esté en el catálogo.",
     "- Los eventos (e…) y las salidas del bus (b…) solo van el día y en el momento de su fecha y hora. No repitas una misma ref ni el mismo circuito del bus.",
     "- No pongas dos veces lo mismo con distinto formato: si incluís una salida del bus (b…), no agregues también el recorrido o la experiencia de ese mismo circuito.",
     "- Los ids son solo para \"ref\": nunca los escribas en títulos, detalles, resumen ni consejos.",
@@ -359,7 +386,10 @@ export function validarRespuesta(texto: string | null, pedido: PedidoPlan, catal
       if (item) {
         if (usados.has(item.id) || (item.dia && item.dia !== fecha)) continue;
         usados.add(item.id);
-        actividades.push({ momento: item.hora ? momentoDeHora(item.hora) : momento, titulo: item.titulo, detalle, url: item.url, tipo: item.tipo, hora: item.hora });
+        // Una comida con un sabor lleva el título del modelo (plato + zona) si nombra ese plato; si no, el del sabor.
+        const tituloComida = item.tipo === "sabor" ? delModelo(act.titulo, 90) : "";
+        const titulo = tituloComida && nombraElPlato(tituloComida, item.titulo) ? tituloComida : item.titulo;
+        actividades.push({ momento: item.hora ? momentoDeHora(item.hora) : momento, titulo, detalle, url: item.url, tipo: item.tipo, hora: item.hora });
       } else if (!ref && libres < 1 && delModelo(act.titulo, 90)) {
         libres++;
         actividades.push({ momento, titulo: delModelo(act.titulo, 90), detalle });
@@ -383,6 +413,12 @@ export function validarRespuesta(texto: string | null, pedido: PedidoPlan, catal
 
 /** Sin IA, el detalle es el resumen de la ficha (lo primero del texto del catálogo). */
 const resumenDe = (x: ItemCatalogo) => x.texto.split(" · ")[0];
+
+const CERCA: Record<Idioma, string> = {
+  es: "Buen plan para el almuerzo cerca de {zona}.",
+  en: "A good lunch plan near {zona}.",
+  pt: "Boa opção de almoço perto de {zona}.",
+};
 
 const POR_DIA: Record<Ritmo, Momento[]> = {
   tranquilo: ["manana", "tarde"],
@@ -412,9 +448,11 @@ export function planSinIA(pedido: PedidoPlan, catalogo: ItemCatalogo[]): Omit<Pl
     const fecha = sumarDias(pedido.llegada, i);
     const actividades: ActividadPlan[] = [];
     const ocupados = new Set<Momento>();
+    const zonas = new Map<Momento, string>();
     const poner = (x: ItemCatalogo, momento: Momento, detalle: string) => {
       usados.add(x.id);
       ocupados.add(momento);
+      if (x.zona) zonas.set(momento, x.zona);
       actividades.push({ momento, titulo: x.titulo, detalle, url: x.url, tipo: x.tipo, hora: x.hora });
     };
     // Una escapada el tercer día ocupa la jornada.
@@ -440,11 +478,17 @@ export function planSinIA(pedido: PedidoPlan, catalogo: ItemCatalogo[]): Omit<Pl
     for (const m of huecos) {
       if (ocupados.has(m)) continue;
       if (m === "mediodia") {
+        // Para comer: una feria gastronómica de ese día o un lugar para comer del portal; si no, un sabor
+        // típico con la zona de la mañana («cerca de Plaza Independencia»).
+        const lugar = delDia.find((y) => y.comida && !usados.has(y.id) && momentoDeHora(y.hora) !== "noche")
+          ?? catalogo.find((y) => y.comida && !y.dia && !usados.has(y.id));
+        if (lugar) { poner(lugar, m, resumenDe(lugar)); continue; }
         const s = sabores.find((y) => !usados.has(y.id));
-        if (s) poner(s, m, resumenDe(s));
+        const zona = zonas.get("manana");
+        if (s) poner(s, m, zona ? `${resumenDe(s)} ${CERCA[pedido.idioma].replace("{zona}", zona)}` : resumenDe(s));
         continue;
       }
-      const x = libres.find((y) => !usados.has(y.id));
+      const x = libres.find((y) => !usados.has(y.id) && !y.comida);
       if (x) poner(x, m, resumenDe(x));
     }
     actividades.sort((a, b) => MOMENTOS.indexOf(a.momento) - MOMENTOS.indexOf(b.momento));

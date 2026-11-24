@@ -17,7 +17,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | E — Buses | 🟡 | Reserva real contra la función atómica; panel con permisos | `tests/buses-base.test.ts`, `tests/buses-reglas.test.ts`; flujo completo en navegador (local). Falta: staging contra copia de la base `turismo`, SMTP real |
 | F — Panel unificado | ✅ | Tablero con datos reales; usuarios y permisos | Tablero, `/admin/usuarios`, menú por permisos (verificado con 3 roles) |
 | G — Migue | ✅ | Un widget; contenido con agenda y cupos reales | `tests/migue-bus.test.ts`; `/api/migue/contenido` sin datos personales (verificado) |
-| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 156/156 tests unitarios, **37/37 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
+| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 159/159 tests unitarios, **37/37 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
 | I — Despliegue | 🟡 | Guía de despliegue, rollback y verificación | `deploy/README.md`, `deploy/sql/`, `.env.example`. Falta: ensayo en staging |
 
 ## Qué está implementado
@@ -65,6 +65,9 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
   vecinos salvo que los pida) y las salidas del bus con cupo. Toda referencia fuera del catálogo se descarta; lo que escribe la
   persona va como dato delimitado. Límite de 8 pedidos cada 10 minutos por conexión; no guarda nada en el servidor.
 - Sin clave o si el modelo falla, arma la visita con las recomendaciones del portal y lo avisa. El plan queda en el navegador.
+- Comidas: al mediodía (y a la noche) propone una feria gastronómica del día o un lugar para comer del portal (tipo
+  gastronomía, peña, bar, mercado… o tema «Sabores tucumanos»); si no hay, el plato típico con la zona de las actividades del
+  día y el tipo de lugar donde se consigue, sin nombrar comercios.
 
 ### Migue
 - Un solo widget (`MigueTurismo`) en todo el sitio. `/api/migue/contenido` suma eventos próximos (120 días),
@@ -98,6 +101,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | Portugués del Bus Turístico y Bus Educativo | P2 | Los textos del bus existen en es/en; en pt se muestra español con aviso |
 | Auditoría con diferencias campo por campo en operaciones del bus | P3 | Hoy se registra persona, operación y ruta (se anota al pedirla: incluye intentos rechazados) |
 | Fotos de los eventos en la base local | P3 | `npm run cultura -- eventos --desde-wordpress --escribir --actualizar --fotos` completa la foto vacía; el 24/11 agendaculturalsmt.com no respondía. Sin foto, la tarjeta usa la del lugar o la imagen por defecto de la Agenda |
+| Lugares para comer en el portal (la guía de bares y peñas de Turismo) | P2 | Cargados como lugares de tipo gastronomía, el planificador los nombra con su enlace en las comidas |
 | Lint (ESLint) | P3 | PagTurismo no tenía linter configurado |
 
 ## Decisiones tomadas
