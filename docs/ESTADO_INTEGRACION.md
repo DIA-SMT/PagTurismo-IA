@@ -17,7 +17,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | E — Buses | 🟡 | Reserva real contra la función atómica; panel con permisos | `tests/buses-base.test.ts`, `tests/buses-reglas.test.ts`; flujo completo en navegador (local). Falta: staging contra copia de la base `turismo`, SMTP real |
 | F — Panel unificado | ✅ | Tablero con datos reales; usuarios y permisos | Tablero, `/admin/usuarios`, menú por permisos (verificado con 3 roles) |
 | G — Migue | ✅ | Un widget; contenido con agenda y cupos reales | `tests/migue-bus.test.ts`; `/api/migue/contenido` sin datos personales (verificado) |
-| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 159/159 tests unitarios, **37/37 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
+| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 161/161 tests unitarios, **37/37 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
 | I — Despliegue | 🟡 | Guía de despliegue, rollback y verificación | `deploy/README.md`, `deploy/sql/`, `.env.example`. Falta: ensayo en staging |
 
 ## Qué está implementado
@@ -101,7 +101,9 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | Portugués del Bus Turístico y Bus Educativo | P2 | Los textos del bus existen en es/en; en pt se muestra español con aviso |
 | Auditoría con diferencias campo por campo en operaciones del bus | P3 | Hoy se registra persona, operación y ruta (se anota al pedirla: incluye intentos rechazados) |
 | Fotos de los eventos en la base local | P3 | `npm run cultura -- eventos --desde-wordpress --escribir --actualizar --fotos` completa la foto vacía; el 24/11 agendaculturalsmt.com no respondía. Sin foto, la tarjeta usa la del lugar o la imagen por defecto de la Agenda |
-| Lugares para comer en el portal (la guía de bares y peñas de Turismo) | P2 | Cargados como lugares de tipo gastronomía, el planificador los nombra con su enlace en las comidas |
+| Validar y publicar los lugares para comer y La Ruta de la Empanada | P1 | 8 lugares (Ente Tucumán Turismo, ranking TripAdvisor 2017, Ruta de la Empanada) y la experiencia, en borrador con fuentes y horarios «a confirmar». Sumar la guía de bares y peñas de Turismo |
+| Talleres culturales anuales 2026 (planilla de Gestión Cultural) | P1 | ~70 talleres en 4 centros culturales: sección propia en lugar de inundar la agenda; corregir errores de la planilla |
+| Estructura de la web de Cultura (documento de Gestión Cultural) | P2 | Falta la Casa Belgraniana – Solar Histórico, los programas Crear Encuentro y Cultura Joven, y alojamientos |
 | Lint (ESLint) | P3 | PagTurismo no tenía linter configurado |
 
 ## Decisiones tomadas

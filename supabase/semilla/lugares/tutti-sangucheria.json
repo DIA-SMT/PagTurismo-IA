@@ -1,0 +1,51 @@
+{
+  "estado": "borrador",
+  "titulo": "Tutti",
+  "clase": "sanguchería",
+  "resumen": "Sánguches de milanesa en la capital. Recomendado por el Ente Tucumán Turismo.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "Virgen de la Merced 699",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "pago",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {
+    "telefono": "381 430-3800"
+  },
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Sangucherías — Ente Tucumán Turismo (consultado el 24/11/2026)",
+      "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/296/sandwich-shops"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Tutti",
+      "clase": "sandwich shop",
+      "resumen": "Milanesa sandwiches in the city. Recommended by the provincial tourism board."
+    },
+    "pt": {
+      "titulo": "Tutti",
+      "clase": "sanduicheria",
+      "resumen": "Sanduíches de milanesa na capital. Recomendado pelo órgão de turismo da província."
+    }
+  }
+}

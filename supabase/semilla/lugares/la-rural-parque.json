@@ -1,0 +1,49 @@
+{
+  "estado": "borrador",
+  "titulo": "La Rural",
+  "clase": "restaurante y parrilla",
+  "resumen": "Restaurante, bar y parrilla dentro del Parque 9 de Julio.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "Parque 9 de Julio",
+  "direccion": "Av. Thays 700, Parque 9 de Julio",
+  "horario": {
+    "texto": "Todos los días de 9 a 1",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "pago",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bares y restaurantes — Ente Tucumán Turismo (consultado el 24/11/2026)",
+      "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/294/bars-and-restaurants"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "La Rural",
+      "clase": "restaurant and grill",
+      "resumen": "Restaurant, bar and grill inside Parque 9 de Julio."
+    },
+    "pt": {
+      "titulo": "La Rural",
+      "clase": "restaurante e churrascaria",
+      "resumen": "Restaurante, bar e churrascaria dentro do Parque 9 de Julio."
+    }
+  }
+}

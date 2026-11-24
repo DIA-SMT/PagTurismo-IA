@@ -1,0 +1,55 @@
+{
+  "estado": "borrador",
+  "titulo": "Mi Nueva Estancia",
+  "clase": "restaurante",
+  "resumen": "Restaurante del centro, entre los mejor puntuados de la capital en TripAdvisor (2017). También tiene local en Yerba Buena.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "Centro",
+  "direccion": "Córdoba 401",
+  "horario": {
+    "texto": "De 12 a 15 y de 21 a 0",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "pago",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {
+    "telefono": "0381 430-7049"
+  },
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bares y restaurantes — Ente Tucumán Turismo (consultado el 24/11/2026)",
+      "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/294/bars-and-restaurants"
+    },
+    {
+      "titulo": "Ranking TripAdvisor de restaurantes de la capital — Contexto Tucumán, 17/12/2017",
+      "url": "https://www.contextotucuman.com/nota/100006/ranking-los-15-mejores-restaurantes-de-la-capital-tucumana-segun-tripadvisor.html"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Mi Nueva Estancia",
+      "clase": "restaurant",
+      "resumen": "Downtown restaurant, among the city's top rated on TripAdvisor (2017). Also in Yerba Buena."
+    },
+    "pt": {
+      "titulo": "Mi Nueva Estancia",
+      "clase": "restaurante",
+      "resumen": "Restaurante do centro, entre os mais bem avaliados da capital no TripAdvisor (2017). Também em Yerba Buena."
+    }
+  }
+}

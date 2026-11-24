@@ -1,0 +1,49 @@
+{
+  "estado": "borrador",
+  "titulo": "El Cardón",
+  "clase": "restaurante de comidas regionales",
+  "resumen": "Restaurante del centro; en la Ruta de la Empanada se arma la propia empanada en un taller.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "Centro",
+  "direccion": "Las Heras 50",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "pago",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "La Ruta de la Empanada — La Gaceta, 7/3/2026",
+      "url": "https://www.lagaceta.com.ar/nota/1127206/sociedad/abrieron-inscripciones-para-hacer-recorrido-turistico-ruta-empanada.html"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "El Cardón",
+      "clase": "regional food restaurant",
+      "resumen": "Downtown restaurant; on the Empanada Route you make your own empanada in a short workshop."
+    },
+    "pt": {
+      "titulo": "El Cardón",
+      "clase": "restaurante de comidas regionais",
+      "resumen": "Restaurante do centro; na Rota da Empanada você monta a sua própria empanada numa oficina."
+    }
+  }
+}

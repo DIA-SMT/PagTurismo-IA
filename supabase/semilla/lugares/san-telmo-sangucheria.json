@@ -1,0 +1,51 @@
+{
+  "estado": "borrador",
+  "titulo": "San Telmo",
+  "clase": "sanguchería",
+  "resumen": "Sánguches de milanesa, el clásico tucumano. Recomendado por el Ente Tucumán Turismo.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "",
+  "direccion": "Francia 102",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "pago",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {
+    "telefono": "381 415-7405"
+  },
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Sangucherías — Ente Tucumán Turismo (consultado el 24/11/2026)",
+      "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/296/sandwich-shops"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "San Telmo",
+      "clase": "sandwich shop",
+      "resumen": "Milanesa sandwiches, the Tucumán classic. Recommended by the provincial tourism board."
+    },
+    "pt": {
+      "titulo": "San Telmo",
+      "clase": "sanduicheria",
+      "resumen": "Sanduíches de milanesa, o clássico tucumano. Recomendado pelo órgão de turismo da província."
+    }
+  }
+}

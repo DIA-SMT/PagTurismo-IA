@@ -1,0 +1,53 @@
+{
+  "estado": "borrador",
+  "titulo": "Il Postino",
+  "clase": "restaurante (pizzas y pastas)",
+  "resumen": "Pizzas y pastas en el centro. Primero en el ranking de TripAdvisor de restaurantes de la capital (2017).",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "Centro",
+  "direccion": "Córdoba 501 (y Junín 84)",
+  "horario": {
+    "texto": "Todos los días de 8 a 1",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "pago",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bares y restaurantes — Ente Tucumán Turismo (consultado el 24/11/2026)",
+      "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/294/bars-and-restaurants"
+    },
+    {
+      "titulo": "Ranking TripAdvisor de restaurantes de la capital — Contexto Tucumán, 17/12/2017",
+      "url": "https://www.contextotucuman.com/nota/100006/ranking-los-15-mejores-restaurantes-de-la-capital-tucumana-segun-tripadvisor.html"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Il Postino",
+      "clase": "restaurant (pizza and pasta)",
+      "resumen": "Pizza and pasta downtown. First in TripAdvisor's ranking of the city's restaurants (2017)."
+    },
+    "pt": {
+      "titulo": "Il Postino",
+      "clase": "restaurante (pizzas e massas)",
+      "resumen": "Pizzas e massas no centro. Primeiro no ranking do TripAdvisor dos restaurantes da capital (2017)."
+    }
+  }
+}
