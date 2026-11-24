@@ -5,6 +5,7 @@ import { buses } from "./buses";
 import { comun } from "./comun";
 import { cultura } from "./cultura";
 import { fichas } from "./fichas";
+import { mapa } from "./mapa";
 import { migue } from "./migue";
 import { paginas } from "./paginas";
 import { planificador } from "./planificador";
@@ -13,7 +14,7 @@ import { recorridos } from "./recorridos";
 import { talleres } from "./talleres";
 
 /** Todas las secciones de textos. Cada archivo define la suya en los tres idiomas. */
-const SECCIONES = { comun, portada, paginas, catalogo, agenda, cultura, buses, fichas, recorridos, migue, planificador, talleres };
+const SECCIONES = { comun, portada, paginas, catalogo, agenda, cultura, buses, fichas, recorridos, migue, planificador, talleres, mapa };
 
 export type Textos = { [K in keyof typeof SECCIONES]: (typeof SECCIONES)[K]["es"] };
 

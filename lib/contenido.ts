@@ -15,6 +15,7 @@ export const PORTAL = "https://smt.gob.ar";
 /** Sitios propios: los enlaces van ahí y no a una sección del portal. */
 export const BUS_TURISTICO = "/bus-turistico";
 export const PALACIO = "https://palacio.smt.gob.ar/";
+/** El mapa de la Municipalidad: el portal muestra sus datos en /mapa y lo cita como fuente. */
 export const MAPA = "https://mapa.smt.gob.ar/";
 
 import type { comun } from "./i18n/textos/comun";
@@ -69,7 +70,7 @@ export const PIE: { columna: keyof TextosComun["pie"]["columnas"]; enlaces: Enla
       { clave: "todosLosRecorridos", url: "/recorridos" },
       { clave: "busTuristico", url: "/bus-turistico" },
       { clave: "circuitoAPie", url: `${PORTAL}/circuitosturisticospie`, externo: true },
-      { clave: "mapa", url: MAPA, externo: true },
+      { clave: "mapa", url: "/mapa" },
     ],
   },
   {
