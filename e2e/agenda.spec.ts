@@ -33,8 +33,9 @@ test.describe("Agenda cultural", () => {
     await expect(page).toHaveURL(/categoria=ferias-artesanos/);
     await expect(page.getByText("Concierto de prueba E2E")).toHaveCount(1); // solo en los destacados
     await page.getByRole("button", { name: /^Ferias de artesanos · \d+/ }).click();
-    await page.getByRole("radio", { name: "Tarjetas" }).check({ force: true });
-    await expect(page).toHaveURL(/vista=tarjetas/);
+    // Tarjetas es la vista por defecto; la lista ya no existe.
+    await expect(page.getByRole("radio", { name: "Tarjetas" })).toBeChecked();
+    await expect(page.getByRole("radio", { name: "Lista" })).toHaveCount(0);
     await expect(page.locator(".agenda-filtrable .tarjeta-evento").first()).toBeVisible();
     await page.getByRole("radio", { name: "Elegir fecha" }).check({ force: true });
     const fecha = page.locator('.agenda-filtrable__fecha input[type="date"]');
@@ -71,7 +72,7 @@ test.describe("Agenda cultural", () => {
     await dia.click();
     await expect(page).toHaveURL(/cuando=fecha&fecha=\d{4}-\d{2}-\d{2}/);
     await expect(dia).toHaveAttribute("aria-pressed", "true");
-    await expect(page.locator(".agenda-item").first()).toBeVisible();
+    await expect(page.locator(".agenda-filtrable .tarjeta-evento").first()).toBeVisible();
   });
 
   test("la ficha del evento ofrece compartir y todas las fechas en .ics", async ({ page, request }) => {

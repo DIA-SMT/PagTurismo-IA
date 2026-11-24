@@ -22,9 +22,9 @@ export const cultura = definir({
     },
     vista: {
       etiqueta: "Ver como",
-      lista: "Lista",
       tarjetas: "Tarjetas",
       calendario: "Calendario",
+      masActividades: "Ver más actividades",
     },
     mes: {
       anterior: "Mes anterior",
@@ -110,9 +110,9 @@ export const cultura = definir({
     },
     vista: {
       etiqueta: "View as",
-      lista: "List",
       tarjetas: "Cards",
       calendario: "Calendar",
+      masActividades: "Show more events",
     },
     mes: {
       anterior: "Previous month",
@@ -198,9 +198,9 @@ export const cultura = definir({
     },
     vista: {
       etiqueta: "Ver como",
-      lista: "Lista",
       tarjetas: "Cartões",
       calendario: "Calendário",
+      masActividades: "Ver mais atividades",
     },
     mes: {
       anterior: "Mês anterior",

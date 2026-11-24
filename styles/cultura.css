@@ -60,11 +60,6 @@
   .agenda-buscador--movil { display: grid; }
 }
 
-/* ---- Agenda: renglón con categorías y foto ---- */
-.agenda-item__rubros { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
-.agenda-item__foto { flex: none; width: 6rem; height: 6rem; margin-left: auto; border-radius: var(--r-md); object-fit: cover; }
-@media (max-width: 37.5rem) { .agenda-item__foto { display: none; } }
-
 /* ---- Calendario mensual ---- */
 .calendario-mes {
   margin-top: var(--sp-5);

@@ -312,29 +312,6 @@
 
 /* ---- Agenda ---- */
 .agenda-filtrable__fecha { max-width: 16rem; margin-top: var(--sp-4); }
-.agenda-lista { display: flex; flex-direction: column; gap: var(--sp-3); padding: 0; list-style: none; }
-.agenda-item {
-  display: flex;
-  gap: var(--sp-5);
-  align-items: flex-start;
-  padding: var(--sp-4) var(--sp-5);
-  border: 1px solid var(--c-borde-objeto);
-  border-radius: 20px;
-  background: var(--c-blanco);
-  color: var(--c-ink);
-  text-decoration: none;
-  box-shadow: var(--sombra-1);
-  transition: box-shadow var(--t-media), transform var(--t-media);
-}
-.agenda-item:hover { color: var(--c-ink); transform: translateY(-2px); box-shadow: var(--sombra-2); }
-.agenda-item .evento__fecha { flex: none; }
-.agenda-item__texto { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.agenda-item__marcas { display: flex; flex-wrap: wrap; gap: 6px; }
-.agenda-item__marcas:empty { display: none; }
-.agenda-item__titulo { font-size: var(--fs-md); }
-.agenda-item__cuando { color: var(--c-ink-soft); font-size: var(--fs-sm); }
-.agenda-item--apagado { opacity: 0.75; }
-.agenda-item--apagado .agenda-item__titulo { text-decoration: line-through; }
 .calendario-anual { margin-top: var(--sp-9); }
 .calendario-anual .agenda { margin-top: var(--sp-5); }
 
@@ -460,8 +437,8 @@
 .escapadas--pagina .marca { margin-bottom: var(--sp-2); }
 
 @media (prefers-reduced-motion: reduce) {
-  .item, .agenda-item, .guia-tarjeta, .itinerario, .circuito-enlace, .evento--enlace, .tema-tarjeta img, .dato--enlace { transition: none; }
-  .item:hover, .agenda-item:hover, .guia-tarjeta:hover, .itinerario:hover, .circuito-enlace:hover, .evento--enlace:hover, .dato--enlace:hover { transform: none; }
+  .item, .guia-tarjeta, .itinerario, .circuito-enlace, .evento--enlace, .tema-tarjeta img, .dato--enlace { transition: none; }
+  .item:hover, .guia-tarjeta:hover, .itinerario:hover, .circuito-enlace:hover, .evento--enlace:hover, .dato--enlace:hover { transform: none; }
 }
 
 /* ---- Revisión de contenidos ---- */

@@ -37,7 +37,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
   capacidad, accesibilidad, requisitos, contacto, legado; tipo de espacio, servicios y redes).
 - `/agenda`: búsqueda, categoría, lugar, gratis, hoy / fin de semana / fecha, **calendario mensual** con
   intensidad por día, destacados primero. Además (de la portada de Agenda Cultural): «Para no perderse» con los
-  destacados, «La semana en la agenda», atajos por categoría, vista de **tarjetas con foto** y día anterior/siguiente.
+  destacados, «La semana en la agenda», atajos por categoría, eventos en **tarjetas con foto** de a 24 (la vista de lista se quitó; quedan tarjetas y calendario) y día anterior/siguiente.
 - Portada: la agenda sube antes de «Qué hacer» con tarjetas, la semana y «Explorá por categoría». `/agenda/[slug]`: compartir, todas las fechas en `.ics`, Google
   Calendar, galería y mapa OpenStreetMap. `/lugares` nuevo con filtro por tipo.
 - `npm run cultura` (espacios, base de la Agenda, WordPress viejo) con legado, fusión sin pisar lo editado,

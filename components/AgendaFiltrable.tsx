@@ -4,7 +4,6 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useMemo, useState } from "react";
 
 import { Icono } from "./Iconos";
-import { Marca } from "./Ui";
 import { Vinculo as Link, useIdioma, useTextos } from "@/components/i18n/Idioma";
 import {
   CUANDOS, contarPorDia, esMes, filtrarAgenda, filtrosAUrl, hayFiltrosDeContenido, intensidad, leerFiltrosAgenda, mesDe,
@@ -13,22 +12,15 @@ import {
 import { formatear } from "@/lib/i18n/definir";
 import { GrillaEventos } from "@/components/cultura/Agenda";
 import { LOCALE } from "@/lib/i18n/config";
-import { aInstante, diaLocal, formatearOcurrencia, partesDeFecha, soloDia, type OcurrenciaDeEvento } from "@/lib/fechas";
+import { aInstante, diaLocal, soloDia } from "@/lib/fechas";
 import type { CategoriaAgenda } from "@/lib/tipos";
 
 export type { OcurrenciaAgenda };
 
-/** Marca de cada estado (el texto sale de los textos de la agenda). Lo confirmado no lleva. */
-const ESTADO: Record<OcurrenciaDeEvento["estado"], "ok" | "medio" | "aviso" | "mal" | null> = {
-  confirmado: null,
-  reprogramado: "medio",
-  suspendido: "aviso",
-  cancelado: "mal",
-};
-
-type Vista = "lista" | "tarjetas" | "calendario";
-const VISTAS: Vista[] = ["lista", "tarjetas", "calendario"];
-const ICONO_VISTA: Record<Vista, string> = { lista: "lista", tarjetas: "tablero", calendario: "calendario" };
+/** Los eventos se ven siempre como tarjetas; el calendario suma el mes arriba de ellas. */
+type Vista = "tarjetas" | "calendario";
+const VISTAS: Vista[] = ["tarjetas", "calendario"];
+const ICONO_VISTA: Record<Vista, string> = { tarjetas: "tablero", calendario: "calendario" };
 const POR_PAGINA_TARJETAS = 24;
 
 /** Día local `AAAA-MM-DD` más `n` días. */
@@ -51,7 +43,7 @@ export function AgendaFiltrable({ ocurrencias, categorias, populares = [], ahora
 }) {
   const params = useSearchParams();
   const [f, setF] = useState<FiltrosAgenda>(() => leerFiltrosAgenda(params));
-  const [vista, setVista] = useState<Vista>(() => (VISTAS as string[]).includes(params.get("vista") ?? "") ? (params.get("vista") as Vista) : "lista");
+  const [vista, setVista] = useState<Vista>(() => (VISTAS as string[]).includes(params.get("vista") ?? "") ? (params.get("vista") as Vista) : "tarjetas");
   const [limiteTarjetas, setLimiteTarjetas] = useState(POR_PAGINA_TARJETAS);
   const [ahora, setAhora] = useState(ahoraServidor);
   const hoy = diaLocal(ahora);
@@ -59,14 +51,16 @@ export function AgendaFiltrable({ ocurrencias, categorias, populares = [], ahora
   const [busqueda, setBusqueda] = useState(f.q);
   const [panelAbierto, setPanelAbierto] = useState(false);
   const id = useId();
-  const idioma = useIdioma();
-  const { agenda: t, cultura: tc, comun } = useTextos();
+  const { agenda: t, cultura: tc } = useTextos();
 
   useEffect(() => setAhora(Date.now()), []);
 
+  // Con otros filtros se vuelve a mostrar la primera tanda de tarjetas.
+  useEffect(() => setLimiteTarjetas(POR_PAGINA_TARJETAS), [f]);
+
   // Los filtros a la URL, sin recargar ni sumar entradas al historial.
   useEffect(() => {
-    const s = filtrosAUrl(f, vista === "calendario" ? { vista, mes } : vista === "tarjetas" ? { vista } : {});
+    const s = filtrosAUrl(f, vista === "calendario" ? { vista, mes } : {});
     window.history.replaceState(null, "", `${window.location.pathname}${s ? `?${s}` : ""}`);
   }, [f, vista, mes]);
 
@@ -216,60 +210,17 @@ export function AgendaFiltrable({ ocurrencias, categorias, populares = [], ahora
         )}
       </p>
 
-      {lista.length > 0 && vista === "tarjetas" ? (
+      {lista.length > 0 ? (
         <>
           <GrillaEventos ocurrencias={lista.slice(0, limiteTarjetas)} categorias={categorias} titulo="h2" />
           {lista.length > limiteTarjetas && (
             <div className="vacio__acciones" style={{ justifyContent: "center", marginTop: "var(--sp-5)" }}>
               <button type="button" className="boton boton--claro" onClick={() => setLimiteTarjetas((n) => n + POR_PAGINA_TARJETAS)}>
-                {t.vacio.verTodas} ({lista.length - limiteTarjetas})
+                {tc.vista.masActividades} ({lista.length - limiteTarjetas})
               </button>
             </div>
           )}
         </>
-      ) : lista.length > 0 ? (
-        <ul className="agenda-lista">
-          {lista.map((o) => {
-            const { dia, mes: m } = partesDeFecha(o.inicio, idioma);
-            const estado = ESTADO[o.estado];
-            return (
-              <li key={`${o.evento}-${o.inicio}`}>
-                <Link className={`agenda-item${o.estado === "cancelado" || o.estado === "suspendido" ? " agenda-item--apagado" : ""}`} href={o.url}>
-                  <span className="evento__fecha" aria-hidden="true">
-                    <span className="evento__mes">{m}</span>
-                    <span className="evento__dia">{dia}</span>
-                  </span>
-                  <span className="agenda-item__texto">
-                    <span className="agenda-item__marcas">
-                      {o.enCurso && o.estado !== "cancelado" && <Marca tipo="exito">{t.estado.enCurso}</Marca>}
-                      {estado && <span className={`estado estado--${estado}`}>{t.estado[o.estado]}</span>}
-                      {o.destacado && <span className="marca marca--destacado"><Icono nombre="estrella" tamano={12} /> {tc.destacado}</span>}
-                      {o.gratis && <Marca tipo="exito">{tc.gratis}</Marca>}
-                      {o.fueraDeLaCiudad && <Marca tipo="alerta">{comun.ui.fueraDeLaCiudad}</Marca>}
-                    </span>
-                    <strong className="agenda-item__titulo">{o.titulo}</strong>
-                    <span className="agenda-item__cuando">{formatearOcurrencia(o, idioma)}</span>
-                    {(o.sede || o.lugar) && (
-                      <span className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{o.sede || o.lugar}</span>
-                    )}
-                    {o.rubros.length > 0 && (
-                      <span className="agenda-item__rubros">
-                        {o.rubros.slice(0, 3).map((r) => {
-                          const k = nombreRubro.get(r);
-                          return k ? <span key={r} className={`tono tono--${k.tono}`}>{k.titulo}</span> : null;
-                        })}
-                      </span>
-                    )}
-                  </span>
-                  {o.imagen && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img className="agenda-item__foto" src={o.imagen.src} alt="" loading="lazy" width={96} height={96} />
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
       ) : (
         <div className="vacio">
           <h2>{hayFiltrosDeContenido(f) ? t.vacio.proximos : t.vacio[f.cuando]}</h2>
