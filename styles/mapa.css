@@ -1,6 +1,6 @@
 /* ---- Mapa interactivo (/mapa) ---- */
 .mapa-interactivo { display: grid; grid-template-columns: minmax(0, 18rem) minmax(0, 1fr); gap: var(--sp-5); align-items: start; }
-.mapa-panel { position: sticky; top: 6rem; display: grid; gap: var(--sp-4); max-height: calc(100vh - 8rem); overflow-y: auto; padding: var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: 1rem; background: var(--c-blanco); }
+.mapa-panel { position: sticky; top: 6rem; display: grid; gap: var(--sp-4); max-height: calc(100vh - 8rem); overflow-y: auto; padding: var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); box-shadow: var(--sombra-1); }
 .mapa-panel .filtros__buscador input { width: 100%; min-height: 2.75rem; padding: 0.5rem 0.8rem 0.5rem 2.6rem; border: 1px solid var(--c-borde-campo); border-radius: var(--r-md); background: var(--c-blanco); color: var(--c-ink); font: inherit; }
 .mapa-capas summary { cursor: pointer; font-weight: var(--fw-fuerte); }
 .mapa-capas__acciones { display: flex; gap: var(--sp-2); margin: var(--sp-3) 0; }
@@ -11,17 +11,17 @@
 .mapa-capa small { color: var(--c-ink-muted); }
 .mapa-capa__punto { display: inline-block; width: 0.8rem; height: 0.8rem; border: 2px solid #fff; border-radius: 50%; box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25); }
 .mapa-principal { display: grid; gap: var(--sp-3); min-width: 0; }
-.mapa-lienzo { position: relative; height: min(70vh, 40rem); min-height: 22rem; overflow: hidden; border: 1px solid var(--c-borde-objeto); border-radius: 1rem; background: var(--c-fondo-alt); }
+.mapa-lienzo { position: relative; height: min(70vh, 40rem); min-height: 22rem; overflow: hidden; border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-fondo-alt); }
 .mapa-lienzo:focus-visible { outline: 3px solid var(--c-azul-600); outline-offset: 3px; }
 .mapa-cargando { position: absolute; inset: 0; display: grid; place-items: center; color: var(--c-ink-soft); }
 .mapa-aviso { padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); background: var(--c-estado-medio-fondo, var(--c-fondo-alt)); color: var(--c-ink); font-size: var(--fs-sm); }
 .mapa-fuente { color: var(--c-ink-muted); font-size: var(--fs-xs); }
 .mapa-fuente a { display: inline-flex; align-items: center; gap: 4px; }
 /* El globo de Leaflet es siempre claro: el texto va oscuro en los dos temas. */
-.mapa-globo { display: grid; gap: 4px; color: #17293c; font-family: inherit; }
-.mapa-globo small { color: #3d5165; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
-.mapa-globo strong { font-size: 1rem; line-height: 1.25; }
-.mapa-globo p { margin: 0 !important; color: #3d5165; font-size: 0.85rem; line-height: 1.4; }
+.mapa-globo { display: grid; gap: 4px; color: #10284D; font-family: inherit; }
+.mapa-globo small { color: #33496B; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.mapa-globo strong { font-family: var(--f-titulos); font-size: 1rem; line-height: 1.25; }
+.mapa-globo p { margin: 0 !important; color: #33496B; font-size: 0.85rem; line-height: 1.4; }
 .mapa-globo__enlaces { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 4px; font-weight: 700; }
 .mapa-globo__enlaces a { color: #0052cc; }
 .mapa-lista h2 { display: flex; align-items: baseline; gap: var(--sp-2); font-size: var(--fs-md); }

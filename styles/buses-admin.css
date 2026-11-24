@@ -1219,7 +1219,7 @@
    ya tiene márgenes, menú y barra superior. Se quitan los rellenos pensados para ese shell. */
 .mod-buses .page-header { margin: 0 0 var(--sp-5); padding: var(--sp-5) var(--sp-6); }
 .mod-buses .page-body { padding: 0; }
-.mod-buses .page-header h1, .mod-buses .page-header h2 { font-weight: var(--fw-fuerte); letter-spacing: -0.02em; }
+.mod-buses .page-header h1, .mod-buses .page-header h2 { font-weight: var(--fw-fuerte); letter-spacing: var(--ls-titular); }
 .mod-buses .btn { font-family: inherit; }
 .mod-buses .btn:focus-visible, .mod-buses .input:focus-visible, .mod-buses .select:focus-visible {
   outline: 3px solid var(--foco-interior);

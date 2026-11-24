@@ -3,12 +3,12 @@
   margin-bottom: var(--sp-8);
   padding: clamp(var(--sp-5), 4vw, var(--sp-7));
   border: 1px solid var(--c-borde-objeto);
-  border-radius: 1.6rem;
+  border-radius: var(--r-xl);
   background: linear-gradient(160deg, var(--c-azul-50), var(--c-blanco) 55%);
-  box-shadow: var(--sombra-1);
+  box-shadow: var(--sombra-2);
 }
 .planificador__intro { max-width: 46rem; margin-bottom: var(--sp-5); }
-.planificador__intro h2, .planificador__cabecera h2 { margin-top: var(--sp-2); font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem); line-height: 1.1; letter-spacing: -0.03em; }
+.planificador__intro h2, .planificador__cabecera h2 { margin-top: var(--sp-2); font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem); line-height: 1.1; letter-spacing: var(--ls-titular); }
 .planificador__intro p:last-child, .planificador__cabecera p { margin-top: var(--sp-2); color: var(--c-ink-soft); }
 .planificador fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .planificador legend { margin-bottom: var(--sp-2); color: var(--c-ink); font-size: var(--fs-sm); font-weight: var(--fw-fuerte); }
