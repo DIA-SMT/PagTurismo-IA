@@ -253,10 +253,9 @@
   .semana-agenda li { flex: 0 0 6.5rem; scroll-snap-align: start; }
 }
 
-/* ---- Franja «Explorá por categoría» (la category-section de Agenda Cultural) ---- */
-.franja-categorias { overflow: hidden; padding-block: 5.5rem; background: #071f3d; color: #fff; }
-.franja-categorias .kicker { color: #83d2f4; }
-.franja-categorias h2 { color: #fff; }
+/* ---- Franja «Explorá por categoría» (la category-section de Agenda Cultural), con el tema del portal:
+   celeste con tarjetas blancas en claro, azul noche con tarjetas oscuras en oscuro. ---- */
+.franja-categorias { overflow: hidden; padding-block: 5.5rem; background: var(--c-azul-50); color: var(--c-ink); }
 .categorias-agenda { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 0; padding: 0; list-style: none; }
 /* Cada categoría lleva un «sticker»: emoji sobre un cuadrado de color con borde blanco, un poco torcido. */
 .categorias-agenda li:nth-child(4n + 1) { --sticker: #ffe58a; --inclinacion: -7deg; }
@@ -270,14 +269,15 @@
   gap: 1.4rem;
   height: 100%;
   padding: 1.35rem 1.6rem;
-  border: 1px solid rgb(255 255 255 / 0.12);
+  border: 1px solid var(--c-borde-objeto);
   border-radius: 1.6rem;
-  background: rgb(255 255 255 / 0.05);
-  color: #fff;
+  background: var(--c-blanco);
+  color: var(--c-ink);
+  box-shadow: var(--sombra-1);
   text-decoration: none;
   transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
-.categoria-agenda:hover, .categoria-agenda:focus-visible { border-color: rgb(255 255 255 / 0.28); background: rgb(255 255 255 / 0.1); color: #fff; transform: translateY(-3px); }
+.categoria-agenda:hover, .categoria-agenda:focus-visible { border-color: var(--c-azul-700); color: var(--c-ink); box-shadow: var(--sombra-2); transform: translateY(-3px); }
 .categoria-agenda__sticker {
   display: grid;
   place-items: center;
@@ -286,7 +286,7 @@
   border: 4px solid #fff;
   border-radius: 24px;
   background: var(--sticker);
-  box-shadow: 0 12px 24px rgb(0 0 0 / 0.35);
+  box-shadow: 0 10px 22px rgb(7 31 61 / 0.22);
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
   font-size: 2.4rem;
   line-height: 1;
@@ -295,9 +295,9 @@
 }
 .categoria-agenda:hover .categoria-agenda__sticker { transform: rotate(0deg) scale(1.1); }
 .categoria-agenda__texto strong { display: block; font-size: clamp(1.45rem, 2.4vw, 2rem); line-height: 1.1; letter-spacing: -0.02em; }
-.categoria-agenda__texto small { display: block; margin-top: 0.3rem; color: #83d2f4; font-size: 0.95rem; }
-.categoria-agenda__flecha { transition: transform 0.2s, color 0.2s; }
-.categoria-agenda:hover .categoria-agenda__flecha { color: #f4c430; transform: translateX(6px); }
+.categoria-agenda__texto small { display: block; margin-top: 0.3rem; color: var(--c-azul-700); font-size: 0.95rem; }
+.categoria-agenda__flecha { color: var(--c-azul-700); transition: transform 0.2s; }
+.categoria-agenda:hover .categoria-agenda__flecha { transform: translateX(6px); }
 @media (prefers-reduced-motion: reduce) {
   .categoria-agenda, .categoria-agenda__sticker, .categoria-agenda__flecha { transition: none; }
   .categoria-agenda:hover { transform: none; }
