@@ -1,0 +1,1341 @@
+{
+  "fuente": "Planilla «HORARIO TALLERES ANUALES 2026.xlsx» de la Dirección de Gestión Cultural",
+  "actualizado": "2026-11-24",
+  "talleres": [
+    {
+      "id": "casa-del-bicentenario-folklore-sentir-norteno",
+      "titulo": "Folklore sentir norteño",
+      "profesor": "Paula Ortiz",
+      "centro": "casa-del-bicentenario",
+      "municipal": true,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "20:00",
+          "hasta": "22:00"
+        },
+        {
+          "dia": 4,
+          "desde": "20:30",
+          "hasta": "22:30"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-gimnasia-funcional",
+      "titulo": "Gimnasia funcional",
+      "profesor": "Veronica Villafañe",
+      "centro": "casa-del-bicentenario",
+      "municipal": true,
+      "disciplina": "bienestar",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "15:00",
+          "hasta": "16:00"
+        },
+        {
+          "dia": 3,
+          "desde": "15:00",
+          "hasta": "16:00"
+        },
+        {
+          "dia": 5,
+          "desde": "15:00",
+          "hasta": "16:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-gimnasia-relax",
+      "titulo": "Gimnasia relax",
+      "profesor": "Veronica Villafañe",
+      "centro": "casa-del-bicentenario",
+      "municipal": true,
+      "disciplina": "bienestar",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "16:00",
+          "hasta": "17:00"
+        },
+        {
+          "dia": 3,
+          "desde": "16:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-origami",
+      "titulo": "Origami",
+      "profesor": "Cecilia Medina",
+      "centro": "casa-del-bicentenario",
+      "municipal": true,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "18:00",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-yoga",
+      "titulo": "Yoga",
+      "profesor": "Homero Sanchez",
+      "centro": "casa-del-bicentenario",
+      "municipal": true,
+      "disciplina": "bienestar",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "16:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-guitarra",
+      "titulo": "Guitarra",
+      "profesor": "Manuel Herrera",
+      "centro": "casa-del-bicentenario",
+      "municipal": true,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "15:00",
+          "hasta": "17:00"
+        },
+        {
+          "dia": 5,
+          "desde": "15:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-danza-arabe",
+      "titulo": "Danza árabe",
+      "profesor": "Erika Diaz",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "20:00",
+          "hasta": "21:30"
+        },
+        {
+          "dia": 4,
+          "desde": "19:00",
+          "hasta": "20:30"
+        },
+        {
+          "dia": 6,
+          "desde": "15:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-teatro",
+      "titulo": "Teatro",
+      "profesor": "Ezequiel Nasci",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "teatro",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "17:00",
+          "hasta": "19:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-ceramica-inicial",
+      "titulo": "Cerámica (inicial)",
+      "profesor": "Veronica Grandolio",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "14:30",
+          "hasta": "16:30"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-caporales",
+      "titulo": "Caporales",
+      "profesor": "Nazarena Cruz Sanchez",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "18:00",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-folklore-viejo-vizcacha",
+      "titulo": "Folklore «Viejo Vizcacha»",
+      "detalle": "Folklore infantil / folklore adultos",
+      "profesor": "Claudio Argañaraz",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": true,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "19:30",
+          "hasta": "20:30"
+        },
+        {
+          "dia": 3,
+          "desde": "20:30",
+          "hasta": "22:00"
+        },
+        {
+          "dia": 5,
+          "desde": "20:00",
+          "hasta": "22:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-folklore-jardin-de-la-republica",
+      "titulo": "Folklore «Jardín de la República»",
+      "profesor": "Veronica Diaz",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "20:00",
+          "hasta": "22:00"
+        },
+        {
+          "dia": 6,
+          "desde": "19:00",
+          "hasta": "21:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-radio-y-comunicacion",
+      "titulo": "Radio y comunicación",
+      "profesor": "Gabriel Velardez",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "letras",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 5,
+          "desde": "18:00",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-streaming",
+      "titulo": "Streaming",
+      "profesor": "Ana Sophia Moreno",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "letras",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "18:30",
+          "hasta": "20:00"
+        },
+        {
+          "dia": 5,
+          "desde": "18:30",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-breaking",
+      "titulo": "Breaking",
+      "profesor": "Alberto Mendez",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "17:00",
+          "hasta": "19:00"
+        },
+        {
+          "dia": 6,
+          "desde": "17:00",
+          "hasta": "19:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-anime-dibujo",
+      "titulo": "Anime (dibujo)",
+      "profesor": "Sergio Ledesma",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "18:00",
+          "hasta": "20:00"
+        },
+        {
+          "dia": 4,
+          "desde": "17:00",
+          "hasta": "19:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-corte-y-confeccion",
+      "titulo": "Corte y confección",
+      "profesor": "Myrian Vera",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "16:00",
+          "hasta": "18:00"
+        },
+        {
+          "dia": 5,
+          "desde": "16:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-del-bicentenario-hip-hop",
+      "titulo": "Hip-hop",
+      "profesor": "Luana Y Marcos",
+      "centro": "casa-del-bicentenario",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "19:30",
+          "hasta": "21:30"
+        },
+        {
+          "dia": 5,
+          "desde": "20:00",
+          "hasta": "21:30"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-yoga",
+      "titulo": "Yoga",
+      "profesor": "Homero Sanchez",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": true,
+      "disciplina": "bienestar",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "10:30",
+          "hasta": "12:00"
+        },
+        {
+          "dia": 3,
+          "desde": "14:30",
+          "hasta": "15:30"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-diseno-y-molderia",
+      "titulo": "Diseño y moldería",
+      "profesor": "Alejandra Cruzado",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": true,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "09:30",
+          "hasta": "12:00"
+        },
+        {
+          "dia": 5,
+          "desde": "14:30",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-deco-hogar",
+      "titulo": "Deco hogar",
+      "profesor": "Alejandra Cruzado",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": true,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "09:30",
+          "hasta": "12:00"
+        },
+        {
+          "dia": 3,
+          "desde": "14:30",
+          "hasta": "18:00"
+        },
+        {
+          "dia": 4,
+          "desde": "09:30",
+          "hasta": "12:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-origami-avanzados",
+      "titulo": "Origami (avanzados)",
+      "profesor": "Cecilia Medina",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": true,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "15:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-pintura-acrilica",
+      "titulo": "Pintura acrílica",
+      "profesor": "Mabel González",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": true,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "16:00",
+          "hasta": "19:00"
+        },
+        {
+          "dia": 3,
+          "desde": "16:00",
+          "hasta": "19:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-dibujo-y-pintura",
+      "titulo": "Dibujo y pintura",
+      "profesor": "Gabriela Ledesma",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": true,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "09:00",
+          "hasta": "12:00"
+        },
+        {
+          "dia": 5,
+          "desde": "09:00",
+          "hasta": "12:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-guitarra",
+      "titulo": "Guitarra",
+      "profesor": "Manuel Herrera",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": true,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "15:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-filatelia",
+      "titulo": "Filatelia",
+      "profesor": "Guillermo Diaz Romero",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "letras",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 6,
+          "desde": "17:30",
+          "hasta": "20:30"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-taller-literario",
+      "titulo": "Taller literario",
+      "profesor": "Susana Brunetti",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "letras",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "09:00",
+          "hasta": "11:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-club-de-lectura",
+      "titulo": "Club de lectura",
+      "profesor": "Gustavo Daniel",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "letras",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "18:00",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-laboratorio-de-tango",
+      "titulo": "Laboratorio de tango",
+      "profesor": "Sergio Mamani",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 6,
+          "desde": "19:00",
+          "hasta": "21:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-ballet-para-adultos",
+      "titulo": "Ballet para adultos",
+      "profesor": "Fernanda Saravia",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "09:00",
+          "hasta": "11:00"
+        },
+        {
+          "dia": 5,
+          "desde": "09:00",
+          "hasta": "11:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-baile-urbano-ninos",
+      "titulo": "Baile urbano (niños)",
+      "profesor": "Milagro Costello",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": true,
+      "horarios": [
+        {
+          "dia": 5,
+          "desde": "18:30",
+          "hasta": "20:00"
+        },
+        {
+          "dia": 6,
+          "desde": "19:00",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-teatro-para-ninos",
+      "titulo": "Teatro para niños",
+      "profesor": "Micaela Gramajo Lopez",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "teatro",
+      "paraChicos": true,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "18:30",
+          "hasta": "20:30"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-tejido",
+      "titulo": "Tejido",
+      "profesor": "Silvana Aibar",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "09:00",
+          "hasta": "12:00"
+        },
+        {
+          "dia": 4,
+          "desde": "15:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-radio",
+      "titulo": "Radio",
+      "profesor": "Gabriel Velardez",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "letras",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "18:00",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-bordado-y-pedreria",
+      "titulo": "Bordado y pedrería",
+      "profesor": "Fernanda Gómez",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "18:00",
+          "hasta": "20:00"
+        },
+        {
+          "dia": 4,
+          "desde": "16:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-canto-adolescente",
+      "titulo": "Canto (adolescente)",
+      "profesor": "Natalia Sanchez",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "musica",
+      "paraChicos": true,
+      "horarios": [
+        {
+          "dia": 6,
+          "desde": "14:00",
+          "hasta": "15:30"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-canto-adulto",
+      "titulo": "Canto (adulto)",
+      "profesor": "Natalia Sanchez",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 6,
+          "desde": "16:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-folklore-viejo-vizcacha",
+      "titulo": "Folklore «Viejo Vizcacha»",
+      "profesor": "Claudio Argañaraz",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "19:00",
+          "hasta": "22:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-mercedes-sosa-tango",
+      "titulo": "Tango",
+      "profesor": "Ramiro Rivas",
+      "centro": "centro-cultural-mercedes-sosa",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 6,
+          "desde": "11:00",
+          "hasta": "13:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-yoga",
+      "titulo": "Yoga",
+      "profesor": "Homero Sanchez",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": true,
+      "disciplina": "bienestar",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "17:30",
+          "hasta": "18:30"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-guitarra",
+      "titulo": "Guitarra",
+      "profesor": "Manuel Herrera",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": true,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "15:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-danza-arabe",
+      "titulo": "Danza árabe",
+      "profesor": "Laura Gimenez Rojas",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "19:00",
+          "hasta": "21:00"
+        },
+        {
+          "dia": 5,
+          "desde": "19:00",
+          "hasta": "21:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-acrobacia-en-tela",
+      "titulo": "Acrobacia en tela",
+      "profesor": "Anahi Cisterna",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "bienestar",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "18:00",
+          "hasta": "20:00"
+        },
+        {
+          "dia": 4,
+          "desde": "18:00",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-pintura-acrilica-ninos",
+      "titulo": "Pintura acrílica (niños)",
+      "profesor": "Gabriela Albornoz",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "artes",
+      "paraChicos": true,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "18:00",
+          "hasta": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-pintura-acrilica-adultos",
+      "titulo": "Pintura acrílica (adultos)",
+      "profesor": "Gabriela Albornoz",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "14:30",
+          "hasta": "16:30"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-bordado-y-pedreria",
+      "titulo": "Bordado y pedrería",
+      "profesor": "Claudia Soria",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "16:00",
+          "hasta": "18:00"
+        },
+        {
+          "dia": 4,
+          "desde": "09:00",
+          "hasta": "11:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-artesanias-bijouterie",
+      "titulo": "Artesanías, bijouterie",
+      "profesor": "Mariana Diaz",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "15:30",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-mosaiquismo",
+      "titulo": "Mosaiquismo",
+      "profesor": "Luciana Cabrera",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 5,
+          "desde": "14:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-tango",
+      "titulo": "Tango",
+      "profesor": "Ramiro Rivas",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "20:00",
+          "hasta": "22:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-reciclado-y-eco-decorativo",
+      "titulo": "Reciclado y eco decorativo",
+      "profesor": "Silvia Figueroa",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "09:00",
+          "hasta": "11:30"
+        },
+        {
+          "dia": 5,
+          "desde": "09:00",
+          "hasta": "11:30"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-sublimacion",
+      "titulo": "Sublimación",
+      "profesor": "Elizabhet Romano",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "16:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-academia-santos-vega",
+      "titulo": "Academia santos vega",
+      "profesor": "Rafael Vera",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "18:00",
+          "hasta": "21:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-canto",
+      "titulo": "Canto",
+      "profesor": "Cecilia Lombard",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "19:00",
+          "hasta": "22:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-tejido",
+      "titulo": "Tejido",
+      "profesor": "Nora Avila",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "15:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-tejido-ancestral",
+      "titulo": "Tejido ancestral",
+      "profesor": "Elena Avellaneda",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "09:30",
+          "hasta": "11:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-academia-la-donosa",
+      "titulo": "Academia «La Donosa»",
+      "profesor": "Sandra Ruiz",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 5,
+          "desde": "19:00",
+          "hasta": "22:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-bordado-y-reciclado-textil",
+      "titulo": "Bordado y reciclado textil",
+      "profesor": "Belen Funes",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 5,
+          "desde": "17:00",
+          "hasta": "19:00"
+        }
+      ]
+    },
+    {
+      "id": "centro-cultural-don-bosco-canto-popular",
+      "titulo": "Canto popular",
+      "profesor": "Viviana Vargas",
+      "centro": "centro-cultural-don-bosco",
+      "municipal": false,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "09:00",
+          "hasta": "10:50"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-yoga",
+      "titulo": "Yoga",
+      "profesor": "Homero Sanchez",
+      "centro": "casa-de-la-cultura",
+      "municipal": true,
+      "disciplina": "bienestar",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "10:00",
+          "hasta": "11:30"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-pintura-al-oleo",
+      "titulo": "Pintura al óleo",
+      "profesor": "Gabriela Ledesma",
+      "centro": "casa-de-la-cultura",
+      "municipal": true,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "19:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-pintura-acrilica",
+      "titulo": "Pintura acrílica",
+      "profesor": "Mabel González",
+      "centro": "casa-de-la-cultura",
+      "municipal": true,
+      "disciplina": "artes",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "15:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-canto-para-vivir",
+      "titulo": "Canto para vivir",
+      "profesor": "Silvana Lemme",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "15:30",
+          "hasta": "17:30"
+        },
+        {
+          "dia": 5,
+          "desde": "18:00",
+          "hasta": "19:30"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-folklore-lunita-tucumana",
+      "titulo": "Folklore «Lunita Tucumana»",
+      "profesor": "Marcela Arancibia",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "18:00",
+          "hasta": "20:00"
+        },
+        {
+          "dia": 3,
+          "desde": "15:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-artesanias-y-reciclados",
+      "titulo": "Artesanías y reciclados",
+      "profesor": "Alejandra Robles",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 5,
+          "desde": "09:00",
+          "hasta": "11:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-teatro-para-adultos",
+      "titulo": "Teatro para adultos",
+      "profesor": "Ezequiel Nasci",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "teatro",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 5,
+          "desde": "16:00",
+          "hasta": "18:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-folklore-chakay-manta",
+      "titulo": "Folklore «Chakay Manta»",
+      "profesor": "Miguel Angel Estrada",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "21:15",
+          "hasta": "22:30"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-canto-colectivo",
+      "titulo": "Canto colectivo",
+      "profesor": "Viviana Vargas",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "15:00",
+          "hasta": "17:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-danzas-latinas",
+      "titulo": "Danzas latinas",
+      "profesor": "Karina Navarro Kairuz",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "17:00",
+          "hasta": "19:00"
+        },
+        {
+          "dia": 4,
+          "desde": "10:00",
+          "hasta": "12:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-murga-cantada",
+      "titulo": "Murga cantada",
+      "profesor": "Pablo Gramajo Lopez",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "musica",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 2,
+          "desde": "19:00",
+          "hasta": "21:00"
+        },
+        {
+          "dia": 3,
+          "desde": "17:00",
+          "hasta": "19:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-tejido-ancestral",
+      "titulo": "Tejido ancestral",
+      "profesor": "Elena Avellaneda",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "oficios",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 4,
+          "desde": "09:00",
+          "hasta": "11:00"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-folklore-del-tiempo-i-naupa",
+      "titulo": "Folklore «Del Tiempo I'Ñaupa»",
+      "profesor": "Miguel Diaz - Karina Sosa Frias",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": true,
+      "horarios": [
+        {
+          "dia": 3,
+          "desde": "19:00",
+          "hasta": "20:30",
+          "nota": "Niños"
+        },
+        {
+          "dia": 3,
+          "desde": "20:30",
+          "hasta": "22:00",
+          "nota": "Adultos"
+        },
+        {
+          "dia": 5,
+          "desde": "19:30",
+          "nota": "Jóvenes"
+        },
+        {
+          "dia": 5,
+          "desde": "20:30",
+          "hasta": "22:00",
+          "nota": "Adultos"
+        }
+      ]
+    },
+    {
+      "id": "casa-de-la-cultura-tango-chakay-manta",
+      "titulo": "Tango «Chakay Manta»",
+      "profesor": "Miguel Angel Estrada",
+      "centro": "casa-de-la-cultura",
+      "municipal": false,
+      "disciplina": "danza",
+      "paraChicos": false,
+      "horarios": [
+        {
+          "dia": 1,
+          "desde": "20:00",
+          "hasta": "21:15"
+        }
+      ]
+    }
+  ]
+}

@@ -17,7 +17,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | E — Buses | 🟡 | Reserva real contra la función atómica; panel con permisos | `tests/buses-base.test.ts`, `tests/buses-reglas.test.ts`; flujo completo en navegador (local). Falta: staging contra copia de la base `turismo`, SMTP real |
 | F — Panel unificado | ✅ | Tablero con datos reales; usuarios y permisos | Tablero, `/admin/usuarios`, menú por permisos (verificado con 3 roles) |
 | G — Migue | ✅ | Un widget; contenido con agenda y cupos reales | `tests/migue-bus.test.ts`; `/api/migue/contenido` sin datos personales (verificado) |
-| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 159/159 tests unitarios, **37/37 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
+| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 176/176 tests unitarios, **43/43 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
 | I — Despliegue | 🟡 | Guía de despliegue, rollback y verificación | `deploy/README.md`, `deploy/sql/`, `.env.example`. Falta: ensayo en staging |
 
 ## Qué está implementado
@@ -43,6 +43,21 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 - `npm run cultura` (espacios, base de la Agenda, WordPress viejo, `completar-lugares` sin red) con legado, fusión sin pisar lo editado,
   fechas en hora de Tucumán y categorías nuevas. El mapeo EventON de la Agenda se reutiliza tal cual.
 - Redirecciones 308 de las rutas de la Agenda (`/eventos/x`, `/espacios-culturales`, espacios en la raíz…).
+
+### Talleres anuales de los centros culturales
+- `/talleres` (es/en/pt): 72 talleres de la planilla 2026 de Gestión Cultural en 4 centros, con búsqueda y filtros por centro,
+  día, disciplina y para chicos (en la URL), y dónde inscribirse con dirección, horario y teléfono de cada centro.
+- `npm run cultura -- talleres --desde-planilla X.xlsx` (prueba en seco por defecto) → `datos/cultura/talleres.json`, con la lista
+  de errores de la planilla. Lector de .xlsx propio (zip + zlib), sin dependencias.
+- La agenda y la portada ya no muestran los talleres anuales (taparían los eventos): enlazan a `/talleres`. Migue recibe una
+  ficha por centro con talleres, días, horarios e inscripción; el planificador los ofrece solo si la persona pide clases.
+
+### Mapa interactivo
+- `/mapa` (es/en/pt) dentro del portal, en lugar de mandar a mapa.smt.gob.ar: Leaflet + OpenStreetMap con las 30 capas y ~840 puntos
+  de la API pública del mapa municipal (`MAPA_SMT_API`, copia de una hora) y los lugares publicados del portal (para visitar y
+  para comer). Búsqueda, capas y `?lugar=` en la URL; lista accesible de lo que se ve; globos armados como texto.
+- El servidor de la API municipal (puerto 5050) no envía su certificado intermedio: el portal lo suma solo para esas conexiones
+  (`lib/certificados/sectigo-dv-r36.ts`), sin desactivar la verificación. Conviene que Innovación corrija el servidor.
 
 ### Buses
 - Código de BotTurismo portado (`lib/buses`, `components/buses`, `app/api/**` con los **mismos contratos**).
@@ -101,7 +116,11 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | Portugués del Bus Turístico y Bus Educativo | P2 | Los textos del bus existen en es/en; en pt se muestra español con aviso |
 | Auditoría con diferencias campo por campo en operaciones del bus | P3 | Hoy se registra persona, operación y ruta (se anota al pedirla: incluye intentos rechazados) |
 | Fotos de los eventos en la base local | P3 | `npm run cultura -- eventos --desde-wordpress --escribir --actualizar --fotos` completa la foto vacía; el 24/11 agendaculturalsmt.com no respondía. Sin foto, la tarjeta usa la del lugar o la imagen por defecto de la Agenda |
-| Lugares para comer en el portal (la guía de bares y peñas de Turismo) | P2 | Cargados como lugares de tipo gastronomía, el planificador los nombra con su enlace en las comidas |
+| Validar y publicar los lugares para comer y La Ruta de la Empanada | P1 | 8 lugares (Ente Tucumán Turismo, ranking TripAdvisor 2017, Ruta de la Empanada) y la experiencia, en borrador con fuentes y horarios «a confirmar». Sumar la guía de bares y peñas de Turismo |
+| Talleres 2026: corregir la planilla y confirmar condiciones | P1 | 3 errores (Danza árabe «2O:30», Pintura al óleo «19:00 a 12:00», Del Tiempo I'Ñaupa sin hora de fin) y la columna de alumnos vacía. Confirmar si los «no municipales» son gratuitos y cómo se inscribe. Pasar la carga al panel |
+| Estructura de la web de Cultura (documento de Gestión Cultural) | P2 | Falta la Casa Belgraniana – Solar Histórico, los programas Crear Encuentro y Cultura Joven, y alojamientos |
+| Coordenadas de los lugares para comer y del resto de las fichas | P2 | Sin coordenadas no aparecen en la capa del portal del mapa |
+| Certificado del servidor del mapa municipal | P2 | Pedir a Innovación que estadisticas.smt.gob.ar:5050 envíe la cadena completa |
 | Lint (ESLint) | P3 | PagTurismo no tenía linter configurado |
 
 ## Decisiones tomadas

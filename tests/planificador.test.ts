@@ -20,6 +20,7 @@ const ocurrencia = (o: Partial<OcurrenciaAgenda> & Pick<OcurrenciaAgenda, "event
 const fuentes: FuentesCatalogo = {
   lugares: [
     { ...comun, slug: "casa-historica", titulo: "Casa Histórica", resumen: "Donde se declaró la Independencia.", categorias: ["historia-y-patrimonio"], clase: "museo", costo, imperdible: true, zona: "Centro" },
+    { ...comun, slug: "museo-ciudad", titulo: "Casa Museo de la Ciudad", resumen: "Historia de la ciudad.", categorias: ["historia-y-patrimonio"], clase: "museo", costo },
     { ...comun, slug: "ex-mercado", titulo: "Ex Mercado de Abasto", resumen: "Edificio histórico.", categorias: ["historia-y-patrimonio"], clase: "edificio", costo },
     { ...comun, slug: "parque-9", titulo: "Parque 9 de Julio", resumen: "El gran parque.", categorias: ["parques-y-aire-libre"], clase: "parque", costo },
   ] as never,
@@ -151,6 +152,29 @@ describe("Planificador: la respuesta de la IA", () => {
     assert.ok(!catalogo.find((x) => x.titulo === "Ex Mercado de Abasto")!.comida);
     assert.ok(catalogo.find((x) => x.titulo === "Feria de sabores")!.comida);
     assert.match(armarPrompt(pedido, catalogo, new Map()), /Feria de sabores \| 2026-11-25 12:30 \| PARA COMER \| zona: Plaza Urquiza/);
+  });
+
+  it("deja un solo paseo en el Bus Turístico por día", () => {
+    const cat = [...catalogo, { id: "x9", tipo: "experiencia" as const, titulo: "City Tour en Bus Turístico", url: "/experiencias/city-tour", texto: "x", temas: [] }];
+    const texto = JSON.stringify({ dias: [{}, { actividades: [
+      { momento: "manana", ref: id("Bus Turístico: Histórico Cultural"), titulo: "x", detalle: "x" },
+      { momento: "tarde", ref: "x9", titulo: "x", detalle: "x" },
+    ] }] });
+    assert.deepEqual(validarRespuesta(texto, pedido, cat)!.dias[1].actividades.map((a) => a.titulo), ["Bus Turístico: Histórico Cultural"]);
+  });
+
+  it("los museos no van un lunes, y el prompt dice el día de la semana de cada fecha", () => {
+    const lunes = pedidoBase({ llegada: "2026-11-30", dias: 1 });
+    const cat = armarCatalogo(fuentes, lunes);
+    const museo = cat.find((x) => x.titulo === "Casa Museo de la Ciudad")!;
+    assert.ok(museo.cierraLunes);
+    assert.match(armarPrompt(lunes, cat, new Map()), /Días: 1 \(lunes 2026-11-30\)/);
+    const texto = JSON.stringify({ dias: [{ actividades: [
+      { momento: "manana", ref: museo.id, titulo: "x", detalle: "x" },
+      { momento: "tarde", ref: cat.find((x) => x.titulo === "Circuito a pie")!.id, titulo: "x", detalle: "x" },
+    ] }] });
+    assert.deepEqual(validarRespuesta(texto, lunes, cat)!.dias[0].actividades.map((a) => a.titulo), ["Circuito a pie"]);
+    assert.ok(!planSinIA(lunes, cat).dias[0].actividades.some((a) => a.titulo === "Casa Museo de la Ciudad"));
   });
 
   it("saca los ids del catálogo que el modelo cita en los textos", () => {

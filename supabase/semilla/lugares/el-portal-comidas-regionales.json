@@ -1,0 +1,57 @@
+{
+  "estado": "borrador",
+  "titulo": "El Portal — Comidas regionales",
+  "clase": "restaurante de comidas regionales",
+  "resumen": "Comidas regionales en pleno centro, a pasos de Plaza Independencia. Primera parada de la Ruta de la Empanada.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "Centro",
+  "direccion": "24 de Septiembre 351",
+  "horario": {
+    "texto": "Lunes a sábados de 12 a 16 y de 20 a 0; domingos de 12 a 16",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "pago",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "Bares y restaurantes — Ente Tucumán Turismo (consultado el 24/11/2026)",
+      "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/294/bars-and-restaurants"
+    },
+    {
+      "titulo": "La Ruta de la Empanada — La Gaceta, 7/3/2026",
+      "url": "https://www.lagaceta.com.ar/nota/1127206/sociedad/abrieron-inscripciones-para-hacer-recorrido-turistico-ruta-empanada.html"
+    },
+    {
+      "titulo": "Ranking TripAdvisor de restaurantes de la capital — Contexto Tucumán, 17/12/2017",
+      "url": "https://www.contextotucuman.com/nota/100006/ranking-los-15-mejores-restaurantes-de-la-capital-tucumana-segun-tripadvisor.html"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "El Portal — Regional food",
+      "clase": "regional food restaurant",
+      "resumen": "Regional dishes downtown, steps from Plaza Independencia. First stop of the Empanada Route."
+    },
+    "pt": {
+      "titulo": "El Portal — Comidas regionais",
+      "clase": "restaurante de comidas regionais",
+      "resumen": "Comidas regionais no centro, perto da Praça Independencia. Primeira parada da Rota da Empanada."
+    }
+  }
+}

@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
   const bus = await datosDelBusParaMigue();
   const catalogo = armarCatalogo({
     lugares: c.lugares, experiencias: c.experiencias, recorridos: c.recorridos, platos: c.platos, escapadas: c.escapadas,
-    agenda: ocurrenciasDeAgenda(c), salidas: bus?.salidas ?? [], circuitos: new Map((bus?.circuitos ?? []).map((k) => [k.slug, k.nombre])),
+    agenda: ocurrenciasDeAgenda(c, Date.now(), { conTalleres: true }), salidas: bus?.salidas ?? [], circuitos: new Map((bus?.circuitos ?? []).map((k) => [k.slug, k.nombre])),
   }, pedido);
 
   let plan: Plan | null = null;

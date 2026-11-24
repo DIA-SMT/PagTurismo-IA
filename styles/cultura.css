@@ -317,3 +317,34 @@
 .agenda-rapidas button[aria-pressed="true"] { outline: 2px solid currentColor; outline-offset: 2px; }
 .agenda-dia-nav { display: flex; align-items: center; gap: var(--sp-3); margin-top: var(--sp-4); }
 .agenda-dia-nav strong { font-size: var(--fs-md); }
+
+/* ---- Talleres anuales de los centros culturales ---- */
+.talleres { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 20rem); gap: var(--sp-6); align-items: start; }
+.talleres-filtros { grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1fr)); }
+.talleres-dias { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-4); }
+.talleres-filtrables .filtros__check { margin-top: var(--sp-2); }
+.talleres-lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); gap: var(--sp-4); margin-top: var(--sp-3); padding: 0; list-style: none; }
+.taller { position: relative; display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4) var(--sp-5); border: 1px solid var(--c-borde-objeto); border-radius: 1rem; background: var(--c-blanco); box-shadow: 0 8px 24px rgb(7 31 61 / 0.06); }
+.taller > .tono { align-self: flex-start; }
+.taller__titulo { font-size: 1.15rem; line-height: 1.2; letter-spacing: -0.01em; }
+.taller__detalle, .taller__prof { color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.taller__horarios { display: grid; gap: 2px; padding: 0; list-style: none; font-size: var(--fs-sm); }
+.taller__horarios strong { display: inline-block; min-width: 2.4rem; color: var(--c-azul-700); }
+.taller__nota { color: var(--c-ink-soft); }
+.taller__centro { display: flex; gap: 6px; align-items: flex-start; margin-top: auto; padding-top: var(--sp-2); border-top: 1px solid var(--c-borde-suave); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.taller__centro svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
+.taller__municipal { position: absolute; top: var(--sp-4); right: var(--sp-4); }
+.talleres-inscripcion { position: sticky; top: 6rem; padding: var(--sp-5); border-radius: 1rem; background: var(--c-azul-50); }
+.talleres-inscripcion h2 { font-size: var(--fs-md); }
+.talleres-inscripcion > p { margin-top: var(--sp-2); color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.talleres-inscripcion ul { display: grid; gap: var(--sp-4); margin-top: var(--sp-4); padding: 0; list-style: none; }
+.talleres-inscripcion li { display: grid; gap: 4px; font-size: var(--fs-sm); }
+.talleres-inscripcion li span { display: flex; gap: 6px; align-items: flex-start; color: var(--c-ink-soft); }
+.talleres-inscripcion li svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
+.talleres-fuente { margin-top: var(--sp-4) !important; font-size: var(--fs-xs) !important; }
+.agenda-talleres { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-2) var(--sp-4); margin-top: var(--sp-4); padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); background: var(--c-azul-50); font-size: var(--fs-sm); }
+@media (max-width: 64rem) {
+  .talleres { grid-template-columns: minmax(0, 1fr); }
+  .talleres-inscripcion { position: static; }
+}
+@media (max-width: 56rem) { .talleres-filtros { grid-template-columns: minmax(0, 1fr); } }

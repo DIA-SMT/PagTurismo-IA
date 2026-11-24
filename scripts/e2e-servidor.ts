@@ -73,6 +73,8 @@ const next = spawn(process.execPath, [path.join("node_modules", "next", "dist", 
     // (vacía y no ausente: así Next no la toma del .env.local).
     NEXT_PUBLIC_MIGUE_URL: "no",
     OPENROUTER_API_KEY: "",
+    // Sin el mapa de la Municipalidad: el mapa muestra solo los lugares del portal y lo avisa.
+    MAPA_SMT_API: "no",
   },
 });
 const terminar = () => next.kill();

@@ -27,6 +27,7 @@ import {
   normalizarLugar, normalizarPlato, normalizarRecorrido,
 } from "./normalizar";
 import type { OcurrenciaAgenda } from "./cultura/agenda";
+import { esTallerAnual } from "./cultura/talleres";
 import { rutas } from "./rutas";
 import type {
   Categoria, CategoriaAgenda, Destacado, Escapada, Etiqueta, Evento, Experiencia, Guia, ItemCatalogo, Lugar, Plato, Recorrido, Sitio,
@@ -244,9 +245,14 @@ export const categoriaPorId = (c: Contenido, id: string) => c.categorias.find((k
  * Las fechas vigentes de la agenda listas para filtrar y mostrar (lib/cultura/agenda.ts). Las usan
  * la portada y /agenda: viajan al navegador, así que solo lo necesario.
  */
-export function ocurrenciasDeAgenda(c: Contenido, ahora = Date.now()): OcurrenciaAgenda[] {
+export function ocurrenciasDeAgenda(c: Contenido, ahora = Date.now(), { conTalleres = false } = {}): OcurrenciaAgenda[] {
   const lugares = lugaresPorSlug(c);
-  return agenda(c, ahora).map((o) => {
+  const todas = agenda(c, ahora);
+  // Los talleres anuales de los centros culturales van en /talleres: acá taparían los eventos.
+  const fechas = new Map<string, number>();
+  for (const o of todas) fechas.set(o.evento, (fechas.get(o.evento) ?? 0) + 1);
+  const visibles = conTalleres ? todas : todas.filter((o) => !esTallerAnual({ titulo: o.datos.titulo, resumen: o.datos.resumen }, fechas.get(o.evento)));
+  return visibles.map((o) => {
     const lugar = o.datos.lugar ? lugares.get(o.datos.lugar) : undefined;
     return {
       evento: o.evento, inicio: o.inicio, fin: o.fin, estado: o.estado, sede: o.sede ?? o.datos.sede, nota: o.nota, enCurso: o.enCurso,

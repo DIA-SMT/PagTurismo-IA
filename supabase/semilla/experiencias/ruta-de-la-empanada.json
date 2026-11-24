@@ -1,0 +1,62 @@
+{
+  "estado": "borrador",
+  "titulo": "La Ruta de la Empanada",
+  "resumen": "Recorrido a pie por tres locales del centro: empanadas, un taller para armar la tuya, malambo y folclore.",
+  "modalidad": "a-pie",
+  "guiada": true,
+  "categorias": [
+    "sabores-tucumanos",
+    "cultura-y-espectaculos"
+  ],
+  "etiquetas": [
+    "a-pie",
+    "requiere-reserva"
+  ],
+  "descripcion": "La Municipalidad creó este recorrido tras el reconocimiento de Taste Atlas a la empanada tucumana. Sale al mediodía frente a Plaza Independencia y pasa por El Portal (empanada y espectáculo de bombos y malambo), El Cardón (taller de armado: cada uno come la que armó) y Lo de la Paliza (última empanada y espectáculo folclórico).",
+  "duracion": "",
+  "horario": {
+    "texto": "Viernes a las 12",
+    "confirmado": false
+  },
+  "puntoEncuentro": "Laprida, primera cuadra, frente a Plaza Independencia",
+  "lugares": [
+    "el-portal-comidas-regionales",
+    "el-cardon",
+    "lo-de-la-paliza"
+  ],
+  "incluye": "Tres empanadas, un taller de armado y espectáculos de malambo y folclore.",
+  "requisitos": "Inscripción previa en línea.",
+  "politicaClima": "",
+  "operador": "Municipalidad de San Miguel de Tucumán",
+  "costo": {
+    "modalidad": "consultar",
+    "detalle": ""
+  },
+  "accion": {
+    "tipo": "inscripcion",
+    "texto": "Inscribirse (formulario de la Municipalidad)",
+    "url": "https://docs.google.com/forms/d/1adybJX2oTnjvYAfo8iL-iKha5Juxn6dSarnk-Yqes3g/viewform"
+  },
+  "salidas": [],
+  "fuentes": [
+    {
+      "titulo": "La Ruta de la Empanada — La Gaceta, 7/3/2026",
+      "url": "https://www.lagaceta.com.ar/nota/1127206/sociedad/abrieron-inscripciones-para-hacer-recorrido-turistico-ruta-empanada.html"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "The Empanada Route",
+      "resumen": "A walking route through three downtown spots: empanadas, a make-your-own workshop, malambo and folk music."
+    },
+    "pt": {
+      "titulo": "A Rota da Empanada",
+      "resumen": "Percurso a pé por três lugares do centro: empanadas, uma oficina para montar a sua, malambo e folclore."
+    }
+  }
+}

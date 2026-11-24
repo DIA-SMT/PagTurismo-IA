@@ -9,7 +9,7 @@ import { Icono } from "@/components/Iconos";
 import { Cabecera, Enlace, Marca } from "@/components/Ui";
 import { getClima } from "@/lib/clima";
 import { datosDelBusParaMigue } from "@/lib/buses/migue";
-import { BUS_TURISTICO, MAPA } from "@/lib/contenido";
+import { BUS_TURISTICO } from "@/lib/contenido";
 import { contenido, destacadosVigentes, agendaDestacada, ocurrenciasDeAgenda } from "@/lib/datos";
 import { CategoriasAgenda, GrillaEventos, SemanaAgenda } from "@/components/cultura/Agenda";
 import { categoriasPopulares, proximosDias, proximosEventos } from "@/lib/cultura/agenda";
@@ -57,7 +57,7 @@ export default async function Portada() {
     { titulo: tc.nav.agenda, detalle: t.accesos.agendaDetalle, url: "/agenda", icono: "calendario" },
     { titulo: t.accesos.bus, detalle: t.accesos.busDetalle, url: BUS_TURISTICO, icono: "bus-linea" },
     { titulo: t.accesos.imperdibles, detalle: t.accesos.imperdiblesDetalle, url: "/descubri", icono: "estrella" },
-    { titulo: t.accesos.mapa, detalle: t.accesos.mapaDetalle, url: MAPA, icono: "mapa" },
+    { titulo: t.accesos.mapa, detalle: t.accesos.mapaDetalle, url: "/mapa", icono: "mapa" },
   ];
   const ahora = Date.now();
   const sitio = c.sitio;
@@ -151,6 +151,10 @@ export default async function Portada() {
               enlace={{ texto: textosPagina.cultura.portada.verAgenda, url: "/agenda" }} />
             <GrillaEventos ocurrencias={proximosAgenda} categorias={c.categoriasAgenda} />
             <SemanaAgenda dias={semanaAgenda} categorias={c.categoriasAgenda} />
+            <p className="agenda-talleres">
+              <span>{textosPagina.talleres.portadaTexto}</span>
+              <Link className="enlace-flecha" href="/talleres">{textosPagina.talleres.verTalleres} <Icono nombre="flecha" tamano={16} /></Link>
+            </p>
           </section>
           {categoriasConFechas.length > 0 && (
             <section className="franja-categorias" aria-labelledby="categorias-titulo" data-modulo="cultura">
@@ -428,7 +432,7 @@ export default async function Portada() {
           </div>
         </div>
 
-        <Enlace className="mapa" href={MAPA}>
+        <Enlace className="mapa" href="/mapa">
           <div className="mapa__plano" aria-hidden="true">
             <span className="mapa__parque" />
             <span className="mapa__pin"><Icono nombre="ubicacion" tamano={40} /><span>San Miguel de Tucumán</span></span>
@@ -438,7 +442,7 @@ export default async function Portada() {
               <h2>{tc.pie.enlaces.mapa}</h2>
               <p>{t.contacto.mapaTexto}</p>
             </div>
-            <Icono nombre="externo" tamano={22} />
+            <Icono nombre="flecha" tamano={22} />
           </div>
         </Enlace>
       </section>
