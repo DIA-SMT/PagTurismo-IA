@@ -10,22 +10,44 @@
 .prosa { max-width: 44rem; color: var(--c-ink); font-size: var(--fs-base); line-height: var(--lh-prosa); }
 
 /* ---- Encabezado de página ---- */
+/* La banda de marca de Applaza (navy a azul, brillo celeste y ondas al pie).
+   Es identidad, como el pie: no cambia con el tema y lleva su texto blanco
+   (15,5:1 sobre el navy y 4,8:1 en el extremo azul, donde nunca hay texto
+   chico porque el contenido queda a la izquierda). */
 .pagina-cabecera {
-  padding-block: var(--sp-7);
-  border-bottom: 1px solid var(--c-borde);
-  background: linear-gradient(180deg, var(--c-azul-50), var(--c-fondo));
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: var(--sp-7) calc(var(--sp-7) + 3.5rem);
+  background: var(--degrade-marca);
+  color: #fff;
 }
+.pagina-cabecera::before, .pagina-cabecera::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0; right: 0; bottom: -1px;
+  height: 3.75rem;
+  pointer-events: none;
+}
+.pagina-cabecera::before { background: var(--olas-marca) center / 100% 100% no-repeat; }
+.pagina-cabecera::after { background: var(--c-fondo); -webkit-mask: var(--ola-fondo) center / 100% 100% no-repeat; mask: var(--ola-fondo) center / 100% 100% no-repeat; }
 .pagina-cabecera h1 {
   max-width: var(--ancho-titular);
   margin-top: var(--sp-3);
+  color: #fff;
   font-size: clamp(2.1rem, 1.5rem + 2.2vw, 3.4rem);
   font-weight: var(--fw-titular);
   line-height: 1.05;
-  letter-spacing: -0.045em;
+  letter-spacing: var(--ls-titular);
 }
-.pagina-cabecera__bajada { max-width: 42rem; margin-top: var(--sp-3); color: var(--c-ink-soft); font-size: var(--fs-md); }
-.pagina-cabecera .kicker { text-transform: uppercase; }
-.pagina-cabecera .cabecera__enlace { margin-top: var(--sp-3); }
+.pagina-cabecera__bajada { max-width: 42rem; margin-top: var(--sp-3); color: #E4EFFF; font-size: var(--fs-md); }
+.pagina-cabecera .kicker { color: #fff; text-transform: uppercase; }
+.pagina-cabecera .cabecera__enlace { margin-top: var(--sp-3); color: #fff; }
+.pagina-cabecera :focus-visible { outline-color: #fff; }
+.pagina-cabecera .migas li { color: #C9DCF7; }
+.pagina-cabecera .migas li + li::before { color: #9DB8E0; }
+.pagina-cabecera .migas a, .pagina-cabecera .migas [aria-current] { color: #fff; }
 
 .migas ol { display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-2); margin-bottom: var(--sp-5); padding: 0; list-style: none; font-size: var(--fs-xs); }
 .migas li { display: inline-flex; align-items: center; gap: var(--sp-2); color: var(--c-ink-muted); }
@@ -183,7 +205,7 @@
 .item__sin-foto { display: grid; place-items: center; height: 100%; background: linear-gradient(150deg, var(--c-azul-50), var(--c-celeste-50)); color: var(--c-azul-700); }
 .item__cuerpo { display: flex; flex: 1; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4) var(--sp-5) var(--sp-5); }
 .item__marcas { display: flex; flex-wrap: wrap; gap: 6px; }
-.item__titulo { font-size: 1.2rem; font-weight: var(--fw-fuerte); line-height: 1.25; letter-spacing: -0.02em; }
+.item__titulo { font-size: 1.2rem; font-weight: var(--fw-fuerte); line-height: 1.25; letter-spacing: var(--ls-titular); }
 .item__meta { color: var(--c-azul-700); font-size: var(--fs-xs); font-weight: var(--fw-semi); }
 .item__resumen { color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.5; }
 @media (max-width: 64rem) { .items { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -202,13 +224,13 @@
 .vacio p { max-width: 36rem; margin: var(--sp-2) auto 0; color: var(--c-ink-soft); }
 .vacio__acciones { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--sp-3); margin-top: var(--sp-5); }
 .pagina-vacia { padding-block: var(--sp-9) var(--sp-10); text-align: center; }
-.pagina-vacia h1 { margin-top: var(--sp-3); font-size: var(--fs-3xl); font-weight: var(--fw-titular); letter-spacing: -0.04em; }
+.pagina-vacia h1 { margin-top: var(--sp-3); font-size: var(--fs-3xl); font-weight: var(--fw-titular); letter-spacing: var(--ls-titular); }
 .pagina-vacia p { max-width: 34rem; margin: var(--sp-3) auto 0; color: var(--c-ink-soft); }
 
 /* ---- Grupos dentro de una página ---- */
 .grupo { margin-top: var(--sp-8); }
 .grupo:first-child { margin-top: 0; }
-.grupo > h2, .grupo__cabecera h2 { margin-bottom: var(--sp-2); font-size: var(--fs-xl); font-weight: var(--fw-titular); letter-spacing: -0.03em; }
+.grupo > h2, .grupo__cabecera h2 { margin-bottom: var(--sp-2); font-size: var(--fs-xl); font-weight: var(--fw-titular); letter-spacing: var(--ls-titular); }
 .grupo > .texto-suave, .grupo__cabecera .texto-suave { max-width: 44rem; margin-bottom: var(--sp-5); }
 .grupo > h2 + .items { margin-top: var(--sp-4); }
 .grupo__cabecera { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--sp-3) var(--sp-5); margin-bottom: var(--sp-4); }
@@ -224,7 +246,7 @@
 }
 .ficha__principal { display: flex; flex-direction: column; gap: var(--sp-7); min-width: 0; }
 .ficha__principal > .aviso { margin-bottom: calc(var(--sp-5) - var(--sp-7)); }
-.ficha__principal h2 { margin-bottom: var(--sp-3); font-size: var(--fs-lg); font-weight: var(--fw-fuerte); letter-spacing: -0.02em; }
+.ficha__principal h2 { margin-bottom: var(--sp-3); font-size: var(--fs-lg); font-weight: var(--fw-fuerte); letter-spacing: var(--ls-titular); }
 .ficha__destacado { max-width: 44rem; font-size: var(--fs-md); line-height: 1.6; }
 .ficha__foto { margin: 0; }
 .ficha__foto-marco { position: relative; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 22px; background: var(--c-fondo-alt); }
@@ -399,7 +421,7 @@
   padding: var(--sp-4);
   border: 1px solid var(--c-borde-objeto);
   border-radius: 16px;
-  background: var(--c-fondo);
+  background: var(--c-blanco);
   color: var(--c-ink);
   text-decoration: none;
   transition: border-color var(--t-rapida), transform var(--t-media);
