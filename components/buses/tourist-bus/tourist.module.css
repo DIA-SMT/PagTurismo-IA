@@ -61,13 +61,13 @@
 }
 
 .langButton:hover {
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
 }
 
 .langButtonActive,
 .langButtonActive:hover {
   background: var(--c-azul-500);
-  color: var(--c-blanco);
+  color: #fff;
 }
 
 /* En pantallas chicas el selector de idioma se achica para compartir la fila
@@ -142,7 +142,7 @@
   border-radius: 999px;
   border: 1px solid rgba(37, 137, 234, 0.35);
   background: var(--c-blanco);
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(12, 28, 46, 0.16);
   transition: background 160ms ease, transform 160ms ease;
@@ -178,7 +178,7 @@
   border: 1px solid rgba(37, 137, 234, 0.35);
   border-radius: 999px;
   background: var(--c-fondo);
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
   font-size: 0.76rem;
   font-weight: 700;
   padding: 4px 10px;
@@ -188,7 +188,7 @@
 
 .dateChip:hover {
   background: var(--c-azul-600);
-  color: var(--c-blanco);
+  color: #fff;
 }
 
 .chipMore {
@@ -226,7 +226,7 @@
 }
 
 .departureDate {
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
   font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.05em;
@@ -289,7 +289,7 @@
   border-radius: 12px;
   padding: 9px 18px;
   background: var(--c-azul-600);
-  color: var(--c-blanco);
+  color: #fff;
   font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
@@ -347,7 +347,7 @@
   height: 44px;
   border-radius: 14px;
   background: var(--c-tinte-azul);
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
 }
 
 .catalogName {
@@ -396,7 +396,7 @@
 .originOption:hover,
 .originOption:focus-visible {
   background: var(--c-tinte-azul);
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
 }
 
 /* Etiqueta de modalidad del circuito (bus / a pie / bici). */
@@ -437,7 +437,7 @@
   border: 1px solid rgba(37, 137, 234, 0.35);
   border-radius: 999px;
   background: transparent;
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
   font-size: 0.82rem;
   font-weight: 700;
   padding: 7px 15px;
@@ -501,12 +501,12 @@
   height: 38px;
   border-radius: 12px;
   background: var(--c-tinte-azul);
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
   margin-bottom: 4px;
 }
 
 .galleryDate {
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -527,7 +527,7 @@
 
 .galleryAllLink {
   align-self: flex-start;
-  color: var(--c-azul-600);
+  color: var(--c-azul-700);
   font-size: 0.92rem;
   font-weight: 800;
   text-decoration: none;

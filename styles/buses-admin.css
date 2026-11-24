@@ -308,7 +308,7 @@
 }
 .mod-buses .btn-primary {
   background: var(--accent);
-  color: var(--c-blanco);
+  color: #fff;
 }
 .mod-buses .btn-primary:hover {
   background: var(--accent-deep);
@@ -523,7 +523,7 @@
   background: var(--accent);
   color: var(--accent-deep);
   border-color: var(--accent);
-  color: var(--c-blanco);
+  color: #fff;
   box-shadow: 0 10px 24px rgba(18, 111, 245, 0.16);
 }
 

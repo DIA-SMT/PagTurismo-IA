@@ -6,7 +6,7 @@
   --brand-blue-soft: var(--c-tinte-azul);
   --text-strong: var(--c-ink);
   --text-main: var(--c-ink);
-  --text-muted: var(--c-ink-muted);
+  --text-muted: var(--c-ink-soft);
   --border-soft: var(--c-borde);
   --surface: var(--c-blanco);
 
@@ -91,7 +91,7 @@
 }
 
 .brandTitle {
-  color: var(--brand-blue);
+  color: var(--c-azul-700);
   font-size: 1.23rem;
   font-weight: 800;
 }
@@ -115,7 +115,7 @@
 }
 
 .nav a:hover {
-  color: var(--brand-blue-strong);
+  color: var(--c-azul-700);
 }
 
 .headerAction {
@@ -126,7 +126,7 @@
   padding: 0 18px;
   border: 1px solid var(--brand-blue-strong);
   border-radius: 999px;
-  color: var(--c-blanco);
+  color: #fff;
   background: var(--brand-blue-strong);
   font-size: 0.86rem;
   font-weight: 800;
@@ -135,7 +135,7 @@
 
 .headerAction:hover {
   background: var(--brand-blue-deep);
-  color: var(--c-blanco);
+  color: #fff;
   transform: translateY(-1px);
 }
 
@@ -210,7 +210,7 @@
   margin: 0 auto;
   padding: clamp(92px, 13vh, 142px) 0 clamp(104px, 13vh, 138px);
   text-align: left;
-  color: var(--c-blanco);
+  color: #fff;
 }
 
 .eyebrow {
@@ -222,7 +222,7 @@
   border: 1px solid rgba(255, 255, 255, 0.42);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.14);
-  color: var(--c-blanco);
+  color: #fff;
   font-size: 0.82rem;
   font-weight: 800;
   animation: heroContentIn 560ms 80ms ease-out both;
@@ -281,7 +281,7 @@
   padding: 0 28px;
   border-radius: 3px;
   border: 2px solid rgba(255, 255, 255, 0.86);
-  color: var(--c-blanco);
+  color: #fff;
   font-size: 0.98rem;
   font-weight: 800;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
@@ -289,7 +289,7 @@
 
 .primaryCta {
   background: var(--brand-blue-strong);
-  border-color: var(--c-blanco);
+  border-color: #fff;
 }
 
 .secondaryCta {
@@ -356,7 +356,7 @@
   border-radius: 4px;
   padding: 18px;
   position: relative;
-  color: var(--c-blanco);
+  color: #fff;
   text-align: left;
   background:
     linear-gradient(180deg, rgba(11, 28, 62, 0.02), rgba(11, 28, 62, 0.66)),
@@ -601,7 +601,7 @@
 .templateLink:hover {
   border-color: var(--brand-blue);
   background: var(--brand-blue);
-  color: var(--c-blanco);
+  color: #fff;
   transform: translateY(-1px);
 }
 
@@ -663,14 +663,14 @@
   border: 1px solid rgba(37, 137, 234, 0.28);
   border-radius: 999px;
   background: var(--c-blanco);
-  color: var(--brand-blue-strong);
+  color: var(--c-azul-700);
   font-size: 1.28rem;
   line-height: 1;
 }
 
 .calendarNavButton:hover:not(:disabled) {
   background: var(--brand-blue-strong);
-  color: var(--c-blanco);
+  color: #fff;
 }
 
 .calendarNavButton:disabled {
@@ -765,7 +765,7 @@
 .publicCalendarShiftSelected {
   border-color: var(--brand-blue-strong);
   background: var(--brand-blue-strong);
-  color: var(--c-blanco);
+  color: #fff;
 }
 
 .actions {
@@ -787,7 +787,7 @@
   gap: 10px;
   padding: 0 24px;
   background: var(--brand-blue-strong);
-  color: var(--c-blanco);
+  color: #fff;
   font-size: 0.98rem;
   font-weight: 900;
   box-shadow: 0 16px 30px rgba(18, 111, 245, 0.22);
@@ -877,7 +877,7 @@
   display: grid;
   place-items: center;
   background: var(--brand-blue-deep);
-  color: var(--c-blanco);
+  color: #fff;
   font-weight: 900;
 }
 
@@ -980,7 +980,7 @@
   height: 18px;
   border-radius: 999px;
   border: 2px solid rgba(255, 255, 255, 0.5);
-  border-top-color: var(--c-blanco);
+  border-top-color: #fff;
   animation: spin 0.65s linear infinite;
 }
 
@@ -1181,4 +1181,23 @@
 /* Portal unificado: nada de esta página puede generar desplazamiento horizontal. */
 .page {
   overflow-x: clip;
+}
+
+/* Portal unificado: el texto sobre la foto del hero va siempre en blanco. Los títulos del portal
+   (h1–h4) toman el color de tinta por defecto, que sobre la foto no se leía. */
+.heroContent :is(h1, h2, h3, p) {
+  color: #fff;
+}
+/* Botones del hero con la forma y el subrayado de los botones del portal. */
+.primaryCta,
+.secondaryCta {
+  border-radius: var(--r-full);
+  text-decoration: none;
+}
+.primaryCta:hover,
+.secondaryCta:hover,
+.primaryCta:focus-visible,
+.secondaryCta:focus-visible {
+  color: #fff;
+  text-decoration: none;
 }

@@ -31,7 +31,7 @@
   gap: 10px;
   padding: 10px 14px;
   background: var(--bt-blue-deep);
-  color: var(--c-blanco);
+  color: #fff;
 }
 
 .headerTitle {
@@ -72,7 +72,7 @@
   padding: 7px 12px;
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--c-blanco);
+  color: #fff;
 }
 
 .statusActive { background: var(--bt-green); }
@@ -186,7 +186,7 @@
   border: 0;
   border-radius: 12px;
   background: var(--bt-blue);
-  color: var(--c-blanco);
+  color: #fff;
   font-size: 1.08rem;
   font-weight: 800;
   cursor: pointer;
@@ -345,7 +345,7 @@
   justify-content: center;
   border-radius: 999px;
   border: 3px dashed var(--c-borde-objeto);
-  color: #aab6c4;
+  color: var(--c-borde-campo);
   font-size: 1.35rem;
   background: var(--c-blanco);
 }
@@ -445,7 +445,7 @@
   bottom: 70px;
   z-index: 40;
   background: var(--bt-ink);
-  color: var(--c-blanco);
+  color: #fff;
   border-radius: 12px;
   padding: 12px 14px;
   font-size: 0.95rem;
@@ -459,14 +459,14 @@
   flex: 0 0 auto;
   border: 0;
   background: transparent;
-  color: var(--c-blanco);
+  color: #fff;
   font-size: 1.1rem;
   cursor: pointer;
 }
 
 .connectionBanner {
   background: var(--bt-red);
-  color: var(--c-blanco);
+  color: #fff;
   text-align: center;
   font-size: 0.82rem;
   font-weight: 700;
