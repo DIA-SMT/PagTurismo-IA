@@ -17,7 +17,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | E — Buses | 🟡 | Reserva real contra la función atómica; panel con permisos | `tests/buses-base.test.ts`, `tests/buses-reglas.test.ts`; flujo completo en navegador (local). Falta: staging contra copia de la base `turismo`, SMTP real |
 | F — Panel unificado | ✅ | Tablero con datos reales; usuarios y permisos | Tablero, `/admin/usuarios`, menú por permisos (verificado con 3 roles) |
 | G — Migue | ✅ | Un widget; contenido con agenda y cupos reales | `tests/migue-bus.test.ts`; `/api/migue/contenido` sin datos personales (verificado) |
-| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 142/142 tests unitarios, **34/34 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
+| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 155/155 tests unitarios, **37/37 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
 | I — Despliegue | 🟡 | Guía de despliegue, rollback y verificación | `deploy/README.md`, `deploy/sql/`, `.env.example`. Falta: ensayo en staging |
 
 ## Qué está implementado
@@ -56,6 +56,15 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 - Panel: salidas y reservas, circuitos, Bus Educativo, books de fotos, BiciTour, FAQ e interacciones de Migue.
   Cada operación de escritura queda en la auditoría del portal con la persona.
 - CSS del bus convertido a tokens del portal (tema claro y oscuro); íconos con el sprite del portal.
+
+### Planificador de la visita con IA
+- En Planificá tu visita: primera vez o no, días y fecha de llegada, con quién, ritmo, intereses, gustos en texto libre y
+  movilidad reducida → itinerario día por día (mañana, mediodía, tarde, noche) con enlaces a las fichas.
+- `POST /api/planifica/itinerario` (lib/planificador.ts): la IA (OpenRouter, misma clave del traductor del bus; modelo
+  `PLANIFICADOR_MODELO`) solo elige de un catálogo con lo **publicado**, los eventos de las fechas del viaje (sin talleres para
+  vecinos salvo que los pida) y las salidas del bus con cupo. Toda referencia fuera del catálogo se descarta; lo que escribe la
+  persona va como dato delimitado. Límite de 8 pedidos cada 10 minutos por conexión; no guarda nada en el servidor.
+- Sin clave o si el modelo falla, arma la visita con las recomendaciones del portal y lo avisa. El plan queda en el navegador.
 
 ### Migue
 - Un solo widget (`MigueTurismo`) en todo el sitio. `/api/migue/contenido` suma eventos próximos (120 días),

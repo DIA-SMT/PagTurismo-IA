@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 
 import { Icono } from "@/components/Iconos";
+import { PlanificadorVisita } from "@/components/PlanificadorVisita";
 import { Vinculo as Link } from "@/components/i18n/Idioma";
 import { EncabezadoPagina, Marca } from "@/components/Ui";
 import { getClima } from "@/lib/clima";
 import { contenido } from "@/lib/datos";
+import { diaLocal } from "@/lib/fechas";
 import { formatear } from "@/lib/i18n/definir";
 import { alternativas, textosActuales } from "@/lib/i18n/servidor";
 import { rutas } from "@/lib/rutas";
@@ -34,6 +36,8 @@ export default async function Planifica() {
       />
 
       <div className="contenedor bloque-interno">
+        <PlanificadorVisita t={t.planificador} temas={c.categorias.map((k) => ({ id: k.id, titulo: k.titulo }))} hoy={diaLocal(Date.now())} />
+
         <ul className="guias">
           {guias.map((g, i) => (
             <li key={g.slug}>

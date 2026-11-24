@@ -1,0 +1,89 @@
+/* ---- Planificador de la visita (Planificá tu visita) ---- */
+.planificador {
+  margin-bottom: var(--sp-8);
+  padding: clamp(var(--sp-5), 4vw, var(--sp-7));
+  border: 1px solid var(--c-borde-objeto);
+  border-radius: 1.6rem;
+  background: linear-gradient(160deg, var(--c-azul-50), var(--c-blanco) 55%);
+  box-shadow: var(--sombra-1);
+}
+.planificador__intro { max-width: 46rem; margin-bottom: var(--sp-5); }
+.planificador__intro h2, .planificador__cabecera h2 { margin-top: var(--sp-2); font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem); line-height: 1.1; letter-spacing: -0.03em; }
+.planificador__intro p:last-child, .planificador__cabecera p { margin-top: var(--sp-2); color: var(--c-ink-soft); }
+.planificador__form { display: grid; gap: var(--sp-5); }
+.planificador fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.planificador legend { margin-bottom: var(--sp-2); color: var(--c-ink); font-size: var(--fs-sm); font-weight: var(--fw-fuerte); }
+.planificador .segmentado { max-width: 34rem; }
+.planificador__fila { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); }
+.planificador textarea { width: 100%; resize: vertical; }
+.planificador__ayuda { display: block; margin-top: var(--sp-1); color: var(--c-ink-muted); font-size: var(--fs-xs); }
+.planificador__intereses { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.planificador__interes { position: relative; }
+.planificador__interes input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.planificador__interes span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.95rem;
+  border: 1px solid var(--c-borde-objeto);
+  border-radius: var(--r-full);
+  background: var(--c-blanco);
+  color: var(--c-ink-soft);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semi);
+}
+.planificador__interes input:checked + span { border-color: #0066FF; background: #0066FF; color: #fff; }
+.planificador__interes input:focus-visible + span { outline: 3px solid var(--c-azul-600); outline-offset: 2px; }
+.planificador__enviar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3) var(--sp-4); }
+.planificador__cargando { color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.planificador__error { padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); background: var(--c-estado-mal-fondo); color: var(--c-estado-mal-texto); font-weight: var(--fw-semi); }
+
+/* El plan */
+.planificador__cabecera { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--sp-4); }
+.planificador__cabecera h2:focus { outline: none; }
+.planificador__acciones { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.planificador__aviso { display: flex; gap: var(--sp-2); align-items: flex-start; margin-top: var(--sp-4); padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); background: var(--c-azul-100); color: var(--c-ink); font-size: var(--fs-sm); }
+.planificador__aviso svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
+.planificador__aviso--sin-ia { background: var(--c-fondo-alt); }
+.planificador__dias { display: grid; gap: var(--sp-6); margin-top: var(--sp-6); padding: 0; list-style: none; }
+.planificador__dia h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--sp-2); font-size: var(--fs-md); }
+.planificador__dia h3 span { color: var(--c-azul-700); }
+.planificador__dia h3 small { flex-basis: 100%; color: var(--c-ink-soft); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.planificador__dia h3::first-letter { text-transform: uppercase; }
+.planificador__actividades { display: grid; gap: var(--sp-3); margin-top: var(--sp-3); padding: 0; list-style: none; }
+.planificador__actividad { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: var(--sp-4); align-items: start; }
+.planificador__momento { display: grid; padding-top: var(--sp-3); color: var(--c-ink-soft); font-size: var(--fs-sm); font-weight: var(--fw-fuerte); }
+.planificador__momento strong { color: var(--c-ink); font-size: var(--fs-base); }
+.planificador__tarjeta { padding: var(--sp-3) var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); }
+.planificador__tarjeta p { margin-top: var(--sp-1); color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.planificador__tipo { display: inline-flex; align-items: center; gap: 4px; color: var(--c-azul-700); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.planificador__titulo { display: block; margin-top: 2px; font-size: var(--fs-base); }
+.planificador__titulo a { color: var(--c-ink); text-decoration-color: var(--c-azul-600); text-underline-offset: 3px; }
+.planificador__titulo a:hover { color: var(--c-azul-700); }
+.planificador__libre { margin-top: var(--sp-2); color: var(--c-ink-soft); }
+.planificador__consejos { margin-top: var(--sp-6); padding: var(--sp-4) var(--sp-5); border-radius: var(--r-lg); background: var(--c-fondo-alt); }
+.planificador__consejos h3 { font-size: var(--fs-base); }
+.planificador__consejos ul { display: grid; gap: var(--sp-1); margin-top: var(--sp-2); padding-left: 1.2rem; color: var(--c-ink-soft); }
+
+@media (max-width: 47.5rem) {
+  .planificador__fila { grid-template-columns: minmax(0, 1fr); }
+  .planificador__actividad { grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); }
+  .planificador__momento { display: flex; gap: var(--sp-2); padding-top: 0; }
+}
+
+@media print {
+  .planificador--plan { border: 0; box-shadow: none; background: none; padding: 0; }
+  .planificador__acciones { display: none; }
+}
+
+/* Campos con el mismo aspecto que los filtros de la agenda. */
+.planificador select, .planificador input[type="date"], .planificador textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--c-borde-campo);
+  border-radius: var(--r-md);
+  background: var(--c-blanco);
+  color: var(--c-ink);
+  font: inherit;
+}
