@@ -193,7 +193,7 @@
 .tarjeta-evento__marcas { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.6rem; }
 .tarjeta-evento__rubros { display: flex; flex-wrap: wrap; gap: 0.35rem 0.75rem; margin: 0.9rem 0 0.4rem; }
 .tarjeta-evento__rubros span { color: var(--c-azul-700); font-size: 0.72rem; font-weight: 850; letter-spacing: 0.08em; text-transform: uppercase; }
-.tarjeta-evento__titulo { margin: 0.35rem 0 0.8rem; font-size: 1.35rem; font-weight: 500; line-height: 1.18; letter-spacing: -0.02em; }
+.tarjeta-evento__titulo { margin: 0.35rem 0 0.8rem; font-size: 1.35rem; font-weight: 500; line-height: 1.18; letter-spacing: var(--ls-titular); }
 .tarjeta-evento__lugar { display: flex; align-items: flex-start; gap: 0.45rem; margin-bottom: 1rem; color: var(--c-ink-soft); }
 .tarjeta-evento__lugar svg { flex: 0 0 auto; margin-top: 0.2rem; }
 .tarjeta-evento__lugar small { display: block; font-size: 0.8rem; }
@@ -294,7 +294,7 @@
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .categoria-agenda:hover .categoria-agenda__sticker { transform: rotate(0deg) scale(1.1); }
-.categoria-agenda__texto strong { display: block; font-size: clamp(1.45rem, 2.4vw, 2rem); line-height: 1.1; letter-spacing: -0.02em; }
+.categoria-agenda__texto strong { display: block; font-family: var(--f-titulos); font-size: clamp(1.45rem, 2.4vw, 2rem); line-height: 1.1; letter-spacing: var(--ls-titular); }
 .categoria-agenda__texto small { display: block; margin-top: 0.3rem; color: var(--c-azul-700); font-size: 0.95rem; }
 .categoria-agenda__flecha { color: var(--c-azul-700); transition: transform 0.2s; }
 .categoria-agenda:hover .categoria-agenda__flecha { transform: translateX(6px); }
