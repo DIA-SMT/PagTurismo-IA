@@ -69,8 +69,10 @@ const next = spawn(process.execPath, [path.join("node_modules", "next", "dist", 
     DIRECTORIO_NEXT: ".next-e2e",
     BUSES_PUERTO_LOCAL: "54360",
     SESION_LOCAL_SECRETO: "secreto-solo-para-pruebas-e2e-no-usar-en-produccion",
-    // Sin el chat de Migue: las pruebas no salen a internet.
+    // Sin el chat de Migue ni la IA del planificador: las pruebas no salen a internet ni gastan crédito
+    // (vacía y no ausente: así Next no la toma del .env.local).
     NEXT_PUBLIC_MIGUE_URL: "no",
+    OPENROUTER_API_KEY: "",
   },
 });
 const terminar = () => next.kill();

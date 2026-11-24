@@ -131,6 +131,19 @@ const limpio = (t: unknown, max = 220) => {
   const s = String(t ?? "").replace(/\s+/g, " ").trim();
   return s.length > max ? `${s.slice(0, max - 1)}…` : s;
 };
+
+/** Saca de un texto del modelo los ids del catálogo que a veces cita: "(b1)", "(x1, s2)", "ver l3". */
+export function sinIds(texto: string): string {
+  return texto
+    .replace(/\s*\((?:\s*(?:ref:?\s*)?[lxrspeb]\d{1,3}\s*,?)+\)/gi, "")
+    .replace(/(^|[\s(])(?:ref:?\s*)?[lxrspeb]\d{1,3}(?=[\s).,;:!?]|$)/gi, "$1")
+    .replace(/\s+([.,;:!?])/g, "$1")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
+/** Texto del modelo listo para mostrar: sin ids del catálogo, sin espacios de más y con un largo máximo. */
+const delModelo = (t: unknown, max: number) => limpio(sinIds(limpio(t, max + 40)), max);
 const costoTexto = (c?: Costo) => (c ? (c.modalidad === "gratis" ? "gratis" : c.modalidad === "pago" ? `pago${c.detalle ? ` (${limpio(c.detalle, 60)})` : ""}` : "consultar costo") : "");
 const unir = (partes: (string | null | undefined | false)[]) => partes.filter(Boolean).join(" · ");
 
@@ -147,6 +160,7 @@ export function momentoDeHora(hora?: string): Momento {
   return h < 12 ? "manana" : h < 15 ? "mediodia" : h < 19 ? "tarde" : "noche";
 }
 
+const BUS: Record<Idioma, string> = { es: "Bus Turístico", en: "Tourist Bus", pt: "Ônibus Turístico" };
 const MAX_EVENTOS = 40;
 const MAX_SALIDAS = 16;
 
@@ -204,7 +218,7 @@ export function armarCatalogo(f: FuentesCatalogo, pedido: PedidoPlan): ItemCatal
     .filter((s) => enViaje(s.fecha) && s.cupo - s.reservadas > 0)
     .slice(0, MAX_SALIDAS);
   agregar("b", salidas.map((s) => ({
-    tipo: "bus" as const, titulo: `Bus Turístico: ${(s.circuito && f.circuitos.get(s.circuito)) || s.titulo}`, url: "/bus-turistico", temas: ["bus", "historia-y-patrimonio"], gratis: true,
+    tipo: "bus" as const, titulo: `${BUS[pedido.idioma]}: ${(s.circuito && f.circuitos.get(s.circuito)) || s.titulo}`, url: "/bus-turistico", temas: ["bus", "historia-y-patrimonio"], gratis: true,
     dia: s.fecha, hora: s.hora.slice(0, 5), circuito: s.circuito ?? undefined,
     texto: unir([`${s.cupo - s.reservadas} lugares libres`, s.punto && `sale de ${limpio(s.punto, 80)}`, "gratuito con reserva previa en /bus-turistico"]),
   })));
@@ -241,6 +255,10 @@ export function armarPrompt(pedido: PedidoPlan, catalogo: ItemCatalogo[], nombre
     "- Cada actividad lleva el id del catálogo en \"ref\". Nunca inventes lugares, comercios, restaurantes, horarios, precios ni datos que no estén en el catálogo.",
     "- Podés agregar como máximo una actividad libre por día sin ref (por ejemplo, almorzar o descansar), sin nombrar comercios ni lugares concretos.",
     "- Los eventos (e…) y las salidas del bus (b…) solo van el día y en el momento de su fecha y hora. No repitas una misma ref ni el mismo circuito del bus.",
+    "- No pongas dos veces lo mismo con distinto formato: si incluís una salida del bus (b…), no agregues también el recorrido o la experiencia de ese mismo circuito.",
+    "- Los ids son solo para \"ref\": nunca los escribas en títulos, detalles, resumen ni consejos.",
+    "- Cada \"detalle\" habla de ESA actividad (qué es y por qué le va a gustar), no de otra cosa.",
+    "- Títulos con mayúscula solo al inicio y en nombres propios (\"Historia y sabores del centro\").",
     "- No llenes el día solo con eventos: combiná lugares, recorridos y sabores con uno o dos eventos que coincidan con sus intereses.",
     "- Momentos: \"manana\", \"mediodia\", \"tarde\", \"noche\", en ese orden dentro de cada día.",
     "- Si es su primera vez, priorizá lo IMPERDIBLE y lo histórico; si ya vino, proponé cosas menos obvias.",
@@ -335,28 +353,28 @@ export function validarRespuesta(texto: string | null, pedido: PedidoPlan, catal
       if (!a || typeof a !== "object") continue;
       const act = a as { momento?: unknown; ref?: unknown; titulo?: unknown; detalle?: unknown };
       const momento = MOMENTOS.includes(act.momento as Momento) ? (act.momento as Momento) : "tarde";
-      const detalle = limpio(act.detalle, 320);
+      const detalle = delModelo(act.detalle, 320);
       const ref = typeof act.ref === "string" ? act.ref.trim() : "";
       const item = ref ? porId.get(ref) : undefined;
       if (item) {
         if (usados.has(item.id) || (item.dia && item.dia !== fecha)) continue;
         usados.add(item.id);
         actividades.push({ momento: item.hora ? momentoDeHora(item.hora) : momento, titulo: item.titulo, detalle, url: item.url, tipo: item.tipo, hora: item.hora });
-      } else if (!ref && libres < 1 && limpio(act.titulo, 90)) {
+      } else if (!ref && libres < 1 && delModelo(act.titulo, 90)) {
         libres++;
-        actividades.push({ momento, titulo: limpio(act.titulo, 90), detalle });
+        actividades.push({ momento, titulo: delModelo(act.titulo, 90), detalle });
       }
     }
     actividades.sort((a, b) => MOMENTOS.indexOf(a.momento) - MOMENTOS.indexOf(b.momento) || (a.hora ?? "").localeCompare(b.hora ?? ""));
-    dias.push({ fecha, titulo: limpio(d.titulo, 90), actividades });
+    dias.push({ fecha, titulo: delModelo(d.titulo, 90), actividades });
   }
   // Si el modelo no dejó ninguna actividad real, el plan no sirve.
   if (!dias.some((d) => d.actividades.some((a) => a.url))) return null;
   return {
-    titulo: limpio(r.titulo, 120),
-    resumen: limpio(r.resumen, 400),
+    titulo: delModelo(r.titulo, 120),
+    resumen: delModelo(r.resumen, 400),
     dias,
-    consejos: (Array.isArray(r.consejos) ? r.consejos : []).map((c) => limpio(c, 240)).filter(Boolean).slice(0, 4),
+    consejos: (Array.isArray(r.consejos) ? r.consejos : []).map((c) => delModelo(c, 240)).filter(Boolean).slice(0, 4),
     conIA: true,
   };
 }

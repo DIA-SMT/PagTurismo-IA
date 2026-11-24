@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import {
-  armarCatalogo, armarPrompt, esTaller, leerPedido, pedirAlModelo, planSinIA, validarRespuesta,
+  armarCatalogo, armarPrompt, esTaller, leerPedido, pedirAlModelo, planSinIA, sinIds, validarRespuesta,
   type FuentesCatalogo, type PedidoPlan,
 } from "../lib/planificador.ts";
 import type { OcurrenciaAgenda } from "../lib/cultura/agenda.ts";
@@ -124,6 +124,12 @@ describe("Planificador: la respuesta de la IA", () => {
     assert.equal(dia1[2].momento, "noche", "el momento sale de la hora real del evento");
     assert.deepEqual(plan.dias[1].actividades, [], "no repite ni deja el bus en otro día");
     assert.equal(plan.dias[1].fecha, "2026-11-25");
+  });
+
+  it("saca los ids del catálogo que el modelo cita en los textos", () => {
+    assert.equal(sinIds("Reservá el Bus Turístico (b1), tiene cupo."), "Reservá el Bus Turístico, tiene cupo.");
+    assert.equal(sinIds("Probá la empanada (s1, s2) y el circuito x1."), "Probá la empanada y el circuito.");
+    assert.equal(sinIds("Volvé en 2026 por la peña"), "Volvé en 2026 por la peña");
   });
 
   it("descarta respuestas que no son JSON o sin ninguna actividad real", () => {
