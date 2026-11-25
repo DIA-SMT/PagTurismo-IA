@@ -67,9 +67,10 @@ export function HeroFotos() {
                 onAnimationEnd={() => setFoto((f) => f + 1)}
               />
             </button>
-            {/* Invisible hasta que llega el teclado: el control de pausa que pide WCAG 2.2.2. */}
-            <button type="button" className="hero-fotos__pausa" onClick={() => setPausado((p) => !p)}>
-              {pausado ? t.controles.reanudarFotos : t.controles.pausarFotos}
+            {/* La pausa que pide WCAG 2.2.2: solo el ícono, transparente. */}
+            <button type="button" className="hero-fotos__pausa" aria-label={pausado ? t.controles.reanudarFotos : t.controles.pausarFotos}
+              title={pausado ? t.controles.reanudarFotos : t.controles.pausarFotos} onClick={() => setPausado((p) => !p)}>
+              <span aria-hidden="true">{pausado ? "▶" : "❚❚"}</span>
             </button>
           </div>
         );

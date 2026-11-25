@@ -199,21 +199,25 @@
 @keyframes hero-reloj { to { transform: scaleX(1); } }
 @keyframes hero-lugar-entra { from { opacity: 0; transform: translateY(4px); } }
 .hero-fotos__pausa {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 6px;
-  padding: 4px 10px;
-  border: 1px solid #ffffff60;
-  border-radius: var(--r-full);
-  background: #102840e6;
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-left: 0.25rem;
+  vertical-align: middle;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
   color: #fff;
   font: inherit;
-  font-size: 0.75rem;
-  white-space: nowrap;
+  font-size: 0.7rem;
+  text-shadow: 0 1px 4px #07182f, 0 0 10px #07182f;
   cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--t-rapida);
 }
-.hero-fotos__pausa:not(:focus-visible) { clip-path: inset(50%); width: 1px; height: 1px; overflow: hidden; padding: 0; border: 0; }
+.hero-fotos__pausa:hover, .hero-fotos__pausa:focus-visible { opacity: 1; }
 
 .hero__interior {
   position: relative;
