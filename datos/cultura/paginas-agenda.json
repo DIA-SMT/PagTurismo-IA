@@ -1,0 +1,351 @@
+{
+  "fuente": "Páginas fijas del sitio nuevo de la Agenda Cultural (DIA-SMT/Agenda-Cultural, src/app/<ruta>/page.tsx), comparadas con el sitio publicado el 2026-11-25",
+  "nota": "Lo carga «npm run cultura -- paginas». Cada ficha entra en BORRADOR; si ya existe, solo se completan campos vacíos. Las fotos (/images/contenido/…) se bajan del sitio de la Agenda con --fotos.",
+  "fichas": [
+    {
+      "pagina": "/patrimonio-historico", "paginaTitulo": "Patrimonio histórico",
+      "coleccion": "lugares", "slug": "museo-historico-provincial",
+      "datos": {
+        "titulo": "Museo Histórico Provincial",
+        "clase": "museo",
+        "tipoEspacio": "cultural",
+        "resumen": "La legendaria casa de las cien puertas, que alberga objetos que narran la historia de Tucumán.",
+        "direccion": "Congreso de Tucumán 56",
+        "zona": "Centro",
+        "costo": { "modalidad": "consultar" },
+        "categorias": ["historia-y-patrimonio"],
+        "etiquetas": [],
+        "imagen": { "src": "/images/contenido/patrimonio/museo-historico-provincial.webp", "alt": "Museo Histórico Provincial" }
+      }
+    },
+    {
+      "pagina": "/patrimonio-historico", "paginaTitulo": "Patrimonio histórico",
+      "coleccion": "lugares", "slug": "museo-de-ciencias-naturales",
+      "datos": {
+        "titulo": "Museo de Ciencias Naturales",
+        "clase": "museo",
+        "tipoEspacio": "cultural",
+        "resumen": "Para explorar la fauna y la flora tucumanas, con colecciones de mamíferos y otras especies y un jardín botánico visitable.",
+        "direccion": "Miguel Lillo 251",
+        "costo": { "modalidad": "consultar" },
+        "categorias": ["cultura-y-espectaculos"],
+        "etiquetas": [],
+        "imagen": { "src": "/images/contenido/patrimonio/museo-de-ciencias-naturales.webp", "alt": "Museo de Ciencias Naturales" }
+      }
+    },
+    {
+      "pagina": "/patrimonio-historico", "paginaTitulo": "Patrimonio histórico",
+      "coleccion": "lugares", "slug": "basilica-de-la-merced",
+      "datos": {
+        "titulo": "Basílica Nuestra Señora de la Merced",
+        "clase": "templo",
+        "resumen": "Templo monumental que resguarda reliquias patrias y la venerada imagen de la Virgen Generala del Ejército Argentino.",
+        "direccion": "24 de Septiembre 253",
+        "zona": "Centro",
+        "costo": { "modalidad": "gratis" },
+        "categorias": ["turismo-religioso", "historia-y-patrimonio"],
+        "etiquetas": [],
+        "imagen": { "src": "/images/contenido/patrimonio/la-merced.webp", "alt": "Basílica Nuestra Señora de la Merced" }
+      }
+    },
+    {
+      "pagina": "/museo-escultorico-a-cielo-abierto", "paginaTitulo": "Museo escultórico a cielo abierto",
+      "coleccion": "lugares", "slug": "museo-escultorico",
+      "datos": {
+        "coordenadas": { "lat": -26.832616, "lng": -65.193948 },
+        "imagen": { "src": "/images/contenido/museo-a-cielo-abierto/portada.webp", "alt": "Esculturas del Parque 9 de Julio" },
+        "galeria": [
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-03.webp", "alt": "Escultura del Parque 9 de Julio, foto 1 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-06.webp", "alt": "Escultura del Parque 9 de Julio, foto 2 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-05.webp", "alt": "Escultura del Parque 9 de Julio, foto 3 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-04.webp", "alt": "Escultura del Parque 9 de Julio, foto 4 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-02.webp", "alt": "Escultura del Parque 9 de Julio, foto 5 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-01.webp", "alt": "Escultura del Parque 9 de Julio, foto 6 de 6" } }
+        ]
+      }
+    },
+    {
+      "pagina": "/museo-escultorico-a-cielo-abierto", "paginaTitulo": "Museo escultórico a cielo abierto",
+      "coleccion": "experiencias", "slug": "museo-escultorico-recorrido-guiado",
+      "datos": {
+        "titulo": "Museo escultórico a cielo abierto",
+        "resumen": "Un recorrido guiado por las esculturas clásicas del Parque 9 de Julio, que integra arte, historia y naturaleza, con un concierto al final.",
+        "descripcion": "Este paseo propone descubrir el valor artístico y paisajístico del Parque 9 de Julio a través de su colección de esculturas clásicas. La experiencia combina arte, historia, mitología y patrimonio natural, e incluye intervenciones artísticas y un concierto final a cargo del grupo «Las Damas de Bronce» en las inmediaciones del Reloj Floral.\n\nAdemás de conocer obras emblemáticas, se comparten detalles sobre su conservación, los procesos de restauración y el desarrollo del parque diseñado por Carlos Thays.\n\nObras incluidas: Diana y Endimión (punto de partida), La Vestal, La Meditación, Apolo de Belvedere, Fauno danzante, Idilio, Venus de Milo, Alegoría al Invierno, Venus del baño, Familia Laocoonte, Venus y Cupido, Galo Moribundo y Venus de Medici (junto al Reloj Floral, cierre del recorrido).\n\nQué se cuenta en el guiado: arte y mitología (referencias clásicas, simbolismos y relatos asociados a cada obra); historia y restauración (procesos de conservación y puesta en valor de las esculturas); estado actual (las obras pendientes de restauración y los planes de intervención, con una breve explicación del proceso de restauración de una pieza), y patrimonio natural (reseña histórica del Parque 9 de Julio y su vegetación característica).\n\nEspectáculo de cierre: el grupo «Las Damas de Bronce» interpreta un repertorio de obras clásicas y contemporáneas que acompaña el entorno escultórico y natural del parque. Dura 30 minutos y se hace en el sector próximo al Reloj Floral.",
+        "modalidad": "bus",
+        "guiada": true,
+        "categorias": ["parques-y-aire-libre", "cultura-y-espectaculos"],
+        "etiquetas": [],
+        "horario": { "texto": "Viernes, 19:30 h", "confirmado": false },
+        "puntoEncuentro": "Salida del bus en Plaza Independencia. El recorrido empieza en la rotonda del Parque 9 de Julio, junto a la escultura «Diana y Endimión».",
+        "incluye": "Guiado por las esculturas y concierto de cierre de 30 minutos junto al Reloj Floral.",
+        "lugares": ["museo-escultorico", "parque-9-de-julio"],
+        "operador": "Dirección de Turismo de la Municipalidad (Bus Turístico)",
+        "costo": { "modalidad": "consultar" },
+        "accion": { "tipo": "inscripcion", "texto": "Inscribirme", "url": "https://linktr.ee/busturisticosmt" },
+        "imagen": { "src": "/images/contenido/museo-a-cielo-abierto/circuito.webp", "alt": "Recorrido guiado por el Museo escultórico a cielo abierto" },
+        "galeria": [
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-03.webp", "alt": "Escultura del Parque 9 de Julio, foto 1 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-06.webp", "alt": "Escultura del Parque 9 de Julio, foto 2 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-05.webp", "alt": "Escultura del Parque 9 de Julio, foto 3 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-04.webp", "alt": "Escultura del Parque 9 de Julio, foto 4 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-02.webp", "alt": "Escultura del Parque 9 de Julio, foto 5 de 6" } },
+          { "foto": { "src": "/images/contenido/museo-a-cielo-abierto/escultura-01.webp", "alt": "Escultura del Parque 9 de Julio, foto 6 de 6" } }
+        ]
+      }
+    },
+    {
+      "pagina": "/pintamos-la-ciudad-que-queremos", "paginaTitulo": "Pintamos la ciudad que queremos",
+      "coleccion": "experiencias", "slug": "pintamos-la-ciudad-que-queremos",
+      "datos": {
+        "titulo": "Pintamos la ciudad que queremos",
+        "resumen": "Murales de artistas locales que transforman el espacio público de la ciudad en una galería a cielo abierto.",
+        "descripcion": "«Pintamos la ciudad que queremos» es un proyecto que impulsa la creación de murales en distintos barrios, convirtiendo las calles en una galería a cielo abierto, con obras que reflejan la identidad, las historias y las expresiones propias de San Miguel de Tucumán.\n\nLas obras incluyen retratos, paisajes, símbolos culturales y piezas contemporáneas que enriquecen el paisaje urbano y acercan el arte a vecinos y visitantes. El proceso reúne a artistas consagrados y jóvenes emergentes, promueve la participación comunitaria y resignifica los espacios públicos.\n\nEl proyecto en números: más de 400 artistas se presentaron y se seleccionaron 100 murales, en toda la capital. Los murales ya tomaron forma en distintos puntos de la ciudad: te invitamos a recorrerlos y a vivir el arte en primera persona.",
+        "modalidad": "libre",
+        "guiada": false,
+        "categorias": ["cultura-y-espectaculos"],
+        "etiquetas": [],
+        "costo": { "modalidad": "gratis", "detalle": "Los murales están en la vía pública." },
+        "accion": { "tipo": "sin-inscripcion", "texto": "Ubicalos en el mapa", "url": "https://mapa.smt.gob.ar/" },
+        "imagen": { "src": "/images/contenido/murales/mural-10.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos" },
+        "galeria": [
+          { "foto": { "src": "/images/contenido/murales/mural-01.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 1 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-02.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 2 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-03.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 3 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-04.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 4 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-05.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 5 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-06.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 6 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-07.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 7 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-08.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 8 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-09.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 9 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-11.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 11 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-12.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 12 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-13.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 13 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-14.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 14 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-15.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 15 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-16.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 16 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-17.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 17 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-18.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 18 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-19.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 19 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-20.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 20 de 21" } },
+          { "foto": { "src": "/images/contenido/murales/mural-21.webp", "alt": "Mural del proyecto Pintamos la ciudad que queremos, foto 21 de 21" } }
+        ]
+      }
+    },
+    {
+      "pagina": "/ferias-municipales", "paginaTitulo": "Ferias municipales",
+      "coleccion": "experiencias", "slug": "ferias-municipales",
+      "datos": {
+        "titulo": "Ferias municipales",
+        "resumen": "Artesanos, gastronomía y emprendimientos locales en espacios para recorrer y disfrutar.",
+        "descripcion": "Las ferias municipales son puntos de encuentro de artesanos, cocineros y emprendedores locales. Son ideales para recorrer en familia, probar sabores de la región, llevarse algo hecho en Tucumán y descubrir la identidad de la ciudad.\n\nLas ferias se publican en la agenda: ferias de emprendedores y ferias gastronómicas, con su lugar y su fecha.",
+        "modalidad": "libre",
+        "guiada": false,
+        "categorias": ["sabores-tucumanos", "cultura-y-espectaculos"],
+        "etiquetas": [],
+        "costo": { "modalidad": "consultar" },
+        "accion": { "tipo": "sin-inscripcion", "texto": "Ver las próximas ferias", "url": "/agenda?q=feria" },
+        "imagen": { "src": "/images/contenido/ferias/feria-01.webp", "alt": "Feria municipal en San Miguel de Tucumán" },
+        "galeria": [
+          { "foto": { "src": "/images/contenido/ferias/feria-09.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 1 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-08.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 3 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-04.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 4 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-05.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 5 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-03.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 6 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-02.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 7 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-07.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 8 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-12.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 9 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-10.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 10 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-06.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 11 de 12" } },
+          { "foto": { "src": "/images/contenido/ferias/feria-13.webp", "alt": "Feria municipal en San Miguel de Tucumán, foto 12 de 12" } }
+        ]
+      }
+    },
+    {
+      "pagina": "/gastronomia", "paginaTitulo": "Gastronomía tucumana",
+      "coleccion": "sabores", "slug": "panchuque",
+      "datos": {
+        "titulo": "Panchuque",
+        "detalle": "Masa que envuelve una salchicha dorada: simple, tentador y perfecto para comer sin pensarlo dos veces.",
+        "imagen": { "src": "/images/contenido/gastronomia/panchuque.webp", "alt": "Panchuque" },
+        "tono": 1, "orden": 5
+      }
+    },
+    {
+      "pagina": "/gastronomia", "paginaTitulo": "Gastronomía tucumana",
+      "coleccion": "sabores", "slug": "achilata",
+      "datos": {
+        "titulo": "Achilata",
+        "detalle": "Frescura intensa con textura cristalina: dulce, liviana y perfecta para refrescar el día.",
+        "imagen": { "src": "/images/contenido/gastronomia/achilata.webp", "alt": "Achilata" },
+        "tono": 2, "orden": 6
+      }
+    },
+    {
+      "pagina": "/gastronomia", "paginaTitulo": "Gastronomía tucumana",
+      "coleccion": "sabores", "slug": "alfajores-de-miel-de-cana",
+      "datos": {
+        "titulo": "Alfajores de miel de caña",
+        "detalle": "Conocidos en la ciudad como «claritas», son verdaderos íconos de la dulzura tucumana.",
+        "imagen": { "src": "/images/contenido/gastronomia/alfajores-de-miel-de-cana.webp", "alt": "Alfajores de miel de caña" },
+        "tono": 3, "orden": 7
+      }
+    },
+    {
+      "pagina": "/gastronomia", "paginaTitulo": "Gastronomía tucumana",
+      "coleccion": "sabores", "slug": "alfeniques",
+      "datos": {
+        "titulo": "Alfeñiques",
+        "detalle": "Caramelos retorcidos de miel de caña, uno de los dulces más tradicionales de la provincia.",
+        "imagen": { "src": "/images/contenido/gastronomia/alfeniques.webp", "alt": "Alfeñiques" },
+        "tono": 4, "orden": 8
+      }
+    },
+    {
+      "pagina": "/guias", "paginaTitulo": "Guías y mapas",
+      "coleccion": "planifica", "slug": "guias-y-mapas",
+      "datos": {
+        "titulo": "Guías y mapas",
+        "resumen": "Guía de bolsillo, circuitos turísticos y el mapa de la ciudad para recorrerla a tu ritmo.",
+        "icono": "mapa", "orden": 6,
+        "secciones": [
+          { "titulo": "Guía de bolsillo", "texto": "Recorré las calles llenas de memoria de la ciudad, desde la emblemática Casa Histórica hasta sus museos, plazas y monumentos." },
+          { "titulo": "Circuitos turísticos", "texto": "Una propuesta integral para descubrir la ciudad desde su historia, su arte y su gente." },
+          { "titulo": "Mapa turístico", "texto": "El plano de San Miguel de Tucumán con circuitos, espacios públicos, servicios y atractivos turísticos." },
+          { "titulo": "Mapa interactivo", "texto": "Plazas, espacios verdes, murales, servicios y puntos de interés en el mapa digital de la Municipalidad." }
+        ],
+        "enlaces": [
+          { "texto": "Guía de bolsillo (PDF)", "url": "https://drive.google.com/file/d/1vHKz2u6ZtChv0Xd-Zwt98rLtMoOiqK3c/view" },
+          { "texto": "Circuitos turísticos (PDF)", "url": "https://drive.google.com/file/d/1QmlEthQKRzVUmRdTZsyyhOW4EPQwtRBs/view" },
+          { "texto": "Mapa turístico (PDF)", "url": "https://www.tucumanturismo.gob.ar/public/files/sanmigueltucuman_05luwrn3_05-07-2024.pdf" },
+          { "texto": "Mapa interactivo (mapa.smt.gob.ar)", "url": "https://mapa.smt.gob.ar/" }
+        ]
+      }
+    },
+    {
+      "pagina": "/oficinas", "paginaTitulo": "Oficinas",
+      "coleccion": "planifica", "slug": "oficinas-de-informacion",
+      "datos": {
+        "titulo": "Oficinas de información",
+        "resumen": "Dónde pedir información, asistencia y servicios en la ciudad, para vecinos y visitantes.",
+        "icono": "ubicacion", "orden": 7,
+        "secciones": [
+          { "titulo": "Oficina de Turismo SMT", "texto": "Información turística, mapas, folletos y asesoramiento para recorrer la ciudad.\n\nDirección: Peatonal Congreso 121.\n\nLunes a viernes: 8 a 13 h y 16 a 21 h. Sábados, domingos y feriados: 9 a 20 h (corrido)." },
+          { "titulo": "Municipalidad de San Miguel de Tucumán", "texto": "Sede central: atención a vecinos, trámites y servicios municipales.\n\nDirección: 9 de Julio 570. Teléfono: (0381) 451-6500.\n\nLunes a viernes: 8 a 20 h." }
+        ],
+        "enlaces": [
+          { "texto": "Cómo llegar a la Oficina de Turismo", "url": "https://www.google.com/maps/search/?api=1&query=-26.833019,-65.203692" },
+          { "texto": "Cómo llegar a la Municipalidad", "url": "https://www.google.com/maps/search/?api=1&query=-26.838846,-65.206642" },
+          { "texto": "Turismo SMT en Instagram", "url": "https://www.instagram.com/turismosmt/" },
+          { "texto": "Turismo SMT en Facebook", "url": "https://www.facebook.com/turismosmt/" }
+        ]
+      }
+    },
+    {
+      "pagina": "/planifica-tu-viaje", "paginaTitulo": "Planificá tu viaje",
+      "coleccion": "planifica", "slug": "servicios-turisticos",
+      "datos": {
+        "titulo": "Alojamiento, agencias y alquiler de autos",
+        "resumen": "Guías de la Dirección de Turismo para elegir dónde dormir y encontrar agencias, excursiones y alquiler de autos.",
+        "icono": "info", "orden": 8,
+        "secciones": [
+          { "titulo": "Dónde dormir y cómo moverte", "texto": "Guías para elegir hoteles, hostels y departamentos temporarios, y para encontrar agencias, excursiones y alquiler de autos." }
+        ],
+        "enlaces": [
+          { "texto": "Alojamiento", "url": "https://docs.google.com/document/d/1kXBwfBl1tJVZb6BFFMJeacW2yGH0pwtS" },
+          { "texto": "Agencias de viaje", "url": "https://docs.google.com/document/d/1HxkuUMsAMloEM_muzirToK0fCYpzjh-y/edit" },
+          { "texto": "Alquiler de autos", "url": "https://docs.google.com/document/d/1KHTC4fyjbJO8yhJw-zRgnReUbikq8NMG/edit" },
+          { "texto": "Guía de bares y peñas", "url": "https://docs.google.com/document/d/1hiAyyZb7E72eculMzxsS-KF-T7GHyuq2/edit" }
+        ]
+      }
+    },
+    {
+      "pagina": "/planifica-tu-viaje", "paginaTitulo": "Planificá tu viaje",
+      "coleccion": "planifica", "slug": "cerca-de-la-ciudad",
+      "datos": {
+        "titulo": "Cerca de la ciudad",
+        "resumen": "Escapadas naturales a menos de una hora, recorridos culturales y excursiones de día completo.",
+        "icono": "mapa", "orden": 9,
+        "secciones": [
+          { "titulo": "Escapadas naturales", "texto": "A menos de una hora: El Cadillal con deportes náuticos y miradores, San Javier con selva de yungas y senderos, Raco y El Siambón con turismo rural, y Villa Nougués con arquitectura europea y vistas panorámicas." },
+          { "titulo": "Recorridos culturales", "texto": "Circuitos guiados, museos, teatros, plazas históricas y espacios patrimoniales. El casco histórico se recorre a pie o en el Bus Turístico gratuito." },
+          { "titulo": "Excursiones recomendadas", "texto": "Circuitos histórico-culturales, museos y casas patrimoniales, el Parque 9 de Julio, peñas tradicionales y salidas de día completo a los Valles Calchaquíes y otros destinos de la provincia." },
+          { "titulo": "Llegar en tren", "texto": "El servicio Retiro–Tucumán (línea Mitre) une Buenos Aires con la capital tucumana con salidas semanales. La Estación Tucumán Mitre está cerca del centro." },
+          { "titulo": "Llegar por ruta", "texto": "La ciudad se conecta con el país por las rutas nacionales 9, 38, 34, 40, 64, 65 y 157. La Terminal de Ómnibus recibe servicios diarios desde numerosos destinos." }
+        ],
+        "enlaces": [
+          { "texto": "Estación Tucumán Mitre en el mapa", "url": "https://www.google.com/maps/search/?api=1&query=-26.821066,-65.211022" },
+          { "texto": "Terminal de Ómnibus en el mapa", "url": "https://www.google.com/maps/search/?api=1&query=-26.835609,-65.195137" },
+          { "texto": "Aeropuerto Benjamín Matienzo en el mapa", "url": "https://www.google.com/maps/search/?api=1&query=-26.835779,-65.108794" }
+        ]
+      }
+    },
+    {
+      "pagina": "/nuestra-ciudad", "paginaTitulo": "Nuestra ciudad",
+      "coleccion": "planifica", "slug": "nuestra-ciudad",
+      "datos": {
+        "titulo": "Nuestra ciudad",
+        "resumen": "San Miguel de Tucumán, Cuna de la Independencia: su historia, su presente y los datos de la ciudad.",
+        "icono": "info", "orden": 10,
+        "secciones": [
+          { "titulo": "Cuna de la Independencia", "texto": "San Miguel de Tucumán no es sólo la ciudad más grande del norte argentino: es también el lugar donde nació nuestra independencia. Fue fundada en 1565 por Diego de Villarroel y trasladada a su ubicación actual en 1685. En sus calles se libró la heroica Batalla de Tucumán y, pocos años después, se declaró aquí la Independencia Argentina, el 9 de julio de 1816.\n\nEse legado la convirtió en la Cuna de la Independencia, y aún hoy se respira historia en sus plazas, edificios y museos." },
+          { "titulo": "Una ciudad que creció con el país", "texto": "A fines del siglo XIX, con la llegada del ferrocarril y el desarrollo de la industria azucarera, San Miguel de Tucumán se convirtió en un polo económico clave para la Argentina. Se construyeron plazas, avenidas, servicios públicos, palacios y parques que le dieron su identidad actual.\n\nHoy la ciudad combina su pasado histórico con un presente vibrante. Es sede de universidades, centros culturales y espacios naturales que la convierten en un punto estratégico para vivir, estudiar y visitar. Sus bulevares arbolados, su gastronomía y su gente invitan a recorrerla a pie, en bici o a bordo del Bus Turístico." },
+          { "titulo": "En números", "texto": "Fundación: 31 de mayo de 1565. Su historia se remonta a la época colonial y sigue viva en sus calles y monumentos.\n\nSuperficie: 91 km². Una ciudad compacta y vibrante, con gran diversidad cultural, comercial y urbana.\n\nPoblación: 590.342 habitantes (Censo 2022). Capital del norte argentino, motor económico, educativo y cultural del NOA.\n\nClima: templado subtropical. Invita a recorrerla todo el año, con veranos intensos e inviernos suaves.\n\nApodos: Jardín de la República y Cuna de la Independencia, dos nombres que reflejan su belleza natural y su legado histórico." }
+        ],
+        "enlaces": []
+      }
+    },
+    {
+      "pagina": "/preguntas-frecuentes", "paginaTitulo": "Preguntas frecuentes",
+      "coleccion": "planifica", "slug": "preguntas-frecuentes",
+      "datos": {
+        "titulo": "Preguntas frecuentes",
+        "resumen": "Clima, cómo llegar, transporte, atractivos, comidas típicas y seguridad: respuestas para quienes visitan la ciudad.",
+        "icono": "info", "orden": 11,
+        "secciones": [
+          { "titulo": "¿Cómo es el clima en San Miguel de Tucumán?", "texto": "La ciudad tiene clima subtropical con estación seca: veranos muy calurosos y húmedos (las máximas pueden superar los 35 °C) e inviernos templados y secos. La media anual ronda los 25 °C, con pocas lluvias en los meses fríos." },
+          { "titulo": "¿Cuál es la mejor época del año para visitar la ciudad?", "texto": "San Miguel de Tucumán se puede visitar todo el año. El invierno (junio a agosto) ofrece días templados y cielos despejados, ideales para caminar y recorrer. El verano (diciembre a febrero) es más caluroso y lluvioso, con la vegetación muy verde. Depende de tus preferencias de clima y actividades." },
+          { "titulo": "¿Cómo puedo llegar a San Miguel de Tucumán?", "texto": "La ciudad cuenta con el Aeropuerto Internacional Teniente Benjamín Matienzo, a 9 km del centro, con vuelos desde las principales ciudades argentinas. También se puede llegar por ruta (RN 9, RN 38 y otras rutas nacionales), en ómnibus de larga distancia o en tren desde la Ciudad de Buenos Aires." },
+          { "titulo": "¿Cuáles son los principales atractivos turísticos?", "texto": "Entre los lugares más visitados se destacan la Casa Histórica de la Independencia, la Plaza Independencia y su entorno histórico, la Catedral de Tucumán y las iglesias del casco céntrico, el Parque 9 de Julio y los museos a su alrededor, y el Cerro San Javier y los miradores cercanos.\n\nOtros puntos de interés: Museo Folklórico, Casa de Gobierno y Museo de la Industria Azucarera." },
+          { "titulo": "¿Cómo es el transporte público dentro de la ciudad?", "texto": "El sistema se basa principalmente en colectivos urbanos, que se pagan con tarjeta SUBE. El centro es caminable y se complementa con taxis, radiotaxis y remises habilitados. La Municipalidad ofrece mapas y herramientas digitales para consultar recorridos y horarios." },
+          { "titulo": "¿Hay visitas guiadas o bus turístico?", "texto": "Sí. Funciona un Bus Turístico gratuito que recorre los principales puntos históricos y culturales, con guías especializados. Los circuitos suelen salir desde Plaza Independencia en días y horarios determinados, con inscripción previa y cupos limitados. También se organizan visitas guiadas a pie en fechas especiales." },
+          { "titulo": "¿Dónde puedo obtener información turística?", "texto": "Podés acercarte a las oficinas de información turística del centro, donde se entregan mapas, folletos y asesoramiento. Además, el Ente Tucumán Turismo brinda información sobre toda la provincia y hay puntos de informes en Plaza Independencia en las temporadas de mayor afluencia." },
+          { "titulo": "¿Es una ciudad segura para los turistas?", "texto": "En general, San Miguel de Tucumán es un destino seguro, pero se recomiendan las mismas precauciones básicas que en cualquier ciudad: cuidar las pertenencias, evitar exhibir objetos de valor y usar taxis o remises oficiales de noche.\n\nAnte emergencias: 911 (seguridad), 107 (emergencias médicas), 100 (bomberos) y 103 (Defensa Civil)." },
+          { "titulo": "¿Qué comidas típicas debería probar?", "texto": "La estrella es la empanada tucumana, emblema gastronómico de la provincia. También se recomiendan el locro, las humitas y los tamales, además de postres como el quesillo con miel de caña, la mazamorra y las confituras regionales." },
+          { "titulo": "¿Qué lugares naturales cercanos puedo visitar?", "texto": "A poca distancia de la ciudad se encuentran el Dique El Cadillal (deportes náuticos y miradores); San Javier, Raco y El Siambón (yungas, senderos y turismo rural), y Villa Nougués (pueblo de montaña con vistas panorámicas).\n\nEn excursiones de día completo también se pueden visitar Tafí del Valle, Amaicha y Quilmes, entre otros destinos." }
+        ],
+        "enlaces": [
+          { "texto": "Bus Turístico", "url": "/bus-turistico" },
+          { "texto": "Gastronomía: sabores tucumanos", "url": "/sabores" },
+          { "texto": "Escapadas", "url": "/escapadas" }
+        ]
+      }
+    },
+    {
+      "pagina": "/preguntas-frecuentes", "paginaTitulo": "Preguntas frecuentes",
+      "coleccion": "planifica", "slug": "preguntas-de-vecinos",
+      "datos": {
+        "titulo": "Preguntas de vecinos",
+        "resumen": "Contacto con la Municipalidad, app Ciudad SMT, residuos, salud, trámites, reclamos y SUBE.",
+        "icono": "info", "orden": 12,
+        "secciones": [
+          { "titulo": "¿Cómo puedo comunicarme con la Municipalidad?", "texto": "La sede central está en 9 de Julio 570, San Miguel de Tucumán. El conmutador telefónico es (0381) 451-6500. También se puede contactar a través del sitio oficial smt.gob.ar y de las redes sociales verificadas del municipio." },
+          { "titulo": "¿Existe una app oficial para gestiones y reclamos?", "texto": "Sí. La app «Ciudad SMT» permite sacar turnos, hacer reclamos, pagar algunos tributos, consultar la agenda de la ciudad y acceder a información útil desde el celular. Es gratuita." },
+          { "titulo": "¿Cómo funciona la recolección de residuos?", "texto": "La recolección domiciliaria se hace de lunes a sábado, generalmente de noche. Se recomienda sacar la basura poco antes del paso del camión. Para residuos voluminosos (poda, escombros, muebles) hay que pedir un retiro especial al municipio o desde la app Ciudad SMT. Para los reciclables hay EcoPuntos en plazas y espacios públicos." },
+          { "titulo": "¿Qué servicios de salud y emergencias hay?", "texto": "La ciudad cuenta con hospitales y centros de salud públicos provinciales y con la Asistencia Pública Municipal para atención primaria y urgencias menores.\n\nEn emergencias: 107 (ambulancias y emergencias médicas), 911 (seguridad), 100 y 103 (bomberos y Defensa Civil)." },
+          { "titulo": "¿Cuáles son los trámites municipales más comunes?", "texto": "Algunos de los trámites más frecuentes son el pago de tasas municipales (CISI, Higiene, Cementerio), la licencia de conducir, la habilitación comercial, el carnet de sanidad y los turnos para castración de mascotas y otros servicios. Muchos pueden iniciarse online desde Ciudad SMT o CiDiTuc." },
+          { "titulo": "¿Qué es Ciudad Digital Tucumán (CiDiTuc)?", "texto": "Es la plataforma digital de trámites del municipio. Ahí se pueden pagar tasas, pedir turnos, consultar expedientes, descargar credenciales digitales y gestionar distintos servicios sin ir a las oficinas." },
+          { "titulo": "¿Cómo presento un reclamo al Municipio?", "texto": "La vía más ágil es la app Ciudad SMT, en la sección Atención Ciudadana, donde se puede reportar un problema y ubicarlo en el mapa. También se reciben reclamos por teléfono, en la Oficina de Reclamos y por las redes oficiales." },
+          { "titulo": "¿Qué es la Asistencia Pública?", "texto": "Es el centro de salud municipal de atención primaria y urgencias menores, abierto las 24 horas. Ofrece curaciones, primeros auxilios, consultas clínicas y derivaciones. Teléfonos: (0381) 430-8393 y 421-2329." },
+          { "titulo": "¿Cómo puedo participar en la gestión municipal?", "texto": "El municipio promueve la participación con encuestas, audiencias públicas, reuniones barriales, consultas en la app Ciudad SMT y la «Banca del Vecino» en el Concejo Deliberante: espacios para proponer ideas, expresar necesidades y acceder a información de gestión." },
+          { "titulo": "¿Cómo obtengo la tarjeta SUBE?", "texto": "La SUBE es el medio de pago de los colectivos urbanos. Se compra en kioscos y puntos habilitados; los beneficiarios de programas sociales pueden obtenerla sin costo en los puntos que informa el municipio. Conviene registrarla en MiSUBE para proteger el saldo y poder recuperarlo si se pierde." }
+        ],
+        "enlaces": [
+          { "texto": "smt.gob.ar", "url": "https://smt.gob.ar/" },
+          { "texto": "Ciudad SMT en Google Play", "url": "https://play.google.com/store/apps/details?id=ar.gob.smt.ciudadana&hl=es_AR" },
+          { "texto": "Ciudad SMT en App Store", "url": "https://apps.apple.com/ar/app/ciudad-smt/id6743326258" },
+          { "texto": "Ciudad Digital (CiDiTuc)", "url": "https://ciudaddigital.smt.gob.ar/" }
+        ]
+      }
+    }
+  ]
+}

@@ -108,6 +108,7 @@ export type Experiencia = Comun & {
   accion: Accion;
   /** Sólo salidas que confirmó el sistema responsable. */
   salidas: Salida[];
+  galeria: Imagen[];
 };
 
 export type EstadoOcurrencia = "confirmado" | "cancelado" | "reprogramado" | "suspendido";

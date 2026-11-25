@@ -2,9 +2,18 @@
  * Importa la Agenda Cultural al portal (public.contenidos). Siempre arranca en PRUEBA EN SECO:
  * muestra qué haría y deja un informe JSON; solo escribe con --escribir.
  *
- *   npm run cultura -- espacios [--escribir] [--fotos]
+ *   npm run cultura -- espacios [--desde-sitio] [--escribir] [--fotos]
  *       Los espacios relevados de la Agenda (datos/cultura/*.json) → lugares. Si el lugar ya existe
  *       en el portal se fusiona (solo completa lo vacío); si no, se crea en BORRADOR para revisar.
+ *       Con --desde-sitio los lee de las fichas publicadas en el sitio de la Agenda (AGENDA_SITIO_URL): mismos
+ *       datos, pero con las fotos en /media/… del sitio nuevo (las del WordPress viejo ya no se pueden bajar).
+ *   npm run cultura -- fotos-eventos [--escribir]
+ *       A cada evento sin foto le busca la de su página en el sitio de la Agenda (/eventos/<slug>, mismo título)
+ *       y la copia a la carpeta de subidas. No toca eventos que ya tienen foto.
+ *   npm run cultura -- paginas [--escribir] [--fotos]
+ *       Las páginas fijas de la Agenda (patrimonio, gastronomía, guías, oficinas, preguntas frecuentes, murales,
+ *       ferias, museo a cielo abierto, nuestra ciudad; datos/cultura/paginas-agenda.json) → fichas del portal en
+ *       BORRADOR. Si la ficha ya existe, solo completa sus campos vacíos.
  *   npm run cultura -- eventos --desde-base [--escribir] [--actualizar] [--fotos]
  *       Los eventos de la base de la Agenda (AGENDA_DATABASE_URL, solo lectura) → eventos. Sus fotos se bajan
  *       del sitio de la Agenda (AGENDA_SITIO_URL, por defecto https://agendacultural.smt.gob.ar).
@@ -25,7 +34,7 @@
  *                 no se publican tal cual).
  *   --reporte X   dónde dejar el informe (por defecto importacion-cultura.json).
  *
- * Base del portal: DATABASE_URL. Sin DATABASE_URL usa la base local (PGlite, .local/pgdata): en ese
+ * Base del portal: DATABASE_URL. Sin DATABASE_URL usa la base local (PGlite, .local/pgdata o CARPETA_LOCAL/pgdata): en ese
  * caso el servidor de desarrollo tiene que estar apagado.
  * Cada alta o cambio queda en la auditoría como «sistema».
  */
@@ -41,6 +50,8 @@ import {
 } from "../lib/cultura/importar.ts";
 import { buildPlan } from "../lib/cultura/eventon.mjs";
 import { leerXlsx } from "../lib/cultura/planilla.ts";
+import { AGENDA_SITIO_POR_DEFECTO, fotosDeEventoDesdeHtml, lugarDesdeHtml, slugsDelSitemap } from "../lib/cultura/sitio-agenda.ts";
+import { normalizar } from "../lib/buscar.ts";
 import { talleresDeLaPlanilla, type ArchivoTalleres } from "../lib/cultura/talleres.ts";
 
 const args = process.argv.slice(2);
@@ -50,8 +61,18 @@ const actualizar = args.includes("--actualizar");
 const conFotos = args.includes("--fotos");
 const iReporte = args.indexOf("--reporte");
 const reporte = path.resolve(iReporte >= 0 && args[iReporte + 1] ? args[iReporte + 1] : "importacion-cultura.json");
-const CARPETA = process.env.CARPETA_SUBIDAS || path.join(process.cwd(), ".local", "subidas");
+/** Carpeta local (como lib/almacenamiento.ts y lib/db/local/instancia.ts): .local, o CARPETA_LOCAL para usar otra base de pruebas. */
+const LOCAL = process.env.CARPETA_LOCAL || path.join(process.cwd(), ".local");
+const CARPETA = process.env.CARPETA_SUBIDAS || path.join(LOCAL, "subidas");
 const AGENTE = { "User-Agent": "PortalTurismoSMT-importador/1.0" };
+/** El sitio nuevo de la Agenda (agendacultural.smt.gob.ar todavía redirige al WordPress viejo, que no responde). */
+const SITIO_AGENDA = process.env.AGENDA_SITIO_URL || AGENDA_SITIO_POR_DEFECTO;
+
+async function pagina(url: string): Promise<string> {
+  const r = await fetch(url, { headers: AGENTE });
+  if (!r.ok) throw new Error(`${url} respondió ${r.status}`);
+  return r.text();
+}
 
 type Json = Record<string, unknown>;
 type Q = (texto: string, params?: unknown[]) => Promise<Json[]>;
@@ -68,7 +89,7 @@ async function abrirBase(): Promise<{ q: Q; transaccion: <T>(fn: (q: Q) => Promi
     };
   }
   const { crearBaseLocal } = await import("../lib/db/local/preparar.ts");
-  const db = await crearBaseLocal({ carpeta: path.join(process.cwd(), ".local", "pgdata") });
+  const db = await crearBaseLocal({ carpeta: path.join(LOCAL, "pgdata") });
   return {
     q: async (t, p = []) => (await db.query(t, p)).rows as Json[],
     transaccion: (fn) => db.transaction((tx) => fn(async (t, p = []) => (await tx.query(t, p)).rows as Json[])),
@@ -77,8 +98,8 @@ async function abrirBase(): Promise<{ q: Q; transaccion: <T>(fn: (q: Q) => Promi
 }
 
 /** Baja una foto, la normaliza (sin EXIF, máx. 2000 px) y devuelve su dirección /subidas/…; null si falla. */
-async function bajarFoto(url: string, carpeta: string, nombre: string, errores: string[]): Promise<string | null> {
-  if (!conFotos || !/^https?:\/\//.test(url)) return url.startsWith("/") ? url : null;
+async function bajarFoto(url: string, carpeta: string, nombre: string, errores: string[], siempre = false): Promise<string | null> {
+  if (!(conFotos || siempre) || !/^https?:\/\//.test(url)) return url.startsWith("/") ? url : null;
   const ruta = `cultura/${carpeta}/${nombre}.jpg`;
   const destino = path.join(CARPETA, ruta);
   if (fs.existsSync(destino)) return `/subidas/${ruta}`;
@@ -123,6 +144,14 @@ const leerEspacios = (): EspacioAgenda[] =>
   ["espacios-culturales.json", "espacios-al-aire-libre.json"].flatMap((f) =>
     JSON.parse(fs.readFileSync(path.join(process.cwd(), "datos", "cultura", f), "utf8")).espacios);
 
+/** Las fichas de lugares publicadas en el sitio de la Agenda (las que lista su sitemap). */
+async function espaciosDelSitio(): Promise<EspacioAgenda[]> {
+  const slugs = slugsDelSitemap(await pagina(`${SITIO_AGENDA}/sitemap.xml`), "lugares");
+  const espacios: EspacioAgenda[] = [];
+  for (const slug of slugs) espacios.push(lugarDesdeHtml(await pagina(`${SITIO_AGENDA}/lugares/${encodeURIComponent(slug)}`), slug, SITIO_AGENDA));
+  return espacios;
+}
+
 async function fichas(q: Q, coleccion: string): Promise<FichaExistente[]> {
   return (await q("select coleccion, slug, estado, datos from public.contenidos where coleccion = $1", [coleccion])) as FichaExistente[];
 }
@@ -134,7 +163,9 @@ async function importarEspacios(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>)
   const informe = { creados: [] as string[], fusionados: [] as { espacio: string; lugar: string; campos: string[] }[], sinCambios: [] as string[], dudosos: [] as { espacio: string; parecidos: string[] }[], fotosConError: [] as string[] };
   const escrituras: { sql: string; params: unknown[] }[] = [];
 
-  for (const e of leerEspacios()) {
+  const desdeSitio = args.includes("--desde-sitio");
+  if (desdeSitio) console.log(`Leyendo las fichas de lugares de ${SITIO_AGENDA}…`);
+  for (const e of desdeSitio ? await espaciosDelSitio() : leerEspacios()) {
     const { slug, dudosos } = buscarLugar(e, lugares);
     const nuevo = await fotosLocales(espacioALugar(e), e.slug, informe.fotosConError);
     if (slug) {
@@ -164,7 +195,7 @@ async function importarEspacios(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>)
  * (AGENDA_SITIO_URL) para que --fotos las baje y las copie al portal.
  */
 const desdeLaAgenda = (ruta: string | null) =>
-  ruta && ruta.startsWith("/") ? new URL(ruta, process.env.AGENDA_SITIO_URL || "https://agendacultural.smt.gob.ar").href : ruta;
+  ruta && ruta.startsWith("/") ? new URL(ruta, SITIO_AGENDA).href : ruta;
 
 async function eventosDeLaBase(): Promise<EventoOrigen[]> {
   const url = process.env.AGENDA_DATABASE_URL;
@@ -308,6 +339,102 @@ async function importarEventos(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) 
   return informe;
 }
 
+/* ---- fotos de los eventos (sitio de la Agenda) ---- */
+
+/**
+ * Los eventos sin foto la buscan en /eventos/<slug> del sitio de la Agenda. Solo se toma si la página tiene el
+ * mismo título (el slug podría haberse reusado) y la foto es del evento (/media/…), no la imagen por defecto.
+ */
+async function fotosDeEventos(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) => Promise<T>) {
+  const eventos = (await fichas(q, "eventos")).filter((e) => !(e.datos.imagen as Json | undefined)?.src);
+  const informe = { conFoto: [] as string[], sinFotoEnLaAgenda: [] as string[], otroTitulo: [] as string[], noEsta: [] as string[], fotosConError: [] as string[] };
+  const escrituras: { sql: string; params: unknown[] }[] = [];
+  console.log(`Eventos sin foto: ${eventos.length}. Buscándolos en ${SITIO_AGENDA}…`);
+  for (const e of eventos) {
+    const r = await fetch(`${SITIO_AGENDA}/eventos/${encodeURIComponent(e.slug)}`, { headers: AGENTE });
+    if (!r.ok) { informe.noEsta.push(e.slug); continue; }
+    const { titulo, imagen } = fotosDeEventoDesdeHtml(await r.text(), SITIO_AGENDA);
+    if (normalizar(titulo) !== normalizar(String(e.datos.titulo ?? ""))) { informe.otroTitulo.push(`${e.slug}: «${titulo}»`); continue; }
+    if (!imagen) { informe.sinFotoEnLaAgenda.push(e.slug); continue; }
+    const legado = e.datos.legado as Json | undefined;
+    const carpeta = (legado?.origen && legado.id ? `eventos-${legado.origen}-${legado.id}` : `eventos-${e.slug}`).toLowerCase().replace(/[^a-z0-9-]/g, "");
+    // Siempre se baja (sin --fotos no tendría sentido): en prueba en seco solo se informa.
+    const src = escribir ? await bajarFoto(imagen, carpeta, "principal", informe.fotosConError, true) : imagen;
+    if (!src) continue;
+    informe.conFoto.push(e.slug);
+    const datos = { ...e.datos, imagen: { src, alt: String(e.datos.titulo ?? ""), credito: "Agenda Cultural SMT" } };
+    escrituras.push({ sql: "update public.contenidos set datos = $3::text::jsonb where coleccion = $1 and slug = $2", params: ["eventos", e.slug, JSON.stringify(datos)] });
+  }
+  console.log(`Con foto nueva: ${informe.conFoto.length}. Sin foto también en la Agenda: ${informe.sinFotoEnLaAgenda.length}. `
+    + `No están en la Agenda: ${informe.noEsta.length}. Con otro título (no se tocan): ${informe.otroTitulo.length}. Fotos con error: ${informe.fotosConError.length}.`);
+  if (escribir) await transaccion(async (tx) => { for (const w of escrituras) await tx(w.sql, w.params); });
+  return informe;
+}
+
+/* ---- páginas fijas de la Agenda → fichas ---- */
+
+type FichaDePagina = { pagina: string; paginaTitulo: string; coleccion: string; slug: string; datos: Json };
+
+/** Completa lo vacío de una ficha existente (en cualquier nivel de un grupo); nunca pisa un dato cargado. */
+function completarCampos(existente: Json, nuevo: Json): { datos: Json; campos: string[] } {
+  const datos = structuredClone(existente);
+  const campos: string[] = [];
+  const estaVacio = (v: unknown): boolean => v === undefined || v === null || v === "" || (Array.isArray(v) && v.length === 0)
+    || (typeof v === "object" && !Array.isArray(v) && Object.values(v as Json).every(estaVacio));
+  for (const [clave, valor] of Object.entries(nuevo)) {
+    if (estaVacio(valor) || clave === "fuentes") continue;
+    if (estaVacio(datos[clave])) { datos[clave] = valor; campos.push(clave); }
+  }
+  // La página de la Agenda queda entre las fuentes, si no estaba.
+  const fuentes = (datos.fuentes as Json[] | undefined) ?? [];
+  for (const f of (nuevo.fuentes as Json[] | undefined) ?? []) {
+    if (campos.length && !fuentes.some((x) => x.url === f.url)) { fuentes.push(f); datos.fuentes = fuentes; }
+  }
+  return { datos, campos };
+}
+
+async function importarPaginas(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) => Promise<T>) {
+  const archivo = JSON.parse(fs.readFileSync(path.join(process.cwd(), "datos", "cultura", "paginas-agenda.json"), "utf8")) as { fichas: FichaDePagina[] };
+  const existentes = (await q("select coleccion, slug, datos from public.contenidos")) as { coleccion: string; slug: string; datos: Json }[];
+  const informe = { creadas: [] as string[], completadas: [] as { ficha: string; campos: string[] }[], sinCambios: [] as string[], fotosConError: [] as string[] };
+  const escrituras: { sql: string; params: unknown[] }[] = [];
+  for (const f of archivo.fichas) {
+    const id = `${f.coleccion}/${f.slug}`;
+    const conFuente: Json = {
+      ...f.datos,
+      fuentes: [{ titulo: `Agenda Cultural SMT — ${f.paginaTitulo}`, url: new URL(f.pagina, SITIO_AGENDA).href }],
+    };
+    // Las fotos de la Agenda (/images/contenido/…) se bajan de su sitio con --fotos.
+    const conUrl = structuredClone(conFuente);
+    const absoluta = (foto: Json | undefined) => {
+      if (foto?.src && String(foto.src).startsWith("/")) foto.src = new URL(String(foto.src), SITIO_AGENDA).href;
+      if (foto && !foto.credito) foto.credito = "Agenda Cultural SMT";
+    };
+    absoluta(conUrl.imagen as Json | undefined);
+    for (const g of (conUrl.galeria as Json[] | undefined) ?? []) absoluta(g.foto as Json);
+    const tieneGaleria = "galeria" in conUrl;
+    const nuevo = await fotosLocales(conUrl, `agenda-${f.coleccion}-${f.slug}`, informe.fotosConError);
+    if (!tieneGaleria) delete nuevo.galeria;
+
+    const ya = existentes.find((e) => e.coleccion === f.coleccion && e.slug === f.slug);
+    if (!ya) {
+      informe.creadas.push(id);
+      escrituras.push({ sql: "insert into public.contenidos (coleccion, slug, estado, datos) values ($1, $2, 'borrador', $3::text::jsonb) on conflict do nothing", params: [f.coleccion, f.slug, JSON.stringify(nuevo)] });
+      continue;
+    }
+    const { datos, campos } = completarCampos(ya.datos, nuevo);
+    if (!campos.length) { informe.sinCambios.push(id); continue; }
+    informe.completadas.push({ ficha: id, campos });
+    escrituras.push({ sql: "update public.contenidos set datos = $3::text::jsonb where coleccion = $1 and slug = $2", params: [f.coleccion, f.slug, JSON.stringify(datos)] });
+  }
+  console.log(`Páginas de la Agenda: ${informe.creadas.length} fichas nuevas (en borrador), ${informe.completadas.length} completadas, ${informe.sinCambios.length} sin cambios.`);
+  for (const c of informe.creadas) console.log(`  nueva: ${c}`);
+  for (const c of informe.completadas) console.log(`  completa ${c.ficha}: ${c.campos.join(", ")}`);
+  if (!conFotos) console.log("  (sin --fotos: las fichas nuevas quedan sin foto)");
+  if (escribir) await transaccion(async (tx) => { for (const w of escrituras) await tx(w.sql, w.params); });
+  return informe;
+}
+
 /* ---- completar lugares (sin red) ---- */
 
 async function completarLugares(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) => Promise<T>) {
@@ -378,8 +505,10 @@ try {
   if (comando === "espacios") resultado = await importarEspacios(base.q, base.transaccion);
   else if (comando === "eventos") resultado = await importarEventos(base.q, base.transaccion);
   else if (comando === "completar-lugares") resultado = await completarLugares(base.q, base.transaccion);
+  else if (comando === "fotos-eventos") resultado = await fotosDeEventos(base.q, base.transaccion);
+  else if (comando === "paginas") resultado = await importarPaginas(base.q, base.transaccion);
   else {
-    console.error("Uso: npm run cultura -- espacios | eventos --desde-base | eventos --desde-wordpress | completar-lugares | talleres --desde-planilla X  [--escribir] [--actualizar] [--fotos]");
+    console.error("Uso: npm run cultura -- espacios [--desde-sitio] | eventos --desde-base | eventos --desde-wordpress | fotos-eventos | paginas | completar-lugares | talleres --desde-planilla X  [--escribir] [--actualizar] [--fotos]");
     process.exitCode = 1;
   }
   if (resultado) {

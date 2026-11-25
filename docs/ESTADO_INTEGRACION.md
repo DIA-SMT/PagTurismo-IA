@@ -118,12 +118,12 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 |---|---|---|
 | Ensayo en **staging** contra una copia de `turismo` y de `portalturismo` | P0 | Antes del corte (PLAN_MIGRACION §4) |
 | Auditoría WCAG 2.2 AA automatizada (axe) en las pantallas portadas del bus | P1 | Lo nuevo tiene etiquetas, foco visible y `aria-live`. Playwright encontró y se corrigió que los campos con error del bus no se marcaban como inválidos (`aria-invalid`); las pantallas del panel del bus no se auditaron una por una |
-| Páginas fijas de la Agenda (nuestra ciudad, patrimonio, ferias, gastronomía, guías, oficinas, FAQ, murales, museo a cielo abierto) | P2 | Pasarlas a fichas editables de Planificá / Qué hacer |
+| Páginas fijas de la Agenda (nuestra ciudad, patrimonio, ferias, gastronomía, guías, oficinas, FAQ, murales, museo a cielo abierto) | P2 | Cargadas como 17 fichas en **borrador** (`npm run cultura -- paginas --fotos --escribir`): falta revisarlas y publicarlas, y resolver las diferencias de `docs/RELEVAMIENTO_AGENDA.md` (dirección de la Oficina de Turismo, entre otras) |
 | Biblioteca de multimedia central (referencias, protección de borrado) | P2 | Hoy cada ficha guarda su foto con texto alternativo, crédito y permiso |
 | Menús, SEO y módulos configurables desde el panel | P2 | Hoy: configuración del sitio existente |
 | Portugués del Bus Turístico y Bus Educativo | P2 | Los textos del bus existen en es/en; en pt se muestra español con aviso |
 | Auditoría con diferencias campo por campo en operaciones del bus | P3 | Hoy se registra persona, operación y ruta (se anota al pedirla: incluye intentos rechazados) |
-| Fotos de los eventos en la base local | P3 | `npm run cultura -- eventos --desde-wordpress --escribir --actualizar --fotos` completa la foto vacía; el 24/11 agendaculturalsmt.com no respondía. Sin foto, la tarjeta usa la del lugar o la imagen por defecto de la Agenda |
+| Fotos de los eventos en la base local | P3 | El WordPress sigue caído (25/11): `npm run cultura -- fotos-eventos --escribir` las trae del sitio nuevo de la Agenda. Sin foto, la tarjeta usa la del lugar o la imagen por defecto de la Agenda |
 | Validar y publicar los lugares para comer y La Ruta de la Empanada | P1 | 8 lugares (Ente Tucumán Turismo, ranking TripAdvisor 2017, Ruta de la Empanada) y la experiencia, en borrador con fuentes y horarios «a confirmar». Sumar la guía de bares y peñas de Turismo |
 | Talleres 2026: corregir la planilla y confirmar condiciones | P1 | 3 errores (Danza árabe «2O:30», Pintura al óleo «19:00 a 12:00», Del Tiempo I'Ñaupa sin hora de fin) y la columna de alumnos vacía. Confirmar si los «no municipales» son gratuitos y cómo se inscribe. Pasar la carga al panel |
 | Estructura de la web de Cultura (documento de Gestión Cultural) | P2 | Falta la Casa Belgraniana – Solar Histórico, los programas Crear Encuentro y Cultura Joven, y alojamientos |

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BotonAccion, Dato, TextoHorario, textoCosto } from "@/components/Ficha";
+import { Galeria } from "@/components/cultura/Piezas";
 import { Icono } from "@/components/Iconos";
 import { AvisoBorrador, AvisoSinTraducir, EncabezadoPagina, FotoFicha, Fuentes, Marca, Parrafos, TarjetaItem } from "@/components/Ui";
 import { esFechaValida, finDeOcurrencia, formatearOcurrencia } from "@/lib/fechas";
@@ -78,6 +79,7 @@ export default async function FichaExperiencia({ params }: PageProps<"/[idioma]/
               <Parrafos texto={e.descripcion} className="prosa" />
             </section>
           )}
+          <Galeria fotos={e.galeria} />
 
           <section aria-labelledby="salidas">
             <h2 id="salidas">{te.proximasSalidas}</h2>

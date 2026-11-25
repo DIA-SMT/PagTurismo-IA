@@ -205,6 +205,7 @@ export const ESQUEMAS: Esquema[] = [
         { tipo: "texto", nombre: "politicaClima", etiqueta: "Si llueve", traducible: true, ancho: "medio" },
         { tipo: "texto", nombre: "operador", etiqueta: "Operador o responsable", ancho: "medio" },
       ] },
+      { titulo: "Galería", campos: [galeria] },
       fuentesYValidacion,
     ],
   },

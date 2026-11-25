@@ -136,6 +136,18 @@ sudo -u portalturismo npm run cultura -- eventos --desde-wordpress --escribir --
 
 Los espacios nuevos entran en **borrador**: un administrador de cultura los revisa y publica.
 
+El WordPress viejo (`agendaculturalsmt.com`) dejó de responder y `agendacultural.smt.gob.ar` todavía redirige
+ahí, así que las fotos se traen del **sitio nuevo de la Agenda** (`AGENDA_SITIO_URL`, por defecto
+`https://agenda.195-35-42-168.sslip.io`). Lo que la Agenda tiene y el portal no (relevado el 25/11/2026, ver
+`docs/RELEVAMIENTO_AGENDA.md`):
+
+```bash
+sudo -u portalturismo npm run cultura -- espacios --desde-sitio --fotos             # prueba en seco
+sudo -u portalturismo npm run cultura -- espacios --desde-sitio --fotos --escribir  # fotos de los 21 espacios
+sudo -u portalturismo npm run cultura -- paginas --fotos --escribir                 # páginas fijas → 17 fichas en borrador
+sudo -u portalturismo npm run cultura -- fotos-eventos --escribir                   # foto a los eventos que no tienen
+```
+
 ### Verificación posterior
 
 Lista completa en `docs/PLAN_MIGRACION.md` §8: páginas en es/en/pt, reserva y cancelación de

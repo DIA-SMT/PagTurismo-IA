@@ -84,7 +84,9 @@ export function espacioALugar(e: EspacioAgenda): Json {
     galeria: (e.gallery ?? []).filter((src) => src && src !== e.image).map((src) => ({ foto: { src, alt: e.name.trim(), credito: "Agenda Cultural SMT" } })),
     categorias: [],
     etiquetas: [],
-    fuentes: e.legacy_url ? [{ titulo: "Agenda Cultural SMT (sitio anterior)", url: e.legacy_url }] : [],
+    fuentes: e.legacy_url
+      ? [{ titulo: /agendaculturalsmt\.com/.test(e.legacy_url) ? "Agenda Cultural SMT (sitio anterior)" : "Agenda Cultural SMT", url: e.legacy_url }]
+      : [],
     validacion: {},
     legado: { origen: "agenda", id: e.slug, url: e.legacy_url || undefined },
   };

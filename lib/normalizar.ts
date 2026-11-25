@@ -123,6 +123,7 @@ export const normalizarExperiencia = (c: Record<string, unknown>, slug: string):
       urlReserva: opcional(s.urlReserva),
       nota: opcional(s.nota),
     })),
+    galeria: galeria(c.galeria),
   };
 };
 
