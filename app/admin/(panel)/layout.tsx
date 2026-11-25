@@ -2,7 +2,9 @@ import Link from "next/link";
 
 import { Icono } from "@/components/Iconos";
 import { Tema } from "@/components/Tema";
+import { AsistentePanel } from "@/components/admin/AsistentePanel";
 import { BotonMenuPanel, MenuPanel } from "@/components/admin/MenuPanel";
+import { sugerenciasPara } from "@/lib/admin/ayuda";
 import { seccionesDelMenu } from "@/lib/admin/menu";
 import { requerirAdmin } from "@/lib/admin/sesion";
 import { NOMBRE_MODULO, NOMBRE_ROL } from "@/lib/permisos";
@@ -55,6 +57,7 @@ export default async function LayoutPanel({ children }: { children: React.ReactN
           </footer>
         </main>
       </div>
+      <AsistentePanel nombre={admin.nombre} sugerencias={sugerenciasPara(admin)} />
     </>
   );
 }
