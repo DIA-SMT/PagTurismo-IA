@@ -23,12 +23,26 @@ import type { comun } from "./i18n/textos/comun";
 type TextosComun = (typeof comun)["es"];
 export type ClaveNav = keyof TextosComun["nav"];
 export type ClavePie = keyof TextosComun["pie"]["enlaces"];
+export type ClaveSubnav = keyof TextosComun["subnav"];
+export type Subseccion = { clave: ClaveSubnav; url: string; icono: string };
 
 /** Los textos salen de lib/i18n/textos/comun.ts según el idioma. */
 export type Enlace = { clave: ClavePie; url: string; externo?: boolean };
 
-export const NAV: { clave: ClaveNav; url: string }[] = [
-  { clave: "descubri", url: "/descubri" },
+/** La navegación principal. «sub» arma el menú desplegable (y los ítems anidados del menú del celular). */
+export const NAV: { clave: ClaveNav; url: string; sub?: Subseccion[] }[] = [
+  {
+    clave: "descubri",
+    url: "/descubri",
+    sub: [
+      { clave: "general", url: "/descubri", icono: "brujula" },
+      { clave: "mapa", url: "/mapa", icono: "mapa" },
+      { clave: "lugares", url: "/lugares", icono: "ubicacion" },
+      { clave: "talleres", url: "/talleres", icono: "personas" },
+      { clave: "sabores", url: "/sabores", icono: "plato" },
+      { clave: "escapadas", url: "/escapadas", icono: "caminata" },
+    ],
+  },
   { clave: "queHacer", url: "/que-hacer" },
   { clave: "recorridos", url: "/recorridos" },
   { clave: "agenda", url: "/agenda" },

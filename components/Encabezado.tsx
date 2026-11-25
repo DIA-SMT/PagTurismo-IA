@@ -1,15 +1,16 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 
 import { Icono } from "./Iconos";
 import { LogoSMT } from "./LogoSMT";
 import { Tema } from "./Tema";
 import { SelectorIdioma } from "./i18n/SelectorIdioma";
 import { useIdioma, useTextos, Vinculo as Link } from "./i18n/Idioma";
-import { NAV } from "@/lib/contenido";
+import { NAV, type Subseccion } from "@/lib/contenido";
 import { localizarRuta } from "@/lib/i18n/config";
+import { formatear } from "@/lib/i18n/definir";
 
 /**
  * Barra del portal. La navegación lleva a las secciones (rutas propias) y
@@ -52,7 +53,9 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
 
           <nav className="nav" aria-label={t.encabezado.secciones}>
             <ul>
-              {NAV.map((e) => (
+              {NAV.map((e) => e.sub ? (
+                <NavDesplegable key={e.url} url={e.url} texto={t.nav[e.clave]} sub={e.sub} actual={actual} />
+              ) : (
                 <li key={e.url}>
                   <Link className="nav__enlace" href={e.url} aria-current={actual(e.url) ? "page" : undefined}>
                     {t.nav[e.clave]}
@@ -139,6 +142,17 @@ function PanelMovil({ cerrar, actual }: { cerrar: () => void; actual: (url: stri
                   {t.nav[e.clave]}
                   <Icono nombre="flecha" tamano={18} />
                 </Link>
+                {e.sub && (
+                  <ul className="panel-movil__sub">
+                    {e.sub.filter((x) => x.url !== e.url).map((x) => (
+                      <li key={x.url}>
+                        <Link href={x.url} onClick={cerrar} aria-current={actual(x.url) ? "page" : undefined}>
+                          <Icono nombre={x.icono} tamano={18} /> {t.subnav[x.clave].titulo}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
@@ -149,5 +163,68 @@ function PanelMovil({ cerrar, actual }: { cerrar: () => void; actual: (url: stri
         <SelectorIdioma variante="panel" />
       </div>
     </div>
+  );
+}
+
+/**
+ * Sección con menú desplegable («Descubrí San Miguel»). El enlace lleva a la sección; el botón de al lado abre
+ * el panel (teclado y pantallas táctiles) y también se abre al pasar el mouse. Escape o un clic afuera lo cierran.
+ */
+function NavDesplegable({ url, texto, sub, actual }: { url: string; texto: string; sub: Subseccion[]; actual: (url: string) => boolean }) {
+  const { comun: t } = useTextos();
+  const [abierto, setAbierto] = useState(false);
+  const li = useRef<HTMLLIElement>(null);
+  const boton = useRef<HTMLButtonElement>(null);
+  const espera = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  // Si el panel se abrió con el mouse, el clic en la flecha lo deja abierto (no lo cierra al instante).
+  const porMouse = useRef(false);
+  const id = useId();
+  const ruta = usePathname();
+
+  useEffect(() => setAbierto(false), [ruta]);
+  useEffect(() => {
+    if (!abierto) return;
+    const fuera = (e: PointerEvent) => { if (!li.current?.contains(e.target as Node)) setAbierto(false); };
+    const tecla = (e: KeyboardEvent) => { if (e.key === "Escape") { setAbierto(false); boton.current?.focus(); } };
+    document.addEventListener("pointerdown", fuera);
+    document.addEventListener("keydown", tecla);
+    return () => { document.removeEventListener("pointerdown", fuera); document.removeEventListener("keydown", tecla); };
+  }, [abierto]);
+
+  // Con el mouse, un instante de margen al salir para poder bajar al panel sin que se cierre.
+  const entrar = () => { clearTimeout(espera.current); if (!abierto) porMouse.current = true; setAbierto(true); };
+  const salir = () => { clearTimeout(espera.current); espera.current = setTimeout(() => { porMouse.current = false; setAbierto(false); }, 180); };
+  const alternar = () => {
+    const abiertoConMouse = porMouse.current;
+    porMouse.current = false;
+    setAbierto((x) => (abiertoConMouse ? true : !x));
+  };
+  const enLaSeccion = actual(url) || sub.some((x) => actual(x.url));
+
+  return (
+    <li ref={li} className="nav__desplegable" data-abierto={abierto ? "" : undefined} data-activa={enLaSeccion ? "" : undefined}
+      onPointerEnter={(e) => e.pointerType === "mouse" && entrar()} onPointerLeave={(e) => e.pointerType === "mouse" && salir()}
+      onBlur={(e) => { if (!li.current?.contains(e.relatedTarget as Node)) setAbierto(false); }}>
+      <Link className="nav__enlace" href={url} aria-current={actual(url) ? "page" : undefined}>{texto}</Link>
+      <button ref={boton} type="button" className="nav__abrir" aria-expanded={abierto} aria-controls={id}
+        aria-label={formatear(t.encabezado.abrirSubmenu, { seccion: texto })} onClick={alternar}>
+        <Icono nombre="chevron" tamano={14} />
+      </button>
+      <div className="nav__panel" id={id} hidden={!abierto}>
+        <ul>
+          {sub.map((x) => (
+            <li key={x.url}>
+              <Link className="nav__subenlace" href={x.url} aria-current={actual(x.url) ? "page" : undefined}>
+                <span className="nav__subicono" aria-hidden="true"><Icono nombre={x.icono} tamano={20} /></span>
+                <span>
+                  <strong>{t.subnav[x.clave].titulo}</strong>
+                  <small>{t.subnav[x.clave].detalle}</small>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </li>
   );
 }

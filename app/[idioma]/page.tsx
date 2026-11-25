@@ -12,6 +12,7 @@ import { datosDelBusParaMigue } from "@/lib/buses/migue";
 import { BUS_TURISTICO } from "@/lib/contenido";
 import { contenido, destacadosVigentes, agendaDestacada, ocurrenciasDeAgenda } from "@/lib/datos";
 import { CategoriasAgenda, GrillaEventos, SemanaAgenda } from "@/components/cultura/Agenda";
+import { TalleresPortada } from "@/components/cultura/TalleresPortada";
 import { categoriasPopulares, proximosDias, proximosEventos } from "@/lib/cultura/agenda";
 import { diaLocal, formatearOcurrencia, nombreMes, partesDeFecha } from "@/lib/fechas";
 import { LOCALE } from "@/lib/i18n/config";
@@ -151,10 +152,6 @@ export default async function Portada() {
               enlace={{ texto: textosPagina.cultura.portada.verAgenda, url: "/agenda" }} />
             <GrillaEventos ocurrencias={proximosAgenda} categorias={c.categoriasAgenda} />
             <SemanaAgenda dias={semanaAgenda} categorias={c.categoriasAgenda} />
-            <p className="agenda-talleres">
-              <span>{textosPagina.talleres.portadaTexto}</span>
-              <Link className="enlace-flecha" href="/talleres">{textosPagina.talleres.verTalleres} <Icono nombre="flecha" tamano={16} /></Link>
-            </p>
           </section>
           {categoriasConFechas.length > 0 && (
             <section className="franja-categorias" aria-labelledby="categorias-titulo" data-modulo="cultura">
@@ -215,6 +212,9 @@ export default async function Portada() {
         </section>
   
       )}
+
+      {/* ---- Talleres en los centros culturales ---- */}
+      <TalleresPortada t={textosPagina.talleres} ahora={ahora} />
 
       {/* ---- Qué hacer ---- */}
       <section className="bloque contenedor" id="que-hacer" aria-labelledby="que-hacer-titulo">

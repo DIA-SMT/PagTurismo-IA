@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BotonAccion, Dato, JsonLd, textoCosto } from "@/components/Ficha";
+import { DescripcionEvento } from "@/components/cultura/Descripcion";
 import { Compartir, Galeria, MapaEmbebido } from "@/components/cultura/Piezas";
 import { Vinculo as Link } from "@/components/i18n/Idioma";
 import { Icono } from "@/components/Iconos";
-import { AvisoBorrador, Aviso, AvisoSinTraducir, EncabezadoPagina, FotoFicha, Fuentes, Marca, Parrafos } from "@/components/Ui";
+import { AvisoBorrador, Aviso, AvisoSinTraducir, EncabezadoPagina, FotoFicha, Fuentes, Marca } from "@/components/Ui";
 import { contenido, porSlug, claseEvento } from "@/lib/datos";
 import { aInstante, esFechaValida, fechaAnual, formatearOcurrencia, nombreMes, ocurrenciasVigentes } from "@/lib/fechas";
 import { formatear } from "@/lib/i18n/definir";
@@ -119,7 +120,7 @@ export default async function FichaEvento({ params }: PageProps<"/[idioma]/agend
             <Aviso tipo="alerta">{formatear(t.avisoFuera, { localidad: e.localidad || t.otraLocalidad })}</Aviso>
           )}
           <FotoFicha imagen={e.imagen} />
-          <Parrafos texto={e.descripcion} className="prosa" />
+          <DescripcionEvento texto={e.descripcion} resumen={e.resumen} t={tc.descripcion} />
 
           <section aria-labelledby="fechas">
             <h2 id="fechas">{t.proximasFechas}</h2>

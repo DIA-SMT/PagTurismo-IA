@@ -17,7 +17,7 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | E — Buses | 🟡 | Reserva real contra la función atómica; panel con permisos | `tests/buses-base.test.ts`, `tests/buses-reglas.test.ts`; flujo completo en navegador (local). Falta: staging contra copia de la base `turismo`, SMTP real |
 | F — Panel unificado | ✅ | Tablero con datos reales; usuarios y permisos | Tablero, `/admin/usuarios`, menú por permisos (verificado con 3 roles) |
 | G — Migue | ✅ | Un widget; contenido con agenda y cupos reales | `tests/migue-bus.test.ts`; `/api/migue/contenido` sin datos personales (verificado) |
-| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 176/176 tests unitarios, **43/43 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
+| H — Diseño y QA | 🟡 | typecheck, tests, build, responsive | 180/180 tests unitarios, **48/48 Playwright** (escritorio y celular), `tsc` limpio, `next build` OK, sin desborde horizontal a 375 px. Falta: auditoría WCAG automatizada |
 | I — Despliegue | 🟡 | Guía de despliegue, rollback y verificación | `deploy/README.md`, `deploy/sql/`, `.env.example`. Falta: ensayo en staging |
 
 ## Qué está implementado
@@ -51,6 +51,14 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
   de errores de la planilla. Lector de .xlsx propio (zip + zlib), sin dependencias.
 - La agenda y la portada ya no muestran los talleres anuales (taparían los eventos): enlazan a `/talleres`. Migue recibe una
   ficha por centro con talleres, días, horarios e inscripción; el planificador los ofrece solo si la persona pide clases.
+
+### Lectura más liviana y navegación
+- Ficha de evento: la descripción se separa en datos clave (duración, punto de encuentro, «llegá N minutos antes», suspensión
+  por lluvia), el itinerario como paradas numeradas, los enlaces como botones y el resto como texto plegable
+  (`lib/cultura/descripcion.ts`; si no reconoce la forma, el texto queda igual).
+- Portada: sección de talleres con las disciplinas como accesos y lo que se dicta hoy (o el próximo día) en los centros.
+- «Descubrí San Miguel» despliega un panel (mouse, teclado y Escape) con la ciudad en un vistazo, el mapa, lugares,
+  talleres, sabores y escapadas; en el celular van anidadas en el menú.
 
 ### Mapa interactivo
 - `/mapa` (es/en/pt) dentro del portal, en lugar de mandar a mapa.smt.gob.ar: Leaflet + OpenStreetMap con las 30 capas y ~840 puntos

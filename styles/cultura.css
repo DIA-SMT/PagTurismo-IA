@@ -348,3 +348,50 @@
   .talleres-inscripcion { position: static; }
 }
 @media (max-width: 56rem) { .talleres-filtros { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- Ficha de evento: la descripción en piezas (datos, recorrido, botones) ---- */
+.descripcion-evento { display: grid; gap: var(--sp-6); }
+.vistazo { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr)); gap: var(--sp-3); padding: 0; list-style: none; }
+.vistazo__item { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: 1rem; background: var(--c-blanco); }
+.vistazo__item > span:last-child { display: grid; gap: 2px; min-width: 0; }
+.vistazo__item small { color: var(--c-ink-soft); font-size: var(--fs-xs); font-weight: var(--fw-fuerte); letter-spacing: 0.04em; text-transform: uppercase; }
+.vistazo__item strong { color: var(--c-ink); font-size: var(--fs-base); line-height: 1.3; }
+.vistazo__icono { display: grid; flex: none; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 0.85rem; background: var(--c-azul-50); color: var(--c-azul-700); }
+.vistazo__item--aviso { border-color: transparent; background: var(--c-estado-medio-fondo); }
+.vistazo__item--aviso .vistazo__icono { background: rgb(255 255 255 / 0.55); color: var(--c-estado-medio-texto); }
+.vistazo__item--aviso small { color: var(--c-ink-soft); font-weight: var(--fw-semi); letter-spacing: 0; text-transform: none; }
+.descripcion-evento__acciones { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+.itinerario-evento h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-2); }
+.itinerario-evento h2 small { color: var(--c-ink-soft); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.itinerario-evento ol { position: relative; display: grid; gap: var(--sp-4); margin-top: var(--sp-4); padding: 0; list-style: none; }
+/* La línea que une las paradas. */
+.itinerario-evento ol::before { content: ""; position: absolute; top: 1rem; bottom: 1rem; left: 1.05rem; width: 3px; border-radius: 3px; background: linear-gradient(var(--c-azul-600), var(--c-azul-100)); }
+.itinerario-evento li { position: relative; display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: var(--sp-3); align-items: start; }
+.itinerario-evento__numero { z-index: 1; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border: 3px solid var(--c-blanco); border-radius: 50%; background: var(--c-azul-600); color: #fff; font-weight: var(--fw-fuerte); box-shadow: var(--sombra-1); }
+.itinerario-evento li:last-child .itinerario-evento__numero { background: var(--c-amarillo-400); color: #17293c; }
+.itinerario-evento__texto { display: grid; gap: 2px; padding: var(--sp-2) var(--sp-4); border-radius: 0.85rem; background: var(--c-blanco); border: 1px solid var(--c-borde-suave); }
+.itinerario-evento__texto span { color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.descripcion-evento__mas summary { cursor: pointer; color: var(--c-azul-700); font-weight: var(--fw-fuerte); }
+.descripcion-evento__mas[open] summary { margin-bottom: var(--sp-3); }
+
+/* ---- Talleres en la portada ---- */
+.talleres-portada__cuerpo { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--sp-5); align-items: start; }
+.talleres-portada__disciplinas { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.5rem), 1fr)); gap: var(--sp-3); padding: 0; list-style: none; }
+.disciplina-taller { display: grid; justify-items: start; gap: 4px; height: 100%; padding: var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: 1.1rem; background: var(--c-blanco); color: var(--c-ink); text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+.disciplina-taller:hover, .disciplina-taller:focus-visible { border-color: var(--c-azul-600); color: var(--c-ink); box-shadow: var(--sombra-2); transform: translateY(-3px); }
+.disciplina-taller strong { margin-top: var(--sp-2); font-size: var(--fs-base); line-height: 1.2; }
+.disciplina-taller small { color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.disciplina-taller__sticker { display: grid; place-items: center; width: 3.2rem; height: 3.2rem; border: 3px solid #fff; border-radius: 0.95rem; background: #ffe58a; box-shadow: 0 8px 18px rgb(7 31 61 / 0.16); font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 1.6rem; line-height: 1; transform: rotate(-6deg); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.talleres-portada__disciplinas li:nth-child(4n + 2) .disciplina-taller__sticker { background: #bfe9fb; transform: rotate(5deg); }
+.talleres-portada__disciplinas li:nth-child(4n + 3) .disciplina-taller__sticker { background: #ffc9b8; transform: rotate(4deg); }
+.talleres-portada__disciplinas li:nth-child(4n + 4) .disciplina-taller__sticker { background: #c9f0d9; transform: rotate(-5deg); }
+.disciplina-taller:hover .disciplina-taller__sticker { transform: rotate(0deg) scale(1.08); }
+.talleres-portada__hoy { padding: var(--sp-5); border-radius: 1.25rem; background: var(--c-azul-50); }
+.talleres-portada__hoy h3 { font-size: var(--fs-md); }
+.talleres-portada__hoy ol { display: grid; gap: var(--sp-2); margin: var(--sp-4) 0; padding: 0; list-style: none; }
+.talleres-portada__hoy li { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr); gap: var(--sp-3); align-items: center; padding: var(--sp-2) var(--sp-3); border-radius: 0.8rem; background: var(--c-blanco); }
+.talleres-portada__hoy li > span:last-child { display: grid; min-width: 0; }
+.talleres-portada__hoy li small { color: var(--c-ink-soft); font-size: var(--fs-xs); }
+.talleres-portada__hora { color: var(--c-azul-700); font-size: var(--fs-md); font-weight: var(--fw-fuerte); font-variant-numeric: tabular-nums; }
+@media (max-width: 56rem) { .talleres-portada__cuerpo { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .disciplina-taller, .disciplina-taller__sticker { transition: none; } .disciplina-taller:hover { transform: none; } }

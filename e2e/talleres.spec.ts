@@ -28,6 +28,17 @@ test.describe("Talleres en los centros culturales", () => {
     await expect(talleres.first().getByRole("heading")).toHaveText("Guitarra");
   });
 
+  test("la portada tiene su sección de talleres: disciplinas y lo de hoy @celular", async ({ page }) => {
+    await page.goto("/");
+    const seccion = page.locator("#talleres");
+    await expect(seccion.getByRole("heading", { name: "Aprendé algo nuevo en los centros culturales" })).toBeVisible();
+    await expect(seccion.locator(".disciplina-taller")).toHaveCount(7);
+    await expect(seccion.locator(".talleres-portada__hoy li").first()).toBeVisible();
+    await seccion.getByRole("link", { name: /Música/ }).click();
+    await expect(page).toHaveURL(/\/talleres\?disciplina=musica/);
+    await expect(page.locator(".taller").first()).toBeVisible();
+  });
+
   test("la agenda y la portada llevan a los talleres", async ({ page }) => {
     await page.goto("/agenda");
     await page.locator(".agenda-talleres").getByRole("link", { name: "Ver los talleres en los centros culturales" }).click();
