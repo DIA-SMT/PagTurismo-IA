@@ -6,7 +6,8 @@
  *       Los espacios relevados de la Agenda (datos/cultura/*.json) → lugares. Si el lugar ya existe
  *       en el portal se fusiona (solo completa lo vacío); si no, se crea en BORRADOR para revisar.
  *   npm run cultura -- eventos --desde-base [--escribir] [--actualizar] [--fotos]
- *       Los eventos de la base de la Agenda (AGENDA_DATABASE_URL, solo lectura) → eventos.
+ *       Los eventos de la base de la Agenda (AGENDA_DATABASE_URL, solo lectura) → eventos. Sus fotos se bajan
+ *       del sitio de la Agenda (AGENDA_SITIO_URL, por defecto https://agendacultural.smt.gob.ar).
  *   npm run cultura -- eventos --desde-wordpress [--escribir] [--actualizar] [--fotos]
  *       Los eventos del WordPress viejo (agendaculturalsmt.com, API pública) → eventos.
  *
@@ -158,6 +159,13 @@ async function importarEspacios(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>)
 
 /* ---- eventos ---- */
 
+/**
+ * La Agenda guarda sus fotos con una ruta propia («/media/eventos/…»): se completan con la dirección de su sitio
+ * (AGENDA_SITIO_URL) para que --fotos las baje y las copie al portal.
+ */
+const desdeLaAgenda = (ruta: string | null) =>
+  ruta && ruta.startsWith("/") ? new URL(ruta, process.env.AGENDA_SITIO_URL || "https://agendacultural.smt.gob.ar").href : ruta;
+
 async function eventosDeLaBase(): Promise<EventoOrigen[]> {
   const url = process.env.AGENDA_DATABASE_URL;
   if (!url) throw new Error("Falta AGENDA_DATABASE_URL (la base de la Agenda Cultural; se lee, no se escribe).");
@@ -183,7 +191,7 @@ async function eventosDeLaBase(): Promise<EventoOrigen[]> {
       organizador: e.organizer, entradas: e.ticket_url ?? e.registration_url, capacidad: e.capacity,
       accesibilidad: e.accessibility, requisitos: e.requirements,
       contacto: { telefono: e.contact_info?.phone, email: e.contact_info?.email },
-      imagen: e.main_image_path, galeria: e.gallery_paths,
+      imagen: desdeLaAgenda(e.main_image_path), galeria: (e.gallery_paths as string[] | null)?.map(desdeLaAgenda),
       categorias: e.categorias,
       fechas: (e.fechas as { inicio: string; fin?: string; todoElDia?: boolean; estado?: string; nota?: string }[])
         .map((f) => ({ ...f, inicio: new Date(f.inicio).toISOString(), fin: f.fin ? new Date(f.fin).toISOString() : null })),
