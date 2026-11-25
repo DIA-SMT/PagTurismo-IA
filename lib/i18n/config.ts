@@ -28,14 +28,20 @@ const SECCIONES: Record<string, Record<Exclude<Idioma, "es">, string>> = {
   experiencias: { en: "experiences", pt: "experiencias" },
   recorridos: { en: "tours", pt: "roteiros" },
   agenda: { en: "events", pt: "agenda" },
+  talleres: { en: "workshops", pt: "oficinas" },
+  mapa: { en: "map", pt: "mapa" },
   planifica: { en: "plan-your-visit", pt: "planeje-sua-visita" },
   descubri: { en: "discover", pt: "descubra" },
   sabores: { en: "food-and-drink", pt: "sabores" },
   escapadas: { en: "day-trips", pt: "passeios" },
+  "bus-turistico": { en: "tourist-bus", pt: "onibus-turistico" },
+  "bus-educativo": { en: "school-bus", pt: "onibus-escolar" },
+  reserva: { en: "booking", pt: "reserva" },
+  galeria: { en: "gallery", pt: "galeria" },
 };
 
 /** Direcciones que no son páginas del sitio y no pasan por los idiomas. */
-const FUERA_DEL_SITIO = /^\/(admin|api|subidas|_next|fotos|stickers|img|migue|fonts)(\/|$)|^\/(sitemap\.xml|robots\.txt|icon\.png|apple-icon\.png|favicon\.ico)$/;
+const FUERA_DEL_SITIO = /^\/(admin|api|subidas|_next|fotos|stickers|img|migue|fonts|buses|bicitour)(\/|$)|^\/(sitemap\.xml|robots\.txt|icon\.png|apple-icon\.png|favicon\.ico)$/;
 
 export const esRutaDelSitio = (pathname: string) => !FUERA_DEL_SITIO.test(pathname);
 

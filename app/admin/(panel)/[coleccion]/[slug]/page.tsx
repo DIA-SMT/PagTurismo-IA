@@ -7,7 +7,8 @@ import { Aviso, Banda, ChipEstado, Tarjeta, fechaCorta } from "@/components/admi
 import { borrarFicha } from "@/app/admin/acciones";
 import { camposCambiados, fichaDe, opcionesDeFormulario, todasLasFichas, ultimosCambios } from "@/lib/admin/datos";
 import { esquemaDe } from "@/lib/admin/esquemas";
-import { requerirAdmin } from "@/lib/admin/sesion";
+import { exigirContenido, requerirAdmin } from "@/lib/admin/sesion";
+import { puedeContenido } from "@/lib/permisos";
 
 export async function generateMetadata({ params }: PageProps<"/admin/[coleccion]/[slug]">): Promise<Metadata> {
   const { coleccion, slug } = await params;
@@ -21,6 +22,7 @@ export default async function EditarFicha({ params, searchParams }: PageProps<"/
   const { coleccion, slug } = await params;
   const esquema = esquemaDe(coleccion);
   if (!esquema) notFound();
+  exigirContenido(admin, esquema.id, slug, "ver");
   const [ficha, filas, historial] = await Promise.all([
     fichaDe(admin, esquema.id, slug),
     todasLasFichas(admin),
@@ -42,6 +44,7 @@ export default async function EditarFicha({ params, searchParams }: PageProps<"/
       <FormularioFicha
         esquemaId={esquema.id}
         modo="ficha"
+        permisos={{ editar: puedeContenido(admin, esquema.id, slug, "editar"), publicar: puedeContenido(admin, esquema.id, slug, "publicar") }}
         inicial={ficha.datos}
         estado={ficha.estado}
         slugOriginal={ficha.slug}
@@ -69,7 +72,7 @@ export default async function EditarFicha({ params, searchParams }: PageProps<"/
               )}
               <p style={{ marginTop: "0.75rem" }}><Link href="/admin/auditoria" className="adm-campo__ayuda">Ver toda la auditoría</Link></p>
             </Tarjeta>
-            <FormularioBorrar coleccion={esquema.id} slug={ficha.slug} accion={borrarFicha} />
+            {puedeContenido(admin, esquema.id, slug, "borrar") && <FormularioBorrar coleccion={esquema.id} slug={ficha.slug} accion={borrarFicha} />}
           </>
         }
       />

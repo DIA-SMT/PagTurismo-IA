@@ -12,6 +12,11 @@ const ACCION = {
   insert: { texto: "Alta", tono: "verde" },
   update: { texto: "Cambio", tono: "azul" },
   delete: { texto: "Baja", tono: "rojo" },
+  // Operaciones del módulo de buses y Migue (se anotan al pedirlas; ver lib/buses/admin-auth.ts).
+  editar: { texto: "Operación", tono: "azul" },
+  borrar: { texto: "Baja o cancelación", tono: "rojo" },
+  configurar: { texto: "Configuración", tono: "ambar" },
+  exportar: { texto: "Exportación", tono: "gris" },
 } as const;
 
 /** Registro de cambios. Lo escribe la base con un disparador: no se puede editar ni borrar. */

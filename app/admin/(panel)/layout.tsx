@@ -2,18 +2,11 @@ import Link from "next/link";
 
 import { Icono } from "@/components/Iconos";
 import { Tema } from "@/components/Tema";
-import { BotonMenuPanel, MenuPanel, type SeccionMenu } from "@/components/admin/MenuPanel";
-import { ESQUEMAS } from "@/lib/admin/esquemas";
+import { BotonMenuPanel, MenuPanel } from "@/components/admin/MenuPanel";
+import { seccionesDelMenu } from "@/lib/admin/menu";
 import { requerirAdmin } from "@/lib/admin/sesion";
+import { NOMBRE_MODULO, NOMBRE_ROL } from "@/lib/permisos";
 import { salirDelPanel } from "../acciones";
-
-const SECCIONES: SeccionMenu[] = [
-  { href: "/admin", texto: "Tablero", icono: "tablero" },
-  ...ESQUEMAS.map((e) => ({ href: `/admin/${e.id}`, texto: e.titulo, icono: e.icono })),
-  { href: "/admin/temas", texto: "Temas y etiquetas", icono: "etiqueta", separar: true },
-  { href: "/admin/configuracion", texto: "Configuración", icono: "ajustes" },
-  { href: "/admin/auditoria", texto: "Auditoría", icono: "auditoria" },
-];
 
 /**
  * Estructura del panel, con el mismo estilo del sitio: menú lateral y barra superior como el
@@ -24,14 +17,14 @@ export default async function LayoutPanel({ children }: { children: React.ReactN
   const admin = await requerirAdmin();
   return (
     <>
-      <MenuPanel secciones={SECCIONES} />
+      <MenuPanel secciones={seccionesDelMenu(admin)} />
       <div className="adm-cuerpo">
         <header className="adm-barra">
           <div className="adm-barra__interior">
             <BotonMenuPanel />
             <Link className="adm-barra__titulo" href="/admin">
-              <strong>Turismo San Miguel</strong>
-              <small>Panel de contenidos del portal</small>
+              <strong>Turismo y Cultura SMT</strong>
+              <small>Panel del portal unificado</small>
             </Link>
             <Tema />
             <Link className="adm-barra__enlace" href="/" target="_blank">
@@ -41,7 +34,10 @@ export default async function LayoutPanel({ children }: { children: React.ReactN
               <span className="adm-usuario__avatar" aria-hidden="true">{admin.nombre.charAt(0).toUpperCase()}</span>
               <span className="adm-usuario__datos">
                 <strong>{admin.nombre}</strong>
-                <small>{admin.email}</small>
+                <small title={admin.email}>
+                  {NOMBRE_ROL[admin.rol]}
+                  {admin.rol !== "superadmin" && admin.modulos.length > 0 && ` · ${admin.modulos.map((m) => NOMBRE_MODULO[m]).join(", ")}`}
+                </small>
               </span>
               <form action={salirDelPanel}>
                 <button type="submit" className="adm-boton adm-boton--secundario adm-boton--chico">

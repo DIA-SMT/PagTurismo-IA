@@ -158,7 +158,7 @@ export function dentroDeVentana(desde: string | undefined, hasta: string | undef
 
 /* ---- Formato ---- */
 
-type Formato = "dia" | "hora" | "diaNumero" | "mesCorto";
+type Formato = "dia" | "hora" | "diaNumero" | "mesCorto" | "diaCorto" | "anio";
 
 const OPCIONES: Record<Formato, (idioma: Idioma) => Intl.DateTimeFormatOptions> = {
   dia: () => ({ weekday: "long", day: "numeric", month: "long", year: "numeric" }),
@@ -166,6 +166,8 @@ const OPCIONES: Record<Formato, (idioma: Idioma) => Intl.DateTimeFormatOptions> 
   hora: (idioma) => (idioma === "en" ? { hour: "numeric", minute: "2-digit" } : { hour: "2-digit", minute: "2-digit", hourCycle: "h23" }),
   diaNumero: () => ({ day: "numeric" }),
   mesCorto: () => ({ month: "short" }),
+  diaCorto: () => ({ weekday: "short", day: "numeric", month: "short" }),
+  anio: () => ({ year: "numeric" }),
 };
 
 const formatos = new Map<string, Intl.DateTimeFormat>();
@@ -213,7 +215,31 @@ export function formatearOcurrencia(o: Pick<Ocurrencia, "inicio" | "fin">, idiom
     const parte = (local: string, i: number) => (soloDia(local) ? dia.format(i) : `${dia.format(i)} · ${hora.format(i)}`);
     texto = `${parte(o.inicio, inicio)} – ${parte(finLocal, fin)}`;
   }
+  // Intl usa espacios especiales (fino U+2009, angosto U+202F) que cambian según la versión de ICU: el
+  // servidor (Node) y el navegador armaban textos distintos y React avisaba que no coincidían.
+  texto = texto.replace(/[\u00A0\u2009\u202F]/g, " ");
   return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
+/** Intl usa espacios especiales que cambian según la versión de ICU (ver formatearOcurrencia). */
+const espacios = (texto: string) => texto.replace(/[\u00A0\u2009\u202F]/g, " ");
+
+/**
+ * Fecha de la tarjeta, como en Agenda Cultural: "mar, 24 nov" ("Tue, Nov 24", "ter, 24 de nov"); con el
+ * año si no es el actual. La mayúscula inicial la pone el estilo.
+ */
+export function fechaDeTarjeta(local: string, idioma: Idioma = "es", ahora = Date.now()): string {
+  const i = aInstante(local);
+  const texto = espacios(fmt(idioma, "diaCorto").format(i)).replace(/\./g, "");
+  const anio = fmt(idioma, "anio").format(i);
+  return anio === fmt(idioma, "anio").format(ahora) ? texto : `${texto} ${anio}`;
+}
+
+/** Hora de la tarjeta: "09:00 h" ("9:00 AM", "09:00"); vacía si el evento es de día entero. */
+export function horaDeTarjeta(local: string, idioma: Idioma = "es"): string {
+  if (soloDia(local)) return "";
+  const hora = espacios(fmt(idioma, "hora").format(aInstante(local)));
+  return idioma === "es" ? `${hora} h` : hora;
 }
 
 /** Para el cuadradito de fecha: { dia: "7", mes: "NOV" }. */

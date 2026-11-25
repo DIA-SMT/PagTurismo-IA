@@ -3,5 +3,9 @@
 @import "../styles/base.css";
 @import "../styles/landing.css";
 @import "../styles/paginas.css";
+@import "../styles/cultura.css";
+@import "../styles/planificador.css";
+@import "../styles/mapa.css";
 @import "../styles/admin.css";
+@import "../styles/buses-admin.css";
 @import "../styles/migue.css";

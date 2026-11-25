@@ -43,12 +43,14 @@
   color: var(--tono-tinta, var(--c-azul-700));
 }
 
-/* ---- Viñeta de pétalo ----
-   La hoja del isologotipo, en chico, delante de cada antetítulo. */
+/* ---- Viñeta de hoja ----
+   La de Applaza: una hoja amarilla, apenas inclinada, delante de cada
+   antetítulo. Es decorativa (no lleva texto), así que el amarillo no tiene
+   que llegar a 3:1; el texto del antetítulo sigue en azul. */
 .kicker {
   display: inline-flex;
   align-items: center;
-  gap: var(--sp-2);
+  gap: 0.625rem;
   color: var(--c-azul-700);
   font-size: 0.8125rem;
   font-weight: var(--fw-fuerte);
@@ -58,9 +60,10 @@
 .kicker::before {
   content: "";
   flex: none;
-  width: 1.3rem; height: 0.8rem;
-  border-radius: 0 100% 0 100%;
-  background: var(--c-azul-600);
+  width: 1.625rem; height: 0.875rem;
+  border-radius: 14px 2px 14px 2px;
+  background: var(--c-amarillo-400);
+  transform: rotate(-8deg);
 }
 
 /* ---- Cabecera de sección ---- */
@@ -78,7 +81,7 @@
   font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.75rem);
   font-weight: var(--fw-titular);
   line-height: 1.05;
-  letter-spacing: -0.04em;
+  letter-spacing: var(--ls-titular);
 }
 .cabecera p { max-width: 38rem; margin-top: var(--sp-2); color: var(--c-ink-soft); }
 .cabecera__enlace {
@@ -99,44 +102,56 @@
 /* ============================================================
    HERO
    ============================================================ */
+/* La portada toma el hero del panel de Applaza: banda navy a azul con un
+   brillo celeste, texto blanco y tres ondas al pie. Las fotos de la ciudad
+   siguen, pero quedan detrás del velo y se asoman a la derecha. El velo es
+   casi opaco donde está el texto: con la foto más clara detrás, la bajada
+   queda por encima de 4,5:1 y el título por encima de 3:1. */
 .hero {
   --hero-velo:
-    linear-gradient(90deg, #f2fafff7 0%, #f2faffeb 30%, #f2faff99 48%, #f2faff00 68%),
-    linear-gradient(0deg, #f2faffcc 0%, #f2faff00 26%);
-  --hero-tinta: #061747;
-  --hero-suave: #172e53;
-  --hero-acento: #0066FF;
-  --hero-kicker: #0052CC;
-  --hero-sombra: 0 1px 2px #fff, 0 0 6px #ffffffe6;
+    radial-gradient(ellipse at 85% 15%, rgb(45 176 255 / 35%), transparent 50%),
+    linear-gradient(100deg, #09234Cf7 0%, #0A2F72eb 40%, #0047C2b3 58%, #0166FF40 78%, #0166FF14 100%);
+  --hero-tinta: #ffffff;
+  --hero-suave: #E4EFFF;
+  --hero-acento: #2DB0FF;
+  --hero-kicker: #ffffff;
+  --hero-sombra: 0 1px 3px rgb(9 35 76 / 45%);
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: #dff2ff;
+  background: var(--c-navy);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .hero {
     --hero-velo:
-      linear-gradient(90deg, #06142af5 0%, #06142ae0 30%, #06142a8c 50%, #06142a00 70%),
-      linear-gradient(0deg, #06142ae6 0%, #06142a00 30%);
-    --hero-tinta: #ffffff;
+      radial-gradient(ellipse at 85% 15%, rgb(45 176 255 / 22%), transparent 50%),
+      linear-gradient(100deg, #061428f7 0%, #071D45eb 40%, #0A3A99a6 60%, #0A3A9933 80%, #0A3A9900 100%);
     --hero-suave: #d4e6fa;
-    --hero-acento: #2EB1FF;
-    --hero-kicker: #F4DC00;
     --hero-sombra: 0 1px 3px #06142a;
-    background: #08192e;
+    background: #061428;
   }
 }
 :root[data-theme="dark"] .hero {
   --hero-velo:
-    linear-gradient(90deg, #06142af5 0%, #06142ae0 30%, #06142a8c 50%, #06142a00 70%),
-    linear-gradient(0deg, #06142ae6 0%, #06142a00 30%);
-  --hero-tinta: #ffffff;
+    radial-gradient(ellipse at 85% 15%, rgb(45 176 255 / 22%), transparent 50%),
+    linear-gradient(100deg, #061428f7 0%, #071D45eb 40%, #0A3A99a6 60%, #0A3A9933 80%, #0A3A9900 100%);
   --hero-suave: #d4e6fa;
-  --hero-acento: #2EB1FF;
-  --hero-kicker: #F4DC00;
   --hero-sombra: 0 1px 3px #06142a;
-  background: #08192e;
+  background: #061428;
 }
+/* Ondas: celeste y amarillo fijos; la última es una máscara con el color del
+   fondo, así empalma con la página en los dos temas. Quedan detrás de los
+   accesos, que se apoyan encima como las tarjetas rápidas de Applaza. */
+.hero::before, .hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 0; right: 0; bottom: -1px;
+  height: 4.875rem;
+  pointer-events: none;
+}
+.hero::before { background: var(--olas-marca) center / 100% 100% no-repeat; }
+.hero::after { background: var(--c-fondo); -webkit-mask: var(--ola-fondo) center / 100% 100% no-repeat; mask: var(--ola-fondo) center / 100% 100% no-repeat; }
 
 .hero-fotos, .hero-fotos__tema { position: absolute; inset: 0; }
 .hero-fotos { z-index: -3; }
@@ -193,14 +208,13 @@
 }
 .hero__texto { grid-area: texto; align-self: center; max-width: 42rem; padding-bottom: var(--sp-6); }
 .hero__kicker { color: var(--hero-kicker); text-shadow: var(--hero-sombra); }
-.hero__kicker::before { background: var(--hero-kicker); }
 .hero h1 {
   margin: var(--sp-4) 0 var(--sp-5);
   color: var(--hero-tinta);
   font-size: clamp(3rem, 1.6rem + 5vw, 5.75rem);
   font-weight: var(--fw-titular);
-  line-height: 0.94;
-  letter-spacing: -0.055em;
+  line-height: 0.96;
+  letter-spacing: var(--ls-titular);
 }
 .hero h1 span { color: var(--hero-acento); }
 .hero__bajada {
@@ -212,6 +226,15 @@
   text-shadow: var(--hero-sombra);
 }
 .hero__botones { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-6); }
+/* Sobre la banda azul, los botones de Applaza: amarillo con navy (11,1:1) y
+   blanco con navy (15,5:1). El azul de marca se perdería contra el fondo. */
+.hero__botones .boton { min-height: 3.125rem; padding-inline: 1.5rem; }
+.hero__botones .boton--primario { background: var(--c-amarillo-400); color: var(--c-navy); box-shadow: 0 10px 22px rgb(244 220 0 / 25%); }
+.hero__botones .boton--primario:hover { background: #fff27a; color: var(--c-navy); transform: translateY(-2px); }
+.hero__botones .boton--claro { border-color: transparent; background: #fff; color: var(--c-navy); }
+.hero__botones .boton--claro svg { color: var(--c-azul-600); }
+.hero__botones .boton--claro:hover { background: #fff; color: var(--c-navy); transform: translateY(-2px); }
+.hero :focus-visible { outline-color: #fff; }
 
 /* Migue presenta la ciudad con la palma abierta hacia el texto. Se apoya
    detrás de los accesos: las tarjetas le tapan el borde de la imagen. */
@@ -236,7 +259,7 @@
   transform: rotate(-6deg);
   box-shadow: 0 6px 22px #0066ff24;
 }
-.hero__burbuja strong { display: block; font-size: 1.4rem; font-style: italic; line-height: 1.1; }
+.hero__burbuja strong { display: block; font-family: var(--f-titulos); font-size: 1.4rem; font-style: italic; line-height: 1.1; }
 .hero__burbuja span { display: block; color: #0058db; font-size: 0.8125rem; font-weight: var(--fw-semi); line-height: 1.25; }
 
 .accesos {
@@ -247,38 +270,42 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--sp-3);
 }
+/* Las tarjetas rápidas de Applaza: tinte pastel, 18 px de radio, título en
+   Outfit y la flecha dentro de un círculo blanco. */
 .acceso {
   display: flex;
   align-items: center;
   gap: var(--sp-3);
-  min-height: 5rem;
-  padding: 0.75rem 1rem;
+  min-height: 5.75rem;
+  padding: 1rem 1.1rem;
   border: 1px solid var(--tono-borde);
-  border-radius: 14px;
+  border-radius: var(--r-lg);
   background: var(--tono-fondo);
   color: var(--c-ink);
   text-decoration: none;
-  box-shadow: 0 6px 18px #123d6b1f;
+  box-shadow: 0 4px 16px rgb(9 35 76 / 10%);
   transition: transform var(--t-media), box-shadow var(--t-media);
 }
-.acceso:hover { color: var(--c-ink); transform: translateY(-3px); box-shadow: 0 10px 24px #123d6b2b; }
+.acceso:hover { color: var(--c-ink); transform: translateY(-3px); box-shadow: 0 12px 28px rgb(9 35 76 / 18%); }
 .acceso > span:nth-child(2) { flex: 1; min-width: 0; }
-.acceso strong { display: block; font-size: 0.9375rem; line-height: 1.3; }
-.acceso small { display: block; margin-top: 2px; color: var(--c-ink-soft); font-size: 0.8125rem; line-height: 1.35; }
-.acceso > svg { flex: none; color: var(--tono-tinta); }
+.acceso strong { display: block; color: var(--c-titulo); font-family: var(--f-titulos); font-size: 1.0625rem; font-weight: var(--fw-fuerte); line-height: 1.2; }
+.acceso small { display: block; margin-top: 3px; color: var(--c-ink-soft); font-size: 0.8125rem; line-height: 1.35; }
+.acceso > svg { flex: none; box-sizing: content-box; width: 16px; height: 16px; padding: 0.55rem; border-radius: 50%; background: var(--c-blanco); color: var(--tono-tinta); box-shadow: 0 3px 10px rgb(9 35 76 / 8%); }
 
 @media (max-width: 56rem) {
   .hero__interior { grid-template-columns: minmax(0, 1fr) auto; min-height: 0; padding-top: 4.5rem; }
   .hero__migue { width: 15rem; margin-bottom: -2.5rem; }
   .hero__burbuja { display: none; }
   .accesos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .hero { --hero-velo: linear-gradient(90deg, #f2faffeb 0%, #f2faffd1 55%, #f2faff8c 100%); }
+  /* En pantallas angostas el texto cruza toda la foto: el velo la cubre
+     entera y nunca baja de 0,85 de opacidad (blanco encima: 5,6:1 o más). */
+  .hero { --hero-velo: radial-gradient(ellipse at 90% 10%, rgb(45 176 255 / 30%), transparent 55%), linear-gradient(160deg, #09234Cf2 0%, #0A2F72e6 60%, #0047C2d9 100%); }
 }
 @media (max-width: 56rem) and (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .hero { --hero-velo: linear-gradient(90deg, #06142aeb 0%, #06142ad1 55%, #06142a99 100%); }
+  :root:not([data-theme="light"]) .hero { --hero-velo: linear-gradient(160deg, #061428f2 0%, #071D45e6 60%, #0A3A99d9 100%); }
 }
 @media (max-width: 56rem) {
-  :root[data-theme="dark"] .hero { --hero-velo: linear-gradient(90deg, #06142aeb 0%, #06142ad1 55%, #06142a99 100%); }
+  :root[data-theme="dark"] .hero { --hero-velo: linear-gradient(160deg, #061428f2 0%, #071D45e6 60%, #0A3A99d9 100%); }
 }
 @media (max-width: 37.5rem) {
   .hero__interior { grid-template-columns: minmax(0, 1fr); grid-template-areas: "texto" "accesos"; padding-top: 4.75rem; padding-bottom: var(--sp-5); }
@@ -326,7 +353,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-.tarjeta h3 { font-size: 1.3rem; font-weight: var(--fw-fuerte); letter-spacing: -0.02em; }
+.tarjeta h3 { font-size: 1.3rem; font-weight: var(--fw-fuerte); letter-spacing: var(--ls-titular); }
 .tarjeta p { color: var(--c-ink-soft); font-size: var(--fs-sm); }
 .tarjeta__mas { display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: auto; padding-top: var(--sp-3); color: var(--c-azul-700); font-size: var(--fs-sm); font-weight: var(--fw-fuerte); }
 .tarjeta:hover .tarjeta__mas svg { transform: translateX(3px); }
@@ -387,7 +414,7 @@
 .lugar__media--sticker { border: 1px solid var(--tono-borde); }
 .lugar__media--sticker img { object-fit: contain; padding: 12%; filter: drop-shadow(0 10px 14px #0b2a5226); transition: transform 0.5s cubic-bezier(.22, 1, .36, 1); }
 .lugar:hover .lugar__media--sticker img { transform: rotate(-4deg) scale(1.06); }
-.lugar h3 { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); margin-top: var(--sp-4); font-size: 1.15rem; font-weight: var(--fw-fuerte); letter-spacing: -0.02em; }
+.lugar h3 { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); margin-top: var(--sp-4); font-size: 1.15rem; font-weight: var(--fw-fuerte); letter-spacing: var(--ls-titular); }
 .lugar h3 svg { flex: none; color: var(--c-azul-700); transition: transform var(--t-rapida); }
 .lugar:hover h3 svg { transform: translateX(3px); }
 .lugar p { margin-top: var(--sp-1); color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.5; }
@@ -395,7 +422,7 @@
 /* ============================================================
    UNA CIUDAD QUE HIZO HISTORIA — línea de tiempo
    ============================================================ */
-.historia { margin-top: clamp(3.5rem, 2rem + 4vw, 6rem); padding-block: clamp(3rem, 2rem + 3vw, 4.5rem); background: var(--c-fondo); }
+.historia { margin-top: clamp(3.5rem, 2rem + 4vw, 6rem); padding-block: clamp(3rem, 2rem + 3vw, 4.5rem); background: var(--c-blanco); border-block: 1px solid var(--c-borde); }
 .historia__lista {
   position: relative;
   display: grid;
@@ -423,7 +450,7 @@
   background: var(--c-blanco);
 }
 .historia__lista li:last-child::before { background: #F4DC00; border-color: #F4DC00; box-shadow: 0 0 0 5px #f4dc0040; }
-.historia__anio { display: block; color: var(--c-azul-600); font-size: clamp(2.5rem, 1.8rem + 2.2vw, 3.75rem); font-weight: var(--fw-titular); line-height: 1; letter-spacing: -0.05em; }
+.historia__anio { display: block; font-family: var(--f-titulos); color: var(--c-azul-600); font-size: clamp(2.5rem, 1.8rem + 2.2vw, 3.75rem); font-weight: var(--fw-titular); line-height: 1; letter-spacing: var(--ls-titular); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .historia__anio { color: var(--c-azul-700); } }
 :root[data-theme="dark"] .historia__anio { color: var(--c-azul-700); }
 .historia__lista h3 { margin-top: var(--sp-3); font-size: 1.1rem; font-weight: var(--fw-fuerte); }
@@ -447,7 +474,7 @@
    noche para ser color de enlace, y la banda pasaría a celeste con texto
    blanco encima. Es identidad, como el pie, y se queda oscura siempre. */
 .recorridos {
-  --banda-1: #0A2E6E;
+  --banda-1: #09234C;
   --banda-2: #0052CC;
   margin-top: clamp(3.5rem, 2rem + 4vw, 6rem);
   padding-block: clamp(3.5rem, 2rem + 4vw, 6rem);
@@ -468,7 +495,7 @@
 .recorridos .cabecera p { color: #d4eeff; }
 
 .recorridos__grilla { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--sp-7); align-items: start; }
-.recorridos__texto h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.75rem); font-weight: var(--fw-titular); line-height: 1.05; letter-spacing: -0.04em; margin-top: var(--sp-2); }
+.recorridos__texto h2 { font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.75rem); font-weight: var(--fw-titular); line-height: 1.05; letter-spacing: var(--ls-titular); margin-top: var(--sp-2); }
 .recorridos__texto > p { margin-top: var(--sp-4); color: #d4eeff; }
 .datos-bus { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-5); padding: 0; list-style: none; }
 .datos-bus li {
@@ -563,7 +590,7 @@
   box-shadow: 0 6px 16px #0066ff33;
 }
 .evento__mes { font-size: 0.75rem; font-weight: var(--fw-fuerte); letter-spacing: 0.12em; }
-.evento__dia { font-size: 1.9rem; font-weight: var(--fw-titular); line-height: 1; letter-spacing: -0.04em; }
+.evento__dia { font-family: var(--f-titulos); font-size: 1.9rem; font-weight: var(--fw-titular); line-height: 1; letter-spacing: var(--ls-titular); }
 .evento__fecha--mes .evento__mes { font-size: 1.25rem; letter-spacing: 0.04em; }
 .evento h3 { font-size: 1.1rem; font-weight: var(--fw-fuerte); line-height: 1.25; }
 .evento__lugar { display: flex; align-items: center; gap: 6px; color: var(--c-azul-700); font-size: var(--fs-xs); font-weight: var(--fw-semi); }
@@ -591,7 +618,7 @@
 .sabor__imagen img { object-fit: contain; padding: 8% 10% 2%; filter: drop-shadow(0 10px 14px #0b2a5221); transition: transform 0.5s cubic-bezier(.22, 1, .36, 1); }
 .sabor:hover .sabor__imagen img { transform: rotate(-3deg) scale(1.05); }
 .sabor__texto { padding: var(--sp-3) var(--sp-5) var(--sp-5); }
-.sabor h3 { color: var(--tono-tinta); font-size: 1.2rem; font-weight: var(--fw-titular); letter-spacing: -0.02em; }
+.sabor h3 { color: var(--tono-tinta); font-size: 1.2rem; font-weight: var(--fw-titular); letter-spacing: var(--ls-titular); }
 .sabor p { margin-top: var(--sp-1); color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.5; }
 @media (max-width: 64rem) { .sabores { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 37.5rem) {
@@ -631,7 +658,7 @@
   font-size: 0.75rem;
   font-weight: var(--fw-fuerte);
 }
-.escapada h3 { margin-top: var(--sp-2); font-size: 1.2rem; font-weight: var(--fw-fuerte); letter-spacing: -0.02em; }
+.escapada h3 { margin-top: var(--sp-2); font-size: 1.2rem; font-weight: var(--fw-fuerte); letter-spacing: var(--ls-titular); }
 .escapada p { margin-top: var(--sp-1); color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.5; }
 @media (max-width: 37.5rem) {
   .escapada { gap: var(--sp-3); }
@@ -667,7 +694,7 @@
 .clima-tarjeta .kicker::before { background: #F4DC00; }
 .clima-tarjeta__ahora { display: flex; align-items: center; gap: var(--sp-4); margin-top: var(--sp-5); }
 .clima-tarjeta__ahora svg { color: #F4DC00; }
-.clima-tarjeta__grados { font-size: 4rem; font-weight: var(--fw-titular); line-height: 1; letter-spacing: -0.05em; }
+.clima-tarjeta__grados { font-family: var(--f-titulos); font-size: 4rem; font-weight: var(--fw-titular); line-height: 1; letter-spacing: var(--ls-titular); }
 .clima-tarjeta__estado { margin-top: var(--sp-2); font-weight: var(--fw-semi); }
 .clima-tarjeta p { position: relative; z-index: 1; margin-top: auto; padding-top: var(--sp-6); color: #d4eeff; font-size: var(--fs-sm); line-height: 1.5; }
 .clima-tarjeta small { position: relative; z-index: 1; margin-top: var(--sp-3); color: #b9d7f5; font-size: 0.75rem; }
@@ -681,7 +708,7 @@
   padding: var(--sp-5);
   border: 1px solid var(--c-borde-objeto);
   border-radius: 20px;
-  background: var(--c-fondo);
+  background: var(--c-blanco);
 }
 .dato h3 { font-size: 1.1rem; font-weight: var(--fw-fuerte); }
 .dato p { margin-top: var(--sp-1); color: var(--c-ink-soft); font-size: var(--fs-sm); line-height: 1.5; }
@@ -710,7 +737,7 @@
   :root:not([data-theme="light"]) .oficina { background: radial-gradient(30rem 18rem at 100% 100%, #1d4066, transparent 70%), var(--c-blanco); }
 }
 :root[data-theme="dark"] .oficina { background: radial-gradient(30rem 18rem at 100% 100%, #1d4066, transparent 70%), var(--c-blanco); }
-.oficina h2 { margin-top: var(--sp-2); font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.4rem); font-weight: var(--fw-titular); line-height: 1.1; letter-spacing: -0.04em; }
+.oficina h2 { margin-top: var(--sp-2); font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.4rem); font-weight: var(--fw-titular); line-height: 1.1; letter-spacing: var(--ls-titular); }
 .oficina > p { max-width: 30rem; margin-top: var(--sp-3); color: var(--c-ink-soft); }
 .oficina__datos { display: grid; gap: var(--sp-3); margin-top: var(--sp-5); padding: 0; list-style: none; }
 .oficina__datos li { display: flex; align-items: center; gap: var(--sp-3); font-weight: var(--fw-media); }

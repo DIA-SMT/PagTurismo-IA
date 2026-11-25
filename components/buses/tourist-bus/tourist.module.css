@@ -1,0 +1,565 @@
+/* Overlay más liviano que el del educativo: deja ver mejor las fotos. */
+.heroOverlayLight {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(7, 31, 65, 0.64) 0%, rgba(10, 52, 101, 0.46) 37%, rgba(12, 68, 128, 0.14) 68%, rgba(10, 48, 91, 0.02) 100%),
+    linear-gradient(180deg, rgba(5, 22, 46, 0.04) 45%, rgba(5, 27, 57, 0.5) 100%);
+  pointer-events: none;
+}
+
+.heroSlide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: scale(1);
+  transition: opacity 1600ms ease-in-out, transform 8500ms ease-out;
+}
+
+.heroSlideActive {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroSlide {
+    transition: none;
+    transform: none;
+  }
+
+  .heroSlideActive {
+    transform: none;
+  }
+}
+
+.langToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid rgba(37, 137, 234, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.langButton {
+  border: 0;
+  background: transparent;
+  color: var(--c-ink-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.langButton:hover {
+  color: var(--c-azul-700);
+}
+
+.langButtonActive,
+.langButtonActive:hover {
+  background: var(--c-azul-500);
+  color: #fff;
+}
+
+/* En pantallas chicas el selector de idioma se achica para compartir la fila
+   con la marca y que el header pegajoso no ocupe media pantalla. */
+@media (max-width: 520px) {
+  .langToggle {
+    padding: 2px;
+  }
+
+  .langButton {
+    padding: 4px 9px;
+    font-size: 0.72rem;
+  }
+}
+
+.departuresSection {
+  display: grid;
+  gap: 18px;
+}
+
+.departuresHeader {
+  display: grid;
+  gap: 6px;
+  max-width: 720px;
+}
+
+.departuresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* Carrusel: una tarjeta por circuito, deslizable hacia la derecha. */
+.carouselWrap {
+  position: relative;
+}
+
+.carouselTrack {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 4px 2px 12px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(37, 137, 234, 0.35) transparent;
+}
+
+.carouselTrack::-webkit-scrollbar {
+  height: 6px;
+}
+
+.carouselTrack::-webkit-scrollbar-thumb {
+  background: rgba(37, 137, 234, 0.35);
+  border-radius: 999px;
+}
+
+.carouselTrack .departureCard {
+  flex: 0 0 300px;
+  scroll-snap-align: start;
+}
+
+.carouselArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 137, 234, 0.35);
+  background: var(--c-blanco);
+  color: var(--c-azul-700);
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(12, 28, 46, 0.16);
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.carouselArrow:hover {
+  background: var(--c-tinte-azul);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carouselArrowLeft {
+  left: -14px;
+}
+
+.carouselArrowRight {
+  right: -14px;
+}
+
+.chipsRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--c-ink-muted);
+}
+
+.chipsLabel {
+  font-weight: 700;
+}
+
+.dateChip {
+  border: 1px solid rgba(37, 137, 234, 0.35);
+  border-radius: 999px;
+  background: var(--c-fondo);
+  color: var(--c-azul-700);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.dateChip:hover {
+  background: var(--c-azul-600);
+  color: #fff;
+}
+
+.chipMore {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--c-ink-muted);
+}
+
+@media (max-width: 640px) {
+  .carouselArrow {
+    display: none;
+  }
+
+  .carouselTrack .departureCard {
+    flex-basis: 260px;
+  }
+}
+
+.departureCard {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background: var(--c-blanco);
+  border: 1px solid var(--c-borde);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(12, 28, 46, 0.06);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.departureCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(37, 137, 234, 0.4);
+  box-shadow: 0 18px 36px rgba(12, 28, 46, 0.1);
+}
+
+.departureDate {
+  color: var(--c-azul-700);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.departureTitle {
+  color: var(--c-ink);
+  font-size: 1.12rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.departureMeta {
+  display: grid;
+  gap: 4px;
+  color: var(--c-ink-muted);
+  font-size: 0.86rem;
+}
+
+.bikesLine {
+  color: var(--c-estado-ok-texto);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.departureFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.seatsBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  background: var(--c-estado-ok-fondo);
+  color: var(--c-estado-ok-texto);
+}
+
+.seatsBadgeLow {
+  background: var(--c-estado-medio-fondo);
+  color: var(--c-estado-aviso-texto);
+}
+
+.seatsBadgeNone {
+  background: var(--c-estado-mal-fondo);
+  color: var(--c-estado-mal-texto);
+}
+
+.departureButton {
+  border: 0;
+  border-radius: 12px;
+  padding: 9px 18px;
+  background: var(--c-azul-600);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.departureButton:hover {
+  background: var(--c-azul-800);
+  transform: translateY(-1px);
+}
+
+.departureButton:disabled {
+  background: var(--c-borde-campo);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.emptyNotice {
+  padding: 26px;
+  border: 1px dashed rgba(37, 137, 234, 0.4);
+  border-radius: 16px;
+  background: var(--c-tinte-azul);
+  color: var(--c-ink);
+  font-size: 0.95rem;
+}
+
+.catalogSection {
+  display: grid;
+  gap: 18px;
+  margin-top: 46px;
+}
+
+.catalogGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.catalogCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 22px;
+  background: var(--c-blanco);
+  border: 1px solid var(--c-borde);
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(12, 28, 46, 0.05);
+}
+
+.catalogIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--c-tinte-azul);
+  color: var(--c-azul-700);
+}
+
+.catalogName {
+  color: var(--c-ink);
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+/* Autocompletado de procedencia (lista de localidades debajo del input). */
+.originBox {
+  position: relative;
+}
+
+.originList {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--c-blanco);
+  border: 1px solid var(--c-borde);
+  border-radius: 12px;
+  box-shadow: 0 16px 34px rgba(12, 28, 46, 0.14);
+  max-height: 264px;
+  overflow-y: auto;
+}
+
+.originOption {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--c-ink);
+  font-size: 0.92rem;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.originOption:hover,
+.originOption:focus-visible {
+  background: var(--c-tinte-azul);
+  color: var(--c-azul-700);
+}
+
+/* Etiqueta de modalidad del circuito (bus / a pie / bici). */
+.catalogModality {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  background: var(--c-tinte-azul);
+  color: var(--c-azul-800);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+}
+
+.catalogSummary {
+  color: var(--c-ink-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.catalogMeta {
+  display: grid;
+  gap: 5px;
+  color: var(--c-ink);
+  font-size: 0.85rem;
+}
+
+.catalogMeta strong {
+  color: var(--c-azul-800);
+}
+
+.catalogToggle {
+  align-self: flex-start;
+  border: 1px solid rgba(37, 137, 234, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--c-azul-700);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 7px 15px;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.catalogToggle:hover {
+  background: var(--c-tinte-azul);
+}
+
+.catalogDetails {
+  display: grid;
+  gap: 10px;
+  padding-top: 4px;
+  color: var(--c-ink);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.highlightsList {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--c-ink);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.galleryCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px;
+  background: var(--c-blanco);
+  border: 1px solid var(--c-borde);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(12, 28, 46, 0.05);
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.galleryCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(37, 137, 234, 0.4);
+  box-shadow: 0 16px 32px rgba(12, 28, 46, 0.1);
+}
+
+.galleryIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: var(--c-tinte-azul);
+  color: var(--c-azul-700);
+  margin-bottom: 4px;
+}
+
+.galleryDate {
+  color: var(--c-azul-700);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.galleryName {
+  color: var(--c-ink);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.galleryMeta {
+  color: var(--c-ink-muted);
+  font-size: 0.84rem;
+}
+
+.galleryAllLink {
+  align-self: flex-start;
+  color: var(--c-azul-700);
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.galleryAllLink:hover {
+  text-decoration: underline;
+}
+
+.officeHours {
+  display: grid;
+  gap: 5px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--c-ink-muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 640px) {
+  .departureFooter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .departureButton {
+    width: 100%;
+  }
+}
+
+/* Portal unificado: los hijos de la grilla no pueden ensancharla (el carrusel desbordaba en el celular). */
+.departuresSection > *,
+.carouselWrap {
+  min-width: 0;
+}

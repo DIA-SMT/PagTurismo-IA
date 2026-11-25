@@ -39,7 +39,7 @@ describe("contenido inicial", () => {
 
   it("la configuración queda publicada", async () => {
     const { rows } = await db.query<{ estado: string }>("select estado from public.contenidos where coleccion = 'configuracion'");
-    assert.ok(rows.length === 2 && rows.every((r) => r.estado === "publicado"));
+    assert.ok(rows.length === 3 && rows.every((r) => r.estado === "publicado"));
   });
 });
 
@@ -50,7 +50,7 @@ describe("permisos", () => {
     assert.equal(borradores, 0);
     const conf = await como("anon", null, async (tx) =>
       (await tx.query("select 1 from public.contenidos where coleccion = 'configuracion'")).rows.length);
-    assert.equal(conf, 2);
+    assert.equal(conf, 3);
   });
 
   it("el visitante no puede escribir", async () => {

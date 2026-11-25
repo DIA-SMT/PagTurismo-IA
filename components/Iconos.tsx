@@ -29,6 +29,73 @@ export function SpriteIconos() {
         <symbol id="i-cerrar" viewBox="0 0 24 24" {...T}>
           <path d="M18 6 6 18M6 6l12 12" />
         </symbol>
+        {/* ---- Portal unificado: panel, cultura y buses ---- */}
+        <symbol id="i-persona" viewBox="0 0 24 24" {...T}>
+          <circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" />
+        </symbol>
+        <symbol id="i-personas" viewBox="0 0 24 24" {...T}>
+          <circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0 1 13 0" /><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8M18.5 20a6.5 6.5 0 0 0-3-5.5" />
+        </symbol>
+        <symbol id="i-chat" viewBox="0 0 24 24" {...T}>
+          <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z" />
+        </symbol>
+        <symbol id="i-camara" viewBox="0 0 24 24" {...T}>
+          <path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" /><circle cx="12" cy="13.5" r="3.5" />
+        </symbol>
+        <symbol id="i-bici" viewBox="0 0 24 24" {...T}>
+          <circle cx="5.5" cy="16.5" r="3.5" /><circle cx="18.5" cy="16.5" r="3.5" /><path d="M5.5 16.5 9 9h6l3.5 7.5M9 9 12 16.5h-1M14 5h2.5l-1.5 4" />
+        </symbol>
+        <symbol id="i-escuela" viewBox="0 0 24 24" {...T}>
+          <path d="M2 9.5 12 4l10 5.5-10 5.5z" /><path d="M6 12v4.5c0 1.5 2.7 3 6 3s6-1.5 6-3V12M22 9.5V15" />
+        </symbol>
+        <symbol id="i-descarga" viewBox="0 0 24 24" {...T}>
+          <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+        </symbol>
+        <symbol id="i-compartir" viewBox="0 0 24 24" {...T}>
+          <circle cx="18" cy="5" r="2.5" /><circle cx="6" cy="12" r="2.5" /><circle cx="18" cy="19" r="2.5" /><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4" />
+        </symbol>
+        <symbol id="i-alerta" viewBox="0 0 24 24" {...T}>
+          <path d="M12 3 2 20h20z" /><path d="M12 10v4M12 17h.01" />
+        </symbol>
+        <symbol id="i-lista" viewBox="0 0 24 24" {...T}>
+          <path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" />
+        </symbol>
+        <symbol id="i-refrescar" viewBox="0 0 24 24" {...T}>
+          <path d="M20 11a8 8 0 0 0-14.6-4.5L4 8M4 4v4h4M4 13a8 8 0 0 0 14.6 4.5L20 16M20 20v-4h-4" />
+        </symbol>
+        <symbol id="i-guardar" viewBox="0 0 24 24" {...T}>
+          <path d="M5 3h11l3 3v13a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" /><path d="M8 3v5h7V3M8 21v-7h8v7" />
+        </symbol>
+        <symbol id="i-filtro" viewBox="0 0 24 24" {...T}>
+          <path d="M3 5h18l-7 8v6l-4 2v-8z" />
+        </symbol>
+        <symbol id="i-play" viewBox="0 0 24 24" {...T}>
+          <path d="M7 4v16l13-8z" />
+        </symbol>
+        <symbol id="i-qr" viewBox="0 0 24 24" {...T}>
+          <rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3" />
+        </symbol>
+        <symbol id="i-globo" viewBox="0 0 24 24" {...T}>
+          <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+        </symbol>
+        <symbol id="i-prohibido" viewBox="0 0 24 24" {...T}>
+          <circle cx="12" cy="12" r="9" /><path d="m5.6 5.6 12.8 12.8" />
+        </symbol>
+        <symbol id="i-tendencia" viewBox="0 0 24 24" {...T}>
+          <path d="m3 17 6-6 4 4 8-8M15 7h6v6" />
+        </symbol>
+        <symbol id="i-chispas" viewBox="0 0 24 24" {...T}>
+          <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" />
+        </symbol>
+        <symbol id="i-interruptor-si" viewBox="0 0 24 24" {...T}>
+          <rect x="2" y="7" width="20" height="10" rx="5" /><circle cx="17" cy="12" r="2.5" />
+        </symbol>
+        <symbol id="i-interruptor-no" viewBox="0 0 24 24" {...T}>
+          <rect x="2" y="7" width="20" height="10" rx="5" /><circle cx="7" cy="12" r="2.5" />
+        </symbol>
+        <symbol id="i-copiar" viewBox="0 0 24 24" {...T}>
+          <rect x="8" y="8" width="12" height="12" rx="2" /><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3" />
+        </symbol>
         <symbol id="i-idioma" viewBox="0 0 24 24" {...T}>
           <circle cx="12" cy="12" r="9" />
           <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z" />
@@ -49,6 +116,9 @@ export function SpriteIconos() {
         </symbol>
         <symbol id="i-calendario" viewBox="0 0 24 24" {...T}>
           <rect x="4" y="5" width="16" height="16" rx="2" /><path d="M8 3v4m8-4v4M4 10h16M8 14h1m3 0h1m3 0h1M8 17h1m3 0h1m3 0h1" />
+        </symbol>
+        <symbol id="i-flecha-diagonal" viewBox="0 0 24 24" {...T}>
+          <path d="M7 17 17 7M7 7h10v10" />
         </symbol>
         <symbol id="i-reloj" viewBox="0 0 24 24" {...T}>
           <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />

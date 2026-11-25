@@ -26,9 +26,11 @@ import {
   normalizarDestacado, normalizarEscapada, normalizarEvento, normalizarExperiencia, normalizarGuia,
   normalizarLugar, normalizarPlato, normalizarRecorrido,
 } from "./normalizar";
+import type { OcurrenciaAgenda } from "./cultura/agenda";
+import { esTallerAnual } from "./cultura/talleres";
 import { rutas } from "./rutas";
 import type {
-  Categoria, Destacado, Escapada, Etiqueta, Evento, Experiencia, Guia, ItemCatalogo, Lugar, Plato, Recorrido, Sitio,
+  Categoria, CategoriaAgenda, Destacado, Escapada, Etiqueta, Evento, Experiencia, Guia, ItemCatalogo, Lugar, Plato, Recorrido, Sitio,
 } from "./tipos";
 
 export type Contenido = {
@@ -42,6 +44,8 @@ export type Contenido = {
   destacados: Destacado[];
   categorias: Categoria[];
   etiquetas: Etiqueta[];
+  /** Categorías de la agenda cultural. */
+  categoriasAgenda: CategoriaAgenda[];
   sitio: Sitio;
   /** Si este pedido ve borradores. */
   conBorradores: boolean;
@@ -120,6 +124,10 @@ export async function leerContenido(conBorradores: boolean, idioma: Idioma): Pro
     destacados: de("destacados", normalizarDestacado).sort(porOrden),
     categorias: (taxonomia.categorias ?? []).filter((c) => c?.id),
     etiquetas: (taxonomia.etiquetas ?? []).filter((e) => e?.id),
+    categoriasAgenda: (((config("categorias-agenda") ?? {}) as { categorias?: Partial<CategoriaAgenda>[] }).categorias ?? [])
+      .filter((k): k is CategoriaAgenda => !!k?.id && !!k?.titulo)
+      .map((k) => ({ id: k.id, titulo: k.titulo, tono: Number.isInteger(k.tono) ? Math.min(3, Math.max(0, Number(k.tono))) : 0 }))
+      .sort((a, b) => a.titulo.localeCompare(b.titulo, "es")),
     sitio: { ...SITIO_VACIO, ...((config("sitio") ?? {}) as Partial<Sitio>) },
     conBorradores,
     idioma,
@@ -232,3 +240,30 @@ export function catalogo(c: Contenido): ItemCatalogo[] {
 }
 
 export const categoriaPorId = (c: Contenido, id: string) => c.categorias.find((k) => k.id === id);
+
+/**
+ * Las fechas vigentes de la agenda listas para filtrar y mostrar (lib/cultura/agenda.ts). Las usan
+ * la portada y /agenda: viajan al navegador, así que solo lo necesario.
+ */
+export function ocurrenciasDeAgenda(c: Contenido, ahora = Date.now(), { conTalleres = false } = {}): OcurrenciaAgenda[] {
+  const lugares = lugaresPorSlug(c);
+  const todas = agenda(c, ahora);
+  // Los talleres anuales de los centros culturales van en /talleres: acá taparían los eventos.
+  const fechas = new Map<string, number>();
+  for (const o of todas) fechas.set(o.evento, (fechas.get(o.evento) ?? 0) + 1);
+  const visibles = conTalleres ? todas : todas.filter((o) => !esTallerAnual({ titulo: o.datos.titulo, resumen: o.datos.resumen }, fechas.get(o.evento)));
+  return visibles.map((o) => {
+    const lugar = o.datos.lugar ? lugares.get(o.datos.lugar) : undefined;
+    return {
+      evento: o.evento, inicio: o.inicio, fin: o.fin, estado: o.estado, sede: o.sede ?? o.datos.sede, nota: o.nota, enCurso: o.enCurso,
+      titulo: o.datos.titulo, url: rutas.evento(o.evento), resumen: o.datos.resumen,
+      lugar: lugar?.titulo ?? o.datos.sede, lugarSlug: lugar?.slug,
+      rubros: o.datos.rubros, gratis: o.datos.costo.modalidad === "gratis", destacado: o.datos.destacado,
+      fueraDeLaCiudad: !!o.datos.fueraDeLaCiudad,
+      // Como en Agenda Cultural: la foto del evento o, si no tiene, la del lugar.
+      imagen: o.datos.imagen ? { src: o.datos.imagen.src, alt: "" } : lugar?.imagen ? { src: lugar.imagen.src, alt: "" } : undefined,
+      direccion: lugar?.direccion ?? o.datos.lugarManual?.direccion,
+      costo: o.datos.costo,
+    };
+  });
+}

@@ -14,6 +14,33 @@ El panel sigue el mismo esquema que el de la subasta del Cementerio del Oeste
 Stack: Next.js 16.3.5 · React 19.2.8 · App Router · TypeScript · CSS propio (sin Tailwind) ·
 Supabase (Postgres, Auth y Storage) en producción · PGlite en local.
 
+> **Portal Unificado de Turismo y Cultura** (rama `integracion/portal-unificado`). Este repositorio
+> integra además la **Agenda Cultural** ([DIA-SMT/Agenda-Cultural](https://github.com/DIA-SMT/Agenda-Cultural))
+> y el **Bus Turístico / Bus Educativo / books de fotos / BiciTour** ([DIA-SMT/BotTurismo-BackyFront](https://github.com/DIA-SMT/BotTurismo-BackyFront)).
+> Un solo sitio, un solo panel, una sola sesión. Documentación de la integración:
+>
+> | Documento | Qué tiene |
+> |---|---|
+> | [docs/ESTADO_INTEGRACION.md](docs/ESTADO_INTEGRACION.md) | Qué está hecho, qué está probado, qué falta y qué riesgos quedan |
+> | [docs/AUDITORIA_REPOSITORIOS.md](docs/AUDITORIA_REPOSITORIOS.md) | Auditoría de los tres repositorios (y `docs/auditoria/` en detalle) |
+> | [docs/MATRIZ_FUNCIONALIDADES.md](docs/MATRIZ_FUNCIONALIDADES.md) | Cada funcionalidad: origen, destino, estrategia, riesgo, prioridad |
+> | [docs/ARQUITECTURA_UNIFICADA.md](docs/ARQUITECTURA_UNIFICADA.md) | Decisiones: datos, rutas, permisos, diseño, Migue |
+> | [docs/PLAN_MIGRACION.md](docs/PLAN_MIGRACION.md) | Migraciones, importación, corte del bus, verificación y vuelta atrás |
+> | [deploy/README.md](deploy/README.md) | Despliegue en la VPS (al final, la sección del portal unificado) |
+>
+> **Rutas nuevas:** `/lugares` (con filtro por tipo de espacio), `/agenda` con buscador, categorías,
+> lugar, gratuidad y calendario mensual, `/bus-turistico` (reservas con cupo real), `/bus-educativo`,
+> `/reserva/[token]`, `/galeria`, `/galeria/[token]` — todas en es/en/pt — y `/bicitour/[codigo]`.
+> **Panel:** grupos Turismo, Cultura, Buses y circuitos, Migue y Sistema (usuarios y permisos,
+> auditoría), con roles `superadmin`, `admin`, `editor` y `consulta` por módulo.
+>
+> **En local** el módulo de buses usa una base PGlite propia (`.local/buses`) con el esquema real del
+> bus y salidas de prueba. Cuentas de prueba (contraseña `turismo-local-2026`, ver
+> `supabase/local/seed-local.sql`): `admin@ejemplo.test` (superadmin), `cultura@ejemplo.test`,
+> `buses@ejemplo.test`, `editor@ejemplo.test`, `consulta@ejemplo.test`. Para cargar la agenda real en
+> local: `npm run cultura -- espacios --escribir` y `npm run cultura -- eventos --desde-wordpress --escribir`
+> (con el servidor apagado).
+
 ## 1. Probarlo en la computadora (modo local)
 
 Requisitos: Node 22.18 o posterior. No hace falta Docker ni una cuenta de Supabase.
@@ -45,6 +72,7 @@ npm run db:local:reiniciar
 |---|---|
 | `npm run dev` | Sitio y panel en desarrollo. |
 | `npm test` | Pruebas: base de datos y permisos, formularios, agenda, catálogo y contenido inicial. |
+| `npm run test:e2e` | Pruebas de punta a punta (Playwright) de los flujos críticos. Levantan su propio servidor con una base aparte (`.local-e2e`). La primera vez: `npx playwright install chromium`. |
 | `npm run typecheck` | Revisión de tipos. |
 | `npm run validar` | Revisa el contenido inicial (`supabase/semilla`). |
 | `npm run db:semilla` | Carga el contenido inicial en Supabase (ver 3). |

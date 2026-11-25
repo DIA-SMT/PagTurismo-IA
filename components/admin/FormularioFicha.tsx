@@ -7,7 +7,7 @@ import { Icono } from "@/components/Iconos";
 import { MensajeAccion } from "@/components/admin/Piezas";
 import { guardarConfiguracion, guardarFicha, subirFoto } from "@/app/admin/acciones";
 import { estadoInicial, type EstadoAccion } from "@/lib/admin/acciones";
-import { ESQUEMAS, ESQUEMA_SITIO, ESQUEMA_TEMAS, type Campo } from "@/lib/admin/esquemas";
+import { ESQUEMAS, ESQUEMA_CATEGORIAS_AGENDA, ESQUEMA_SITIO, ESQUEMA_TEMAS, type Campo } from "@/lib/admin/esquemas";
 import { IDIOMAS_TRADUCCION, slugDe } from "@/lib/admin/limpiar";
 import { ponerTraduccion, textosTraducibles, traduccionDe, type TextoTraducible } from "@/lib/admin/traducibles";
 import { LOCALE, localizarRuta } from "@/lib/i18n/config";
@@ -18,9 +18,14 @@ export type Opciones = {
   fichas: Record<string, { slug: string; titulo: string; estado: string }[]>;
   temas: { id: string; titulo: string }[];
   etiquetas: { id: string; titulo: string }[];
+  rubros: { id: string; titulo: string }[];
 };
 
-const esquemaPorId = (id: string) => (id === "sitio" ? ESQUEMA_SITIO : id === "categorias" ? ESQUEMA_TEMAS : ESQUEMAS.find((e) => e.id === id)!);
+const esquemaPorId = (id: string) =>
+  id === "sitio" ? ESQUEMA_SITIO
+    : id === "categorias" ? ESQUEMA_TEMAS
+      : id === "categorias-agenda" ? ESQUEMA_CATEGORIAS_AGENDA
+        : ESQUEMAS.find((e) => e.id === id)!;
 
 function leerRuta(obj: unknown, ruta: Ruta): unknown {
   return ruta.reduce<unknown>((o, k) => (o && typeof o === "object" ? (o as Json)[k as string] : undefined), obj);
@@ -45,8 +50,10 @@ function escribirRuta(obj: unknown, ruta: Ruta, valor: unknown): unknown {
  *  - modo "ficha": colecciones con estado (borrador o publicado) y dirección (slug).
  *  - modo "configuracion": datos del sitio o temas y etiquetas.
  */
-export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuardado = "borrador", slugOriginal = "", opciones, rutaPublica, ultimoCambio, lateralExtra }: {
+export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuardado = "borrador", slugOriginal = "", opciones, rutaPublica, ultimoCambio, lateralExtra, permisos = { editar: true, publicar: true } }: {
   esquemaId: string;
+  /** Lo que la cuenta puede hacer con esta ficha. Solo cambia lo que se muestra: el servidor y la base lo vuelven a controlar. */
+  permisos?: { editar: boolean; publicar: boolean };
   modo: "ficha" | "configuracion";
   inicial: Json;
   estado?: string;
@@ -145,11 +152,17 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
             {modo === "ficha" && (
               <div className="adm-campo">
                 <label className="adm-campo__etiqueta" htmlFor={`${idFormulario}-estado`}>Estado</label>
-                <select id={`${idFormulario}-estado`} value={estado} onChange={(e) => { setEstado(e.target.value); setSucio(true); }}>
+                <select id={`${idFormulario}-estado`} value={estado} disabled={!permisos.publicar} onChange={(e) => { setEstado(e.target.value); setSucio(true); }}>
                   <option value="borrador">Borrador (no se ve en el sitio)</option>
                   <option value="publicado">Publicado</option>
                 </select>
-                <span className="adm-campo__ayuda">Dejala en borrador hasta confirmar los datos operativos.</span>
+                <span className="adm-campo__ayuda">
+                  {permisos.publicar
+                    ? "Dejala en borrador hasta confirmar los datos operativos."
+                    : estadoGuardado === "publicado"
+                      ? "Está publicada: tu rol no puede cambiarla. Pedile a un administrador del módulo."
+                      : "Tu rol guarda borradores; un administrador del módulo la publica."}
+                </span>
               </div>
             )}
             {modo === "ficha" && (
@@ -168,7 +181,8 @@ export function FormularioFicha({ esquemaId, modo, inicial, estado: estadoGuarda
               </div>
             )}
             <MensajeAccion estado={resultado} />
-            <button type="submit" form={idFormulario} className="adm-boton adm-boton--primario adm-boton--ancho" disabled={enviando}>
+            <button type="submit" form={idFormulario} className="adm-boton adm-boton--primario adm-boton--ancho"
+              disabled={enviando || !permisos.editar || (!permisos.publicar && estadoGuardado === "publicado")}>
               <Icono nombre="check" tamano={18} />
               {enviando ? "Guardando…" : modo === "ficha" && estado === "publicado" ? "Guardar y publicar" : "Guardar"}
             </button>
@@ -275,8 +289,9 @@ function CampoFormulario({ campo, ruta, ctx }: { campo: Campo; ruta: Ruta; ctx: 
         </div>
       );
     case "temas":
-    case "etiquetas": {
-      const lista = campo.tipo === "temas" ? ctx.opciones.temas : ctx.opciones.etiquetas;
+    case "etiquetas":
+    case "rubros": {
+      const lista = campo.tipo === "temas" ? ctx.opciones.temas : campo.tipo === "rubros" ? ctx.opciones.rubros : ctx.opciones.etiquetas;
       const elegidos = Array.isArray(valor) ? (valor as string[]) : [];
       return (
         <fieldset className={`${clase} adm-grupo`} style={{ background: "transparent", border: 0, padding: 0 }}>

@@ -1,0 +1,106 @@
+/* ---- Planificador de la visita (Planificá tu visita) ---- */
+.planificador {
+  margin-bottom: var(--sp-8);
+  padding: clamp(var(--sp-5), 4vw, var(--sp-7));
+  border: 1px solid var(--c-borde-objeto);
+  border-radius: var(--r-xl);
+  background: linear-gradient(160deg, var(--c-azul-50), var(--c-blanco) 55%);
+  box-shadow: var(--sombra-2);
+}
+.planificador__intro { max-width: 46rem; margin-bottom: var(--sp-5); }
+.planificador__intro h2, .planificador__cabecera h2 { margin-top: var(--sp-2); font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.3rem); line-height: 1.1; letter-spacing: var(--ls-titular); }
+.planificador__intro p:last-child, .planificador__cabecera p { margin-top: var(--sp-2); color: var(--c-ink-soft); }
+.planificador fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.planificador legend { margin-bottom: var(--sp-2); color: var(--c-ink); font-size: var(--fs-sm); font-weight: var(--fw-fuerte); }
+.planificador .segmentado { max-width: 34rem; }
+.planificador textarea { width: 100%; resize: vertical; }
+.planificador__ayuda { display: block; margin-top: var(--sp-1); color: var(--c-ink-muted); font-size: var(--fs-xs); }
+.planificador__cargando { color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.planificador__error { padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); background: var(--c-estado-mal-fondo); color: var(--c-estado-mal-texto); font-weight: var(--fw-semi); }
+
+/* El plan */
+.planificador__cabecera { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--sp-4); }
+.planificador__cabecera h2:focus { outline: none; }
+.planificador__acciones { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.planificador__aviso { display: flex; gap: var(--sp-2); align-items: flex-start; margin-top: var(--sp-4); padding: var(--sp-3) var(--sp-4); border-radius: var(--r-md); background: var(--c-azul-100); color: var(--c-ink); font-size: var(--fs-sm); }
+.planificador__aviso svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
+.planificador__aviso--sin-ia { background: var(--c-fondo-alt); }
+.planificador__dias { display: grid; gap: var(--sp-6); margin-top: var(--sp-6); padding: 0; list-style: none; }
+.planificador__dia h3 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--sp-2); font-size: var(--fs-md); }
+.planificador__dia h3 span { color: var(--c-azul-700); }
+.planificador__dia h3 small { flex-basis: 100%; color: var(--c-ink-soft); font-size: var(--fs-sm); font-weight: var(--fw-semi); }
+.planificador__dia h3::first-letter { text-transform: uppercase; }
+.planificador__actividades { display: grid; gap: var(--sp-3); margin-top: var(--sp-3); padding: 0; list-style: none; }
+.planificador__actividad { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: var(--sp-4); align-items: start; }
+.planificador__momento { display: grid; padding-top: var(--sp-3); color: var(--c-ink-soft); font-size: var(--fs-sm); font-weight: var(--fw-fuerte); }
+.planificador__momento strong { color: var(--c-ink); font-size: var(--fs-base); }
+.planificador__tarjeta { padding: var(--sp-3) var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); }
+.planificador__tarjeta p { margin-top: var(--sp-1); color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.planificador__tipo { display: inline-flex; align-items: center; gap: 4px; color: var(--c-azul-700); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.planificador__titulo { display: block; margin-top: 2px; font-size: var(--fs-base); }
+.planificador__titulo a { color: var(--c-ink); text-decoration-color: var(--c-azul-600); text-underline-offset: 3px; }
+.planificador__titulo a:hover { color: var(--c-azul-700); }
+.planificador__libre { margin-top: var(--sp-2); color: var(--c-ink-soft); }
+.planificador__consejos { margin-top: var(--sp-6); padding: var(--sp-4) var(--sp-5); border-radius: var(--r-lg); background: var(--c-fondo-alt); }
+.planificador__consejos h3 { font-size: var(--fs-base); }
+.planificador__consejos ul { display: grid; gap: var(--sp-1); margin-top: var(--sp-2); padding-left: 1.2rem; color: var(--c-ink-soft); }
+
+@media (max-width: 47.5rem) {
+  .planificador__actividad { grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); }
+  .planificador__momento { display: flex; gap: var(--sp-2); padding-top: 0; }
+}
+
+@media print {
+  .planificador--plan { border: 0; box-shadow: none; background: none; padding: 0; }
+  .planificador__acciones { display: none; }
+}
+
+/* Campos con el mismo aspecto que los filtros de la agenda. */
+.planificador select, .planificador input[type="date"], .planificador textarea {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--c-borde-campo);
+  border-radius: var(--r-md);
+  background: var(--c-blanco);
+  color: var(--c-ink);
+  font: inherit;
+}
+
+/* ---- Paso a paso: intro a la izquierda, una pregunta por vez a la derecha ---- */
+.planificador--pasos { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 32rem); gap: var(--sp-6); align-items: center; }
+.planificador--pasos .planificador__intro { margin-bottom: 0; }
+.planificador__paso { padding: var(--sp-5); border: 1px solid var(--c-borde-objeto); border-radius: 1.25rem; background: var(--c-blanco); box-shadow: var(--sombra-2); }
+.planificador__progreso { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); color: var(--c-ink-soft); font-size: var(--fs-sm); }
+.planificador__progreso > span:first-child { display: inline-flex; align-items: center; gap: 6px; color: var(--c-azul-700); font-weight: var(--fw-fuerte); }
+.planificador__atras { display: inline-flex; align-items: center; gap: 4px; min-height: 2.25rem; padding: 0 var(--sp-2) 0 0; border: 0; background: none; color: var(--c-azul-700); font: inherit; font-weight: var(--fw-fuerte); cursor: pointer; }
+.planificador__barra { height: 4px; margin: var(--sp-3) 0 var(--sp-4); border-radius: 4px; background: var(--c-borde-suave); overflow: hidden; }
+.planificador__barra span { display: block; height: 100%; border-radius: 4px; background: #0066FF; transition: width 0.3s ease; }
+.planificador__pregunta { margin-bottom: var(--sp-4); font-size: clamp(1.2rem, 1rem + 0.6vw, 1.45rem); line-height: 1.2; }
+.planificador__pregunta:focus { outline: none; }
+.planificador__opciones { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.planificador__opcion {
+  min-height: 2.75rem;
+  padding: 0.45rem 1.05rem;
+  border: 1px solid var(--c-borde-objeto);
+  border-radius: var(--r-full);
+  background: var(--c-blanco);
+  color: var(--c-ink);
+  font: inherit;
+  font-weight: var(--fw-semi);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.planificador__opcion:hover { border-color: #0066FF; color: var(--c-azul-700); }
+.planificador__opcion[aria-pressed="true"] { border-color: #0066FF; background: #0066FF; color: #fff; }
+.planificador__opcion:focus-visible { outline: 3px solid var(--c-azul-600); outline-offset: 2px; }
+.planificador__opciones .planificador__ayuda { flex-basis: 100%; margin-top: 0; }
+.planificador__siguiente { display: flex; flex-basis: 100%; justify-content: flex-end; }
+.planificador__fecha { display: flex; flex-basis: 100%; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-2); }
+.planificador__fecha input { flex: 1 1 10rem; width: auto; }
+.planificador__final { display: grid; gap: var(--sp-3); }
+.planificador__final .boton { justify-self: start; }
+@media (max-width: 56rem) {
+  .planificador--pasos { grid-template-columns: minmax(0, 1fr); gap: var(--sp-5); }
+}
+@media (prefers-reduced-motion: reduce) { .planificador__barra span, .planificador__opcion { transition: none; } }

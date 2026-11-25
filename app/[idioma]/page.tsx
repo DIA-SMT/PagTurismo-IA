@@ -8,9 +8,14 @@ import { Vinculo as Link } from "@/components/i18n/Idioma";
 import { Icono } from "@/components/Iconos";
 import { Cabecera, Enlace, Marca } from "@/components/Ui";
 import { getClima } from "@/lib/clima";
-import { BUS_TURISTICO, MAPA } from "@/lib/contenido";
-import { contenido, destacadosVigentes, agendaDestacada } from "@/lib/datos";
+import { datosDelBusParaMigue } from "@/lib/buses/migue";
+import { BUS_TURISTICO } from "@/lib/contenido";
+import { contenido, destacadosVigentes, agendaDestacada, ocurrenciasDeAgenda } from "@/lib/datos";
+import { CategoriasAgenda, GrillaEventos, SemanaAgenda } from "@/components/cultura/Agenda";
+import { TalleresPortada } from "@/components/cultura/TalleresPortada";
+import { categoriasPopulares, proximosDias, proximosEventos } from "@/lib/cultura/agenda";
 import { diaLocal, formatearOcurrencia, nombreMes, partesDeFecha } from "@/lib/fechas";
+import { LOCALE } from "@/lib/i18n/config";
 import { formatear } from "@/lib/i18n/definir";
 import { alternativas, rutaLocal, textosActuales } from "@/lib/i18n/servidor";
 import type { Textos } from "@/lib/i18n/textos";
@@ -39,19 +44,31 @@ function proximasFechasDelCalendario(eventos: Evento[], ahora: number, cuantas: 
 }
 
 export default async function Portada() {
-  const [c, textosPagina, clima, buscarEn] = await Promise.all([contenido(), textosActuales(), getClima(), rutaLocal("/que-hacer")]);
+  const [c, textosPagina, clima, buscarEn, bus] = await Promise.all([
+    contenido(), textosActuales(), getClima(), rutaLocal("/que-hacer"), datosDelBusParaMigue(),
+  ]);
+  // Próximas salidas reales del Bus Turístico (con cupo), para la sección de recorridos.
+  const salidasBus = (bus?.salidas ?? []).slice(0, 3).map((s) => ({
+    ...s,
+    nombre: bus?.circuitos.find((k) => k.slug === s.circuito)?.nombre ?? s.titulo,
+    libres: Math.max(0, s.cupo - s.reservadas),
+  }));
   const { comun: tc, portada: t } = textosPagina;
   const accesos = [
     { titulo: tc.nav.agenda, detalle: t.accesos.agendaDetalle, url: "/agenda", icono: "calendario" },
     { titulo: t.accesos.bus, detalle: t.accesos.busDetalle, url: BUS_TURISTICO, icono: "bus-linea" },
     { titulo: t.accesos.imperdibles, detalle: t.accesos.imperdiblesDetalle, url: "/descubri", icono: "estrella" },
-    { titulo: t.accesos.mapa, detalle: t.accesos.mapaDetalle, url: MAPA, icono: "mapa" },
+    { titulo: t.accesos.mapa, detalle: t.accesos.mapaDetalle, url: "/mapa", icono: "mapa" },
   ];
   const ahora = Date.now();
   const sitio = c.sitio;
   const destacados = destacadosVigentes(c, ahora);
   const categorias = c.categorias;
   const agenda = agendaDestacada(c, ahora, 3);
+  const ocurrenciasAgenda = ocurrenciasDeAgenda(c, ahora);
+  const proximosAgenda = proximosEventos(ocurrenciasAgenda, ahora, 3);
+  const semanaAgenda = proximosDias(ocurrenciasAgenda, diaLocal(ahora));
+  const categoriasConFechas = categoriasPopulares(ocurrenciasAgenda, ahora, 4);
   const calendario = agenda.length ? [] : proximasFechasDelCalendario(c.eventos, ahora, 3);
   const recorridos = c.recorridos;
   const circuitosBus = recorridos.filter((r) => r.modalidad === "bus");
@@ -127,6 +144,78 @@ export default async function Portada() {
         </section>
       )}
 
+      {/* ---- Agenda cultural, como en la portada de Agenda Cultural: próximos eventos, la semana y la franja de categorías ---- */}
+      {proximosAgenda.length > 0 ? (
+        <>
+          <section className="bloque contenedor agenda-portada" id="agenda" aria-labelledby="agenda-titulo" data-modulo="cultura">
+            <Cabecera id="agenda-titulo" kicker={textosPagina.cultura.portada.kicker} titulo={textosPagina.cultura.portada.titulo}
+              enlace={{ texto: textosPagina.cultura.portada.verAgenda, url: "/agenda" }} />
+            <GrillaEventos ocurrencias={proximosAgenda} categorias={c.categoriasAgenda} />
+            <SemanaAgenda dias={semanaAgenda} categorias={c.categoriasAgenda} />
+          </section>
+          {categoriasConFechas.length > 0 && (
+            <section className="franja-categorias" aria-labelledby="categorias-titulo" data-modulo="cultura">
+              <div className="contenedor">
+                <Cabecera id="categorias-titulo" kicker={textosPagina.cultura.categorias.kicker} titulo={textosPagina.cultura.categorias.titulo} />
+                <CategoriasAgenda populares={categoriasConFechas} categorias={c.categoriasAgenda} />
+              </div>
+            </section>
+          )}
+        </>
+      ) : (
+        <section className="bloque contenedor" id="agenda" aria-labelledby="agenda-titulo">
+          <Cabecera id="agenda-titulo" kicker={tc.nav.agenda} titulo={agenda.length ? t.agenda.tituloSemana : t.agenda.tituloCalendario}
+            bajada={agenda.length ? t.agenda.bajadaSemana : t.agenda.bajadaCalendario}
+            enlace={{ texto: t.agenda.verCompleta, url: "/agenda" }} />
+          <ul className="agenda">
+            {agenda.map((o) => {
+              const { dia, mes } = partesDeFecha(o.inicio, c.idioma);
+              return (
+                <li key={`${o.evento}-${o.inicio}`}>
+                  <Link className="evento evento--enlace" href={rutas.evento(o.evento)}>
+                    <div className="evento__fecha" aria-hidden="true">
+                      <span className="evento__mes">{mes}</span>
+                      <span className="evento__dia">{dia}</span>
+                    </div>
+                    <h3>{o.datos.titulo}</h3>
+                    {o.enCurso && <Marca tipo="exito">{t.agenda.enCurso}</Marca>}
+                    <p className="evento__cuando">{formatearOcurrencia(o, c.idioma)}</p>
+                    {(o.sede || o.datos.sede) && <p className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{o.sede || o.datos.sede}</p>}
+                  </Link>
+                </li>
+              );
+            })}
+            {calendario.map((e) => {
+              const r = e.recurrente!;
+              const mes = nombreMes(r.mes, c.idioma);
+              return (
+                <li key={e.slug}>
+                  <Link className="evento evento--enlace" href={rutas.evento(e.slug)}>
+                    <div className={`evento__fecha${r.dia ? "" : " evento__fecha--mes"}`} aria-hidden="true">
+                      <span className="evento__mes">{mes.slice(0, 3).toUpperCase()}</span>
+                      {r.dia && <span className="evento__dia">{r.dia}</span>}
+                    </div>
+                    <h3>
+                      <span className="visualmente-oculto">
+                        {r.dia ? formatear(t.agenda.cadaDia, { dia: r.dia, mes }) : formatear(t.agenda.cadaMes, { mes })}
+                      </span>
+                      {e.titulo}
+                    </h3>
+                    {e.fueraDeLaCiudad && <Marca tipo="alerta">{tc.ui.fueraDeLaCiudad}</Marca>}
+                    <p className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{e.fueraDeLaCiudad ? e.localidad || e.sede : e.sede}</p>
+                    <p>{e.resumen}</p>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+  
+      )}
+
+      {/* ---- Talleres en los centros culturales ---- */}
+      <TalleresPortada t={textosPagina.talleres} ahora={ahora} />
+
       {/* ---- Qué hacer ---- */}
       <section className="bloque contenedor" id="que-hacer" aria-labelledby="que-hacer-titulo">
         <Cabecera id="que-hacer-titulo" kicker={tc.nav.queHacer} titulo={t.temas.titulo} bajada={t.temas.bajada}
@@ -146,55 +235,6 @@ export default async function Portada() {
         </Carrusel>
       </section>
 
-      {/* ---- Agenda ---- */}
-      <section className="bloque contenedor" id="agenda" aria-labelledby="agenda-titulo">
-        <Cabecera id="agenda-titulo" kicker={tc.nav.agenda} titulo={agenda.length ? t.agenda.tituloSemana : t.agenda.tituloCalendario}
-          bajada={agenda.length ? t.agenda.bajadaSemana : t.agenda.bajadaCalendario}
-          enlace={{ texto: t.agenda.verCompleta, url: "/agenda" }} />
-        <ul className="agenda">
-          {agenda.map((o) => {
-            const { dia, mes } = partesDeFecha(o.inicio, c.idioma);
-            return (
-              <li key={`${o.evento}-${o.inicio}`}>
-                <Link className="evento evento--enlace" href={rutas.evento(o.evento)}>
-                  <div className="evento__fecha" aria-hidden="true">
-                    <span className="evento__mes">{mes}</span>
-                    <span className="evento__dia">{dia}</span>
-                  </div>
-                  <h3>{o.datos.titulo}</h3>
-                  {o.enCurso && <Marca tipo="exito">{t.agenda.enCurso}</Marca>}
-                  <p className="evento__cuando">{formatearOcurrencia(o, c.idioma)}</p>
-                  {(o.sede || o.datos.sede) && <p className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{o.sede || o.datos.sede}</p>}
-                </Link>
-              </li>
-            );
-          })}
-          {calendario.map((e) => {
-            const r = e.recurrente!;
-            const mes = nombreMes(r.mes, c.idioma);
-            return (
-              <li key={e.slug}>
-                <Link className="evento evento--enlace" href={rutas.evento(e.slug)}>
-                  <div className={`evento__fecha${r.dia ? "" : " evento__fecha--mes"}`} aria-hidden="true">
-                    <span className="evento__mes">{mes.slice(0, 3).toUpperCase()}</span>
-                    {r.dia && <span className="evento__dia">{r.dia}</span>}
-                  </div>
-                  <h3>
-                    <span className="visualmente-oculto">
-                      {r.dia ? formatear(t.agenda.cadaDia, { dia: r.dia, mes }) : formatear(t.agenda.cadaMes, { mes })}
-                    </span>
-                    {e.titulo}
-                  </h3>
-                  {e.fueraDeLaCiudad && <Marca tipo="alerta">{tc.ui.fueraDeLaCiudad}</Marca>}
-                  <p className="evento__lugar"><Icono nombre="ubicacion" tamano={15} />{e.fueraDeLaCiudad ? e.localidad || e.sede : e.sede}</p>
-                  <p>{e.resumen}</p>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </section>
-
       {/* ---- Recorridos ---- */}
       <section className="recorridos" id="recorridos" aria-labelledby="recorridos-titulo">
         <div className="contenedor">
@@ -210,10 +250,24 @@ export default async function Portada() {
                 <li><Icono nombre="ticket" tamano={16} /> {t.recorridos.gratuito}</li>
               </ul>
               <div className="inscripcion">
-                <h3>{t.recorridos.salidasTitulo}</h3>
-                <p>{t.recorridos.salidasTexto}</p>
+                <h3>{salidasBus.length ? textosPagina.buses.proximasSalidas : t.recorridos.salidasTitulo}</h3>
+                {salidasBus.length ? (
+                  <ul className="salidas-portada">
+                    {salidasBus.map((s) => (
+                      <li key={`${s.circuito}-${s.fecha}-${s.hora}`}>
+                        <strong>{s.nombre}</strong>
+                        <span>{new Intl.DateTimeFormat(LOCALE[c.idioma].intl, { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }).format(new Date(`${s.fecha}T12:00:00Z`))} · {s.hora.slice(0, 5)}</span>
+                        <span className={`estado estado--${s.libres === 0 ? "mal" : s.libres <= 3 ? "medio" : "ok"}`}>
+                          {s.libres === 0 ? textosPagina.buses.completa : s.libres === 1 ? textosPagina.buses.ultimoLugar : formatear(textosPagina.buses.lugares, { n: s.libres })}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{t.recorridos.salidasTexto}</p>
+                )}
                 <Enlace className="boton boton--amarillo" href={BUS_TURISTICO}>
-                  <Icono nombre="bus-linea" tamano={18} /> {t.recorridos.reservar} <Icono nombre="externo" tamano={16} />
+                  <Icono nombre="bus-linea" tamano={18} /> {t.recorridos.reservar} <Icono nombre="flecha" tamano={16} />
                 </Enlace>
               </div>
             </div>
@@ -378,7 +432,7 @@ export default async function Portada() {
           </div>
         </div>
 
-        <Enlace className="mapa" href={MAPA}>
+        <Enlace className="mapa" href="/mapa">
           <div className="mapa__plano" aria-hidden="true">
             <span className="mapa__parque" />
             <span className="mapa__pin"><Icono nombre="ubicacion" tamano={40} /><span>San Miguel de Tucumán</span></span>
@@ -388,7 +442,7 @@ export default async function Portada() {
               <h2>{tc.pie.enlaces.mapa}</h2>
               <p>{t.contacto.mapaTexto}</p>
             </div>
-            <Icono nombre="externo" tamano={22} />
+            <Icono nombre="flecha" tamano={22} />
           </div>
         </Enlace>
       </section>

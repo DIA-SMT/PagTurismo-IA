@@ -18,7 +18,7 @@ export type Campo =
   | (Base & { tipo: "numero"; min?: number; max?: number })
   | (Base & { tipo: "booleano" })
   | (Base & { tipo: "opciones"; opciones: { valor: string; texto: string }[] })
-  | (Base & { tipo: "temas" | "etiquetas" })
+  | (Base & { tipo: "temas" | "etiquetas" | "rubros" })
   | (Base & { tipo: "relacion"; coleccion: string; multiple?: boolean })
   | (Base & { tipo: "imagen" })
   /** Solo la dirección de una imagen (texto), con botón para subirla. La usan los temas. */
@@ -52,6 +52,26 @@ const resumen: Campo = {
 const temas: Campo = { tipo: "temas", nombre: "categorias", etiqueta: "Temas" };
 const etiquetas: Campo = { tipo: "etiquetas", nombre: "etiquetas", etiqueta: "Etiquetas" };
 const imagen: Campo = { tipo: "imagen", nombre: "imagen", etiqueta: "Imagen principal" };
+/** Categorías de la agenda cultural (configuracion/categorias-agenda). */
+const rubros: Campo = { tipo: "rubros", nombre: "rubros", etiqueta: "Categorías de la agenda", ayuda: "Música, teatro, ferias… Sirven para filtrar la agenda." };
+
+const galeria: Campo = {
+  tipo: "lista", nombre: "galeria", etiqueta: "Galería de fotos", resumen: "foto", textoAgregar: "Agregar foto",
+  ayuda: "Fotos adicionales, con texto alternativo y crédito.", campos: [{ tipo: "imagen", nombre: "foto", etiqueta: "Foto", requerido: true }],
+};
+
+/** De dónde vino la ficha si la trajo un importador. Sirve para no duplicarla al volver a importar. */
+const legado: Seccion = {
+  titulo: "Origen de la importación",
+  descripcion: "Lo completa el importador (Agenda Cultural o el WordPress viejo). No lo cambies: se usa para no duplicar la ficha.",
+  campos: [
+    { tipo: "grupo", nombre: "legado", etiqueta: "Origen", campos: [
+      { tipo: "texto", nombre: "origen", etiqueta: "Sistema", ancho: "medio" },
+      { tipo: "texto", nombre: "id", etiqueta: "Identificador", ancho: "medio" },
+      { tipo: "url", nombre: "url", etiqueta: "Dirección original" },
+    ] },
+  ],
+};
 
 const costo: Campo = {
   tipo: "grupo", nombre: "costo", etiqueta: "Costo", campos: [
@@ -101,6 +121,11 @@ export const ESQUEMAS: Esquema[] = [
         titulo,
         { tipo: "texto", nombre: "clase", etiqueta: "Tipo de lugar", traducible: true, requerido: true, ancho: "medio", marcador: "museo, plaza, parque, templo…" },
         { tipo: "booleano", nombre: "imperdible", etiqueta: "Imperdible", ancho: "medio", ayuda: "Aparece en Descubrí San Miguel." },
+        { tipo: "opciones", nombre: "tipoEspacio", etiqueta: "Espacio de la agenda cultural", ancho: "medio",
+          ayuda: "Para el listado de lugares y los filtros de la agenda.", opciones: [
+            { valor: "cultural", texto: "Espacio cultural (museo, teatro, centro cultural)" },
+            { valor: "aire-libre", texto: "Espacio al aire libre (plaza, parque)" },
+          ] },
         resumen,
         { tipo: "parrafo", nombre: "porQueIr", etiqueta: "Por qué ir", traducible: true, filas: 3 },
         { tipo: "parrafo", nombre: "descripcion", etiqueta: "Descripción e historia", traducible: true, filas: 6, ayuda: "Separá los párrafos con una línea en blanco." },
@@ -121,8 +146,16 @@ export const ESQUEMAS: Esquema[] = [
           { tipo: "url", nombre: "web", etiqueta: "Sitio oficial" },
         ] },
         { tipo: "parrafo", nombre: "accesibilidad", etiqueta: "Accesibilidad", traducible: true, filas: 3, ayuda: "Solo condiciones verificadas, por sector." },
+        { tipo: "parrafo", nombre: "servicios", etiqueta: "Servicios", traducible: true, filas: 3, ayuda: "Uno por línea: baños, bar, estacionamiento…" },
+        { tipo: "grupo", nombre: "redes", etiqueta: "Redes y entradas", campos: [
+          { tipo: "url", nombre: "instagram", etiqueta: "Instagram", ancho: "medio" },
+          { tipo: "url", nombre: "facebook", etiqueta: "Facebook", ancho: "medio" },
+          { tipo: "url", nombre: "entradas", etiqueta: "Venta de entradas" },
+        ] },
       ] },
+      { titulo: "Galería", campos: [galeria] },
       fuentesYValidacion,
+      legado,
     ],
   },
   {
@@ -189,8 +222,9 @@ export const ESQUEMAS: Esquema[] = [
         ] },
         { tipo: "booleano", nombre: "fueraDeLaCiudad", etiqueta: "Es fuera de San Miguel de Tucumán", ancho: "medio" },
         resumen,
+        { tipo: "booleano", nombre: "destacado", etiqueta: "Destacado", ancho: "medio", ayuda: "Aparece primero en la agenda y en la portada." },
         { tipo: "parrafo", nombre: "descripcion", etiqueta: "Descripción permanente", traducible: true, filas: 4, ayuda: "Lo que no cambia de un año a otro. Cada edición va en las fechas." },
-        temas, etiquetas, imagen,
+        rubros, temas, etiquetas, imagen,
       ] },
       { titulo: "Fechas", descripcion: "Hora de Tucumán. Si una fecha se cancela, cambiá su estado: no la borres.", campos: [
         { tipo: "lista", nombre: "ocurrencias", etiqueta: "Fechas confirmadas", resumen: "inicio", textoAgregar: "Agregar fecha", campos: [
@@ -212,13 +246,29 @@ export const ESQUEMAS: Esquema[] = [
       { titulo: "Dónde y cómo", campos: [
         { tipo: "relacion", nombre: "lugar", etiqueta: "Lugar (si tiene ficha)", coleccion: "lugares", ancho: "medio" },
         { tipo: "texto", nombre: "sede", etiqueta: "Sede (texto)", ancho: "medio" },
+        { tipo: "grupo", nombre: "lugarManual", etiqueta: "Lugar sin ficha",
+          ayuda: "Solo si el lugar no tiene ficha: dirección y coordenadas para el mapa y «Cómo llegar».", campos: [
+            { tipo: "texto", nombre: "direccion", etiqueta: "Dirección", ancho: "medio" },
+            { tipo: "numero", nombre: "lat", etiqueta: "Latitud", ancho: "medio", min: -90, max: 90 },
+            { tipo: "numero", nombre: "lng", etiqueta: "Longitud", ancho: "medio", min: -180, max: 180 },
+          ] },
         { tipo: "texto", nombre: "localidad", etiqueta: "Localidad", ancho: "medio", marcador: "Famaillá, a unos 35 km" },
         { tipo: "texto", nombre: "organizador", etiqueta: "Organizador", ancho: "medio" },
         costo,
         { tipo: "texto", nombre: "inscripcion", etiqueta: "Entradas o inscripción", traducible: true, ancho: "medio" },
         { tipo: "url", nombre: "urlOficial", etiqueta: "Sitio oficial", ancho: "medio" },
+        { tipo: "url", nombre: "entradas", etiqueta: "Enlace para comprar entradas o inscribirse", ancho: "medio" },
+        { tipo: "numero", nombre: "capacidad", etiqueta: "Capacidad (personas)", ancho: "medio", min: 1 },
+        { tipo: "parrafo", nombre: "accesibilidad", etiqueta: "Accesibilidad", traducible: true, filas: 2 },
+        { tipo: "parrafo", nombre: "requisitos", etiqueta: "Requisitos o recomendaciones", traducible: true, filas: 2 },
+        { tipo: "grupo", nombre: "contacto", etiqueta: "Contacto del organizador", campos: [
+          { tipo: "texto", nombre: "telefono", etiqueta: "Teléfono", ancho: "medio" },
+          { tipo: "correo", nombre: "email", etiqueta: "Correo", ancho: "medio" },
+        ] },
       ] },
+      { titulo: "Galería", campos: [galeria] },
       fuentesYValidacion,
+      legado,
     ],
   },
   {
@@ -408,6 +458,22 @@ export const ESQUEMA_TEMAS: Esquema = {
       { tipo: "lista", nombre: "etiquetas", etiqueta: "Etiquetas", resumen: "titulo", textoAgregar: "Agregar etiqueta", campos: [
         { tipo: "texto", nombre: "id", etiqueta: "Identificador", requerido: true, ancho: "medio" },
         { tipo: "texto", nombre: "titulo", etiqueta: "Nombre", traducible: true, requerido: true, ancho: "medio" },
+      ] },
+    ] },
+  ],
+};
+
+/** Categorías de la agenda cultural (módulo cultura). */
+export const ESQUEMA_CATEGORIAS_AGENDA: Esquema = {
+  id: "categorias-agenda", titulo: "Categorías de la agenda", singular: "categoría", nuevo: "", icono: "etiqueta",
+  descripcion: "Música, teatro, ferias… Ordenan y filtran la agenda cultural.",
+  secciones: [
+    { titulo: "Categorías", descripcion: "No cambies el identificador de una categoría existente: los eventos lo usan.", campos: [
+      { tipo: "lista", nombre: "categorias", etiqueta: "Categorías", resumen: "titulo", textoAgregar: "Agregar categoría", campos: [
+        { tipo: "texto", nombre: "id", etiqueta: "Identificador", requerido: true, ancho: "medio", marcador: "musica" },
+        { tipo: "texto", nombre: "titulo", etiqueta: "Nombre", traducible: true, requerido: true, ancho: "medio" },
+        { tipo: "numero", nombre: "tono", etiqueta: "Color (0 a 3)", ancho: "medio", min: 0, max: 3,
+          ayuda: "0 azul · 1 verde · 2 amarillo · 3 violeta. Es decorativo." },
       ] },
     ] },
   ],

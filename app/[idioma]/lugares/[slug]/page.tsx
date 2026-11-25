@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { BotonAccion, Dato, JsonLd, TextoHorario, enlaceComoLlegar, textoCosto } from "@/components/Ficha";
 import { Icono } from "@/components/Iconos";
+import { Galeria, MapaEmbebido } from "@/components/cultura/Piezas";
 import { AvisoBorrador, AvisoSinTraducir, EncabezadoPagina, Enlace, FotoFicha, Fuentes, Marca, Parrafos, TarjetaItem } from "@/components/Ui";
 import { contenido, porSlug, categoriaDe, catalogo, nombresDeEtiquetas, relacionadosConLugar } from "@/lib/datos";
 import { formatear } from "@/lib/i18n/definir";
@@ -90,6 +91,14 @@ export default async function FichaLugar({ params }: PageProps<"/[idioma]/lugare
               <Parrafos texto={l.accesibilidad} className="prosa" />
             </section>
           )}
+          {l.servicios.length > 0 && (
+            <section aria-labelledby="servicios">
+              <h2 id="servicios">{t.cultura.lugares.servicios}</h2>
+              <ul className="lista-servicios">{l.servicios.map((s) => <li key={s}>{s}</li>)}</ul>
+            </section>
+          )}
+          <Galeria fotos={l.galeria} />
+          {l.coordenadas && <MapaEmbebido lat={l.coordenadas.lat} lng={l.coordenadas.lng} nombre={l.titulo} />}
         </div>
 
         <aside className="ficha__lateral" aria-labelledby="info-practica">
@@ -110,7 +119,10 @@ export default async function FichaLugar({ params }: PageProps<"/[idioma]/lugare
             </dl>
             <div className="panel-practico__acciones">
               <BotonAccion url={llegar.url} texto={llegar.texto} />
+              {l.redes.entradas && <BotonAccion url={l.redes.entradas} texto={t.cultura.lugares.entradas} primario={false} />}
               {l.contacto?.web && <BotonAccion url={l.contacto.web} texto={dato.sitioOficial} primario={false} />}
+              {l.redes.instagram && <BotonAccion url={l.redes.instagram} texto="Instagram" primario={false} />}
+              {l.redes.facebook && <BotonAccion url={l.redes.facebook} texto="Facebook" primario={false} />}
             </div>
           </div>
         </aside>

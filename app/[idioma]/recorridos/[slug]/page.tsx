@@ -5,7 +5,6 @@ import { BotonAccion, Dato } from "@/components/Ficha";
 import { Vinculo as Link } from "@/components/i18n/Idioma";
 import { AvisoBorrador, Aviso, AvisoSinTraducir, EncabezadoPagina, FotoFicha, Fuentes, Marca, Parrafos } from "@/components/Ui";
 import { contenido, porSlug, lugaresPorSlug } from "@/lib/datos";
-import { MAPA } from "@/lib/contenido";
 import { formatear } from "@/lib/i18n/definir";
 import { alternativas, textosActuales } from "@/lib/i18n/servidor";
 import type { Parada } from "@/lib/tipos";
@@ -122,7 +121,7 @@ export default async function FichaRecorrido({ params }: PageProps<"/[idioma]/re
             <div className="panel-practico__acciones">
               {accion && <BotonAccion url={accion.url!} texto={accion.texto} />}
               {experiencia && <BotonAccion url={`/experiencias/${experiencia.slug}`} texto={tr.verCondiciones} primario={!accion} />}
-              <BotonAccion url={MAPA} texto={tr.mapa} primario={false} />
+              <BotonAccion url="/mapa" texto={tr.mapa} primario={false} />
             </div>
           </div>
         </aside>

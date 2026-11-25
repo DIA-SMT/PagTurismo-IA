@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 
 import { Icono } from "./Iconos";
 import { Enlace } from "./Ui";
-import { MAPA } from "@/lib/contenido";
 import { IDIOMA_BASE, type Idioma } from "@/lib/i18n/config";
 import { comun } from "@/lib/i18n/textos/comun";
 import { fichas } from "@/lib/i18n/textos/fichas";
@@ -41,7 +40,7 @@ export function TextoHorario({ horario, idioma = IDIOMA_BASE }: { horario?: Dato
   );
 }
 
-/** "Cómo llegar": con coordenadas verificadas o la dirección; si no hay, el mapa de la ciudad. */
+/** "Cómo llegar": con coordenadas verificadas o la dirección; si no hay, el mapa interactivo del portal. */
 export function enlaceComoLlegar(
   l: Pick<Lugar, "coordenadas" | "direccion" | "titulo">,
   idioma: Idioma = IDIOMA_BASE,
@@ -53,7 +52,8 @@ export function enlaceComoLlegar(
   if (l.direccion) {
     return { url: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${l.direccion}, San Miguel de Tucumán`)}`, texto: t.comoLlegar };
   }
-  return { url: MAPA, texto: t.buscarEnMapa };
+  // Sin coordenadas ni dirección: el mapa del portal, buscando por el nombre.
+  return { url: `/mapa?q=${encodeURIComponent(l.titulo)}`, texto: t.buscarEnMapa };
 }
 
 export function BotonAccion({ url, texto, primario = true }: { url: string; texto: string; primario?: boolean }) {

@@ -5,9 +5,10 @@ import { redirect } from "next/navigation";
 
 import { mensajeDeErrorDb, type EstadoAccion } from "@/lib/admin/acciones";
 import { contextoDeLimpieza, referenciasA, todasLasFichas } from "@/lib/admin/datos";
-import { ESQUEMA_SITIO, ESQUEMA_TEMAS, esquemaDe } from "@/lib/admin/esquemas";
+import { ESQUEMA_CATEGORIAS_AGENDA, ESQUEMA_SITIO, ESQUEMA_TEMAS, esquemaDe } from "@/lib/admin/esquemas";
 import { SLUG_VALIDO, limpiarFicha, slugDe } from "@/lib/admin/limpiar";
-import { comoAdmin, requerirAdmin } from "@/lib/admin/sesion";
+import { comoAdmin, requerirAdmin, type Admin } from "@/lib/admin/sesion";
+import { MODULOS, puede, puedeContenido, type Modulo } from "@/lib/permisos";
 import { guardarFoto } from "@/lib/almacenamiento";
 import { cerrarSesion } from "@/lib/auth";
 import { conBase } from "@/lib/db";
@@ -37,6 +38,8 @@ export async function guardarFicha(_previo: EstadoAccion, form: FormData): Promi
   if (!crudo) return { error: "No se pudieron leer los datos del formulario. Recargá la página." };
 
   const filas = await todasLasFichas(admin);
+  const sinPermiso = permisoDeGuardado(admin, esquema.id, original, estado, filas);
+  if (sinPermiso) return { error: sinPermiso };
   const { datos, errores } = limpiarFicha(esquema, crudo, contextoDeLimpieza(filas));
 
   let slug = original;
@@ -74,11 +77,31 @@ export async function guardarFicha(_previo: EstadoAccion, form: FormData): Promi
   return { ok: true, mensaje: estado === "publicado" ? "Guardado y publicado." : "Guardado como borrador." };
 }
 
+/**
+ * ¿Puede guardar esta ficha? Devuelve el motivo si no. La base lo vuelve a controlar (RLS y el
+ * disparador de publicación): esto es para dar un mensaje claro antes de intentar.
+ */
+function permisoDeGuardado(admin: Admin, coleccion: string, original: string, estado: string, filas: { coleccion: string; slug: string; estado: string }[]) {
+  if (!puedeContenido(admin, coleccion, original, "editar")) return "Tu usuario no puede editar en esta sección.";
+  const antes = original ? filas.find((f) => f.coleccion === coleccion && f.slug === original)?.estado : undefined;
+  if ((estado === "publicado" || antes === "publicado") && !puedeContenido(admin, coleccion, original, "publicar")) {
+    return antes === "publicado"
+      ? "Esta ficha está publicada y tu rol no puede cambiarla. Pedile a un administrador del módulo."
+      : "Tu rol no puede publicar. Guardala como borrador y un administrador del módulo la publica.";
+  }
+  return null;
+}
+
+/** Módulo dueño de cada configuración. */
+const MODULO_CONFIGURACION: Record<string, Modulo> = { sitio: "turismo", categorias: "turismo", "categorias-agenda": "cultura" };
+
 /** Configuración del sitio o temas y etiquetas (una sola ficha cada una, siempre vigente). */
 export async function guardarConfiguracion(_previo: EstadoAccion, form: FormData): Promise<EstadoAccion> {
   const admin = await requerirAdmin();
   const cual = String(form.get("slugOriginal") ?? "");
-  const esquema = cual === "sitio" ? ESQUEMA_SITIO : cual === "categorias" ? ESQUEMA_TEMAS : null;
+  const modulo = MODULO_CONFIGURACION[cual];
+  if (modulo && !puede(admin, modulo, "configurar")) return { error: "Tu usuario no puede cambiar esta configuración." };
+  const esquema = cual === "sitio" ? ESQUEMA_SITIO : cual === "categorias" ? ESQUEMA_TEMAS : cual === "categorias-agenda" ? ESQUEMA_CATEGORIAS_AGENDA : null;
   if (!esquema) return { error: "Configuración desconocida." };
   const crudo = leerDatos(form);
   if (!crudo) return { error: "No se pudieron leer los datos del formulario. Recargá la página." };
@@ -108,6 +131,19 @@ export async function guardarConfiguracion(_previo: EstadoAccion, form: FormData
       }
     }
   }
+  if (cual === "categorias-agenda") {
+    // Una categoría que todavía usa algún evento no se puede quitar.
+    const quedan = new Set(((datos.categorias ?? []) as { id: string }[]).map((c) => c.id));
+    const usadas = new Map<string, string[]>();
+    for (const f of filas.filter((x) => x.coleccion === "eventos")) {
+      for (const id of Array.isArray(f.datos.rubros) ? (f.datos.rubros as string[]) : []) {
+        if (!quedan.has(id)) usadas.set(id, [...(usadas.get(id) ?? []), String(f.datos.titulo ?? f.slug)]);
+      }
+    }
+    if (usadas.size) {
+      errores.categorias = `No se puede quitar porque la usan eventos: ${[...usadas].map(([id, ev]) => `«${id}» (${ev.slice(0, 3).join(", ")}${ev.length > 3 ? ` y ${ev.length - 3} más` : ""})`).join("; ")}.`;
+    }
+  }
   if (Object.keys(errores).length) return { error: "Revisá los campos marcados.", errores };
 
   try {
@@ -130,6 +166,7 @@ export async function borrarFicha(_previo: EstadoAccion, form: FormData): Promis
   const esquema = esquemaDe(String(form.get("coleccion") ?? ""));
   const slug = String(form.get("slug") ?? "");
   if (!esquema || !slug) return { error: "Ficha desconocida." };
+  if (!puedeContenido(admin, esquema.id, slug, "borrar")) return { error: "Tu usuario no puede borrar fichas de esta sección." };
   if (form.get("confirmar") !== "si") return { error: "Marcá la casilla para confirmar que querés borrarla." };
 
   const filas = await todasLasFichas(admin);
@@ -149,7 +186,8 @@ export async function borrarFicha(_previo: EstadoAccion, form: FormData): Promis
 
 /** Sube una foto y devuelve su dirección pública para guardarla en la ficha. */
 export async function subirFoto(form: FormData): Promise<{ src?: string; error?: string }> {
-  await requerirAdmin();
+  const admin = await requerirAdmin();
+  if (!MODULOS.some((m) => puede(admin, m, "editar"))) return { error: "Tu usuario no puede subir fotos." };
   const archivo = form.get("archivo");
   const coleccion = String(form.get("coleccion") ?? "general");
   if (!(archivo instanceof File) || !archivo.size) return { error: "Elegí una foto." };

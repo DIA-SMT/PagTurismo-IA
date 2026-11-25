@@ -5,7 +5,8 @@ import { FormularioFicha } from "@/components/admin/FormularioFicha";
 import { Banda } from "@/components/admin/Piezas";
 import { opcionesDeFormulario, todasLasFichas } from "@/lib/admin/datos";
 import { esquemaDe } from "@/lib/admin/esquemas";
-import { requerirAdmin } from "@/lib/admin/sesion";
+import { exigirContenido, requerirAdmin } from "@/lib/admin/sesion";
+import { puedeContenido } from "@/lib/permisos";
 
 export async function generateMetadata({ params }: PageProps<"/admin/[coleccion]/nueva">): Promise<Metadata> {
   return { title: esquemaDe((await params).coleccion)?.nuevo ?? "Nueva ficha" };
@@ -27,6 +28,7 @@ export default async function NuevaFicha({ params }: PageProps<"/admin/[coleccio
   const admin = await requerirAdmin();
   const esquema = esquemaDe((await params).coleccion);
   if (!esquema) notFound();
+  exigirContenido(admin, esquema.id, "", "editar");
   const filas = await todasLasFichas(admin);
 
   return (
@@ -39,6 +41,7 @@ export default async function NuevaFicha({ params }: PageProps<"/admin/[coleccio
       <FormularioFicha
         esquemaId={esquema.id}
         modo="ficha"
+        permisos={{ editar: true, publicar: puedeContenido(admin, esquema.id, "", "publicar") }}
         inicial={INICIALES[esquema.id] ?? {}}
         opciones={opcionesDeFormulario(filas)}
       />

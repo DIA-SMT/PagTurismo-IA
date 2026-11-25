@@ -33,6 +33,14 @@ export async function fichaDe(admin: Admin, coleccion: string, slug: string) {
   return f ?? null;
 }
 
+/** Categorías de la agenda cultural (configuracion/categorias-agenda). */
+export function categoriasAgenda(filas: FilaPanel[]): { id: string; titulo: string }[] {
+  const datos = (filas.find((f) => f.coleccion === "configuracion" && f.slug === "categorias-agenda")?.datos ?? {}) as {
+    categorias?: { id: string; titulo: string }[];
+  };
+  return (datos.categorias ?? []).filter((c) => c?.id).map((c) => ({ id: c.id, titulo: c.titulo }));
+}
+
 /** Lo que el formulario necesita para revisar temas, etiquetas y relaciones. */
 export function contextoDeLimpieza(filas: FilaPanel[]): ContextoLimpieza {
   const taxonomia = (filas.find((f) => f.coleccion === "configuracion" && f.slug === "categorias")?.datos ?? {}) as {
@@ -44,6 +52,7 @@ export function contextoDeLimpieza(filas: FilaPanel[]): ContextoLimpieza {
   return {
     temas: new Set((taxonomia.categorias ?? []).map((c) => c.id)),
     etiquetas: new Set((taxonomia.etiquetas ?? []).map((e) => e.id)),
+    rubros: new Set(categoriasAgenda(filas).map((c) => c.id)),
     fichas,
   };
 }
@@ -64,6 +73,7 @@ export function opcionesDeFormulario(filas: FilaPanel[]) {
     fichas,
     temas: (taxonomia.categorias ?? []).map((c) => ({ id: c.id, titulo: c.titulo })),
     etiquetas: (taxonomia.etiquetas ?? []).map((e) => ({ id: e.id, titulo: e.titulo })),
+    rubros: categoriasAgenda(filas).sort((a, b) => a.titulo.localeCompare(b.titulo, "es")),
   };
 }
 export type OpcionesFormulario = ReturnType<typeof opcionesDeFormulario>;
@@ -123,7 +133,25 @@ export function camposCambiados(c: Cambio): string[] {
 }
 
 /** Cómo mostrar un cambio de la auditoría: título legible, sección y enlace a la ficha. */
+const OPERACIONES_BUSES: [RegExp, string, string][] = [
+  [/tourist-bookings/, "Reserva del Bus Turístico", "/admin/buses"],
+  [/tourist-departures\/batch/, "Salidas por lote", "/admin/buses"],
+  [/tourist-departures/, "Salida del Bus Turístico", "/admin/buses"],
+  [/tourist-circuits/, "Circuito del Bus Turístico", "/admin/buses"],
+  [/educational-settings/, "Configuración del Bus Educativo", "/admin/buses/educativo"],
+  [/educational/, "Bus Educativo", "/admin/buses/educativo"],
+  [/photo-books/, "Book de fotos", "/admin/buses/fotos"],
+  [/bicitour/, "BiciTour", "/admin/buses/bicitour"],
+  [/faqs/, "Pregunta frecuente de Migue", "/admin/migue"],
+];
+const VERBO: Record<string, string> = { POST: "alta", PATCH: "cambio", PUT: "cambio", DELETE: "baja", GET: "descarga" };
+
 export function describirCambio(c: Cambio): { titulo: string; seccion: string; href?: string } {
+  if (c.tabla === "buses") {
+    const [metodo = "", ruta = ""] = (c.registro_id ?? "").split(" ");
+    const [, titulo, href] = OPERACIONES_BUSES.find(([re]) => re.test(ruta)) ?? [null, ruta, undefined];
+    return { titulo: `${titulo} (${VERBO[metodo] ?? metodo.toLowerCase()})`, seccion: /faqs/.test(ruta) ? "Migue" : "Buses y circuitos", href };
+  }
   if (c.tabla === "admins") {
     const nombre = (c.despues ?? c.antes) as { nombre?: string } | null;
     return { titulo: `Cuenta del equipo: ${nombre?.nombre ?? "sin nombre"}`, seccion: "Equipo" };
@@ -131,6 +159,7 @@ export function describirCambio(c: Cambio): { titulo: string; seccion: string; h
   const [coleccion, slug] = (c.registro_id ?? "").split("/");
   const titulo = String(c.despues?.datos?.titulo ?? c.antes?.datos?.titulo ?? slug ?? "");
   if (coleccion === "configuracion") {
+    if (slug === "categorias-agenda") return { titulo: "Categorías de la agenda", seccion: "Cultura", href: "/admin/categorias-agenda" };
     return slug === "categorias"
       ? { titulo: "Temas y etiquetas", seccion: "Configuración", href: "/admin/temas" }
       : { titulo: "Datos del sitio", seccion: "Configuración", href: "/admin/configuracion" };

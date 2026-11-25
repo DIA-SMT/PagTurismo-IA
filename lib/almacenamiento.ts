@@ -11,7 +11,7 @@ import { supabase, usaSupabase } from "@/lib/entorno";
 // que tiene que quedar FUERA de cada versión desplegada (p. ej. /srv/<app>/compartido/subidas)
 // para no perderlas en el próximo despliegue. Las fotos que ya trae el sitio siguen en public/.
 
-export const CARPETA_LOCAL = process.env.CARPETA_SUBIDAS || path.join(process.cwd(), ".local", "subidas");
+export const CARPETA_LOCAL = process.env.CARPETA_SUBIDAS || path.join(process.env.CARPETA_LOCAL || path.join(process.cwd(), ".local"), "subidas");
 const BUCKET = "fotos";
 const TIPOS = new Set(["image/jpeg", "image/png", "image/webp"]);
 export const TAMANO_MAXIMO = 4 * 1024 * 1024;

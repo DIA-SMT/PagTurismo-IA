@@ -1,0 +1,49 @@
+{
+  "estado": "borrador",
+  "titulo": "Lo de la Paliza",
+  "clase": "restaurante de comidas regionales",
+  "resumen": "Última parada de la Ruta de la Empanada, con espectáculo folclórico.",
+  "porQueIr": "",
+  "descripcion": "",
+  "categorias": [
+    "sabores-tucumanos"
+  ],
+  "etiquetas": [],
+  "imperdible": false,
+  "zona": "Centro",
+  "direccion": "Laprida 181",
+  "horario": {
+    "texto": "",
+    "confirmado": false
+  },
+  "costo": {
+    "modalidad": "pago",
+    "detalle": ""
+  },
+  "duracion": "",
+  "contacto": {},
+  "accesibilidad": "",
+  "fuentes": [
+    {
+      "titulo": "La Ruta de la Empanada — La Gaceta, 7/3/2026",
+      "url": "https://www.lagaceta.com.ar/nota/1127206/sociedad/abrieron-inscripciones-para-hacer-recorrido-turistico-ruta-empanada.html"
+    }
+  ],
+  "validacion": {
+    "fecha": "",
+    "responsable": "",
+    "proximaRevision": ""
+  },
+  "traducciones": {
+    "en": {
+      "titulo": "Lo de la Paliza",
+      "clase": "regional food restaurant",
+      "resumen": "Last stop of the Empanada Route, with a folk show."
+    },
+    "pt": {
+      "titulo": "Lo de la Paliza",
+      "clase": "restaurante de comidas regionais",
+      "resumen": "Última parada da Rota da Empanada, com show folclórico."
+    }
+  }
+}

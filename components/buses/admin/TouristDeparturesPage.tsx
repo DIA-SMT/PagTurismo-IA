@@ -1,0 +1,1243 @@
+'use client'
+
+import type { CSSProperties, FormEvent } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  Ban,
+  Bus,
+  CalendarDays,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Download,
+  Mail,
+  MessageCircle,
+  Pencil,
+  Plus,
+  RefreshCw,
+  Trash2,
+} from '@/components/buses/iconos'
+import {
+  formatDateToDisplay,
+  formatDateTimeToDisplay,
+  getMonthBounds,
+  getTodayDateStringInBuenosAires,
+} from '@/lib/buses/educational-bus-requests'
+import {
+  formatDepartureTime,
+  getDepartureOccupancyPercent,
+  type TouristBooking,
+  type TouristDepartureAvailability,
+  type TouristNotificationLog,
+} from '@/lib/buses/tourist-bus'
+import type { TouristCircuitRecord } from '@/lib/buses/tourist-circuits'
+import { TouristCircuitsPanel } from './TouristCircuitsPanel'
+import { DateInput } from '@/components/buses/DateInput'
+
+type Scope = 'upcoming' | 'past' | 'all'
+type AdminTab = 'salidas' | 'circuitos'
+
+const customCircuitValue = '__custom__'
+
+// Índice 0 = domingo (convención de JS Date.getDay), presentado lunes primero.
+const batchWeekdayOptions = [
+  { value: 1, label: 'Lun' },
+  { value: 2, label: 'Mar' },
+  { value: 3, label: 'Mié' },
+  { value: 4, label: 'Jue' },
+  { value: 5, label: 'Vie' },
+  { value: 6, label: 'Sáb' },
+  { value: 0, label: 'Dom' },
+]
+
+interface NewDepartureForm {
+  circuitSlug: string
+  title: string
+  departureDate: string
+  departureTime: string
+  capacity: string
+  bikeStock: string
+  meetingPoint: string
+  notes: string
+  recurring: boolean
+  weekdays: number[]
+  fromDate: string
+  toDate: string
+}
+
+const initialNewDeparture: NewDepartureForm = {
+  circuitSlug: '',
+  title: '',
+  departureDate: '',
+  departureTime: '16:00',
+  capacity: '40',
+  bikeStock: '',
+  meetingPoint: 'Plaza Independencia (calle Laprida)',
+  notes: '',
+  recurring: false,
+  weekdays: [],
+  fromDate: '',
+  toDate: '',
+}
+
+// Lunes (inicio) de la semana de una fecha YYYY-MM-DD: las salidas se agrupan
+// por semanas de lunes a domingo en la tabla (pedido de turismo 2026-09-15).
+function getWeekStartKey(dateKey: string) {
+  const [year, month, day] = dateKey.split('-').map(Number)
+  const date = new Date(Date.UTC(year, month - 1, day))
+  const dayOfWeek = date.getUTCDay() // 0 = domingo
+  date.setUTCDate(date.getUTCDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1))
+  return date.toISOString().slice(0, 10)
+}
+
+function formatWeekLabel(weekStartKey: string) {
+  const start = new Date(`${weekStartKey}T12:00:00Z`)
+  const end = new Date(start)
+  end.setUTCDate(end.getUTCDate() + 6)
+  const shortDate = (date: Date) =>
+    `${String(date.getUTCDate()).padStart(2, '0')}/${String(date.getUTCMonth() + 1).padStart(2, '0')}`
+  return `Semana del ${shortDate(start)} al ${shortDate(end)}/${end.getUTCFullYear()}`
+}
+
+function toWhatsAppLink(phone: string) {
+  const digits = phone.replace(/\D/g, '')
+  if (!digits) return null
+  if (digits.startsWith('54')) return `https://wa.me/${digits}`
+  return `https://wa.me/54${digits.startsWith('0') ? digits.slice(1) : digits}`
+}
+
+function DeparturePill({ departure, todayKey }: { departure: TouristDepartureAvailability; todayKey: string }) {
+  const isPast = departure.departure_date < todayKey
+  const tone =
+    departure.status === 'cancelled'
+      ? { background: 'rgba(239, 68, 68, 0.15)', color: 'var(--c-error)' }
+      : isPast
+        ? { background: 'rgba(148, 163, 184, 0.18)', color: 'var(--c-ink-muted)' }
+        : { background: 'rgba(16, 185, 129, 0.15)', color: 'var(--c-exito)' }
+  const label = departure.status === 'cancelled' ? 'Cancelada' : isPast ? 'Finalizada' : 'Activa'
+
+  return (
+    <span className="badge" style={tone}>
+      {label}
+    </span>
+  )
+}
+
+function BookingStatusPill({ status }: { status: TouristBooking['status'] }) {
+  const tone =
+    status === 'confirmed'
+      ? { background: 'rgba(16, 185, 129, 0.15)', color: 'var(--c-exito)' }
+      : { background: 'rgba(239, 68, 68, 0.15)', color: 'var(--c-error)' }
+
+  return (
+    <span className="badge" style={tone}>
+      {status === 'confirmed' ? 'Confirmada' : 'Cancelada'}
+    </span>
+  )
+}
+
+export default function TouristDeparturesPage() {
+  const todayKey = useMemo(() => getTodayDateStringInBuenosAires(), [])
+  const initialMonthBounds = useMemo(() => getMonthBounds(todayKey.slice(0, 7)), [todayKey])
+
+  const [activeTab, setActiveTab] = useState<AdminTab>('salidas')
+  const [scope, setScope] = useState<Scope>('upcoming')
+  const [departures, setDepartures] = useState<TouristDepartureAvailability[]>([])
+  const [loading, setLoading] = useState(true)
+  const [feedback, setFeedback] = useState<string | null>(null)
+  const [circuitRecords, setCircuitRecords] = useState<TouristCircuitRecord[]>([])
+  const [circuitsLoading, setCircuitsLoading] = useState(true)
+  const [circuitsError, setCircuitsError] = useState<string | null>(null)
+  const [aiConfigured, setAiConfigured] = useState(false)
+  const [showCreateForm, setShowCreateForm] = useState(false)
+  const [newDeparture, setNewDeparture] = useState<NewDepartureForm>(initialNewDeparture)
+  const [creating, setCreating] = useState(false)
+  const [createErrors, setCreateErrors] = useState<Record<string, string>>({})
+  const [expandedId, setExpandedId] = useState<number | null>(null)
+  const [bookingsByDeparture, setBookingsByDeparture] = useState<Record<number, TouristBooking[]>>({})
+  const [notificationLogsByDeparture, setNotificationLogsByDeparture] = useState<Record<number, TouristNotificationLog[]>>({})
+  const [bookingsLoading, setBookingsLoading] = useState(false)
+  const [capacityDrafts, setCapacityDrafts] = useState<Record<number, string>>({})
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [editDraft, setEditDraft] = useState({
+    departureDate: '',
+    departureTime: '',
+    capacity: '',
+    bikeStock: '',
+    meetingPoint: '',
+    notes: '',
+  })
+  const [savingEdit, setSavingEdit] = useState(false)
+  const [exportFrom, setExportFrom] = useState(initialMonthBounds?.startDate || todayKey)
+  const [exportTo, setExportTo] = useState(initialMonthBounds?.endDate || todayKey)
+  const [exporting, setExporting] = useState(false)
+  // Filtro por circuito: aplica a la tabla, los contadores y el export
+  // (pedido de turismo 2026-09-08: exportar las reservas de UN circuito).
+  const [circuitFilter, setCircuitFilter] = useState('')
+
+  const fetchDepartures = useCallback(async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(`/api/admin/tourist-departures?scope=${scope}`, { cache: 'no-store' })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'No se pudieron cargar las salidas.')
+      setDepartures(result.data || [])
+    } catch (error) {
+      console.error(error)
+      setDepartures([])
+    } finally {
+      setLoading(false)
+    }
+  }, [scope])
+
+  useEffect(() => {
+    fetchDepartures()
+  }, [fetchDepartures])
+
+  const fetchCircuits = useCallback(async () => {
+    setCircuitsLoading(true)
+    setCircuitsError(null)
+    try {
+      const response = await fetch('/api/admin/tourist-circuits', { cache: 'no-store' })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'No se pudieron cargar los circuitos.')
+      setCircuitRecords(result.data || [])
+      setAiConfigured(Boolean(result.aiConfigured))
+    } catch (error) {
+      setCircuitRecords([])
+      setCircuitsError(error instanceof Error ? error.message : 'No se pudieron cargar los circuitos.')
+    } finally {
+      setCircuitsLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchCircuits()
+  }, [fetchCircuits])
+
+  const activeCircuits = useMemo(() => circuitRecords.filter((record) => record.active), [circuitRecords])
+
+  const filteredDepartures = useMemo(
+    () => (circuitFilter ? departures.filter((departure) => departure.circuit_slug === circuitFilter) : departures),
+    [departures, circuitFilter],
+  )
+
+  const stats = useMemo(() => {
+    const active = filteredDepartures.filter((departure) => departure.status === 'active')
+    return {
+      total: filteredDepartures.length,
+      reserved: filteredDepartures.reduce((total, departure) => total + departure.reserved, 0),
+      remaining: active.reduce((total, departure) => total + departure.remaining, 0),
+      cancelled: filteredDepartures.filter((departure) => departure.status === 'cancelled').length,
+    }
+  }, [filteredDepartures])
+
+  const loadBookings = useCallback(async (departureId: number) => {
+    setBookingsLoading(true)
+    try {
+      const response = await fetch(`/api/admin/tourist-departures/${departureId}/bookings`, { cache: 'no-store' })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'No se pudieron cargar las reservas.')
+      setBookingsByDeparture((current) => ({ ...current, [departureId]: result.data || [] }))
+      setNotificationLogsByDeparture((current) => ({ ...current, [departureId]: result.notificationLogs || [] }))
+    } catch (error) {
+      console.error(error)
+      setBookingsByDeparture((current) => ({ ...current, [departureId]: [] }))
+    } finally {
+      setBookingsLoading(false)
+    }
+  }, [])
+
+  const toggleExpanded = (departureId: number) => {
+    setExpandedId((current) => {
+      const next = current === departureId ? null : departureId
+      if (next !== null) void loadBookings(next)
+      return next
+    })
+  }
+
+  // Elegir un circuito precarga su cupo y punto de encuentro por defecto.
+  const handleCircuitSelect = (value: string) => {
+    const record = activeCircuits.find((circuit) => circuit.slug === value)
+    setNewDeparture((current) => ({
+      ...current,
+      circuitSlug: value,
+      capacity: record?.default_capacity ? String(record.default_capacity) : current.capacity,
+      meetingPoint: record?.default_meeting_point ?? current.meetingPoint,
+    }))
+  }
+
+  const toggleBatchWeekday = (weekday: number) => {
+    setNewDeparture((current) => ({
+      ...current,
+      weekdays: current.weekdays.includes(weekday)
+        ? current.weekdays.filter((day) => day !== weekday)
+        : [...current.weekdays, weekday],
+    }))
+  }
+
+  const handleCreate = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setCreating(true)
+    setCreateErrors({})
+    setFeedback(null)
+    try {
+      const basePayload = {
+        circuitSlug: newDeparture.circuitSlug === customCircuitValue ? '' : newDeparture.circuitSlug,
+        title: newDeparture.title,
+        departureTime: newDeparture.departureTime,
+        capacity: Number(newDeparture.capacity),
+        bikeStock: newDeparture.bikeStock,
+        meetingPoint: newDeparture.meetingPoint,
+        notes: newDeparture.notes,
+      }
+
+      const url = newDeparture.recurring ? '/api/admin/tourist-departures/batch' : '/api/admin/tourist-departures'
+      const payload = newDeparture.recurring
+        ? { ...basePayload, weekdays: newDeparture.weekdays, fromDate: newDeparture.fromDate, toDate: newDeparture.toDate }
+        : { ...basePayload, departureDate: newDeparture.departureDate }
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const result = await response.json()
+      if (!response.ok) {
+        if (result.fieldErrors) setCreateErrors(result.fieldErrors)
+        throw new Error(result.error || 'No se pudo crear la salida.')
+      }
+
+      if (newDeparture.recurring) {
+        const created = result.data?.created ?? 0
+        const skipped = result.data?.skipped ?? 0
+        setFeedback(`Se crearon ${created} salidas${skipped > 0 ? ` (${skipped} ya existían y se saltearon)` : ''}.`)
+      } else {
+        setFeedback('Salida creada correctamente.')
+      }
+      setNewDeparture((current) => ({ ...initialNewDeparture, circuitSlug: current.circuitSlug }))
+      setShowCreateForm(false)
+      await fetchDepartures()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'No se pudo crear la salida.')
+    } finally {
+      setCreating(false)
+    }
+  }
+
+  const cancelDepartureWithNotice = async (departure: TouristDepartureAvailability) => {
+    const promptMessage =
+      departure.reserved > 0
+        ? `Motivo de la cancelación de "${departure.title}" (se incluye en el mail a los ${departure.reserved} inscriptos):`
+        : `Motivo de la cancelación de "${departure.title}" (queda registrado):`
+    const reason = window.prompt(promptMessage, '')
+    if (reason === null) return // canceló el diálogo
+    if (!reason.trim()) {
+      setFeedback('La cancelación necesita un motivo (es lo que le explicamos al turista).')
+      return
+    }
+
+    setFeedback(null)
+    try {
+      const response = await fetch(`/api/admin/tourist-departures/${departure.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'cancelled', notifyBookings: true, cancelReason: reason.trim() }),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'No se pudo cancelar la salida.')
+
+      const notification = result.notification as { sent: number; failed: number; emailConfigured: boolean } | null
+      if (!notification || departure.reserved === 0) {
+        setFeedback('Salida cancelada.')
+      } else if (!notification.emailConfigured) {
+        setFeedback('Salida cancelada. No se enviaron avisos porque el SMTP no está configurado: contactá a los inscriptos manualmente.')
+      } else {
+        setFeedback(
+          `Salida cancelada. Avisos enviados: ${notification.sent}${notification.failed > 0 ? ` · fallaron ${notification.failed} (contactalos manualmente)` : ''}.`,
+        )
+      }
+      await fetchDepartures()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'No se pudo cancelar la salida.')
+    }
+  }
+
+  const patchDeparture = async (departureId: number, payload: Record<string, unknown>, successMessage: string) => {
+    setFeedback(null)
+    try {
+      const response = await fetch(`/api/admin/tourist-departures/${departureId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'No se pudo actualizar la salida.')
+      setFeedback(successMessage)
+      await fetchDepartures()
+      return true
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'No se pudo actualizar la salida.')
+      return false
+    }
+  }
+
+  // Edición en línea de una salida: fecha, hora, cupo, bicis, punto y notas.
+  const startEditDeparture = (departure: TouristDepartureAvailability) => {
+    setEditingId(departure.id)
+    setEditDraft({
+      departureDate: departure.departure_date,
+      departureTime: departure.departure_time.slice(0, 5),
+      capacity: String(departure.capacity),
+      bikeStock: departure.bike_stock === null ? '' : String(departure.bike_stock),
+      meetingPoint: departure.meeting_point || '',
+      notes: departure.notes || '',
+    })
+  }
+
+  const saveEditDeparture = async (departure: TouristDepartureAvailability) => {
+    const capacity = Number(editDraft.capacity)
+    if (!Number.isInteger(capacity) || capacity < 1) {
+      setFeedback('Ingresá un cupo válido.')
+      return
+    }
+    if (capacity < departure.reserved) {
+      setFeedback(`El cupo no puede ser menor a los ${departure.reserved} lugares ya reservados.`)
+      return
+    }
+    if (editDraft.bikeStock !== '') {
+      const bikeStock = Number(editDraft.bikeStock)
+      if (!Number.isInteger(bikeStock) || bikeStock < 0) {
+        setFeedback('Ingresá una cantidad de bicicletas válida.')
+        return
+      }
+      if (bikeStock < departure.bikes_reserved) {
+        setFeedback(`Las bicicletas no pueden ser menos que las ${departure.bikes_reserved} ya reservadas.`)
+        return
+      }
+    }
+
+    setSavingEdit(true)
+    try {
+      const saved = await patchDeparture(
+        departure.id,
+        {
+          departureDate: editDraft.departureDate,
+          departureTime: editDraft.departureTime,
+          capacity,
+          bikeStock: editDraft.bikeStock === '' ? null : Number(editDraft.bikeStock),
+          meetingPoint: editDraft.meetingPoint,
+          notes: editDraft.notes,
+        },
+        'Salida actualizada correctamente.',
+      )
+      if (saved) setEditingId(null)
+    } finally {
+      setSavingEdit(false)
+    }
+  }
+
+  const deleteDeparture = async (departureId: number) => {
+    if (!window.confirm('¿Eliminar esta salida? Esta acción no se puede deshacer.')) return
+    setFeedback(null)
+    try {
+      const response = await fetch(`/api/admin/tourist-departures/${departureId}`, { method: 'DELETE' })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'No se pudo eliminar la salida.')
+      setFeedback('Salida eliminada correctamente.')
+      if (expandedId === departureId) setExpandedId(null)
+      await fetchDepartures()
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'No se pudo eliminar la salida.')
+    }
+  }
+
+  const updateBookingStatus = async (booking: TouristBooking, status: TouristBooking['status']) => {
+    setFeedback(null)
+    try {
+      const response = await fetch(`/api/admin/tourist-bookings/${booking.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      })
+      const result = await response.json()
+      if (!response.ok) throw new Error(result.error || 'No se pudo actualizar la reserva.')
+      setFeedback(status === 'cancelled' ? 'Reserva cancelada.' : 'Reserva reconfirmada.')
+      await Promise.all([loadBookings(booking.departure_id), fetchDepartures()])
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'No se pudo actualizar la reserva.')
+    }
+  }
+
+  const saveCapacity = async (departure: TouristDepartureAvailability) => {
+    const draft = capacityDrafts[departure.id]
+    const capacity = Number(draft)
+    if (!draft || !Number.isInteger(capacity) || capacity < 1) {
+      setFeedback('Ingresá un cupo válido.')
+      return
+    }
+    if (capacity < departure.reserved) {
+      setFeedback(`El cupo no puede ser menor a los ${departure.reserved} lugares ya reservados.`)
+      return
+    }
+    await patchDeparture(departure.id, { capacity }, 'Cupo actualizado correctamente.')
+  }
+
+  // Lista de embarque de una salida puntual, para imprimir y controlar al subir.
+  const downloadBoardingList = async (departure: TouristDepartureAvailability) => {
+    setFeedback(null)
+    try {
+      const response = await fetch(`/api/admin/tourist-departures/${departure.id}/export`)
+      if (!response.ok) {
+        const result = await response.json().catch(() => null)
+        throw new Error(result?.error || 'No se pudo generar la lista.')
+      }
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      const disposition = response.headers.get('Content-Disposition') || ''
+      const match = /filename="([^"]+)"/.exec(disposition)
+      link.download = match?.[1] || 'lista-embarque.xlsx'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.URL.revokeObjectURL(url)
+      setFeedback('Lista de embarque descargada.')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'No se pudo generar la lista.')
+    }
+  }
+
+  const handleExport = async () => {
+    setExporting(true)
+    setFeedback(null)
+    try {
+      const response = await fetch(
+        `/api/admin/tourist-departures/export?from=${exportFrom}&to=${exportTo}${circuitFilter ? `&circuit=${encodeURIComponent(circuitFilter)}` : ''}`,
+      )
+      if (!response.ok) {
+        const result = await response.json().catch(() => null)
+        throw new Error(result?.error || 'No se pudo exportar el archivo.')
+      }
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      const disposition = response.headers.get('Content-Disposition') || ''
+      const match = /filename="([^"]+)"/.exec(disposition)
+      link.download = match?.[1] || 'reservas-bus-turistico.xlsx'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      window.URL.revokeObjectURL(url)
+      setFeedback('Exportación generada correctamente.')
+    } catch (error) {
+      setFeedback(error instanceof Error ? error.message : 'No se pudo exportar el archivo.')
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  return (
+    <>
+      <div className="page-header">
+        <div>
+          <h2>Bus Turístico</h2>
+          <p>Salidas, cupos, reservas y catálogo de circuitos del bus turístico. No afecta al bus educativo.</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="view-toggle-group">
+            <button className={`btn ${activeTab === 'salidas' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setActiveTab('salidas')}>
+              <CalendarDays size={14} />
+              Salidas
+            </button>
+            <button className={`btn ${activeTab === 'circuitos' ? 'btn-primary' : 'btn-secondary'}`} onClick={() => setActiveTab('circuitos')}>
+              <Bus size={14} />
+              Circuitos
+            </button>
+          </div>
+          {activeTab === 'salidas' ? (
+            <>
+              <button className="btn btn-secondary" onClick={fetchDepartures} disabled={loading}>
+                <RefreshCw size={14} style={loading ? { animation: 'spin 0.6s linear infinite' } : {}} />
+                Actualizar
+              </button>
+              <button className="btn btn-primary" onClick={() => setShowCreateForm((current) => !current)}>
+                <Plus size={14} />
+                Nueva salida
+              </button>
+            </>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="page-body">
+        {activeTab === 'circuitos' ? (
+          <TouristCircuitsPanel
+            records={circuitRecords}
+            aiConfigured={aiConfigured}
+            loading={circuitsLoading}
+            loadError={circuitsError}
+            onChanged={fetchCircuits}
+          />
+        ) : (
+        <>
+        {feedback ? (
+          <div className="badge" style={{ background: 'rgba(6,182,212,0.15)', color: 'var(--info)', marginBottom: 16 }}>
+            {feedback}
+          </div>
+        ) : null}
+
+        {showCreateForm ? (
+          <div className="table-container" style={{ marginBottom: 20, padding: 18 }}>
+            <h3 style={{ marginBottom: 14, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <Bus size={16} />
+              Nueva salida
+            </h3>
+            <form onSubmit={handleCreate}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 12 }}>
+                <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                  Circuito
+                  <select
+                    className="select"
+                    value={newDeparture.circuitSlug}
+                    onChange={(event) => handleCircuitSelect(event.target.value)}
+                  >
+                    <option value="">Elegí un circuito</option>
+                    {activeCircuits.map((circuit) => (
+                      <option key={circuit.slug} value={circuit.slug}>
+                        {circuit.name_es}
+                      </option>
+                    ))}
+                    <option value={customCircuitValue}>Otro circuito (personalizado)</option>
+                  </select>
+                </label>
+                {newDeparture.circuitSlug === customCircuitValue ? (
+                  <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                    Nombre de la salida
+                    <input
+                      className="input"
+                      value={newDeparture.title}
+                      onChange={(event) => setNewDeparture((current) => ({ ...current, title: event.target.value }))}
+                      placeholder="Ej. Circuito con Acento Francés"
+                    />
+                    {createErrors.title ? <span style={{ color: 'var(--c-error)', fontSize: 12 }}>{createErrors.title}</span> : null}
+                  </label>
+                ) : null}
+                {!newDeparture.recurring ? (
+                  <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                    Fecha
+                    <DateInput
+                      className="input"
+                      min={todayKey}
+                      value={newDeparture.departureDate}
+                      onChange={(event) => setNewDeparture((current) => ({ ...current, departureDate: event.target.value }))}
+                    />
+                    {createErrors.departureDate ? <span style={{ color: 'var(--c-error)', fontSize: 12 }}>{createErrors.departureDate}</span> : null}
+                  </label>
+                ) : (
+                  <>
+                    <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                      Desde
+                      <DateInput
+                        className="input"
+                        min={todayKey}
+                        value={newDeparture.fromDate}
+                        onChange={(event) => setNewDeparture((current) => ({ ...current, fromDate: event.target.value }))}
+                      />
+                      {createErrors.fromDate ? <span style={{ color: 'var(--c-error)', fontSize: 12 }}>{createErrors.fromDate}</span> : null}
+                    </label>
+                    <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                      Hasta
+                      <DateInput
+                        className="input"
+                        min={newDeparture.fromDate || todayKey}
+                        value={newDeparture.toDate}
+                        onChange={(event) => setNewDeparture((current) => ({ ...current, toDate: event.target.value }))}
+                      />
+                      {createErrors.toDate ? <span style={{ color: 'var(--c-error)', fontSize: 12 }}>{createErrors.toDate}</span> : null}
+                    </label>
+                  </>
+                )}
+                <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                  Hora
+                  <input
+                    type="time"
+                    className="input"
+                    value={newDeparture.departureTime}
+                    onChange={(event) => setNewDeparture((current) => ({ ...current, departureTime: event.target.value }))}
+                  />
+                  {createErrors.departureTime ? <span style={{ color: 'var(--c-error)', fontSize: 12 }}>{createErrors.departureTime}</span> : null}
+                </label>
+                <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                  Cupo
+                  <input
+                    type="number"
+                    min={1}
+                    max={500}
+                    className="input"
+                    value={newDeparture.capacity}
+                    onChange={(event) => setNewDeparture((current) => ({ ...current, capacity: event.target.value }))}
+                  />
+                  {createErrors.capacity ? <span style={{ color: 'var(--c-error)', fontSize: 12 }}>{createErrors.capacity}</span> : null}
+                </label>
+                <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                  Bicicletas municipales (opcional)
+                  <input
+                    type="number"
+                    min={0}
+                    max={500}
+                    className="input"
+                    value={newDeparture.bikeStock}
+                    onChange={(event) => setNewDeparture((current) => ({ ...current, bikeStock: event.target.value }))}
+                    placeholder="Vacío si no presta bicis"
+                    title="Stock de bicis prestadas para esta salida. El turista puede ir con bici propia igual."
+                  />
+                  {createErrors.bikeStock ? <span style={{ color: 'var(--c-error)', fontSize: 12 }}>{createErrors.bikeStock}</span> : null}
+                </label>
+                <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                  Punto de encuentro
+                  <input
+                    className="input"
+                    value={newDeparture.meetingPoint}
+                    onChange={(event) => setNewDeparture((current) => ({ ...current, meetingPoint: event.target.value }))}
+                    placeholder="Ej. Plaza Independencia"
+                  />
+                </label>
+                <label style={{ display: 'grid', gap: 6, fontSize: 13 }}>
+                  Notas (visibles al público)
+                  <input
+                    className="input"
+                    value={newDeparture.notes}
+                    onChange={(event) => setNewDeparture((current) => ({ ...current, notes: event.target.value }))}
+                    placeholder="Ej. Traer gorra y agua"
+                  />
+                </label>
+              </div>
+
+              <div style={{ marginTop: 14, display: 'grid', gap: 10 }}>
+                <label className="flex items-center gap-2" style={{ fontSize: 13, cursor: 'pointer' }}>
+                  <input
+                    type="checkbox"
+                    checked={newDeparture.recurring}
+                    onChange={(event) => setNewDeparture((current) => ({ ...current, recurring: event.target.checked }))}
+                  />
+                  Repetir semanalmente (genera todas las salidas del período de una sola vez)
+                </label>
+                {newDeparture.recurring ? (
+                  <div className="flex items-center gap-2" style={{ flexWrap: 'wrap' }}>
+                    <span style={{ fontSize: 13 }}>Días:</span>
+                    {batchWeekdayOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        className={`btn ${newDeparture.weekdays.includes(option.value) ? 'btn-primary' : 'btn-secondary'}`}
+                        style={{ height: 30, padding: '0 12px', fontSize: 12 }}
+                        onClick={() => toggleBatchWeekday(option.value)}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                    {createErrors.weekdays ? <span style={{ color: 'var(--c-error)', fontSize: 12 }}>{createErrors.weekdays}</span> : null}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="flex items-center gap-2" style={{ marginTop: 14 }}>
+                <button type="submit" className="btn btn-primary" disabled={creating}>
+                  {creating ? 'Creando...' : newDeparture.recurring ? 'Crear salidas del período' : 'Crear salida'}
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={() => setShowCreateForm(false)}>
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        ) : null}
+
+        <div className="stats-grid">
+          <div className="stat-card" style={{ '--card-color': '#0ea5e9', '--card-color-bg': 'rgba(14,165,233,0.15)' } as CSSProperties}>
+            <div className="card-icon">
+              <Bus size={18} />
+            </div>
+            <div className="card-value">{stats.total}</div>
+            <div className="card-label">Salidas listadas</div>
+          </div>
+          <div className="stat-card" style={{ '--card-color': 'var(--c-exito)', '--card-color-bg': 'rgba(16,185,129,0.15)' } as CSSProperties}>
+            <div className="card-icon">OK</div>
+            <div className="card-value">{stats.reserved}</div>
+            <div className="card-label">Lugares reservados</div>
+          </div>
+          <div className="stat-card" style={{ '--card-color': 'var(--c-alerta)', '--card-color-bg': 'rgba(245,158,11,0.15)' } as CSSProperties}>
+            <div className="card-icon">?</div>
+            <div className="card-value">{stats.remaining}</div>
+            <div className="card-label">Lugares disponibles</div>
+          </div>
+          <div className="stat-card" style={{ '--card-color': 'var(--c-error)', '--card-color-bg': 'rgba(239,68,68,0.15)' } as CSSProperties}>
+            <div className="card-icon">
+              <Ban size={16} />
+            </div>
+            <div className="card-value">{stats.cancelled}</div>
+            <div className="card-label">Canceladas</div>
+          </div>
+        </div>
+
+        <div className="table-container">
+          <div className="table-toolbar" style={{ justifyContent: 'space-between' }}>
+            <div className="flex items-center gap-2" style={{ flexWrap: 'wrap' }}>
+              <select className="select" value={scope} onChange={(event) => setScope(event.target.value as Scope)} style={{ width: 180 }}>
+                <option value="upcoming">Próximas salidas</option>
+                <option value="past">Salidas pasadas</option>
+                <option value="all">Todas</option>
+              </select>
+              <select
+                className="select"
+                value={circuitFilter}
+                onChange={(event) => setCircuitFilter(event.target.value)}
+                style={{ width: 230 }}
+                title="Filtra la tabla, los contadores y el export"
+              >
+                <option value="">Todos los circuitos</option>
+                {circuitRecords.map((circuit) => (
+                  <option key={circuit.slug} value={circuit.slug}>
+                    {circuit.name_es}
+                    {circuit.active ? '' : ' (inactivo)'}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex items-center gap-2" style={{ flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+              <span style={{ color: 'var(--text-secondary)', fontSize: '0.82rem' }}>Salidas entre:</span>
+              <DateInput
+                className="input"
+                title="Desde (fecha de la salida)"
+                value={exportFrom}
+                onChange={(event) => setExportFrom(event.target.value)}
+                style={{ width: 150 }}
+              />
+              <DateInput
+                className="input"
+                title="Hasta (fecha de la salida)"
+                value={exportTo}
+                onChange={(event) => setExportTo(event.target.value)}
+                style={{ width: 150 }}
+              />
+              <button className="btn btn-primary" onClick={handleExport} disabled={exporting} title="Exporta todas las reservas de las salidas cuya fecha cae en el rango">
+                <Download size={14} />
+                {exporting ? 'Exportando...' : 'Exportar reservas'}
+              </button>
+            </div>
+          </div>
+
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Salida</th>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Ocupación</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan={6}>
+                      <div className="loading-state">
+                        <div className="spinner" />
+                        Cargando salidas...
+                      </div>
+                    </td>
+                  </tr>
+                ) : filteredDepartures.length === 0 ? (
+                  <tr>
+                    <td colSpan={6}>
+                      <div className="empty-state">
+                        <div className="icon">
+                          <Bus size={18} />
+                        </div>
+                        <p>No hay salidas para el filtro seleccionado. Creá una con “Nueva salida”.</p>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  filteredDepartures.map((departure, index) => {
+                    const isExpanded = expandedId === departure.id
+                    const bookings = bookingsByDeparture[departure.id] || []
+                    const occupancy = getDepartureOccupancyPercent(departure)
+                    const weekStart = getWeekStartKey(departure.departure_date)
+                    const showWeekHeader =
+                      index === 0 || getWeekStartKey(filteredDepartures[index - 1].departure_date) !== weekStart
+                    const isCurrentWeek = weekStart === getWeekStartKey(todayKey)
+
+                    return (
+                      <Fragment key={departure.id}>
+                        {showWeekHeader ? (
+                          <tr>
+                            <td
+                              colSpan={6}
+                              style={{
+                                padding: '9px 12px',
+                                background: isCurrentWeek ? 'rgba(18,111,245,0.08)' : 'rgba(148,163,184,0.10)',
+                                borderTop: '1px solid rgba(148,163,184,0.25)',
+                              }}
+                            >
+                              <span
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: 6,
+                                  fontSize: 12,
+                                  fontWeight: 700,
+                                  letterSpacing: '0.04em',
+                                  textTransform: 'uppercase',
+                                  color: isCurrentWeek ? 'var(--c-azul-600)' : 'var(--text-secondary)',
+                                }}
+                              >
+                                <CalendarDays size={13} />
+                                {formatWeekLabel(weekStart)}
+                                {isCurrentWeek ? ' · esta semana' : ''}
+                              </span>
+                            </td>
+                          </tr>
+                        ) : null}
+                        <tr>
+                          <td>
+                            <div className="td-text-primary">{departure.title}</div>
+                            {departure.meeting_point ? <div className="td-muted">{departure.meeting_point}</div> : null}
+                          </td>
+                          <td>
+                            <div className="flex items-center gap-2">
+                              <CalendarDays size={14} />
+                              {formatDateToDisplay(departure.departure_date)}
+                            </div>
+                          </td>
+                          <td>{formatDepartureTime(departure.departure_time)} h</td>
+                          <td>
+                            <div className="td-text-primary">
+                              {departure.reserved}/{departure.capacity} ({occupancy}%)
+                            </div>
+                            <div style={{ width: 120, height: 6, borderRadius: 999, background: 'rgba(148,163,184,0.25)', overflow: 'hidden', marginTop: 4 }}>
+                              <div
+                                style={{
+                                  width: `${occupancy}%`,
+                                  height: '100%',
+                                  borderRadius: 999,
+                                  background: occupancy >= 100 ? 'var(--c-error)' : occupancy >= 75 ? 'var(--c-alerta)' : 'var(--c-exito)',
+                                }}
+                              />
+                            </div>
+                          </td>
+                          <td>
+                            <DeparturePill departure={departure} todayKey={todayKey} />
+                          </td>
+                          <td>
+                            <div className="flex items-center gap-2" style={{ flexWrap: 'nowrap', whiteSpace: 'nowrap', gap: 8 }}>
+                              <button className="btn btn-secondary" style={{ height: 32, padding: '0 10px', fontSize: 13 }} onClick={() => toggleExpanded(departure.id)}>
+                                {isExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                                Inscriptos ({departure.reserved})
+                              </button>
+                              <button
+                                className="btn btn-secondary"
+                                style={{ height: 32, padding: '0 10px', fontSize: 13 }}
+                                onClick={() => (editingId === departure.id ? setEditingId(null) : startEditDeparture(departure))}
+                              >
+                                <Pencil size={14} />
+                                Editar
+                              </button>
+                              {departure.status === 'active' ? (
+                                <button
+                                  className="btn btn-secondary"
+                                  style={{ height: 32, padding: '0 10px', fontSize: 13, color: 'var(--c-error)' }}
+                                  onClick={() => cancelDepartureWithNotice(departure)}
+                                >
+                                  <Ban size={14} />
+                                  Cancelar
+                                </button>
+                              ) : (
+                                <button
+                                  className="btn btn-secondary"
+                                  style={{ height: 32, padding: '0 10px', fontSize: 13, color: 'var(--c-exito)' }}
+                                  onClick={() => patchDeparture(departure.id, { status: 'active' }, 'Salida reactivada.')}
+                                >
+                                  <CheckCircle2 size={14} />
+                                  Reactivar
+                                </button>
+                              )}
+                              {departure.reserved === 0 ? (
+                                <button
+                                  className="btn btn-secondary"
+                                  style={{ height: 32, padding: '0 10px', fontSize: 13, color: 'var(--c-error)' }}
+                                  onClick={() => deleteDeparture(departure.id)}
+                                >
+                                  <Trash2 size={14} />
+                                </button>
+                              ) : null}
+                            </div>
+                          </td>
+                        </tr>
+                        {editingId === departure.id ? (
+                          <tr>
+                            <td colSpan={6} style={{ background: 'rgba(18,111,245,0.05)' }}>
+                              <div style={{ padding: '14px 6px', display: 'grid', gap: 12 }}>
+                                <strong style={{ fontSize: 13 }}>Editar salida — los cambios se ven al instante en la página pública</strong>
+                                <div className="flex items-center gap-2" style={{ flexWrap: 'wrap' }}>
+                                  <label style={{ display: 'grid', gap: 4, fontSize: 12 }}>
+                                    Fecha
+                                    <DateInput
+                                      className="input"
+                                      style={{ width: 150 }}
+                                      value={editDraft.departureDate}
+                                      onChange={(event) => setEditDraft((c) => ({ ...c, departureDate: event.target.value }))}
+                                    />
+                                  </label>
+                                  <label style={{ display: 'grid', gap: 4, fontSize: 12 }}>
+                                    Hora
+                                    <input
+                                      type="time"
+                                      className="input"
+                                      style={{ width: 110 }}
+                                      value={editDraft.departureTime}
+                                      onChange={(event) => setEditDraft((c) => ({ ...c, departureTime: event.target.value }))}
+                                    />
+                                  </label>
+                                  <label style={{ display: 'grid', gap: 4, fontSize: 12 }}>
+                                    Cupo
+                                    <input
+                                      type="number"
+                                      min={departure.reserved || 1}
+                                      max={500}
+                                      className="input"
+                                      style={{ width: 90 }}
+                                      value={editDraft.capacity}
+                                      onChange={(event) => setEditDraft((c) => ({ ...c, capacity: event.target.value }))}
+                                    />
+                                  </label>
+                                  <label style={{ display: 'grid', gap: 4, fontSize: 12 }}>
+                                    Bicis (vacío = sin bicis)
+                                    <input
+                                      type="number"
+                                      min={0}
+                                      max={500}
+                                      className="input"
+                                      style={{ width: 130 }}
+                                      value={editDraft.bikeStock}
+                                      onChange={(event) => setEditDraft((c) => ({ ...c, bikeStock: event.target.value }))}
+                                    />
+                                  </label>
+                                </div>
+                                <div className="flex items-center gap-2" style={{ flexWrap: 'wrap' }}>
+                                  <label style={{ display: 'grid', gap: 4, fontSize: 12, flex: '1 1 260px' }}>
+                                    Punto de encuentro
+                                    <input
+                                      type="text"
+                                      className="input"
+                                      value={editDraft.meetingPoint}
+                                      onChange={(event) => setEditDraft((c) => ({ ...c, meetingPoint: event.target.value }))}
+                                    />
+                                  </label>
+                                  <label style={{ display: 'grid', gap: 4, fontSize: 12, flex: '1 1 260px' }}>
+                                    Notas (visibles para el turista)
+                                    <input
+                                      type="text"
+                                      className="input"
+                                      value={editDraft.notes}
+                                      onChange={(event) => setEditDraft((c) => ({ ...c, notes: event.target.value }))}
+                                    />
+                                  </label>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    className="btn btn-primary"
+                                    style={{ height: 34, padding: '0 16px', fontSize: 13 }}
+                                    onClick={() => saveEditDeparture(departure)}
+                                    disabled={savingEdit}
+                                  >
+                                    {savingEdit ? 'Guardando…' : 'Guardar cambios'}
+                                  </button>
+                                  <button
+                                    className="btn btn-secondary"
+                                    style={{ height: 34, padding: '0 14px', fontSize: 13 }}
+                                    onClick={() => setEditingId(null)}
+                                    disabled={savingEdit}
+                                  >
+                                    Cancelar edición
+                                  </button>
+                                  {departure.reserved > 0 ? (
+                                    <span className="td-muted" style={{ fontSize: 12 }}>
+                                      Ojo: hay {departure.reserved} personas inscriptas. Si cambiás fecha u hora, avisales (los mails de confirmación ya salieron con el horario anterior).
+                                    </span>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        ) : null}
+                        {isExpanded ? (
+                          <tr>
+                            <td colSpan={6} style={{ background: 'rgba(148,163,184,0.06)' }}>
+                              <div style={{ padding: '12px 6px', display: 'grid', gap: 14 }}>
+                                <div className="flex items-center gap-2" style={{ flexWrap: 'wrap' }}>
+                                  <button
+                                    className="btn btn-secondary"
+                                    style={{ height: 32, padding: '0 12px', fontSize: 13 }}
+                                    onClick={() => downloadBoardingList(departure)}
+                                    disabled={departure.reserved === 0}
+                                    title="Excel con los confirmados para imprimir y tildar al subir"
+                                  >
+                                    <Download size={13} />
+                                    Lista de embarque
+                                  </button>
+                                  <strong style={{ fontSize: 13 }}>Editar cupo:</strong>
+                                  <input
+                                    type="number"
+                                    min={departure.reserved || 1}
+                                    max={500}
+                                    className="input"
+                                    style={{ width: 110 }}
+                                    value={capacityDrafts[departure.id] ?? String(departure.capacity)}
+                                    onChange={(event) =>
+                                      setCapacityDrafts((current) => ({ ...current, [departure.id]: event.target.value }))
+                                    }
+                                  />
+                                  <button className="btn btn-secondary" style={{ height: 32, padding: '0 12px', fontSize: 13 }} onClick={() => saveCapacity(departure)}>
+                                    Guardar cupo
+                                  </button>
+                                  {departure.bike_stock !== null ? (
+                                    <span className="badge" style={{ background: 'rgba(16,185,129,0.15)', color: 'var(--c-exito)' }}>
+                                      🚲 Bicis: {departure.bikes_reserved}/{departure.bike_stock}
+                                    </span>
+                                  ) : null}
+                                  {departure.notes ? <span className="td-muted">Notas: {departure.notes}</span> : null}
+                                </div>
+
+                                {(notificationLogsByDeparture[departure.id] || []).map((log) => (
+                                  <div
+                                    key={log.id}
+                                    style={{
+                                      border: `1px solid ${log.failed > 0 ? 'rgba(239,68,68,0.4)' : 'rgba(16,185,129,0.4)'}`,
+                                      background: log.failed > 0 ? 'rgba(239,68,68,0.06)' : 'rgba(16,185,129,0.06)',
+                                      borderRadius: 10,
+                                      padding: '10px 14px',
+                                      display: 'grid',
+                                      gap: 6,
+                                      fontSize: 13,
+                                    }}
+                                  >
+                                    <div className="td-text-primary">
+                                      📨 Avisos de cancelación por mail — {formatDateTimeToDisplay(log.created_at)}:{' '}
+                                      {log.sent} de {log.total} entregados al servidor de correo
+                                      {log.failed > 0 ? ` · fallaron ${log.failed}` : ''}
+                                    </div>
+                                    {log.reason ? <div className="td-muted">Motivo enviado: “{log.reason}”</div> : null}
+                                    {log.failed > 0 ? (
+                                      <div style={{ color: 'var(--c-error)' }}>
+                                        No se les pudo enviar (contactalos a mano):{' '}
+                                        {log.recipients
+                                          .filter((recipient) => !recipient.ok)
+                                          .map((recipient) => `${recipient.name} <${recipient.email}>`)
+                                          .join(', ')}
+                                      </div>
+                                    ) : null}
+                                  </div>
+                                ))}
+
+                                {bookingsLoading && bookings.length === 0 ? (
+                                  <div className="loading-state" style={{ padding: 12 }}>
+                                    <div className="spinner" />
+                                    Cargando reservas...
+                                  </div>
+                                ) : bookings.length === 0 ? (
+                                  <p className="td-muted" style={{ padding: '4px 0' }}>
+                                    Todavía no hay reservas para esta salida.
+                                  </p>
+                                ) : (
+                                  <div className="table-scroll">
+                                    <table>
+                                      <thead>
+                                        <tr>
+                                          <th>Nombre</th>
+                                          <th>Contacto</th>
+                                          <th>Procedencia</th>
+                                          <th>Personas</th>
+                                          {departure.bike_stock !== null ? <th>Bicis</th> : null}
+                                          <th>Idioma</th>
+                                          <th>Estado</th>
+                                          <th>Reservada</th>
+                                          <th>Acciones</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {bookings.map((booking) => (
+                                          <tr key={booking.id}>
+                                            <td>
+                                              <div className="td-text-primary">{booking.full_name}</div>
+                                            </td>
+                                            <td>
+                                              <div className="flex items-center gap-2" style={{ gap: 8 }}>
+                                                <a href={`mailto:${booking.email}`} className="btn btn-secondary" style={{ height: 28, padding: '0 8px', fontSize: 12 }}>
+                                                  <Mail size={12} />
+                                                </a>
+                                                {toWhatsAppLink(booking.phone) ? (
+                                                  <a href={toWhatsAppLink(booking.phone) || '#'} target="_blank" rel="noreferrer" className="btn btn-secondary" style={{ height: 28, padding: '0 8px', fontSize: 12 }}>
+                                                    <MessageCircle size={12} />
+                                                  </a>
+                                                ) : null}
+                                                <span className="td-muted">{booking.phone}</span>
+                                              </div>
+                                            </td>
+                                            <td>{booking.origin_city || '—'}</td>
+                                            <td>{booking.people_count}</td>
+                                            {departure.bike_stock !== null ? <td>{booking.municipal_bikes || 0}</td> : null}
+                                            <td>{booking.language === 'en' ? 'EN' : 'ES'}</td>
+                                            <td>
+                                              <BookingStatusPill status={booking.status} />
+                                            </td>
+                                            <td className="td-muted">{formatDateTimeToDisplay(booking.created_at)}</td>
+                                            <td>
+                                              {booking.status === 'confirmed' ? (
+                                                <button
+                                                  className="btn btn-secondary"
+                                                  style={{ height: 28, padding: '0 10px', fontSize: 12, color: 'var(--c-error)' }}
+                                                  onClick={() => updateBookingStatus(booking, 'cancelled')}
+                                                >
+                                                  Cancelar
+                                                </button>
+                                              ) : (
+                                                <button
+                                                  className="btn btn-secondary"
+                                                  style={{ height: 28, padding: '0 10px', fontSize: 12, color: 'var(--c-exito)' }}
+                                                  onClick={() => updateBookingStatus(booking, 'confirmed')}
+                                                >
+                                                  Reconfirmar
+                                                </button>
+                                              )}
+                                            </td>
+                                          </tr>
+                                        ))}
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                )}
+                              </div>
+                            </td>
+                          </tr>
+                        ) : null}
+                      </Fragment>
+                    )
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </>
+        )}
+      </div>
+    </>
+  )
+}

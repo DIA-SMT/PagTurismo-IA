@@ -1,4 +1,8 @@
+import fs from "node:fs";
+import path from "node:path";
 import type { NextConfig } from "next";
+
+import { redireccionesHeredadas } from "./lib/redirecciones";
 
 const supabase = process.env.NEXT_PUBLIC_SUPABASE_URL ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL) : null;
 
@@ -7,11 +11,11 @@ const nextConfig: NextConfig = {
   // carpeta de compilación de la que ya está corriendo.
   distDir: process.env.DIRECTORIO_NEXT || ".next",
   // PGlite (base local) carga un .wasm desde node_modules.
-  serverExternalPackages: ["@electric-sql/pglite"],
+  serverExternalPackages: ["@electric-sql/pglite", "@electric-sql/pglite-socket"],
   // Sin Supabase (modo local, o una vista previa sin DATABASE_URL) la base se arma con las
   // migraciones y el contenido inicial: tienen que viajar con las funciones.
   outputFileTracingIncludes: {
-    "/**": ["./supabase/migrations/*.sql", "./supabase/local/*.sql", "./supabase/semilla/**/*.json"],
+    "/**": ["./supabase/migrations/*.sql", "./supabase/local/*.sql", "./supabase/semilla/**/*.json", "./lib/buses/sql/**/*.sql", "./datos/cultura/*.json"],
   },
   experimental: {
     // Fotos que sube el equipo desde el panel. Vercel corta en 4,5 MB.
@@ -25,6 +29,19 @@ const nextConfig: NextConfig = {
     remotePatterns: supabase
       ? [{ protocol: "https", hostname: supabase.hostname, pathname: "/storage/v1/object/public/**" }]
       : [],
+  },
+
+  // Rutas de los sitios que se integraron (Agenda Cultural, Bus Turístico): 308 para no romper
+  // enlaces compartidos, buscadores ni QR impresos. La tabla está en lib/redirecciones.ts.
+  async redirects() {
+    const espacios = ["espacios-culturales.json", "espacios-al-aire-libre.json"].flatMap((f) => {
+      try {
+        return JSON.parse(fs.readFileSync(path.join(process.cwd(), "datos", "cultura", f), "utf8")).espacios as { slug: string }[];
+      } catch {
+        return [];
+      }
+    });
+    return redireccionesHeredadas(espacios.map((e) => e.slug));
   },
 
   async headers() {
