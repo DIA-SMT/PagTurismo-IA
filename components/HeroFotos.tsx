@@ -5,15 +5,16 @@ import { useEffect, useState } from "react";
 
 import { useTextos } from "./i18n/Idioma";
 import { HERO } from "@/lib/contenido";
-import { formatear } from "@/lib/i18n/definir";
 
 /**
  * Las panorámicas del hero. Hay una serie de día y otra de noche, y el CSS
  * muestra la que corresponde al tema: de noche la ciudad se ve de noche.
  *
- * Avanza sola cada ocho segundos salvo que el sistema pida menos movimiento,
- * y siempre se puede pausar: WCAG 2.2.2 pide un control para todo lo que se
- * mueve más de cinco segundos.
+ * Sin botonera: arriba a la derecha queda el nombre del lugar con una línea que
+ * se llena en ocho segundos (la animación es el reloj: al terminar, pasa la foto;
+ * se frena con el mouse encima y en pestañas ocultas). Un clic en el nombre
+ * adelanta. No avanza si el sistema pide menos movimiento, y la pausa que pide
+ * WCAG 2.2.2 aparece al llegar con el teclado.
  */
 export function HeroFotos() {
   const { comun: t } = useTextos();
@@ -27,14 +28,6 @@ export function HeroFotos() {
     preferencia.addEventListener("change", sincronizar);
     return () => preferencia.removeEventListener("change", sincronizar);
   }, []);
-
-  useEffect(() => {
-    if (pausado !== false) return;
-    const reloj = window.setTimeout(() => {
-      if (!document.hidden) setFoto((actual) => actual + 1);
-    }, 8000);
-    return () => window.clearTimeout(reloj);
-  }, [foto, pausado]);
 
   return (
     <>
@@ -59,28 +52,26 @@ export function HeroFotos() {
       </div>
 
       {Object.entries(HERO).map(([tema, escenas]) => {
-        const total = escenas.length;
-        const actual = foto % total;
+        const lugar = t.hero[escenas[foto % escenas.length].archivo];
         return (
           <div key={tema} className={`hero-fotos__controles hero-fotos__tema--${tema}`} role="group" aria-label={t.controles.fotosDeLaCiudad}>
-            <p className="hero-fotos__lugar" aria-live="polite">{t.hero[escenas[actual].archivo]}</p>
-            <div className="hero-fotos__botones">
-              <button type="button" aria-label={t.controles.fotoAnterior} onClick={() => setFoto((actual + total - 1) % total)}>‹</button>
-              {escenas.map(({ archivo }, indice) => (
-                <button
-                  key={archivo}
-                  type="button"
-                  className="hero-fotos__punto"
-                  aria-label={formatear(t.controles.fotoNumero, { n: indice + 1, total })}
-                  aria-current={indice === actual}
-                  onClick={() => setFoto(indice)}
-                />
-              ))}
-              <button type="button" aria-label={t.controles.fotoSiguiente} onClick={() => setFoto((actual + 1) % total)}>›</button>
-              <button type="button" aria-label={pausado ? t.controles.reanudarFotos : t.controles.pausarFotos} onClick={() => setPausado((p) => !p)}>
-                {pausado ? "▶" : "❚❚"}
-              </button>
-            </div>
+            {/* El nombre del lugar es el control: un clic pasa a la siguiente foto. La línea de abajo es el reloj. */}
+            <button type="button" className="hero-fotos__lugar" title={t.controles.fotoSiguiente} onClick={() => setFoto((f) => f + 1)}>
+              <span aria-live="polite">{lugar}</span>
+              <span className="visualmente-oculto"> · {t.controles.fotoSiguiente}</span>
+              <span
+                key={foto}
+                className="hero-fotos__reloj"
+                data-corre={pausado === false}
+                aria-hidden="true"
+                onAnimationEnd={() => setFoto((f) => f + 1)}
+              />
+            </button>
+            {/* La pausa que pide WCAG 2.2.2: solo el ícono, transparente. */}
+            <button type="button" className="hero-fotos__pausa" aria-label={pausado ? t.controles.reanudarFotos : t.controles.pausarFotos}
+              title={pausado ? t.controles.reanudarFotos : t.controles.pausarFotos} onClick={() => setPausado((p) => !p)}>
+              <span aria-hidden="true">{pausado ? "▶" : "❚❚"}</span>
+            </button>
           </div>
         );
       })}

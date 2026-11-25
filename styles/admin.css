@@ -504,3 +504,38 @@ a.adm-dato:hover { border-color: var(--c-azul-300); box-shadow: var(--a-sombra-a
 }
 /* Imagen de un tema: se ve entera (puede ser una ilustración recortada). */
 .adm-imagen__vista--entera img { padding: 0.5rem; object-fit: contain; }
+
+/* ---- Migue del panel (asistente para usar el panel) ---- */
+.adm-asistente__abrir { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 90; display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.35rem 1rem 0.35rem 0.35rem; border: 1px solid var(--c-borde-objeto); border-radius: 999px; background: var(--c-blanco); color: var(--c-ink); font: inherit; font-weight: 700; box-shadow: var(--sombra-3); cursor: pointer; transition: transform 0.15s; }
+.adm-asistente__abrir:hover { transform: translateY(-2px); }
+.adm-asistente__abrir img { border-radius: 50%; background: var(--c-azul-50); }
+.adm-asistente { position: fixed; right: 1.25rem; bottom: 5.5rem; z-index: 91; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; width: min(26rem, calc(100vw - 2rem)); height: min(36rem, calc(100vh - 8rem)); overflow: hidden; border: 1px solid var(--c-borde-objeto); border-radius: 1.1rem; background: var(--c-blanco); box-shadow: var(--sombra-3); }
+.adm-asistente__cabecera { display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 0.9rem; border-bottom: 1px solid var(--c-borde-suave); background: var(--c-azul-50); }
+.adm-asistente__cabecera img { border-radius: 50%; }
+.adm-asistente__cabecera div { display: grid; flex: 1; min-width: 0; }
+.adm-asistente__cabecera small { color: var(--c-ink-soft); font-size: 0.78rem; }
+.adm-asistente__nueva { border: 0; background: none; color: var(--c-azul-700); font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+.adm-asistente__cerrar { display: grid; place-items: center; width: 2rem; height: 2rem; border: 0; border-radius: 50%; background: none; color: var(--c-ink-soft); cursor: pointer; }
+.adm-asistente__cerrar:hover { background: var(--c-blanco); }
+.adm-asistente__charla { display: flex; flex-direction: column; gap: 0.6rem; overflow-y: auto; padding: 0.9rem; }
+.adm-asistente__msj { max-width: 88%; padding: 0.6rem 0.8rem; border-radius: 0.9rem; font-size: 0.9rem; line-height: 1.45; }
+.adm-asistente__msj p { margin: 0; }
+.adm-asistente__msj p + p { margin-top: 0.35rem; }
+.adm-asistente__msj p:empty { display: none; }
+.adm-asistente__msj--migue { align-self: flex-start; border-bottom-left-radius: 0.25rem; background: var(--c-fondo-alt); color: var(--c-ink); }
+.adm-asistente__msj--migue a { color: var(--c-azul-700); font-weight: 700; }
+.adm-asistente__msj--yo { align-self: flex-end; border-bottom-right-radius: 0.25rem; background: #0066ff; color: #fff; }
+.adm-asistente__sugerencias { display: grid; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.adm-asistente__sugerencias button { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid var(--c-borde-objeto); border-radius: 0.75rem; background: var(--c-blanco); color: var(--c-azul-700); font: inherit; font-size: 0.85rem; font-weight: 600; text-align: left; cursor: pointer; }
+.adm-asistente__sugerencias button:hover { border-color: var(--c-azul-600); background: var(--c-azul-50); }
+.adm-asistente__escribiendo { color: var(--c-ink-soft); font-size: 0.85rem; font-style: italic; }
+.adm-asistente__error { padding: 0.5rem 0.75rem; border-radius: 0.6rem; background: var(--c-estado-mal-fondo); color: var(--c-estado-mal-texto); font-size: 0.85rem; }
+.adm-asistente__form { display: flex; gap: 0.5rem; align-items: flex-end; padding: 0.6rem 0.75rem; border-top: 1px solid var(--c-borde-suave); }
+.adm-asistente__form textarea { flex: 1; min-height: 2.6rem; max-height: 7rem; padding: 0.55rem 0.7rem; border: 1px solid var(--c-borde-campo); border-radius: 0.7rem; background: var(--c-blanco); color: var(--c-ink); font: inherit; font-size: 0.9rem; resize: vertical; }
+.adm-asistente__form .adm-boton { min-width: 2.6rem; height: 2.6rem; padding: 0; justify-content: center; }
+.adm-asistente__aviso { margin: 0; padding: 0 0.9rem 0.6rem; color: var(--c-ink-muted); font-size: 0.72rem; }
+@media (max-width: 40rem) {
+  .adm-asistente { right: 0.5rem; bottom: 4.75rem; width: calc(100vw - 1rem); height: calc(100vh - 6.5rem); }
+  .adm-asistente__abrir span { display: none; }
+  .adm-asistente__abrir { padding: 0.35rem; }
+}
