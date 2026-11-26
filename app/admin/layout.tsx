@@ -4,7 +4,7 @@ import { ProveedorIdioma } from "@/components/i18n/Idioma";
 import { textosCliente } from "@/lib/i18n/textos";
 
 export const metadata: Metadata = {
-  title: { default: "Panel de Turismo", template: "%s · Panel de Turismo" },
+  title: { default: "Panel de Cultura", template: "%s · Panel de Cultura" },
   robots: { index: false, follow: false },
 };
 

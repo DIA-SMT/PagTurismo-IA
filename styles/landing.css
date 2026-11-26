@@ -817,3 +817,28 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-fotos__imagen, .tarjeta, .tarjeta__foto img, .lugar img, .sabor img, .acceso, .mapa, .experiencia { transition: none; }
 }
+
+/* ---- ¿Qué hacer hoy? (vecino / de visita) ---- */
+.hoy { padding-bottom: 0; }
+.hoy__cabecera { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--sp-3) var(--sp-4); margin-bottom: var(--sp-4); }
+.hoy__cabecera h2 { margin: 0; }
+.hoy__perfil { display: inline-flex; padding: 4px; border: 1px solid var(--c-borde-objeto); border-radius: var(--r-full); background: var(--c-blanco); box-shadow: 0 2px 10px rgb(9 35 76 / 6%); }
+.hoy__perfil button { display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.5rem; padding: 0 1rem; border: 0; border-radius: var(--r-full); background: transparent; color: var(--c-ink-soft); font: inherit; font-size: 0.9rem; font-weight: var(--fw-semi); cursor: pointer; transition: background var(--t-rapida), color var(--t-rapida); }
+.hoy__perfil button:hover { color: var(--c-ink); }
+.hoy__perfil button[aria-pressed="true"] { background: var(--c-azul-600, #0066ff); color: #fff; }
+.hoy__accesos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+.hoy__accesos .acceso { height: 100%; }
+@media (max-width: 64rem) { .hoy__accesos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 37.5rem) {
+  .hoy__perfil { width: 100%; }
+  .hoy__perfil button { flex: 1; justify-content: center; padding: 0 0.5rem; }
+  .hoy__accesos { gap: var(--sp-2); }
+  .hoy__accesos .acceso { flex-direction: column; align-items: flex-start; gap: var(--sp-2); min-height: 0; padding: 0.75rem; }
+  .hoy__accesos .acceso .icono-pastel { width: 2.5rem; height: 2.5rem; border-radius: 12px; }
+  .hoy__accesos .acceso > svg { display: none; }
+}
+
+/* ---- Franja que separa lo cultural de lo turístico ---- */
+.franja-turismo { display: grid; justify-items: center; gap: var(--sp-2); margin-top: var(--sp-6); padding: var(--sp-6) var(--sp-4) var(--sp-2); border-top: 1px solid var(--c-borde-suave); text-align: center; }
+.franja-turismo h2 { margin: 0; font-size: clamp(1.75rem, 3.2vw, 2.5rem); }
+.franja-turismo > p:not(.kicker) { max-width: 38rem; margin: 0 0 var(--sp-2); color: var(--c-ink-soft); }

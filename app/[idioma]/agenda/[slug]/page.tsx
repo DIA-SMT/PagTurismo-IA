@@ -41,7 +41,7 @@ function enlaceCalendario(e: Evento, o: Ocurrencia, sede?: string): string {
   const fin = o.fin && esFechaValida(o.fin) ? utc(o.fin) : new Date(aInstante(o.inicio) + 2 * 3_600_000).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
   const escapar = (t: string) => t.replace(/[\\;,]/g, (c) => `\\${c}`).replace(/\n/g, "\\n");
   const ics = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Turismo San Miguel de Tucuman//Agenda//ES",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Cultura San Miguel de Tucuman//Agenda//ES",
     "BEGIN:VEVENT",
     `UID:${e.slug}-${inicio}@turismo-smt`,
     `DTSTAMP:${inicio}`, `DTSTART:${inicio}`, `DTEND:${fin}`,
