@@ -13,7 +13,9 @@
  *   npm run cultura -- paginas [--escribir] [--fotos]
  *       Las páginas fijas de la Agenda (patrimonio, gastronomía, guías, oficinas, preguntas frecuentes, murales,
  *       ferias, museo a cielo abierto, nuestra ciudad; datos/cultura/paginas-agenda.json) → fichas del portal en
- *       BORRADOR. Si la ficha ya existe, solo completa sus campos vacíos.
+ *       BORRADOR. Si la ficha ya existe, solo completa sus campos vacíos. Con --archivo X carga otro archivo con la
+ *       misma forma: datos/turismo/ente-tucuman-turismo.json (Ente Tucumán Turismo: lugares para comer, peñas,
+ *       museos, alojamientos, agencias y alquiler de autos).
  *   npm run cultura -- eventos --desde-base [--escribir] [--actualizar] [--fotos]
  *       Los eventos de la base de la Agenda (AGENDA_DATABASE_URL, solo lectura) → eventos. Sus fotos se bajan
  *       del sitio de la Agenda (AGENDA_SITIO_URL, por defecto https://agendacultural.smt.gob.ar).
@@ -371,16 +373,28 @@ async function fotosDeEventos(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) =
   return informe;
 }
 
-/* ---- páginas fijas de la Agenda → fichas ---- */
+/* ---- páginas de otros sitios (Agenda, Ente Tucumán Turismo) → fichas ---- */
 
 type FichaDePagina = { pagina: string; paginaTitulo: string; coleccion: string; slug: string; datos: Json };
+/** datos/cultura/paginas-agenda.json, datos/turismo/ente-tucuman-turismo.json… */
+type ArchivoDeFichas = {
+  /** Sitio de origen: las páginas y las fotos con ruta relativa se completan con esta dirección. Por defecto, la Agenda. */
+  sitio?: string;
+  /** Cómo se nombra el origen en las fuentes y en el crédito de las fotos. */
+  fuente?: string;
+  /** Prefijo de la carpeta de fotos en subidas/cultura/. */
+  carpeta?: string;
+  fichas: FichaDePagina[];
+};
 
 /** Completa lo vacío de una ficha existente (en cualquier nivel de un grupo); nunca pisa un dato cargado. */
 function completarCampos(existente: Json, nuevo: Json): { datos: Json; campos: string[] } {
   const datos = structuredClone(existente);
   const campos: string[] = [];
-  const estaVacio = (v: unknown): boolean => v === undefined || v === null || v === "" || (Array.isArray(v) && v.length === 0)
-    || (typeof v === "object" && !Array.isArray(v) && Object.values(v as Json).every(estaVacio));
+  // Dentro de un grupo, un «no» sin marcar cuenta como vacío ({ texto: "", confirmado: false } es un horario vacío).
+  const estaVacio = (v: unknown, anidado = false): boolean => v === undefined || v === null || v === "" || (anidado && v === false)
+    || (Array.isArray(v) && v.length === 0)
+    || (typeof v === "object" && !Array.isArray(v) && Object.values(v as Json).every((x) => estaVacio(x, true)));
   for (const [clave, valor] of Object.entries(nuevo)) {
     if (estaVacio(valor) || clave === "fuentes") continue;
     if (estaVacio(datos[clave])) { datos[clave] = valor; campos.push(clave); }
@@ -394,7 +408,13 @@ function completarCampos(existente: Json, nuevo: Json): { datos: Json; campos: s
 }
 
 async function importarPaginas(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) => Promise<T>) {
-  const archivo = JSON.parse(fs.readFileSync(path.join(process.cwd(), "datos", "cultura", "paginas-agenda.json"), "utf8")) as { fichas: FichaDePagina[] };
+  const iArchivo = args.indexOf("--archivo");
+  const ruta = iArchivo >= 0 && args[iArchivo + 1] ? path.resolve(args[iArchivo + 1]) : path.join(process.cwd(), "datos", "cultura", "paginas-agenda.json");
+  const archivo = JSON.parse(fs.readFileSync(ruta, "utf8")) as ArchivoDeFichas;
+  const sitio = archivo.sitio ?? SITIO_AGENDA;
+  const origen = archivo.fuente ?? "Agenda Cultural SMT";
+  const prefijo = archivo.carpeta ?? "agenda";
+  console.log(`Fichas de ${origen} (${path.relative(process.cwd(), ruta)}): ${archivo.fichas.length}.`);
   const existentes = (await q("select coleccion, slug, datos from public.contenidos")) as { coleccion: string; slug: string; datos: Json }[];
   const informe = { creadas: [] as string[], completadas: [] as { ficha: string; campos: string[] }[], sinCambios: [] as string[], fotosConError: [] as string[] };
   const escrituras: { sql: string; params: unknown[] }[] = [];
@@ -402,18 +422,18 @@ async function importarPaginas(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) 
     const id = `${f.coleccion}/${f.slug}`;
     const conFuente: Json = {
       ...f.datos,
-      fuentes: [{ titulo: `Agenda Cultural SMT — ${f.paginaTitulo}`, url: new URL(f.pagina, SITIO_AGENDA).href }],
+      fuentes: [{ titulo: `${origen} — ${f.paginaTitulo}`, url: new URL(f.pagina, sitio).href }],
     };
-    // Las fotos de la Agenda (/images/contenido/…) se bajan de su sitio con --fotos.
+    // Las fotos del origen (/images/contenido/… en la Agenda, /public/img/… en el Ente) se bajan con --fotos.
     const conUrl = structuredClone(conFuente);
     const absoluta = (foto: Json | undefined) => {
-      if (foto?.src && String(foto.src).startsWith("/")) foto.src = new URL(String(foto.src), SITIO_AGENDA).href;
-      if (foto && !foto.credito) foto.credito = "Agenda Cultural SMT";
+      if (foto?.src && String(foto.src).startsWith("/")) foto.src = new URL(String(foto.src), sitio).href;
+      if (foto && !foto.credito) foto.credito = origen;
     };
     absoluta(conUrl.imagen as Json | undefined);
     for (const g of (conUrl.galeria as Json[] | undefined) ?? []) absoluta(g.foto as Json);
     const tieneGaleria = "galeria" in conUrl;
-    const nuevo = await fotosLocales(conUrl, `agenda-${f.coleccion}-${f.slug}`, informe.fotosConError);
+    const nuevo = await fotosLocales(conUrl, `${prefijo}-${f.coleccion}-${f.slug}`, informe.fotosConError);
     if (!tieneGaleria) delete nuevo.galeria;
 
     const ya = existentes.find((e) => e.coleccion === f.coleccion && e.slug === f.slug);
@@ -427,7 +447,7 @@ async function importarPaginas(q: Q, transaccion: <T>(fn: (q: Q) => Promise<T>) 
     informe.completadas.push({ ficha: id, campos });
     escrituras.push({ sql: "update public.contenidos set datos = $3::text::jsonb where coleccion = $1 and slug = $2", params: [f.coleccion, f.slug, JSON.stringify(datos)] });
   }
-  console.log(`Páginas de la Agenda: ${informe.creadas.length} fichas nuevas (en borrador), ${informe.completadas.length} completadas, ${informe.sinCambios.length} sin cambios.`);
+  console.log(`${origen}: ${informe.creadas.length} fichas nuevas (en borrador), ${informe.completadas.length} completadas, ${informe.sinCambios.length} sin cambios.`);
   for (const c of informe.creadas) console.log(`  nueva: ${c}`);
   for (const c of informe.completadas) console.log(`  completa ${c.ficha}: ${c.campos.join(", ")}`);
   if (!conFotos) console.log("  (sin --fotos: las fichas nuevas quedan sin foto)");

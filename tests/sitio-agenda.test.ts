@@ -144,3 +144,55 @@ describe("páginas fijas de la Agenda → fichas (datos/cultura/paginas-agenda.j
     assert.equal(e.accion.tipo, "sin-inscripcion");
   });
 });
+
+describe("Ente Tucumán Turismo → fichas (datos/turismo/ente-tucuman-turismo.json)", () => {
+  type Ficha = { pagina: string; paginaTitulo: string; coleccion: string; slug: string; datos: Record<string, unknown> };
+  const ente = JSON.parse(fs.readFileSync("datos/turismo/ente-tucuman-turismo.json", "utf8")) as { sitio: string; fuente: string; fichas: Ficha[] };
+  const agenda = (JSON.parse(fs.readFileSync("datos/cultura/paginas-agenda.json", "utf8")) as { fichas: Ficha[] }).fichas;
+  const espacios = ["espacios-culturales", "espacios-al-aire-libre"]
+    .flatMap((f) => (JSON.parse(fs.readFileSync(`datos/cultura/${f}.json`, "utf8")) as { espacios: { slug: string }[] }).espacios)
+    .map((e) => ({ coleccion: "lugares", slug: e.slug }));
+  const semilla = leerSemilla();
+  const config = semilla.find((f) => f.coleccion === "configuracion" && f.slug === "categorias")!.datos as { categorias: { id: string }[]; etiquetas: { id: string }[] };
+  const rubros = semilla.find((f) => f.coleccion === "configuracion" && f.slug === "categorias-agenda")!.datos as { categorias: { id: string }[] };
+  const porColeccion: Record<string, Set<string>> = {};
+  for (const f of [...semilla, ...agenda, ...espacios, ...ente.fichas]) (porColeccion[f.coleccion] ??= new Set()).add(f.slug);
+  const ctx: Contexto = {
+    temas: new Set(config.categorias.map((c) => c.id)), etiquetas: new Set(config.etiquetas.map((e) => e.id)),
+    rubros: new Set(rubros.categorias.map((c) => c.id)), fichas: porColeccion,
+  };
+  const nuevas = ente.fichas.filter((f) => "titulo" in f.datos);
+
+  it("cada ficha nueva pasa el formulario del panel sin errores", () => {
+    assert.ok(nuevas.length > 40);
+    for (const f of nuevas) {
+      assert.match(f.slug, SLUG_VALIDO, f.slug);
+      const { errores } = limpiarFicha(esquemaDe(f.coleccion)!, f.datos, ctx);
+      assert.deepEqual(errores, {}, `${f.coleccion}/${f.slug}`);
+    }
+  });
+
+  it("no repite fichas y las que completan no traen título, resumen ni fotos", () => {
+    const ids = ente.fichas.map((f) => `${f.coleccion}/${f.slug}`);
+    assert.equal(new Set(ids).size, ids.length);
+    for (const f of ente.fichas.filter((x) => !("titulo" in x.datos))) {
+      for (const campo of ["resumen", "imagen", "galeria"]) assert.ok(!(campo in f.datos), `${f.slug}: ${campo}`);
+    }
+  });
+
+  it("solo trae lo de la capital y las páginas son del sitio del Ente", () => {
+    for (const f of ente.fichas) {
+      assert.match(f.pagina, /^\/[a-z0-9/-]+$/, f.slug);
+      assert.doesNotMatch(String(f.datos.direccion ?? ""), /Yerba Buena|Raco/, f.slug);
+      const foto = f.datos.imagen as { src: string } | undefined;
+      if (foto) assert.match(foto.src, /^\/public\/img\/\S+$/, f.slug);
+    }
+    assert.equal(new URL(ente.sitio).hostname, "www.tucumanturismo.gob.ar");
+  });
+
+  it("los restaurantes y peñas quedan en el tema Sabores tucumanos", () => {
+    for (const f of nuevas.filter((x) => x.paginaTitulo === "Bares y Restaurantes" || x.paginaTitulo === "Peñas Tucumanas")) {
+      assert.ok((f.datos.categorias as string[]).includes("sabores-tucumanos"), f.slug);
+    }
+  });
+});

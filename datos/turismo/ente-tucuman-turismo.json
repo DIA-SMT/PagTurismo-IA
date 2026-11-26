@@ -1,0 +1,1903 @@
+{
+  "sitio": "https://www.tucumanturismo.gob.ar",
+  "fuente": "Ente Tucumán Turismo",
+  "carpeta": "ente",
+  "relevado": "2026-11-26",
+  "nota": "Generado del sitio y de la API pública de www.tucumanturismo.gob.ar (solo San Miguel de Tucumán). Lo carga «npm run cultura -- paginas --archivo datos/turismo/ente-tucuman-turismo.json --fotos». Todo entra en BORRADOR; en fichas existentes solo se completan campos vacíos y no se agregan fotos.",
+  "avisos": [
+    "Museo Folklórico Provincial General Manuel Belgrano: el enlace de Google Maps del Ente apunta a «Museo Histórico Provincial Nicolás Avellaneda»; no se usan sus coordenadas"
+  ],
+  "fichas": [
+    {
+      "pagina": "/articulos/articulo/491/casa-historica-de-la-independencia",
+      "paginaTitulo": "Casa Histórica de la Independencia",
+      "coleccion": "lugares",
+      "slug": "casa-historica",
+      "datos": {
+        "descripcion": "Es el edificio y el museo más importante del país. En sus salones se juró la Independencia Argentina el 9 de julio de 1816. Su patrimonio, integrado por objetos del período colonial, de las guerras de la independencia y del siglo XIX, recrea el proceso histórico que desembocó en la libertad. Su sitio de mayor valor es el Salón de la Jura, donde se exhibe el acta de la independencia.\n\nEl museo cuenta con una muestra interactiva que integra recursos tecnológicos y digitales. Además, posee un espacio ideal para que los niños aprendan sobre la historia a través de juegos y recursos didácticos.\n\nUno de sus imperdibles es el Espectáculo \"Luces y Sonidos de la Independencia\", que se proyecta viernes y sábados por la noche, con reserva previa.",
+        "direccion": "Congreso de Tucumán 141",
+        "coordenadas": {
+          "lat": -26.833135,
+          "lng": -65.203842
+        },
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "duracion": "45 minutos",
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/493/museo-de-la-industria-azucarera",
+      "paginaTitulo": "Museo de la Industria Azucarera",
+      "coleccion": "lugares",
+      "slug": "museo-industria-azucarera",
+      "datos": {
+        "descripcion": "Ubicado en el Parque 9 de Julio, este museo se erige en la casona de 1800 donde vivió el obispo José Eusebio Colombres, quien decidió retomar el cultivo de la caña de azúcar en la provincia.\n\nEn él se exhiben diversas maquinarias utilizadas a lo largo de la historia para la elaboración del azúcar. Además, se exponen las pertenencias del obispo Colombres. Engalana la entrada del museo un trapiche de madera con el que trabajaban la caña los antiguos ingenios azucareros.",
+        "direccion": "Parque 9 de Julio",
+        "coordenadas": {
+          "lat": -26.826635,
+          "lng": -65.190392
+        },
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "duracion": "1 hora",
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/506/casa-de-gobierno",
+      "paginaTitulo": "Casa de Gobierno",
+      "coleccion": "lugares",
+      "slug": "casa-de-gobierno",
+      "datos": {
+        "descripcion": "Ubicada frente a la Plaza Independencia, es el palacio de Gobierno y ofrece visitas guiadas durante los días de semana. Los imperdibles son el Salón Blanco y la tumba de Juan Bautista Alberdi.",
+        "coordenadas": {
+          "lat": -26.830042,
+          "lng": -65.204874
+        },
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "duracion": "30 minutos",
+        "horario": {
+          "texto": "Lunes a viernes (excepto feriados) 9.00; 10.30; 12.00; 14.00; 15.00; y 16.00",
+          "confirmado": false
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/507/museo-historico-provincial",
+      "paginaTitulo": "Museo Histórico Provincial",
+      "coleccion": "lugares",
+      "slug": "museo-historico-provincial",
+      "datos": {
+        "descripcion": "Ubicado en el Casco Histórico de la capital, este museo se erige en la casona donde nació Nicolás Avellaneda, presidente de la Nación entre 1874 y 1880. Conocida como “La Casa de las cien puertas”, desde 1976 alberga el museo donde se expone la historia de Tucumán desde su primera fundación en Ibatín en 1565 y el traslado a su emplazamiento actual en 1685 hasta su posterior desarrollo social, político y económico.\n\nA lo largo de sus salas se exhiben armas, indumentaria, documentos y herramientas de uso agrícola, entre otros elementos que integran su patrimonio.",
+        "direccion": "Congreso de Tucumán 56",
+        "coordenadas": {
+          "lat": -26.832152,
+          "lng": -65.203294
+        },
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/508/museo-de-arte-sacro",
+      "paginaTitulo": "Museo de Arte Sacro",
+      "coleccion": "lugares",
+      "slug": "museo-de-arte-sacro",
+      "datos": {
+        "titulo": "Museo de Arte Sacro",
+        "clase": "museo",
+        "tipoEspacio": "cultural",
+        "zona": "Casco histórico",
+        "categorias": [
+          "historia-y-patrimonio",
+          "turismo-religioso"
+        ],
+        "resumen": "Ubicado en el Casco Histórico, muestra una extensa colección religiosa de Tucumán.",
+        "descripcion": "Ubicado en el Casco Histórico, en él se exhiben piezas que reflejan la historia y el arte de la Iglesia Católica y la sociedad tucumana, representada por la fusión entre la cultura española y la indígena.\n\nEn sus salas se pueden observar pinturas, esculturas, ornamentos de platería y mobiliario. Destacan un antiguo óleo alto peruano que representa a la Virgen del Rosario de Pomata y una Casulla bordada del siglo XVIII que perteneció a la iglesia de Santa María Magdalena de la Compañía de Jesús en Tucumán.",
+        "direccion": "Congreso de Tucumán 53",
+        "coordenadas": {
+          "lat": -26.831948,
+          "lng": -65.203591
+        },
+        "costo": {
+          "modalidad": "pago",
+          "detalle": "$4.000. Menores de 12 años, gratis. Jubilados gratis los días martes"
+        },
+        "duracion": "45 minutos",
+        "contacto": {
+          "telefono": "381 2542562"
+        },
+        "redes": {},
+        "imagen": {
+          "src": "/public/img/museosacrogaleria1_edky9o4i_17-07-2024_wkcryyxa_19-06-2025.jpg",
+          "alt": "Museo de Arte Sacro"
+        },
+        "galeria": [
+          {
+            "foto": {
+              "src": "/public/img/museosacrogaleria4_vbqqazzr_17-07-2024_lhk5u7t3_19-06-2025.jpg",
+              "alt": "Museo de Arte Sacro"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/1_ktab7sb6_19-06-2025.jpg",
+              "alt": "Museo de Arte Sacro"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/2_ls79849u_19-06-2025.jpg",
+              "alt": "Museo de Arte Sacro"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/museos_7qofukpy_16-07-2025.jpg",
+              "alt": "Museo de Arte Sacro"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/museos_4hll1csb_16-07-2025.jpg",
+              "alt": "Museo de Arte Sacro"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/509/museo-de-ciencias-naturales",
+      "paginaTitulo": "Museo de Ciencias Naturales",
+      "coleccion": "lugares",
+      "slug": "museo-de-ciencias-naturales",
+      "datos": {
+        "descripcion": "Cerca del centro de la ciudad existe una selva donde es posible sumergirse para conocer la flora y fauna de la región: el Museo Miguel Lillo de Ciencias Naturales.\n\nEn sus salas se pueden ver colecciones de insectos, mariposas, escarabajos y distintas especies de arácnidos. También se pueden observar grandes mamíferos y animales del continente africano y asiático. En el recinto sobre Paleontología se exhiben esqueletos de mamíferos de gran porte como el tigre Diente de Sable y el Gliptodonte.\n\nEl museo de ciencias naturales se complementa con el Museo Histórico Dr. Miguel Lillo, que abre de martes a viernes de 8.30 a 12.30 horas y exhibe material perteneciente al científico y con el Jardín Botánico de la institución, una exposición a cielo abierto de la flora de la región.\n\nCon la misma entrada se puede acceder a todos los sectores del predio.\n\nMenores de 5 años, jubilados y pensionados, sin cargo.",
+        "direccion": "Miguel Lillo 251",
+        "coordenadas": {
+          "lat": -26.831451,
+          "lng": -65.221141
+        },
+        "costo": {
+          "modalidad": "pago",
+          "detalle": "$4.000. Para reservas grupales, comunicarse al teléfono 4863121"
+        },
+        "duracion": "1 hora",
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/510/parque-9-de-julio",
+      "paginaTitulo": "Parque 9 de Julio",
+      "coleccion": "lugares",
+      "slug": "parque-9-de-julio",
+      "datos": {
+        "descripcion": "Es el principal espacio verde de la ciudad y en su interior hay bares, restaurantes y juegos, entre otras atracciones.",
+        "coordenadas": {
+          "lat": -26.829092,
+          "lng": -65.191461
+        },
+        "duracion": "3 horas",
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/512/museo-folklorico-provincial",
+      "paginaTitulo": "Museo Folklórico Provincial",
+      "coleccion": "lugares",
+      "slug": "museo-folklorico-provincial",
+      "datos": {
+        "titulo": "Museo Folklórico Provincial General Manuel Belgrano",
+        "clase": "museo",
+        "tipoEspacio": "cultural",
+        "zona": "Casco histórico",
+        "categorias": [
+          "historia-y-patrimonio",
+          "cultura-y-espectaculos"
+        ],
+        "resumen": "Resguarda todo el acervo cultural de Tucumán.",
+        "descripcion": "Ubicado en el Casco Histórico de la capital, este museo alberga muestras de la artesanía popular y folklórica de Tucumán y de la región. Se pueden observar piezas de madera y cuero confeccionadas por los indígenas Chané, platería criolla en elementos religiosos y en mates y jarras, y textiles como randas, tapices, alfombras, mantas y ponchos. La colección de instrumentos musicales está integrada por cajas, bombos legüeros, quenas, sikus, erkes, charangos, guitarras y arpas, elaborados con técnicas prehispánicas e hispánicas.",
+        "direccion": "24 de Septiembre 565",
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "duracion": "30 minutos",
+        "contacto": {},
+        "redes": {},
+        "imagen": {
+          "src": "/public/img/768x650-MFolk-Mobile_5o3cm85j_28-06-2024_rdfkd3vi_19-06-2025.jpg",
+          "alt": "Museo Folklórico Provincial General Manuel Belgrano"
+        },
+        "galeria": [
+          {
+            "foto": {
+              "src": "/public/img/museofolcgaleria3_6utvboyj_14-06-2024_m1ntsrs5_25-06-2025.jpg",
+              "alt": "Museo Folklórico Provincial General Manuel Belgrano"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/museofolcgaleria4_b93urm42_14-06-2024_19ywklvd_25-06-2025.jpg",
+              "alt": "Museo Folklórico Provincial General Manuel Belgrano"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/museofolclorico1_2n9r9zg0_17-07-2024_h7tazj90_25-06-2025.jpg",
+              "alt": "Museo Folklórico Provincial General Manuel Belgrano"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/museof_p640j9ov_16-07-2025.jpg",
+              "alt": "Museo Folklórico Provincial General Manuel Belgrano"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/WhatsA_j12kew1t_16-07-2025.jpg",
+              "alt": "Museo Folklórico Provincial General Manuel Belgrano"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/museof_811zvalc_16-07-2025.jpg",
+              "alt": "Museo Folklórico Provincial General Manuel Belgrano"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/513/casa-padilla",
+      "paginaTitulo": "Casa Padilla",
+      "coleccion": "lugares",
+      "slug": "museo-casa-padilla",
+      "datos": {
+        "descripcion": "Ubicado en el corazón de la ciudad, frente a la Plaza Independencia, este museo se erige en un caserón de 1860 que resguarda piezas de arte decorativo, arte oriental, elementos originales de Europa, Oriente y Egipto, óleos de artistas renombrados y mobiliario que perteneció a los dueños de la casa, una familia tradicional, y de otros célebres personajes de la historia tucumana.",
+        "direccion": "25 de Mayo 36",
+        "coordenadas": {
+          "lat": -26.830409,
+          "lng": -65.2047
+        },
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "duracion": "1 hora",
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/514/museo-mercedes-sosa-casa-natal",
+      "paginaTitulo": "Museo Mercedes Sosa Casa Natal",
+      "coleccion": "lugares",
+      "slug": "casa-natal-mercedes-sosa",
+      "datos": {
+        "descripcion": "Ubicado en la casa de Mercedes Sosa, en el museo se exponen objetos que pertenecieron a la familia de la cantora. Con ambientaciones sonoras y puestas interactivas, los visitantes pueden adentrarse en la trayectoria de esta prolífica artista tucumana, conocida como “La Voz de América”.",
+        "direccion": "Miguel Calixto del Corro 344",
+        "coordenadas": {
+          "lat": -26.827913,
+          "lng": -65.194016
+        },
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "duracion": "45 minutos",
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/550/iglesia-catedral-nuestra-senora-de-la-encarnacion",
+      "paginaTitulo": "Iglesia Catedral Nuestra Señora de la Encarnación",
+      "coleccion": "lugares",
+      "slug": "catedral",
+      "datos": {
+        "descripcion": "Es la Iglesia Matriz de San Miguel de Tucumán y se emplaza frente a la Plaza Independencia, en el Casco Histórico de la ciudad.",
+        "coordenadas": {
+          "lat": -26.831532,
+          "lng": -65.203598
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/551/plaza-independencia",
+      "paginaTitulo": "Plaza Independencia",
+      "coleccion": "lugares",
+      "slug": "plaza-independencia",
+      "datos": {
+        "descripcion": "Es la plaza central de la capital. En su centro se sitúa la Estatua de la Libertad, obra de la famosa escultora Lola Mora. A su alrededor se emplazan importantes edificios de la ciudad como la Casa de Gobierno, el Jockey Club y la Federación Económica, con estilos arquitectónicos italianos y franceses.",
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/552/basilica-de-nuestra-senora-de-la-merced",
+      "paginaTitulo": "Basílica de Nuestra Señora de la Merced",
+      "coleccion": "lugares",
+      "slug": "basilica-de-la-merced",
+      "datos": {
+        "descripcion": "Es uno de los templos más importantes de la provincia. Aquí se puede observar la imagen de la Virgen María en su advocación como Nuestra Señora de la Merced, nombrada generala del Ejército Argentino por el General Manuel Belgrano.",
+        "coordenadas": {
+          "lat": -26.831404,
+          "lng": -65.201588
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/630/monumento-al-bicentenario",
+      "paginaTitulo": "Monumento al Bicentenario",
+      "coleccion": "lugares",
+      "slug": "monumento-al-bicentenario",
+      "datos": {
+        "descripcion": "Es uno de los puntos más icónicos de San Miguel de Tucumán y se emplaza sobre la Avenida Mate de Luna.",
+        "coordenadas": {
+          "lat": -26.827313,
+          "lng": -65.222398
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/687/iglesia-y-convento-de-san-francisco",
+      "paginaTitulo": "Iglesia y Convento de San Francisco",
+      "coleccion": "lugares",
+      "slug": "iglesia-san-francisco",
+      "datos": {
+        "descripcion": "Ubicado frente a la Plaza Independencia, la Iglesia y Convento San Francisco es uno de los templos más importantes de San Miguel de Tucumán. Recientemente reinaugurado tras tareas de puesta en valor, al pasar por la intersección de las calles 25 de Mayo y San Martín puede apreciarse su fachada con los colores originales de la edificación. En su interior se encuentra el Museo San Francisco.",
+        "coordenadas": {
+          "lat": -26.829492,
+          "lng": -65.204608
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/688/museo-san-francisco",
+      "paginaTitulo": "Museo San Francisco",
+      "coleccion": "lugares",
+      "slug": "museo-san-francisco",
+      "datos": {
+        "titulo": "Museo San Francisco",
+        "clase": "museo",
+        "tipoEspacio": "cultural",
+        "zona": "Casco histórico",
+        "direccion": "25 de Mayo y San Lorenzo (Iglesia y Convento de San Francisco)",
+        "categorias": [
+          "historia-y-patrimonio",
+          "turismo-religioso"
+        ],
+        "resumen": "El museo del templo resguarda grandes tesoros de la historia de Tucumán.",
+        "descripcion": "Ubicado dentro de la Iglesia y Convento San Francisco, que en la actualidad se encuentra en refacción, este museo resguarda los muebles originales utilizados durante el Congreso de Tucumán de 1816, ocasión de la declaración de la Independencia del país.",
+        "contacto": {},
+        "redes": {},
+        "imagen": {
+          "src": "/public/img/museo%20iglesia%20san%20francisco%20(26)_kjuoayrf_14-07-2025.JPG",
+          "alt": "Museo San Francisco"
+        },
+        "galeria": [
+          {
+            "foto": {
+              "src": "/public/img/museo%20iglesia%20san%20francisco%20(5)_kehpje64_14-07-2025.jpg",
+              "alt": "Museo San Francisco"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/museo%20san%20francisco%20(39)_ro9g8g85_14-07-2025.JPG",
+              "alt": "Museo San Francisco"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/876/centro-cultural-alberto-rouges",
+      "paginaTitulo": "Centro Cultural Alberto Rougés",
+      "coleccion": "lugares",
+      "slug": "centro-cultural-rouges",
+      "datos": {
+        "descripcion": "Ubicado frente a la Plaza Independencia de la capital, es el centro de estudios de referencia de la historia y las artes de la región. Posee un amplio patrimonio bibliográfico y documental donado por referentes de la filosofía, la literatura y la cultura que se organiza en seis bibliotecas con más de 20 mil ejemplares a disposición del público. A lo largo del año, en sus salones se llevan adelante exposiciones, cursos, conferencias, congresos y talleres de diferentes ramas de las ciencias sociales.",
+        "coordenadas": {
+          "lat": -26.830795,
+          "lng": -65.2031
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/992/casa-museo-de-la-ciudad-smt",
+      "paginaTitulo": "Casa Museo de la Ciudad SMT",
+      "coleccion": "lugares",
+      "slug": "casa-museo-de-la-ciudad",
+      "datos": {
+        "descripcion": "De estilo Art Nouveau, esta casona posee diez salas que narran la historia de San Miguel de Tucumán desde la fundación en Ibatín el 31 de mayo de 1565 hasta los años '80 en su actual emplazamiento. Además, el museo cuenta con una sala audiovisual e interactiva de datos sobre la historia de la ciudad.",
+        "coordenadas": {
+          "lat": -26.822339,
+          "lng": -65.209191
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/993/museo-provincial-escultor-juan-carlos-iramain",
+      "paginaTitulo": "Museo Provincial Escultor Juan Carlos Iramain",
+      "coleccion": "lugares",
+      "slug": "museo-iramain",
+      "datos": {
+        "titulo": "Museo Provincial Escultor Juan Carlos Iramain",
+        "clase": "museo",
+        "tipoEspacio": "cultural",
+        "categorias": [
+          "cultura-y-espectaculos"
+        ],
+        "resumen": "Este museo dedicado al célebre artista tucumano, creador del Cristo Bendicente de San Javier, posee en su patrimonio fotografías familiares, mobiliario original de la casona que habitaron y frisos religiosos realizados por el escultor.",
+        "descripcion": "Este museo dedicado al célebre artista tucumano, creador del Cristo Bendicente de San Javier, posee en su patrimonio fotografías familiares, mobiliario original de la casona que habitaron y frisos religiosos realizados por el escultor.",
+        "coordenadas": {
+          "lat": -26.832301,
+          "lng": -65.200507
+        },
+        "contacto": {},
+        "redes": {},
+        "imagen": {
+          "src": "/public/img/Frente-del-Museo-Iramain_lhlovfu0_05-11-2025.jpg",
+          "alt": "Museo Provincial Escultor Juan Carlos Iramain"
+        },
+        "galeria": [
+          {
+            "foto": {
+              "src": "/public/img/WhatsA_eajjkogv_05-11-2025.jpeg",
+              "alt": "Museo Provincial Escultor Juan Carlos Iramain"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/WhatsA_r51nlhno_05-11-2025.jpeg",
+              "alt": "Museo Provincial Escultor Juan Carlos Iramain"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/WhatsA_vtw5u95n_05-11-2025.jpeg",
+              "alt": "Museo Provincial Escultor Juan Carlos Iramain"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/1038/museo-casa-belgraniana-solar-historico",
+      "paginaTitulo": "Museo Casa Belgraniana Solar Histórico",
+      "coleccion": "lugares",
+      "slug": "casa-belgraniana",
+      "datos": {
+        "descripcion": "La Casa Belgraniana es una recreación de la modesta vivienda que ocupó el General Manuel Belgrano en 1816. Construida con materiales y técnicas de la época, esta réplica conserva la simplicidad y austeridad que caracterizaban la vida del prócer. Incluye un aljibe en el patio y mobiliario recreado, como catres y sillas.\n\nEl museo incorpora tecnología moderna con pantallas táctiles y paneles informativos, además de proyecciones de documentales y materiales escolares históricos. Este espacio invita a conocer la vida y obra de Belgrano, así como su impacto en la historia de Tucumán y la Argentina.",
+        "direccion": "Bernabé Aráoz 681",
+        "coordenadas": {
+          "lat": -26.838064,
+          "lng": -65.218194
+        },
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "contacto": {},
+        "redes": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/772/teatros-y-cines",
+      "paginaTitulo": "Teatros y Cines",
+      "coleccion": "lugares",
+      "slug": "teatro-san-martin",
+      "datos": {
+        "descripcion": "Es uno de los sitios culturales más importantes de la provincia. Posee una capacidad para 800 personas y en él pueden disfrutarse conciertos, óperas, ballets y obras de teatro. En él tienen su sede la Orquesta Estable, el Coro Estable y el Ballet Estable de la Provincia.",
+        "direccion": "Avenida Sarmiento 601",
+        "contacto": {
+          "telefono": "3814522579"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/teatrosanmartin/"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/772/teatros-y-cines",
+      "paginaTitulo": "Teatros y Cines",
+      "coleccion": "lugares",
+      "slug": "teatro-alberdi",
+      "datos": {
+        "titulo": "Teatro Alberdi",
+        "clase": "teatro",
+        "tipoEspacio": "cultural",
+        "resumen": "El teatro, que pertenece a la Universidad Nacional de Tucumán, cuenta con capacidad para 590 personas.",
+        "categorias": [
+          "cultura-y-espectaculos"
+        ],
+        "descripcion": "El teatro, que pertenece a la Universidad Nacional de Tucumán, cuenta con capacidad para 590 personas.",
+        "direccion": "Esquina de Jujuy y Crisóstomo Álvarez",
+        "contacto": {
+          "telefono": "(0381) 4229118"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/teatroalberdi_oficial/"
+        },
+        "costo": {
+          "modalidad": "consultar"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/772/teatros-y-cines",
+      "paginaTitulo": "Teatros y Cines",
+      "coleccion": "lugares",
+      "slug": "teatro-mercedes-sosa",
+      "datos": {
+        "titulo": "Teatro Mercedes Sosa",
+        "clase": "teatro",
+        "tipoEspacio": "cultural",
+        "resumen": "Ubicado frente a la Plaza Independencia de la capital, tiene una capacidad para más de 1.500 personas y es el más grande de la provincia. En él se llevan a cabo recitales de bandas y artistas locales y nacionales de diferentes géneros. Lleva su nombre en honor y reconocimiento a la gran cantante tucumana.",
+        "categorias": [
+          "cultura-y-espectaculos"
+        ],
+        "descripcion": "Ubicado frente a la Plaza Independencia de la capital, tiene una capacidad para más de 1.500 personas y es el más grande de la provincia. En él se llevan a cabo recitales de bandas y artistas locales y nacionales de diferentes géneros. Lleva su nombre en honor y reconocimiento a la gran cantante tucumana.",
+        "direccion": "San Martín 479",
+        "contacto": {
+          "telefono": "3814214994"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/teatromercedessosa/"
+        },
+        "costo": {
+          "modalidad": "consultar"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/772/teatros-y-cines",
+      "paginaTitulo": "Teatros y Cines",
+      "coleccion": "lugares",
+      "slug": "sala-orestes-caviglia",
+      "datos": {
+        "titulo": "Sala Orestes Caviglia",
+        "clase": "teatro",
+        "tipoEspacio": "cultural",
+        "resumen": "La sala tiene una capacidad para 186 personas y en ella se pueden disfrutar todo tipo de espectáculos. En este sitio también se proyectan películas, por lo que se lo utiliza como sede del Espacio INCAA, con una selección de estrenos del cine nacional.",
+        "categorias": [
+          "cultura-y-espectaculos"
+        ],
+        "descripcion": "La sala tiene una capacidad para 186 personas y en ella se pueden disfrutar todo tipo de espectáculos. En este sitio también se proyectan películas, por lo que se lo utiliza como sede del Espacio INCAA, con una selección de estrenos del cine nacional.",
+        "direccion": "San Martín 251",
+        "contacto": {
+          "telefono": "3814307678"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/orestescaviglia/"
+        },
+        "costo": {
+          "modalidad": "consultar"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/772/teatros-y-cines",
+      "paginaTitulo": "Teatros y Cines",
+      "coleccion": "lugares",
+      "slug": "teatro-rosita-avila",
+      "datos": {
+        "descripcion": "Ubicado dentro del Complejo del hotel Hilton Garden Inn, tiene capacidad para 300 personas y posee espacio para exposiciones.",
+        "direccion": "Las Piedras 1500",
+        "contacto": {
+          "telefono": "3814200338"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/tmrositaavila/"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/772/teatros-y-cines",
+      "paginaTitulo": "Teatros y Cines",
+      "coleccion": "lugares",
+      "slug": "teatro-sala-ross",
+      "datos": {
+        "titulo": "Teatro Sala Ross",
+        "clase": "teatro",
+        "tipoEspacio": "cultural",
+        "resumen": "Es un espacio de teatro independiente dedicado a la enseñanza, investigación y difusión de las artes escénicas en la provincia. Cuenta con una variada cartelera todos los fines de semana. Posee dos salas, una biblioteca de arte y espacio de lectura.",
+        "categorias": [
+          "cultura-y-espectaculos"
+        ],
+        "descripcion": "Es un espacio de teatro independiente dedicado a la enseñanza, investigación y difusión de las artes escénicas en la provincia. Cuenta con una variada cartelera todos los fines de semana. Posee dos salas, una biblioteca de arte y espacio de lectura.",
+        "direccion": "Laprida 135",
+        "contacto": {
+          "telefono": "3813186244"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/teatrosalaross/"
+        },
+        "costo": {
+          "modalidad": "consultar"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/772/teatros-y-cines",
+      "paginaTitulo": "Teatros y Cines",
+      "coleccion": "lugares",
+      "slug": "teatro-general-manuel-belgrano",
+      "datos": {
+        "titulo": "Teatro General Manuel Belgrano",
+        "clase": "teatro",
+        "tipoEspacio": "cultural",
+        "resumen": "Ubicado en pleno microcentro de San Miguel de Tucumán, tiene capacidad para alrededor de 500 personas y es el espacio cultural más recientemente inaugurado.",
+        "categorias": [
+          "cultura-y-espectaculos"
+        ],
+        "descripcion": "Ubicado en pleno microcentro de San Miguel de Tucumán, tiene capacidad para alrededor de 500 personas y es el espacio cultural más recientemente inaugurado.",
+        "direccion": "Crisóstomo Álvarez 765",
+        "contacto": {},
+        "redes": {},
+        "costo": {
+          "modalidad": "consultar"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "rose",
+      "datos": {
+        "titulo": "Rosé",
+        "clase": "bar y restaurante",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Bar y restaurante de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Santa Fe 373 - Barrio Norte y San Lorenzo 493 - Barrio Sur",
+        "horario": {
+          "texto": "Lunes a Sábado 8:00 a 13:00hs | 16:30 a 21:30. Domingo 16:30 a 21:30hs",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3813887098"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "florencia-rosello-pasteleria",
+      "datos": {
+        "titulo": "Florencia Rosello Pastelería Artesanal",
+        "clase": "pastelería artesanal",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Pastelería artesanal de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Las Piedras y Buenos Aires – Barrio Sur",
+        "horario": {
+          "texto": "Lunes a viernes 7.30 a 12.30 y de 17.00 a 21.00. Sábado de 8.00 a 14.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3815791569"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "midgard-resto-beer-house",
+      "datos": {
+        "titulo": "Midgard Resto Beer House",
+        "clase": "resto bar y cervecería",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Resto bar y cervecería de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Balcarce 109",
+        "horario": {
+          "texto": "Lunes a Viernes 7:30 a 14:30 y de 17:30 a 20:30. Sábado de 8 a 13 y de 22 a 03 con shows en vivo",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "381-2093549"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "el-molino",
+      "datos": {
+        "titulo": "El Molino",
+        "clase": "bar y restaurante",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Bar y restaurante de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "24 de Septiembre 551",
+        "horario": {
+          "texto": "Lunes a sábado de 7.00 a 01.00. Domingo de 17.00 a 01.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3812567741"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "la-pizzada",
+      "datos": {
+        "titulo": "La Pizzada",
+        "clase": "pizzería",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Pizzería de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "24 de Septiembre y 25 de Mayo y Santiago del Estero 1002",
+        "horario": {
+          "texto": "8.00 a 01.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "4314200"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "positano-bar",
+      "datos": {
+        "titulo": "Positano Bar",
+        "clase": "bar",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Bar de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Av. Mate de Luna 2890",
+        "horario": {
+          "texto": "8.00 a 01.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "4323000"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "oliver-brown",
+      "datos": {
+        "titulo": "Oliver Brown",
+        "clase": "cafetería",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Cafetería de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "24 de Septiembre 689 y San Martín 761",
+        "horario": {
+          "texto": "Lunes a viernes de 7 a 21.30. Sábados de 8 a 21.30 y domingos de 9 a 13 y de 17.30 a 21.30",
+          "confirmado": false
+        },
+        "contacto": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "sir-harris",
+      "datos": {
+        "titulo": "Sir Harris",
+        "clase": "bar",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Bar de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Laprida 210",
+        "horario": {
+          "texto": "Lunes a viernes de 7.00 a 00.00. Sábado de 7.30 a 00.30",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3816755575 / 4212801"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "el-portal-comidas-regionales",
+      "datos": {
+        "direccion": "24 de Septiembre 351",
+        "horario": {
+          "texto": "Lunes a sábado de 12.00 a 16.00 y de 20.00 a 00.00. Domingos de 12.00 a 16.00",
+          "confirmado": false
+        },
+        "contacto": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "mi-nueva-estancia",
+      "datos": {
+        "direccion": "Córdoba 401",
+        "horario": {
+          "texto": "12.00 a 15.00 y 21.00 a 00.00",
+          "confirmado": false
+        },
+        "contacto": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "la-marina",
+      "datos": {
+        "titulo": "La Marina",
+        "clase": "bar y restaurante",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Bar y restaurante de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "24 de Septiembre 524",
+        "horario": {
+          "texto": "7.00 a 22.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3814311180 / 3814437149"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "los-naranjos-bar-y-patio",
+      "datos": {
+        "titulo": "Los Naranjos Bar y Patio",
+        "clase": "bar",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Bar de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Laprida 35 - 1° piso Hotel Garden Plaza",
+        "horario": {
+          "texto": "Domingo a miércoles de 7.00 a 00.00. Jueves a sábado y vísperas de feriados de 7.00 a 01.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "0381 4311755 int. 133. Reservas: 3813 596741 (WhatsApp)"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "pizzeria-kentucky",
+      "datos": {
+        "titulo": "Pizzería Kentucky",
+        "clase": "pizzería",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Pizzería de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "24 de Septiembre 460",
+        "horario": {
+          "texto": "07.00 a 02.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3814523691 / 3812518840"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "leno",
+      "datos": {
+        "titulo": "Leno",
+        "clase": "bar y restaurante",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Bar y restaurante de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "24 de Septiembre 468",
+        "horario": {
+          "texto": "11.00 a 02.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3813966286 / 3813930147"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "grido-helados",
+      "datos": {
+        "titulo": "Grido Helados",
+        "clase": "heladería",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Heladería de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "24 de Septiembre 444 y 9 de Julio 71",
+        "horario": {
+          "texto": "10.00 a 02.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3814867418"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "filipo",
+      "datos": {
+        "titulo": "Filipo",
+        "clase": "bar y restaurante",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Bar y restaurante de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Mendoza 501",
+        "horario": {
+          "texto": "8.00 a 23.00",
+          "confirmado": false
+        },
+        "contacto": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "beans",
+      "datos": {
+        "titulo": "Beans",
+        "clase": "cafetería",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Cafetería de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "San Martín 747 - Galería La Florida y Mendoza 502",
+        "horario": {
+          "texto": "8 a 21.00",
+          "confirmado": false
+        },
+        "contacto": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "il-postino",
+      "datos": {
+        "direccion": "Córdoba 501 y Junín 84",
+        "horario": {
+          "texto": "8 a 01.00",
+          "confirmado": false
+        },
+        "contacto": {}
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "la-rural-parque",
+      "datos": {
+        "direccion": "Av. Thays 700 (Parque 9 de Julio)",
+        "horario": {
+          "texto": "9 a 01.00",
+          "confirmado": false
+        },
+        "contacto": {},
+        "servicios": "restaurante\nbar\nparrilla y salones de fiesta"
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/174/bares-y-restaurantes",
+      "paginaTitulo": "Bares y Restaurantes",
+      "coleccion": "lugares",
+      "slug": "totem-parque-9-de-julio",
+      "datos": {
+        "titulo": "Tótem",
+        "clase": "cafetería y bar",
+        "categorias": [
+          "sabores-tucumanos"
+        ],
+        "resumen": "Cafetería y bar de la capital, en la guía de bares y restaurantes del Ente Tucumán Turismo.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Av. Paz Posse y Honduras (Parque 9 de Julio)",
+        "horario": {
+          "texto": "Todos los días de 07.00 a 02.00",
+          "confirmado": false
+        },
+        "contacto": {
+          "telefono": "3815088731 / 3814976648"
+        },
+        "servicios": "cafetería\nbar\njuegos externos para niños"
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/146/penas-tucumanas",
+      "paginaTitulo": "Peñas Tucumanas",
+      "coleccion": "lugares",
+      "slug": "el-alto-de-la-lechuza",
+      "datos": {
+        "titulo": "El Alto de la Lechuza",
+        "clase": "peña",
+        "categorias": [
+          "sabores-tucumanos",
+          "cultura-y-espectaculos"
+        ],
+        "resumen": "Podés degustar la mejor gastronomía regional y parrilladas mientras disfrutas de espectáculos musicales en la peña más antigua del país.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "24 de Septiembre 1199",
+        "contacto": {
+          "telefono": "3815587575"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/el_alto_oficial/"
+        },
+        "horario": {
+          "texto": "Consultar carteleras y horarios en las redes sociales de cada peña.",
+          "confirmado": false
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/146/penas-tucumanas",
+      "paginaTitulo": "Peñas Tucumanas",
+      "coleccion": "lugares",
+      "slug": "la-9-pena-y-restobar",
+      "datos": {
+        "titulo": "La 9 Peña y Restobar",
+        "clase": "peña",
+        "categorias": [
+          "sabores-tucumanos",
+          "cultura-y-espectaculos"
+        ],
+        "resumen": "Podés degustar gastronomía regional y disfrutar de espectáculos musicales.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "9 de Julio 345",
+        "contacto": {
+          "telefono": "3815835592"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/la9tucuman/"
+        },
+        "horario": {
+          "texto": "Consultar carteleras y horarios en las redes sociales de cada peña.",
+          "confirmado": false
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/146/penas-tucumanas",
+      "paginaTitulo": "Peñas Tucumanas",
+      "coleccion": "lugares",
+      "slug": "la-casa-de-yamil",
+      "datos": {
+        "titulo": "La Casa de Yamil",
+        "clase": "peña",
+        "categorias": [
+          "sabores-tucumanos",
+          "cultura-y-espectaculos"
+        ],
+        "resumen": "Podés degustar gastronomía regional y parrilladas y disfrutar de espectáculos musicales.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "España 153",
+        "contacto": {
+          "telefono": "3814140779 / 3815853295"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/lacasadeyamil/"
+        },
+        "horario": {
+          "texto": "Consultar carteleras y horarios en las redes sociales de cada peña.",
+          "confirmado": false
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/146/penas-tucumanas",
+      "paginaTitulo": "Peñas Tucumanas",
+      "coleccion": "lugares",
+      "slug": "el-cardon",
+      "datos": {
+        "porQueIr": "Podés degustar gastronomía regional y disfrutar de espectáculos musicales.",
+        "direccion": "Las Heras 50",
+        "contacto": {
+          "telefono": "3815850860"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/elcardontucuman/"
+        },
+        "horario": {
+          "texto": "Consultar carteleras y horarios en las redes sociales de cada peña.",
+          "confirmado": false
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/146/penas-tucumanas",
+      "paginaTitulo": "Peñas Tucumanas",
+      "coleccion": "lugares",
+      "slug": "pena-la-escondida",
+      "datos": {
+        "titulo": "Peña La Escondida",
+        "clase": "peña",
+        "categorias": [
+          "sabores-tucumanos",
+          "cultura-y-espectaculos"
+        ],
+        "resumen": "Podés degustar de la gastronomía regional mientras disfrutas de espectáculos musicales.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "Miguel Lillo 234",
+        "contacto": {
+          "telefono": "3812142282"
+        },
+        "redes": {},
+        "horario": {
+          "texto": "Consultar carteleras y horarios en las redes sociales de cada peña.",
+          "confirmado": false
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/146/penas-tucumanas",
+      "paginaTitulo": "Peñas Tucumanas",
+      "coleccion": "lugares",
+      "slug": "lo-de-la-paliza",
+      "datos": {
+        "porQueIr": "Podés degustar gastronomía regional y disfrutar de espectáculos musicales.",
+        "direccion": "Laprida 181",
+        "contacto": {
+          "telefono": "3812484403 / 3813034789"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/lodelapaliza/"
+        },
+        "horario": {
+          "texto": "Consultar carteleras y horarios en las redes sociales de cada peña.",
+          "confirmado": false
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/146/penas-tucumanas",
+      "paginaTitulo": "Peñas Tucumanas",
+      "coleccion": "lugares",
+      "slug": "pena-la-taba",
+      "datos": {
+        "titulo": "Peña La Taba",
+        "clase": "peña",
+        "categorias": [
+          "sabores-tucumanos",
+          "cultura-y-espectaculos"
+        ],
+        "resumen": "Podés degustar buena gastronomía y disfrutar de espectáculos musicales.",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "direccion": "San Juan 1131",
+        "contacto": {
+          "telefono": "3812484403"
+        },
+        "redes": {
+          "instagram": "https://www.instagram.com/lataba.tuc/"
+        },
+        "horario": {
+          "texto": "Consultar carteleras y horarios en las redes sociales de cada peña.",
+          "confirmado": false
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/167/empanadillas-de-dulce-de-cayote",
+      "paginaTitulo": "Empanadillas de dulce de cayote",
+      "coleccion": "sabores",
+      "slug": "empanadillas-de-dulce-de-cayote",
+      "datos": {
+        "titulo": "Empanadillas de dulce de cayote",
+        "detalle": "Empanadillas dulces de masa casera rellenas con dulce de cayote, recién sacadas del horno.",
+        "imagen": {
+          "src": "/public/img/1920x650-Empanadilladecayote-Desktop_icaunf8e_04-07-2024.jpg",
+          "alt": "Empanadillas de dulce de cayote"
+        },
+        "tono": 5,
+        "orden": 9
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/556/espectaculo-luces-y-sonidos-de-la-independencia",
+      "paginaTitulo": "Espectáculo Luces y Sonidos de la Independencia",
+      "coleccion": "experiencias",
+      "slug": "luces-y-sonidos-de-la-independencia",
+      "datos": {
+        "titulo": "Luces y Sonidos de la Independencia",
+        "resumen": "Espectáculo proyectado al anochecer sobre los muros de la Casa Histórica, que relata los hechos que llevaron a la jura de la Independencia.",
+        "descripcion": "Es uno de los imperdibles para todo turista que visita Tucumán. El espectáculo, que se proyecta al anochecer en los muros de la Casa Histórica de la Independencia, relata los principales acontecimientos que llevaron a la jura. Los horarios de proyección varían según la temporada.",
+        "modalidad": "libre",
+        "guiada": false,
+        "horario": {
+          "texto": "jueves, viernes y sábados a las 20:30 horas. Los horarios varían según la temporada.",
+          "confirmado": false
+        },
+        "costo": {
+          "modalidad": "pago"
+        },
+        "lugares": [
+          "casa-historica"
+        ],
+        "categorias": [
+          "historia-y-patrimonio",
+          "cultura-y-espectaculos"
+        ],
+        "accion": {
+          "tipo": "consultar",
+          "texto": "Entradas en el Ente Tucumán Turismo",
+          "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/556/espectaculo-luces-y-sonidos-de-la-independencia"
+        },
+        "imagen": {
+          "src": "/public/img/galerialuzsonido_isd667sh_12-06-2024_x1zzp7ll_24-06-2025.jpg",
+          "alt": "Luces y Sonidos de la Independencia"
+        },
+        "galeria": [
+          {
+            "foto": {
+              "src": "/public/img/qrlucesysonidova_wku6mhhc_17-07-2024_rwrug3s4_25-06-2025.jpeg",
+              "alt": "Luces y Sonidos de la Independencia"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/luzsonidogaleria1_8e7nj6by_10-06-2024_zovke4kl_25-06-2025.jpg",
+              "alt": "Luces y Sonidos de la Independencia"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/991/paseo-por-el-lago-san-miguel",
+      "paginaTitulo": "Paseo por el Lago San Miguel",
+      "coleccion": "experiencias",
+      "slug": "bicilagos-lago-san-miguel",
+      "datos": {
+        "titulo": "Bicilagos en el Lago San Miguel",
+        "resumen": "El Lago San Miguel del Parque 9 de Julio se puede navegar en bicis acuáticas para dos personas.",
+        "descripcion": "Una nueva propuesta permite a los turistas navegar por el Lago San Miguel en atractivas bicis acuáticas llamados \"Bicilagos\" disponibles para dos o tres pasajeros. La actividad se puede disfrutar de martes a viernes de 14 a 20 horas y los sábados y domingos en doble turno, de 10 a 13 horas y de 15 a 20 horas.",
+        "modalidad": "libre",
+        "guiada": false,
+        "horario": {
+          "texto": "Martes a viernes de 14 a 20. Sábados y domingos de 10 a 13 y de 15 a 20.",
+          "confirmado": false
+        },
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "lugares": [
+          "parque-9-de-julio"
+        ],
+        "categorias": [
+          "parques-y-aire-libre"
+        ],
+        "accion": {
+          "tipo": "sin-inscripcion",
+          "texto": "Cómo llegar",
+          "url": "https://maps.app.goo.gl/viZYeReA2AWYbR9BA"
+        },
+        "imagen": {
+          "src": "/public/img/260115152447_41425_sg4xhzc2_16-01-2026.jpg",
+          "alt": "Bicilagos en el Lago San Miguel"
+        }
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/954/la-ruta-argentina-del-art-nouveau-en-tucuman",
+      "paginaTitulo": "La Ruta Argentina del Art Nouveau en Tucumán",
+      "coleccion": "experiencias",
+      "slug": "ruta-del-art-nouveau",
+      "datos": {
+        "titulo": "Ruta del Art Nouveau",
+        "resumen": "San Miguel de Tucumán fue distinguida «Ciudad Art Nouveau 2025»: un recorrido a pie por sus edificios y monumentos de ese estilo.",
+        "descripcion": "¿Sabías que San Miguel de Tucumán fue distinguida como “Ciudad Art Nouveau 2025” por sus ejemplares del estilo arquitectónico Art Nouveau?\n\nEl Art Nouveau fue un estilo artístico internacional surgido entre fines del siglo XIX e inicios del XX que se caracterizó por sus líneas fluidas y las curvas que se inspiraron en la naturaleza, especialmente en formas vegetales. Se manifestó en diferentes disciplinas como la arquitectura, las artes decorativas, la pintura y la escultura, buscando una estética unificada y moderna que rompiera con las convenciones anteriores.\n\nConocé más sobre los edificios y monumentos que integran la Ruta del Art Nouveau en Tucumán:\n\nCasa de Gobierno (25 de Mayo 90): Diseñada por el arquitecto Domingo Selva, la Casa de Gobierno de Tucumán es un palacio ecléctico donde el lujo francés se mezcla con el Barroco.\n\nEstatua de la Libertad (Plaza Independencia): Esculpida en mármol de Carrara por la célebre artista tucumana Lola Mora, la Estatua de la Libertad enaltece la Plaza Independencia de San Miguel de Tucumán.\n\nEx Hotel Plaza - Teatro Mercedes Sosa (San Martín 435): Obra del arquitecto José Pasteris y ubicado frente a la Plaza Independencia, el Ex Hotel Plaza donde en la actualidad funciona el Teatro Mercedes Sosa, es uno de los ejemplos más puros de la Secesión Vienesa en la ciudad.\n\nEx Casa Sucar - Museo de la Ciudad SMT (Salta al 500): Constituido como una joya recuperada de la ciudad, este edificio representa la vivienda aristocrática de la \"Generación del Centenario\".\n\nMonumento a Juan Bautista Alberdi (Plaza Alberdi): Obra maestra de la célebre escultora tucumana Lola Mora, destaca por la integración de la figura política de Juan Bautista Alberdi con alegorías escultóricas llenas de movimiento y simbolismo, características del lenguaje visual de principios del 1900.\n\nArchivo Histórico de la Provincia (25 de Mayo 487): El edificio donde funciona el Archivo Histórico de la Provincia constituye una pieza clave.\n\nSociedad Sarmiento (Congreso de Tucumán 65): Construido por el ingeniero Domingo Selva e inaugurado en 1909, se trata de un exponente del eclecticismo con fuerte carga decorativa.\n\nFacultad de Artes UNT (Simón Bolívar 700): Originalmente parte de una quinta o casona señorial, el edificio donde en la actualidad funciona la Facultad de Artes de la Universidad Nacional de Tucumán, presenta una volumetría imponente donde se aprecian detalles ornamentales en los frisos y aberturas que dialogan con el lenguaje modernista de la época.\n\nHotel Congreso Colonial: Aunque su nombre remite a lo colonial por su cercanía al Museo Casa Histórica de la Independencia, el edificio conserva detalles propios de la arquitectura de principios del siglo XX, con ornamentación que fusiona elementos clásicos con líneas más fluidas.\n\nComisaría N° 2 (1901) (Buenos Aires 479): Este edificio donde funciona la Comisaría N° 2 de Tucumán es un ejemplo fascinante de arquitectura institucional.",
+        "modalidad": "a-pie",
+        "guiada": false,
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "lugares": [
+          "casa-de-gobierno",
+          "plaza-independencia",
+          "casa-museo-de-la-ciudad",
+          "plaza-juan-b-alberdi"
+        ],
+        "categorias": [
+          "historia-y-patrimonio"
+        ],
+        "accion": {
+          "tipo": "sin-inscripcion",
+          "texto": "Más en el Ente Tucumán Turismo",
+          "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/954/la-ruta-argentina-del-art-nouveau-en-tucuman"
+        },
+        "imagen": {
+          "src": "/public/img/artnouveau_r91yxc1l_13-07-2026.png",
+          "alt": "Ruta del Art Nouveau en Tucumán"
+        },
+        "galeria": [
+          {
+            "foto": {
+              "src": "/public/img/Casa_M_0o9m9rfs_08-08-2025.jpg",
+              "alt": "Ruta del Art Nouveau en Tucumán"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/estatu_yszd0a1t_15-01-2026.JPG",
+              "alt": "Ruta del Art Nouveau en Tucumán"
+            }
+          },
+          {
+            "foto": {
+              "src": "/public/img/818x46_4j4myoi8_13-07-2026.jpg",
+              "alt": "Ruta del Art Nouveau en Tucumán"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "pagina": "/articulos/articulo/785/ruta-de-la-fe-ciudad-historica",
+      "paginaTitulo": "Ruta de la Fe - Ciudad Histórica",
+      "coleccion": "experiencias",
+      "slug": "ruta-de-la-fe-ciudad-historica",
+      "datos": {
+        "titulo": "Ruta de la Fe en la Ciudad Histórica",
+        "resumen": "Los templos del casco histórico con más valor religioso, histórico y cultural: la Catedral, La Merced, Santo Domingo y San Francisco.",
+        "descripcion": "La religión se constituye como un componente esencial para la visita de ciudades y países en todo el mundo con la fe como principal motor. Tucumán no es la excepción y en cada uno de sus circuitos turísticos podrás encontrar sitios y templos de gran valor religioso, histórico y cultural.\n\nEn la Ciudad Histórica destacan templos de visita obligada para todo turista, más aún aquellos interesados en el turismo religioso, entre los que destacan:\n\nIglesia Catedral de Nuestra Señora de la Encarnación: es el mayor templo de la provincia ubicado frente a la Plaza Independencia. Entre sus principales reliquias se encuentran la Cruz Fundacional, su órgano traído de París en 1800 (y del que existen solo dos ejemplares en Sudamérica) y sus frisos que relatan la creación del mundo.\n\nBasílica Nuestra Señora de la Merced: resguarda grandes reliquias de la historia del país. Aquí se puede observar la imagen de la Virgen María en su advocación como Nuestra Señora de la Merced, nombrada generala del Ejército Argentino por el General Manuel Belgrano.\n\nIglesia Santo Domingo: situada junto a la sede de la UNSTA (Universidad del Norte Santo Tomás de Aquino). Nombrada Basílica Menor de Nuestra Señora del Rosario, el templo resguarda la imagen de la Virgen del Rosario traída desde el primer asentamiento de la ciudad en Ibatín.\n\nIglesia y Convento de San Francisco: recientemente inaugurada tras un proceso de puesta en valor, entre sus reliquias se encuentra la figura del Cristo Yacente. En su interior, dentro del Museo San Francisco, se encuentra expuesto el mobiliario original utilizado durante la jura de la independencia en 1816.",
+        "modalidad": "a-pie",
+        "guiada": false,
+        "costo": {
+          "modalidad": "gratis"
+        },
+        "lugares": [
+          "catedral",
+          "basilica-de-la-merced",
+          "iglesia-san-francisco"
+        ],
+        "categorias": [
+          "turismo-religioso",
+          "historia-y-patrimonio"
+        ],
+        "accion": {
+          "tipo": "sin-inscripcion",
+          "texto": "Más en el Ente Tucumán Turismo",
+          "url": "https://www.tucumanturismo.gob.ar/articulos/articulo/785/ruta-de-la-fe-ciudad-historica"
+        },
+        "imagen": {
+          "src": "/public/img/ciudadhistorica3_g6w3ni5y_17-07-2025.jpg",
+          "alt": "Ruta de la Fe en la Ciudad Histórica"
+        }
+      }
+    },
+    {
+      "pagina": "/alojamientos",
+      "paginaTitulo": "Alojamientos",
+      "coleccion": "planifica",
+      "slug": "alojamientos-habilitados",
+      "datos": {
+        "titulo": "Alojamientos habilitados",
+        "resumen": "Los 35 hoteles, hostels y departamentos de San Miguel de Tucumán inscriptos en el registro oficial del Ente Tucumán Turismo.",
+        "icono": "ubicacion",
+        "orden": 13,
+        "secciones": [
+          {
+            "titulo": "De dónde sale esta lista",
+            "texto": "Del registro de alojamientos del Ente Tucumán Turismo, el organismo provincial que los habilita. Los teléfonos y sitios son los que figuran ahí: conviene confirmar tarifas y disponibilidad directamente con cada alojamiento."
+          },
+          {
+            "titulo": "Hoteles de 5 estrellas",
+            "texto": "Catalinas Park: Av. Soldati 380. Tel. +5438156275071. www.hotelcatalinastucuman.com.ar.\n\nSheraton Tucumán: Av. Soldati 440. Tel. +543814554700, +5438145554730, +543815511000. www.sheraton.com/tucuman."
+          },
+          {
+            "titulo": "Hoteles de 4 estrellas",
+            "texto": "Bicentenario Suites & Spa: Las Heras 21. Tel. +543812546289, +543815569205. www.hotelbicentenario.com.ar.\n\nDel Jardín: Laprida 463. Tel. 0381-2441320 y 381-4159705. www.hoteldeljardin.com.ar.\n\nGarden Park Suites & Eventos: Av. Soldati 330. Tel. 0381 431-0700 / 3815842242. www.hotelgardenpark.com.ar.\n\nHilton Garden Inn Tucumán: Las Piedras 1550. Tel. +543814525555, +5438154434764. www.hgitucuman.com.\n\nMetropol: 24 de Septiembre 524. Tel. +543814311180, +545157338. hotelmetropol.com.ar/portal/es-es/2387/Home.\n\nRamada Plaza: Laprida 35. Tel. +543814311755. hotelgardenplaza.com.ar/#!/-hoteltucuman.\n\nSuite Garden Park: Av. Soldati 330. Tel. +54381 4310700, +543815842242. www.gardenparkhotel.com.ar.\n\nTucumán Center Suites Business: 25 de Mayo 230. Tel. +54381 4525555, +543815070790, +543815070794. www.tucumancenterhotel.com.ar."
+          },
+          {
+            "titulo": "Hoteles de 3 estrellas",
+            "texto": "Amerian Tucumán Apart & Suite: Santiago del Estero 419. Tel. +543815601766, +543814319441, +543812581775. amerian.com/destinos/amerian-tucuman-apart-suitre.\n\nCarlos V: 25 de Mayo 330. Tel. +543812526323, +543814311666, +543816580744. www.hotelcarlosv.com.ar.\n\nColonial: San Martín 35. Tel. 4222738 / 0381 455-8875. www.hotelcolonialweb.com.ar.\n\nEmbajador: Las Heras 221. Tel. +543813587268, +543814229885, +543814311264. www.hotelembajador.com.ar.\n\nFrancia: Crisóstomo Álvarez 467. Tel. +543813875731, +543814310781. www.hotelfrancia.com.ar.\n\nLe Park: Junín 1134. Tel. +543812526323, +543814311666, +543816580744.\n\nMediterráneo: 24 de Septiembre 364. Tel. +543813186849, +543814867853. www.hotelmediterraneotuc.com.ar.\n\nMiami: Junín 580. Tel. +543814310265, +543815647361. hotelmiamituc.com.\n\nPremier: Crisóstomo Álvarez 510. Tel. +543814310381, +543814310382, +543816580744. hotelpremier.com.ar.\n\nRepública: Rivadavia 71. Tel. +543814310481, +543814310483. www.hotelrepublica.net.\n\nSolar Norte: México 879. Tel. +543814272722, +543815404755.\n\nVersailles: Crisóstomo Álvarez 481. Tel. +543814229760. www.hotelversaillestuc.com.ar."
+          },
+          {
+            "titulo": "Hoteles de 2 estrellas",
+            "texto": "América: Santiago del Estero 1064. Tel. +543814224853. www.hotelamerica.com.ar.\n\nLa Terminal: Av. Brígido Terán 227. Tel. +543812073681, +543812128973, +543814210647. hotellaterminal.com.ar.\n\nLG Golden Suite: Bernabé Aráoz 36. Tel. +543815798882, +543814216286."
+          },
+          {
+            "titulo": "Hoteles de 1 estrella",
+            "texto": "Astoria: Congreso 88. Tel. +543814937828. www.hotelastoriatucuman.com.ar.\n\nCharcas: Charcas 31. Tel. +543814219576.\n\nGarden: Crisóstomo Álvarez 627. Tel. (54 381) 4311246/ 4227354."
+          },
+          {
+            "titulo": "Hostels",
+            "texto": "A la Gurda: Maipú 490. Tel. +543813368726, +543812324008.\n\nBrisa: Congreso 190. Tel. (381) 5167770.\n\nLas Carretas: Benjamín Aráoz 38. Tel. +543814216211, +543815813634, +543814214186. www.lascarretashostal.com.ar.\n\nMercer: Suipacha 685. Tel. +543814331268, +5438156819173. www.mercerhostal.com.ar."
+          },
+          {
+            "titulo": "Residenciales",
+            "texto": "Universo: Santiago del Estero 1060. Tel. (0381) 4311136 / (0381) 5624299."
+          },
+          {
+            "titulo": "Departamentos y apart",
+            "texto": "The Point Casa: Virgen de la Merced 120. Tel. +543816319589. www.thepointcasa.com.ar.\n\nTP Apart Hotel: Santa Fe 1635. Tel. (0381)4237821 - (0381) 154177559."
+          }
+        ],
+        "enlaces": [
+          {
+            "texto": "Registro de alojamientos de toda la provincia",
+            "url": "https://www.tucumanturismo.gob.ar/alojamientos"
+          }
+        ]
+      }
+    },
+    {
+      "pagina": "/agencias",
+      "paginaTitulo": "Agencias de viajes",
+      "coleccion": "planifica",
+      "slug": "agencias-y-alquiler-de-autos",
+      "datos": {
+        "titulo": "Agencias de viajes y alquiler de autos",
+        "resumen": "Agencias de viajes y empresas de alquiler de autos de la capital inscriptas en el Ente Tucumán Turismo.",
+        "icono": "bus-linea",
+        "orden": 14,
+        "secciones": [
+          {
+            "titulo": "Agencias de viajes",
+            "texto": "Abba Tour and Meeting (legajo ATR-0005): San Lorenzo 475. Tel. +543815240668. www.abba-tour.com.\n\nE.V.T. Cerro del Aconquija Viajes y Turismo (legajo 17509): Crisóstomo Álvarez 397 - Piso 6º - Dpto. «B». Tel. +543814235148, +543816814162. www.cerrodelaconquijaviajes.tur.ar.\n\nE.V.T. CF-Wamos (legajo 18334): atención por canales electrónicos. www.cf-wamos.tur.ar.\n\nE.V.T. JF Turismo (legajo 14316): Pje Batalla de Cerrito 1229. Tel. +543814229278.\n\nE.V.T. Noroeste Viajes (legajo 2923): San Martín 773. Tel. +543814222401, +543814306461.\n\nE.V.T. Turismo Cultural Kayanka (legajo 11961): Crisóstomo Álvarez 1560. Tel. +543814337080, +543815339609.\n\nE.V.T. Turismo del Tucumán (legajo 10003): atención por canales electrónicos. Tel. +543814660603, +543814149622. turismodeltucuman.tur.ar.\n\nMalu Turismo Tucumán (legajo ATR-0006): Juan Bautista Alberdi 668. Tel. +543815470906. www.maluturismo.com.\n\nTaku (legajo ATR-0002): Corrientes 1230. Tel. +543816634311.\n\nTucumán al Mundo (legajo ATR-0004): Pasaje Cruz Varela. Tel. +543814066801. www.tucumanalmundo.com.\n\nXynergia Travel & Tech (legajo ATR-0001): atención por canales electrónicos. Tel. +543815903830. xynergiatravel.com."
+          },
+          {
+            "titulo": "Alquiler de autos",
+            "texto": "Avis Budget Rent a Car: 24 de Septiembre 524 - Hall - Swiss Hotel Metropol. Tel. +543815616919.\n\nCactus Rent a Car: Aeropuerto. Tel. +543815976884. www.cactus.com.ar.\n\nDonde Rent a Car: Gobernador Gutierrez 1384. Tel. +543815446677, +543813931851.\n\nHertz: Calle Crisóstomo 507. Tel. +543814524991.\n\nMóvil Renta: Calle San Lorenzo 370. Tel. +543814310550, +543815873049.\n\nSinergia Rent a Car: Av. Soldati 380 (Hotel Catalinas). Tel. +543814571012, +544735377.\n\nSixt: Las Heras 21. Tel. +543815798932, +543812017955."
+          }
+        ],
+        "enlaces": [
+          {
+            "texto": "Agencias de viajes (Ente Tucumán Turismo)",
+            "url": "https://www.tucumanturismo.gob.ar/agencias"
+          },
+          {
+            "texto": "Alquiler de autos (Ente Tucumán Turismo)",
+            "url": "https://www.tucumanturismo.gob.ar/autos"
+          },
+          {
+            "texto": "Guías de turismo habilitados",
+            "url": "https://www.tucumanturismo.gob.ar/guias"
+          },
+          {
+            "texto": "Prestadores de turismo activo",
+            "url": "https://www.tucumanturismo.gob.ar/prestadores"
+          },
+          {
+            "texto": "Colectivos a otras localidades",
+            "url": "https://www.tucumanturismo.gob.ar/transporte"
+          }
+        ]
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "bersuit",
+      "datos": {
+        "titulo": "Bersuit",
+        "clase": "espectaculo",
+        "resumen": "Espectáculo en el Teatro Mercedes Sosa.",
+        "lugar": "teatro-mercedes-sosa",
+        "sede": "Teatro Mercedes Sosa",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2026-11-27T21:00",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "musica"
+        ],
+        "imagen": {
+          "src": "/public/img/75Si5g_mcyj5vn7_27-05-2026.png",
+          "alt": "Bersuit"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "1932",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "myriam-hernandez-tauro-world-tour-2026",
+      "datos": {
+        "titulo": "Myriam Hernández - TAURO World Tour 2026",
+        "clase": "espectaculo",
+        "resumen": "Espectáculo en el Teatro Mercedes Sosa.",
+        "lugar": "teatro-mercedes-sosa",
+        "sede": "Teatro Mercedes Sosa",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2026-11-28T21:00",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "musica"
+        ],
+        "imagen": {
+          "src": "/public/img/DHKzme_qmtxx8an_16-06-2026.png",
+          "alt": "Myriam Hernández - TAURO World Tour 2026"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "1967",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "turf-30-anos",
+      "datos": {
+        "titulo": "Turf 30 Años",
+        "clase": "espectaculo",
+        "resumen": "Espectáculo en el Teatro Mercedes Sosa.",
+        "lugar": "teatro-mercedes-sosa",
+        "sede": "Teatro Mercedes Sosa",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2027-04-02T21:00",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "musica"
+        ],
+        "imagen": {
+          "src": "/public/img/EBX3cc_gsa1khtz_25-09-2026.png",
+          "alt": "Turf 30 Años"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "2255",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "dracula-resurreccion",
+      "datos": {
+        "titulo": "Drácula – Resurrección",
+        "clase": "espectaculo",
+        "resumen": "Espectáculo en el Teatro Mercedes Sosa.",
+        "lugar": "teatro-mercedes-sosa",
+        "sede": "Teatro Mercedes Sosa",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2027-03-12T21:00",
+            "estado": "confirmado"
+          },
+          {
+            "inicio": "2027-03-13T21:00",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "teatro"
+        ],
+        "imagen": {
+          "src": "/public/img/GrSRe3_vxz8lrbr_13-10-2026.png",
+          "alt": "Drácula – Resurrección"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "2294",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "el-rey-pelusa-y-el-principe-germain",
+      "datos": {
+        "titulo": "El Rey Pelusa y El Príncipe Germain",
+        "clase": "espectaculo",
+        "resumen": "Espectáculo en el Teatro Mercedes Sosa.",
+        "lugar": "teatro-mercedes-sosa",
+        "sede": "Teatro Mercedes Sosa",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2027-04-17T21:00",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "teatro"
+        ],
+        "imagen": {
+          "src": "/public/img/hU1AAU_kfxy4nfa_26-10-2026.png",
+          "alt": "El Rey Pelusa y El Príncipe Germain"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "2326",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "luis-fonsi-mar-infinito-world-tour",
+      "datos": {
+        "titulo": "Luis Fonsi – Mar Infinito World Tour",
+        "clase": "espectaculo",
+        "resumen": "Espectáculo en el Teatro Mercedes Sosa.",
+        "lugar": "teatro-mercedes-sosa",
+        "sede": "Teatro Mercedes Sosa",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2027-04-11T20:00",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "musica"
+        ],
+        "imagen": {
+          "src": "/public/img/qCEodf_50rqgeyg_30-10-2026.png",
+          "alt": "Luis Fonsi – Mar Infinito World Tour"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "2355",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "los-arrieros",
+      "datos": {
+        "titulo": "Los Arrieros",
+        "clase": "espectaculo",
+        "resumen": "Espectáculo en Lo de la Paliza.",
+        "lugar": "lo-de-la-paliza",
+        "sede": "Lo de la Paliza",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2026-11-28T22:00",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "musica"
+        ],
+        "imagen": {
+          "src": "/public/img/b4f14c_1e0l3ohx_12-11-2026.jpg",
+          "alt": "Los Arrieros"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "2390",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "q-tono",
+      "datos": {
+        "titulo": "Q´ Tono",
+        "clase": "espectaculo",
+        "resumen": "Espectáculo en Lo de la Paliza.",
+        "lugar": "lo-de-la-paliza",
+        "sede": "Lo de la Paliza",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2026-11-27T22:00",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "musica"
+        ],
+        "imagen": {
+          "src": "/public/img/03bf3b_io502ymm_12-11-2026.jpg",
+          "alt": "Q´ Tono"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "2392",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    },
+    {
+      "pagina": "/eventos",
+      "paginaTitulo": "Eventos",
+      "coleccion": "eventos",
+      "slug": "la-familia-corre",
+      "datos": {
+        "titulo": "La familia corre",
+        "clase": "deportivo",
+        "resumen": "Carrera en la pista de ciclismo del Parque 9 de Julio.",
+        "lugar": "parque-9-de-julio",
+        "sede": "Pista de ciclismo del Parque 9 de Julio",
+        "costo": {
+          "modalidad": "consultar"
+        },
+        "ocurrencias": [
+          {
+            "inicio": "2026-11-28",
+            "estado": "confirmado"
+          }
+        ],
+        "rubros": [
+          "deportes"
+        ],
+        "imagen": {
+          "src": "/public/img/WhatsA_8jbpwdeb_24-11-2026.jpeg",
+          "alt": "La familia corre"
+        },
+        "legado": {
+          "origen": "ente-turismo",
+          "id": "2409",
+          "url": "https://www.tucumanturismo.gob.ar/eventos"
+        }
+      }
+    }
+  ]
+}

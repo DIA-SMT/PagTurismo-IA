@@ -27,6 +27,7 @@ Supabase (Postgres, Auth y Storage) en producción · PGlite en local.
 > | [docs/ARQUITECTURA_UNIFICADA.md](docs/ARQUITECTURA_UNIFICADA.md) | Decisiones: datos, rutas, permisos, diseño, Migue |
 > | [docs/PLAN_MIGRACION.md](docs/PLAN_MIGRACION.md) | Migraciones, importación, corte del bus, verificación y vuelta atrás |
 > | [docs/RELEVAMIENTO_AGENDA.md](docs/RELEVAMIENTO_AGENDA.md) | Qué tiene el sitio de la Agenda que el portal no tenía, qué se trajo y qué queda por decidir |
+> | [docs/RELEVAMIENTO_ENTE_TURISMO.md](docs/RELEVAMIENTO_ENTE_TURISMO.md) | Lo mismo con el sitio del Ente Tucumán Turismo: gastronomía, peñas, museos, teatros, alojamientos, agencias |
 > | [deploy/README.md](deploy/README.md) | Despliegue en la VPS (al final, la sección del portal unificado) |
 >
 > **Rutas nuevas:** `/lugares` (con filtro por tipo de espacio), `/agenda` con buscador, categorías,

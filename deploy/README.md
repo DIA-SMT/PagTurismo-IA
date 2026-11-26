@@ -146,6 +146,8 @@ sudo -u portalturismo npm run cultura -- espacios --desde-sitio --fotos         
 sudo -u portalturismo npm run cultura -- espacios --desde-sitio --fotos --escribir  # fotos de los 21 espacios
 sudo -u portalturismo npm run cultura -- paginas --fotos --escribir                 # páginas fijas → 17 fichas en borrador
 sudo -u portalturismo npm run cultura -- fotos-eventos --escribir                   # foto a los eventos que no tienen
+# Después, lo del Ente Tucumán Turismo (docs/RELEVAMIENTO_ENTE_TURISMO.md): 46 fichas nuevas en borrador
+sudo -u portalturismo npm run cultura -- paginas --archivo datos/turismo/ente-tucuman-turismo.json --fotos --escribir
 ```
 
 ### Verificación posterior

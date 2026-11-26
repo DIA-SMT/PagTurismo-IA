@@ -124,10 +124,10 @@ Rama: `integracion/portal-unificado`. Última actualización: 2026-11-22. **Prod
 | Portugués del Bus Turístico y Bus Educativo | P2 | Los textos del bus existen en es/en; en pt se muestra español con aviso |
 | Auditoría con diferencias campo por campo en operaciones del bus | P3 | Hoy se registra persona, operación y ruta (se anota al pedirla: incluye intentos rechazados) |
 | Fotos de los eventos en la base local | P3 | El WordPress sigue caído (25/11): `npm run cultura -- fotos-eventos --escribir` las trae del sitio nuevo de la Agenda. Sin foto, la tarjeta usa la del lugar o la imagen por defecto de la Agenda |
-| Validar y publicar los lugares para comer y La Ruta de la Empanada | P1 | 8 lugares (Ente Tucumán Turismo, ranking TripAdvisor 2017, Ruta de la Empanada) y la experiencia, en borrador con fuentes y horarios «a confirmar». Sumar la guía de bares y peñas de Turismo |
+| Validar y publicar los lugares para comer y La Ruta de la Empanada | P1 | 8 lugares (Ente Tucumán Turismo, ranking TripAdvisor 2017, Ruta de la Empanada) y la experiencia, en borrador con fuentes y horarios «a confirmar». La guía de bares y peñas del Ente suma 21 más (`docs/RELEVAMIENTO_ENTE_TURISMO.md`), también en borrador |
 | Talleres 2026: corregir la planilla y confirmar condiciones | P1 | 3 errores (Danza árabe «2O:30», Pintura al óleo «19:00 a 12:00», Del Tiempo I'Ñaupa sin hora de fin) y la columna de alumnos vacía. Confirmar si los «no municipales» son gratuitos y cómo se inscribe. Pasar la carga al panel |
-| Estructura de la web de Cultura (documento de Gestión Cultural) | P2 | Falta la Casa Belgraniana – Solar Histórico, los programas Crear Encuentro y Cultura Joven, y alojamientos |
-| Coordenadas de los lugares para comer y del resto de las fichas | P2 | Sin coordenadas no aparecen en la capa del portal del mapa |
+| Estructura de la web de Cultura (documento de Gestión Cultural) | P2 | Falta la Casa Belgraniana – Solar Histórico, los programas Crear Encuentro y Cultura Joven. Alojamientos: guía «Alojamientos habilitados» con el registro del Ente, en borrador |
+| Coordenadas de los lugares para comer y del resto de las fichas | P2 | Sin coordenadas no aparecen en la capa del portal del mapa. El Ente aporta las de 14 atractivos; los lugares para comer siguen sin |
 | Certificado del servidor del mapa municipal | P2 | Pedir a Innovación que estadisticas.smt.gob.ar:5050 envíe la cadena completa |
 | Lint (ESLint) | P3 | PagTurismo no tenía linter configurado |
 
