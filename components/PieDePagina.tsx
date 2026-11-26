@@ -56,7 +56,7 @@ export async function PieDePagina() {
           <div className="footer__identidad">
             <div className="footer__logo">
               <Image src="/img/logo-smt-neg.png" alt={t.sitio.logoAlt} width={184} height={60} />
-              <span className="footer__turismo">{t.sitio.turismo}</span>
+              <span className="footer__turismo">{t.sitio.marca}</span>
             </div>
             <address className="footer__direccion">
               <span><Icono nombre="ubicacion" tamano={16} />{TURISMO.area}: {TURISMO.domicilio}</span>

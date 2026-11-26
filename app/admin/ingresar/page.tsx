@@ -26,14 +26,14 @@ export default async function Ingresar() {
         </div>
         <div className="adm-ingreso__lema">
           <p>Dirección de Turismo</p>
-          <strong>Turismo San Miguel de Tucumán</strong>
+          <strong>Cultura San Miguel de Tucumán</strong>
           <p>Panel de contenidos del portal: lugares, experiencias, agenda y recorridos.</p>
         </div>
       </section>
 
       <section className="adm-ingreso__formulario">
         <div className="adm-ingreso__caja">
-          <p>Panel de Turismo</p>
+          <p>Panel de Cultura</p>
           <h1>Ingreso del equipo</h1>
           <p style={{ marginTop: "0.75rem", color: "var(--a-gris)" }}>Solo para el equipo autorizado de la Dirección de Turismo.</p>
           <div className="adm-tarjeta">

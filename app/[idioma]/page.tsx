@@ -4,6 +4,7 @@ import Image from "next/image";
 import { AbrirMigue } from "@/components/AbrirMigue";
 import { Carrusel } from "@/components/Carrusel";
 import { HeroFotos } from "@/components/HeroFotos";
+import { QueHacerHoy, type AccesoHoy } from "@/components/QueHacerHoy";
 import { Vinculo as Link } from "@/components/i18n/Idioma";
 import { Icono } from "@/components/Iconos";
 import { Cabecera, Enlace, Marca } from "@/components/Ui";
@@ -13,8 +14,9 @@ import { BUS_TURISTICO } from "@/lib/contenido";
 import { contenido, destacadosVigentes, agendaDestacada, ocurrenciasDeAgenda } from "@/lib/datos";
 import { CategoriasAgenda, GrillaEventos, SemanaAgenda } from "@/components/cultura/Agenda";
 import { TalleresPortada } from "@/components/cultura/TalleresPortada";
-import { categoriasPopulares, proximosDias, proximosEventos } from "@/lib/cultura/agenda";
-import { diaLocal, formatearOcurrencia, nombreMes, partesDeFecha } from "@/lib/fechas";
+import { categoriasPopulares, filtrarAgenda, proximosDias, proximosEventos, type FiltrosAgenda } from "@/lib/cultura/agenda";
+import { TALLERES } from "@/lib/cultura/datos-talleres";
+import { diaDeSemana, diaLocal, formatearOcurrencia, nombreMes, partesDeFecha } from "@/lib/fechas";
 import { LOCALE } from "@/lib/i18n/config";
 import { formatear } from "@/lib/i18n/definir";
 import { alternativas, rutaLocal, textosActuales } from "@/lib/i18n/servidor";
@@ -56,9 +58,9 @@ export default async function Portada() {
   const { comun: tc, portada: t } = textosPagina;
   const accesos = [
     { titulo: tc.nav.agenda, detalle: t.accesos.agendaDetalle, url: "/agenda", icono: "calendario" },
+    { titulo: t.accesos.talleres, detalle: t.accesos.talleresDetalle, url: "/talleres", icono: "personas" },
     { titulo: t.accesos.bus, detalle: t.accesos.busDetalle, url: BUS_TURISTICO, icono: "bus-linea" },
-    { titulo: t.accesos.imperdibles, detalle: t.accesos.imperdiblesDetalle, url: "/descubri", icono: "estrella" },
-    { titulo: t.accesos.mapa, detalle: t.accesos.mapaDetalle, url: "/mapa", icono: "mapa" },
+    { titulo: t.accesos.turismo, detalle: t.accesos.turismoDetalle, url: "/descubri", icono: "brujula" },
   ];
   const ahora = Date.now();
   const sitio = c.sitio;
@@ -77,6 +79,49 @@ export default async function Portada() {
   const platos = c.platos;
   const escapadas = c.escapadas;
   const guias = c.guias;
+
+  // ---- ¿Qué hacer hoy? Accesos con datos del día, para vecinos y para visitantes ----
+  const th = t.hoy;
+  const sinFiltros: FiltrosAgenda = { cuando: "hoy", fecha: "", q: "", rubro: "", lugar: "", gratis: false };
+  const hoyEnAgenda = filtrarAgenda(ocurrenciasAgenda, sinFiltros, ahora).length;
+  const gratisFinde = filtrarAgenda(ocurrenciasAgenda, { ...sinFiltros, cuando: "finde", gratis: true }, ahora).length;
+  const diaHoy = diaDeSemana(ahora);
+  const talleresDelDia = (dia: number) => TALLERES.talleres.reduce((n, x) => n + x.horarios.filter((h) => h.dia === dia).length, 0);
+  const salidaBus = salidasBus[0];
+  // Si hoy no hay nada, el próximo día de la semana que tenga actividades.
+  const proximoDia = hoyEnAgenda ? undefined : semanaAgenda.find((d) => d.eventos > 0 && d.dia > diaLocal(ahora));
+  const nombreDia = (dia: string) => new Intl.DateTimeFormat(LOCALE[c.idioma].intl, { weekday: "long", timeZone: "UTC" }).format(new Date(`${dia}T12:00:00Z`));
+  const accesoAgenda: AccesoHoy = {
+    titulo: th.agendaTitulo, icono: "calendario", tono: 3,
+    url: hoyEnAgenda ? "/agenda?cuando=hoy" : proximoDia ? `/agenda?cuando=fecha&fecha=${proximoDia.dia}` : "/agenda",
+    detalle: hoyEnAgenda === 1 ? th.agendaUna : hoyEnAgenda ? formatear(th.agendaDetalle, { n: hoyEnAgenda })
+      : proximoDia ? formatear(th.agendaProximo, { dia: nombreDia(proximoDia.dia), n: proximoDia.eventos }) : th.agendaNada,
+  };
+  const accesosHoy: Record<"vecino" | "turista", AccesoHoy[]> = {
+    vecino: [
+      accesoAgenda,
+      {
+        titulo: th.talleresTitulo, icono: "personas", tono: 0, url: `/talleres?dia=${diaHoy === 0 ? 1 : diaHoy}`,
+        detalle: diaHoy === 0 ? formatear(th.talleresDomingo, { n: talleresDelDia(1) }) : formatear(th.talleresDetalle, { n: talleresDelDia(diaHoy) }),
+      },
+      {
+        titulo: th.gratisTitulo, icono: "ticket", tono: 4, url: "/agenda?cuando=finde&gratis=1",
+        detalle: gratisFinde ? formatear(th.gratisDetalle, { n: gratisFinde }) : th.gratisNada,
+      },
+      { titulo: th.museosTitulo, icono: "estatua", tono: 1, url: "/que-hacer/historia-y-patrimonio", detalle: diaHoy === 1 ? th.museosLunes : th.museosAbiertos },
+    ],
+    turista: [
+      accesoAgenda,
+      {
+        titulo: th.busTitulo, icono: "bus-linea", tono: 0, url: BUS_TURISTICO,
+        detalle: !salidaBus ? th.busSinSalidas
+          : salidaBus.fecha === diaLocal(ahora) ? formatear(th.busHoy, { hora: salidaBus.hora.slice(0, 5) })
+            : formatear(th.busProxima, { fecha: new Intl.DateTimeFormat(LOCALE[c.idioma].intl, { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }).format(new Date(`${salidaBus.fecha}T12:00:00Z`)) }),
+      },
+      { titulo: th.museosTitulo, icono: "estatua", tono: 1, url: "/que-hacer/historia-y-patrimonio", detalle: diaHoy === 1 ? th.museosLunes : th.museosAbiertos },
+      { titulo: th.planificaTitulo, icono: "chispas", tono: 4, url: "/planifica", detalle: th.planificaDetalle },
+    ],
+  };
 
   return (
     <>
@@ -98,11 +143,11 @@ export default async function Portada() {
             </form>
 
             <div className="hero__botones">
-              <Link className="boton boton--primario" href="/que-hacer">
-                {t.hero.explorar} <Icono nombre="flecha" tamano={18} />
+              <Link className="boton boton--primario" href="/agenda">
+                <Icono nombre="calendario" tamano={18} /> {t.hero.verAgenda} <Icono nombre="flecha" tamano={18} />
               </Link>
-              <Link className="boton boton--claro" href="/agenda">
-                <Icono nombre="calendario" tamano={18} /> {t.hero.verAgenda}
+              <Link className="boton boton--claro" href="/que-hacer">
+                {t.hero.explorar}
               </Link>
             </div>
           </div>
@@ -124,25 +169,8 @@ export default async function Portada() {
         </div>
       </section>
 
-      {/* ---- Destacados ---- */}
-      {destacados.length > 0 && (
-        <section className="bloque contenedor" aria-labelledby="destacados-titulo">
-          <Cabecera id="destacados-titulo" kicker={t.destacados.kicker} titulo={t.destacados.titulo} bajada={t.destacados.bajada} />
-          <div className="destacados">
-            {destacados.slice(0, 3).map((d) => (
-              <Enlace className="tarjeta" href={d.url} key={d.slug}>
-                <div className="tarjeta__foto"><Image src={d.imagen.src} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" /></div>
-                <div className="tarjeta__cuerpo">
-                  <span className="etiqueta">{d.etiqueta}</span>
-                  <h3>{d.titulo}</h3>
-                  <p>{d.detalle}</p>
-                  <span className="tarjeta__mas" aria-hidden="true">{t.destacados.verMas} <Icono nombre="flecha" tamano={18} /></span>
-                </div>
-              </Enlace>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* ---- ¿Qué hacer hoy? ---- */}
+      <QueHacerHoy t={th} accesos={accesosHoy} />
 
       {/* ---- Agenda cultural, como en la portada de Agenda Cultural: próximos eventos, la semana y la franja de categorías ---- */}
       {proximosAgenda.length > 0 ? (
@@ -216,26 +244,7 @@ export default async function Portada() {
       {/* ---- Talleres en los centros culturales ---- */}
       <TalleresPortada t={textosPagina.talleres} ahora={ahora} />
 
-      {/* ---- Qué hacer ---- */}
-      <section className="bloque contenedor" id="que-hacer" aria-labelledby="que-hacer-titulo">
-        <Cabecera id="que-hacer-titulo" kicker={tc.nav.queHacer} titulo={t.temas.titulo} bajada={t.temas.bajada}
-          enlace={{ texto: t.temas.verCatalogo, url: "/que-hacer" }} />
-        <Carrusel etiqueta={t.temas.carrusel}>
-          {categorias.map((c) => (
-            <li key={c.id}>
-              <Link className={`lugar${c.tono !== undefined ? ` tono-${c.tono}` : ""}`} href={rutas.categoria(c.id)}>
-                <div className={`lugar__media lugar__media--${c.tono === undefined ? "foto" : "sticker"}`}>
-                  <Image src={c.imagen} alt="" fill sizes="(max-width: 600px) 80vw, (max-width: 1150px) 40vw, 25vw" />
-                </div>
-                <h3>{c.titulo} <Icono nombre="flecha" tamano={18} /></h3>
-                <p>{c.detalle}</p>
-              </Link>
-            </li>
-          ))}
-        </Carrusel>
-      </section>
-
-      {/* ---- Recorridos ---- */}
+      {/* ---- Bus Turístico y recorridos ---- */}
       <section className="recorridos" id="recorridos" aria-labelledby="recorridos-titulo">
         <div className="contenedor">
           <div className="recorridos__grilla">
@@ -309,6 +318,53 @@ export default async function Portada() {
             </ul>
           )}
         </div>
+      </section>
+
+      {/* ---- Destacados ---- */}
+      {destacados.length > 0 && (
+        <section className="bloque contenedor" aria-labelledby="destacados-titulo">
+          <Cabecera id="destacados-titulo" kicker={t.destacados.kicker} titulo={t.destacados.titulo} bajada={t.destacados.bajada} />
+          <div className="destacados">
+            {destacados.slice(0, 3).map((d) => (
+              <Enlace className="tarjeta" href={d.url} key={d.slug}>
+                <div className="tarjeta__foto"><Image src={d.imagen.src} alt="" fill sizes="(max-width: 900px) 100vw, 33vw" /></div>
+                <div className="tarjeta__cuerpo">
+                  <span className="etiqueta">{d.etiqueta}</span>
+                  <h3>{d.titulo}</h3>
+                  <p>{d.detalle}</p>
+                  <span className="tarjeta__mas" aria-hidden="true">{t.destacados.verMas} <Icono nombre="flecha" tamano={18} /></span>
+                </div>
+              </Enlace>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* ---- Turismo: de acá para abajo, lo que necesita quien viene de visita ---- */}
+      <div className="contenedor franja-turismo" id="turismo">
+        <p className="kicker">{t.turismoBloque.kicker}</p>
+        <h2>{t.turismoBloque.titulo}</h2>
+        <p>{t.turismoBloque.bajada}</p>
+        <Link className="boton boton--claro" href="/descubri">{tc.subnav.general.titulo} <Icono nombre="flecha" tamano={18} /></Link>
+      </div>
+
+      {/* ---- Qué hacer ---- */}
+      <section className="bloque contenedor" id="que-hacer" aria-labelledby="que-hacer-titulo">
+        <Cabecera id="que-hacer-titulo" kicker={tc.nav.queHacer} titulo={t.temas.titulo} bajada={t.temas.bajada}
+          enlace={{ texto: t.temas.verCatalogo, url: "/que-hacer" }} />
+        <Carrusel etiqueta={t.temas.carrusel}>
+          {categorias.map((c) => (
+            <li key={c.id}>
+              <Link className={`lugar${c.tono !== undefined ? ` tono-${c.tono}` : ""}`} href={rutas.categoria(c.id)}>
+                <div className={`lugar__media lugar__media--${c.tono === undefined ? "foto" : "sticker"}`}>
+                  <Image src={c.imagen} alt="" fill sizes="(max-width: 600px) 80vw, (max-width: 1150px) 40vw, 25vw" />
+                </div>
+                <h3>{c.titulo} <Icono nombre="flecha" tamano={18} /></h3>
+                <p>{c.detalle}</p>
+              </Link>
+            </li>
+          ))}
+        </Carrusel>
       </section>
 
       {/* ---- Itinerarios ---- */}

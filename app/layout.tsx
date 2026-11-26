@@ -12,15 +12,15 @@ export const metadata: Metadata = {
   // Open Graph de cada idioma los pone app/[idioma]/layout.tsx; estos quedan para el panel.
   metadataBase: new URL(urlDelSitio()),
   title: {
-    default: "Turismo | Ciudad San Miguel de Tucumán",
-    template: "%s | Turismo San Miguel de Tucumán",
+    default: "Cultura | Ciudad San Miguel de Tucumán",
+    template: "%s | Cultura San Miguel de Tucumán",
   },
   description:
-    "Sitio oficial de turismo de San Miguel de Tucumán: qué hacer, recorridos guiados gratuitos, agenda, gastronomía, escapadas y datos útiles para tu visita a la ciudad donde se declaró la Independencia.",
+    "Sitio oficial de cultura de San Miguel de Tucumán: agenda cultural, talleres gratuitos, museos y centros culturales, y todo para recorrer la ciudad donde se declaró la Independencia: bus turístico, recorridos, gastronomía y datos útiles.",
   openGraph: {
     type: "website",
     locale: "es_AR",
-    siteName: "Turismo — Ciudad San Miguel de Tucumán",
+    siteName: "Cultura — Ciudad San Miguel de Tucumán",
     images: ["/fotos/panoramas/casa-historica.webp"],
   },
 };
