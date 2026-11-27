@@ -29,25 +29,28 @@ export type Subseccion = { clave: ClaveSubnav; url: string; icono: string };
 /** Los textos salen de lib/i18n/textos/comun.ts según el idioma. */
 export type Enlace = { clave: ClavePie; url: string; externo?: boolean };
 
-/** La navegación principal. «sub» arma el menú desplegable (y los ítems anidados del menú del celular). */
+/**
+ * La navegación principal. El portal es de Cultura: primero la agenda y los talleres; Turismo es una sección
+ * con su menú desplegable («sub», que también arma los ítems anidados del menú del celular).
+ */
 export const NAV: { clave: ClaveNav; url: string; sub?: Subseccion[] }[] = [
+  { clave: "agenda", url: "/agenda" },
+  { clave: "talleres", url: "/talleres" },
+  { clave: "busTuristico", url: "/bus-turistico" },
   {
-    clave: "descubri",
+    clave: "turismo",
     url: "/descubri",
     sub: [
       { clave: "general", url: "/descubri", icono: "brujula" },
-      { clave: "mapa", url: "/mapa", icono: "mapa" },
+      { clave: "queHacer", url: "/que-hacer", icono: "estrella" },
       { clave: "lugares", url: "/lugares", icono: "ubicacion" },
-      { clave: "talleres", url: "/talleres", icono: "personas" },
+      { clave: "recorridos", url: "/recorridos", icono: "estatua" },
+      { clave: "mapa", url: "/mapa", icono: "mapa" },
       { clave: "sabores", url: "/sabores", icono: "plato" },
       { clave: "escapadas", url: "/escapadas", icono: "caminata" },
+      { clave: "planifica", url: "/planifica", icono: "avion" },
     ],
   },
-  { clave: "queHacer", url: "/que-hacer" },
-  { clave: "recorridos", url: "/recorridos" },
-  { clave: "agenda", url: "/agenda" },
-  { clave: "busTuristico", url: "/bus-turistico" },
-  { clave: "planifica", url: "/planifica" },
 ];
 
 /* ---- Hero ---- */

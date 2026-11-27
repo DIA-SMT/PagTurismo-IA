@@ -1,21 +1,21 @@
 {
   "hero": {
-    "kicker": "San Miguel de Tucumán · Ciudad Histórica",
-    "titulo": "Donde nació",
-    "tituloAcento": "la Independencia",
-    "bajada": "Historia, sabores y naturaleza al pie del cerro San Javier. Viví la capital del Jardín de la República.",
+    "kicker": "San Miguel de Tucumán · Cultura",
+    "titulo": "Viví la cultura de",
+    "tituloAcento": "San Miguel",
+    "bajada": "Agenda cultural, talleres gratuitos, museos y centros culturales. Y todo lo que necesitás para recorrer la ciudad donde nació la Independencia.",
     "traducciones": {
       "en": {
-        "kicker": "San Miguel de Tucumán · Historic City",
-        "titulo": "Birthplace of",
-        "tituloAcento": "Argentine Independence",
-        "bajada": "History, flavors and nature at the foot of the San Javier hills. Experience the capital of the Garden of the Republic."
+        "kicker": "San Miguel de Tucumán · Culture",
+        "titulo": "Experience the culture of",
+        "tituloAcento": "San Miguel",
+        "bajada": "Cultural events, free workshops, museums and cultural centers. Plus everything you need to explore the city where Argentina declared its independence."
       },
       "pt": {
-        "kicker": "San Miguel de Tucumán · Cidade Histórica",
-        "titulo": "Onde nasceu",
-        "tituloAcento": "a Independência",
-        "bajada": "História, sabores e natureza aos pés do cerro San Javier. Viva a capital do Jardim da República."
+        "kicker": "San Miguel de Tucumán · Cultura",
+        "titulo": "Viva a cultura de",
+        "tituloAcento": "San Miguel",
+        "bajada": "Agenda cultural, oficinas gratuitas, museus e centros culturais. E tudo o que você precisa para conhecer a cidade onde a Argentina declarou sua independência."
       }
     }
   },

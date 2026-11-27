@@ -25,7 +25,7 @@ export default async function LayoutPanel({ children }: { children: React.ReactN
           <div className="adm-barra__interior">
             <BotonMenuPanel />
             <Link className="adm-barra__titulo" href="/admin">
-              <strong>Turismo y Cultura SMT</strong>
+              <strong>Cultura SMT</strong>
               <small>Panel del portal unificado</small>
             </Link>
             <Tema />

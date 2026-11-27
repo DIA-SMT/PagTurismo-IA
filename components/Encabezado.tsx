@@ -48,7 +48,7 @@ export function Encabezado({ clima }: { clima?: ReactNode }) {
         <div className="contenedor header__inner">
           <Link className="header__marca" href="/" aria-label={t.sitio.irAlInicio}>
             <LogoSMT ancho={184} alto={60} alt="" prioritario />
-            <span className="header__turismo" aria-hidden="true">{t.sitio.turismo}</span>
+            <span className="header__turismo" aria-hidden="true">{t.sitio.marca}</span>
           </Link>
 
           <nav className="nav" aria-label={t.encabezado.secciones}>
@@ -167,7 +167,7 @@ function PanelMovil({ cerrar, actual }: { cerrar: () => void; actual: (url: stri
 }
 
 /**
- * Sección con menú desplegable («Descubrí San Miguel»). El enlace lleva a la sección; el botón de al lado abre
+ * Sección con menú desplegable («Turismo»). El enlace lleva a la sección; el botón de al lado abre
  * el panel (teclado y pantallas táctiles) y también se abre al pasar el mouse. Escape o un clic afuera lo cierran.
  */
 function NavDesplegable({ url, texto, sub, actual }: { url: string; texto: string; sub: Subseccion[]; actual: (url: string) => boolean }) {
