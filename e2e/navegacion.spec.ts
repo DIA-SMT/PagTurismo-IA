@@ -6,7 +6,7 @@ test.describe("Navegación", () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/");
     const principales = page.locator(".nav > ul > li > .nav__enlace");
-    await expect(principales).toHaveText(["Agenda", "Talleres", "Museos", "Centros culturales", "Turismo"]);
+    await expect(principales).toHaveText(["Agenda", "Talleres", "Museos", "Centros culturales", "Programas", "Turismo"]);
     await expect(page).toHaveTitle(/^Cultura \| /);
     const panel = page.locator(".nav__panel");
     await expect(panel).toBeHidden();

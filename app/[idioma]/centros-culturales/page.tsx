@@ -56,6 +56,11 @@ export default async function CentrosCulturales() {
           <Link className="boton boton--primario" href="/talleres">{t.centros.verTalleres} <Icono nombre="flecha" tamano={18} /></Link>
         </aside>
 
+        <p className="espacios__programas">
+          {t.centros.programas}{" "}
+          <Link className="enlace-flecha" href="/programas">{t.centros.verProgramas} <Icono nombre="flecha" tamano={16} /></Link>
+        </p>
+
         {actividades.length > 0 && (
           <section className="grupo" aria-labelledby="centros-actividades">
             <div className="grupo__cabecera">

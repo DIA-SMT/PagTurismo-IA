@@ -38,6 +38,7 @@ export const NAV: { clave: ClaveNav; url: string; sub?: Subseccion[] }[] = [
   { clave: "talleres", url: "/talleres" },
   { clave: "museos", url: "/museos" },
   { clave: "centros", url: "/centros-culturales" },
+  { clave: "programas", url: "/programas" },
   {
     clave: "turismo",
     url: "/descubri",
@@ -82,6 +83,7 @@ export const PIE: { columna: keyof TextosComun["pie"]["columnas"]; enlaces: Enla
       { clave: "talleres", url: "/talleres" },
       { clave: "museos", url: "/museos" },
       { clave: "centros", url: "/centros-culturales" },
+      { clave: "programas", url: "/programas" },
     ],
   },
   {

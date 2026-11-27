@@ -28,6 +28,7 @@ export const comun = definir({
       turismo: "Turismo",
       museos: "Museos",
       centros: "Centros culturales",
+      programas: "Programas",
     },
     subnav: {
       general: { titulo: "La ciudad en un vistazo", detalle: "Imperdibles, historia y por dónde empezar" },
@@ -97,6 +98,7 @@ export const comun = definir({
         talleres: "Talleres en los centros culturales",
         museos: "Museos",
         centros: "Centros culturales",
+        programas: "Programas de Gestión Cultural",
         todosLosRecorridos: "Todos los recorridos",
         busTuristico: "Bus Turístico",
         circuitoAPie: "Circuito a pie",
@@ -184,6 +186,7 @@ export const comun = definir({
       turismo: "Tourism",
       museos: "Museums",
       centros: "Cultural centers",
+      programas: "Programs",
     },
     subnav: {
       general: { titulo: "The city at a glance", detalle: "Must-sees, history and where to start" },
@@ -253,6 +256,7 @@ export const comun = definir({
         talleres: "Cultural center workshops",
         museos: "Museums",
         centros: "Cultural centers",
+        programas: "Cultural Affairs programs",
         todosLosRecorridos: "All tours",
         busTuristico: "Tourist Bus",
         circuitoAPie: "Walking tour",
@@ -340,6 +344,7 @@ export const comun = definir({
       turismo: "Turismo",
       museos: "Museus",
       centros: "Centros culturais",
+      programas: "Programas",
     },
     subnav: {
       general: { titulo: "A cidade num relance", detalle: "Imperdíveis, história e por onde começar" },
@@ -409,6 +414,7 @@ export const comun = definir({
         talleres: "Oficinas nos centros culturais",
         museos: "Museus",
         centros: "Centros culturais",
+        programas: "Programas de Gestão Cultural",
         todosLosRecorridos: "Todos os roteiros",
         busTuristico: "Ônibus Turístico",
         circuitoAPie: "Roteiro a pé",
