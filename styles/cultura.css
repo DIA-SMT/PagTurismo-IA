@@ -395,3 +395,53 @@
 .talleres-portada__hora { color: var(--c-azul-700); font-size: var(--fs-md); font-weight: var(--fw-fuerte); font-variant-numeric: tabular-nums; }
 @media (max-width: 56rem) { .talleres-portada__cuerpo { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .disciplina-taller, .disciplina-taller__sticker { transition: none; } .disciplina-taller:hover { transform: none; } }
+
+/* ---- Museos y centros culturales (/museos, /centros-culturales, fichas y portada) ---- */
+.espacios__grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); gap: var(--sp-4); margin: 0; padding: 0; list-style: none; }
+.espacios__vacio { color: var(--c-ink-soft); }
+@media (min-width: 64rem) { .espacios__grilla { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.espacio { display: flex; flex-direction: column; height: 100%; overflow: hidden; border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); box-shadow: 0 4px 16px rgb(9 35 76 / 8%); }
+.espacio__foto { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9; overflow: hidden; background: var(--tono-fondo); color: var(--tono-tinta); }
+.espacio__foto img { object-fit: cover; transition: transform var(--t-media); }
+.espacio:hover .espacio__foto img { transform: scale(1.03); }
+.espacio__icono { display: grid; place-items: center; width: 5rem; height: 5rem; border-radius: 1.4rem; background: var(--tono-icono); }
+.espacio__cuerpo { display: flex; flex: 1; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4); }
+.espacio__clase { margin: 0; color: var(--c-ink-soft); font-size: 0.75rem; font-weight: var(--fw-semi); letter-spacing: 0.06em; text-transform: uppercase; }
+.espacio h3 { margin: 0; font-size: 1.15rem; line-height: 1.25; }
+.espacio h3 a { color: var(--c-titulo); text-decoration: none; }
+.espacio h3 a:hover { color: var(--c-azul-700); }
+.espacio__resumen { margin: 0; color: var(--c-ink-soft); font-size: 0.9rem; line-height: 1.45; }
+.espacio__dato { display: flex; gap: 0.35rem; align-items: flex-start; margin: 0; color: var(--c-ink); font-size: 0.85rem; }
+.espacio__dato svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
+.espacio__enlaces { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.espacio__enlaces a { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.65rem; border: 1px solid var(--tono-borde); border-radius: var(--r-full); background: var(--tono-fondo); color: var(--tono-tinta); font-size: 0.8rem; font-weight: var(--fw-semi); text-decoration: none; }
+.espacio__enlaces a:hover { border-color: var(--tono-tinta); }
+.espacio .enlace-flecha { margin-top: auto; padding-top: var(--sp-2); }
+
+.aviso-lunes { display: flex; gap: var(--sp-2); align-items: flex-start; margin: 0 0 var(--sp-5); padding: var(--sp-3) var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-md); background: var(--c-azul-50); color: var(--c-ink); }
+.aviso-lunes svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
+.aviso-lunes--hoy { border-color: var(--c-estado-medio-punto); background: var(--c-estado-medio-fondo); color: var(--c-estado-medio-texto); }
+.aviso-lunes--hoy svg { color: var(--c-estado-medio-texto); }
+.aviso-lunes--chico { margin-bottom: var(--sp-3); padding: var(--sp-2) var(--sp-3); font-size: 0.85rem; }
+
+.aviso-inscripcion { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--sp-4); align-items: center; margin: var(--sp-6) 0; padding: var(--sp-5); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); }
+.aviso-inscripcion h2 { margin: 0 0 var(--sp-1); font-size: 1.2rem; }
+.aviso-inscripcion p { margin: 0; color: var(--c-ink-soft); }
+@media (max-width: 45rem) { .aviso-inscripcion { grid-template-columns: minmax(0, 1fr); } }
+
+.talleres-centro > p { margin: 0 0 var(--sp-3); color: var(--c-ink-soft); }
+.talleres-centro__lista { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: var(--sp-2); margin: 0; padding: 0; list-style: none; }
+.talleres-centro__lista li { display: flex; flex-direction: column; gap: 2px; padding: var(--sp-2) var(--sp-3); border: 1px solid var(--c-borde-suave); border-radius: 0.75rem; background: var(--c-blanco); }
+.talleres-centro__lista strong { font-size: 0.92rem; }
+.talleres-centro__lista span { color: var(--c-ink-soft); font-size: 0.8rem; }
+
+.espacios-portada__columnas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); }
+.espacios-portada__columna { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-5); border: 1px solid var(--tono-borde); border-radius: var(--r-lg); background: var(--tono-fondo); }
+.espacios-portada__columna h3 { display: flex; gap: var(--sp-2); align-items: center; margin: 0; font-size: 1.25rem; }
+.espacios-portada__columna .icono-pastel { width: 2.5rem; height: 2.5rem; border-radius: 12px; background: var(--tono-icono); color: var(--tono-tinta); }
+.espacios-portada__columna ul { display: grid; gap: var(--sp-2); margin: 0; padding: 0; list-style: none; }
+.espacios-portada__columna li a { display: flex; flex-direction: column; padding: var(--sp-2) var(--sp-3); border-radius: 0.75rem; background: var(--c-blanco); color: var(--c-ink); text-decoration: none; box-shadow: 0 2px 8px rgb(9 35 76 / 6%); }
+.espacios-portada__columna li a:hover { box-shadow: 0 6px 16px rgb(9 35 76 / 12%); }
+.espacios-portada__columna li strong { color: var(--c-titulo); }
+.espacios-portada__columna li small { color: var(--c-ink-soft); }
+@media (max-width: 45rem) { .espacios-portada__columnas { grid-template-columns: minmax(0, 1fr); } }
