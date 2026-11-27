@@ -4,8 +4,11 @@ import { notFound } from "next/navigation";
 import { BotonAccion, Dato, JsonLd, TextoHorario, enlaceComoLlegar, textoCosto } from "@/components/Ficha";
 import { Icono } from "@/components/Iconos";
 import { Galeria, MapaEmbebido } from "@/components/cultura/Piezas";
+import { GrillaEventos } from "@/components/cultura/Agenda";
 import { AvisoBorrador, AvisoSinTraducir, EncabezadoPagina, Enlace, FotoFicha, Fuentes, Marca, Parrafos, TarjetaItem } from "@/components/Ui";
-import { contenido, porSlug, categoriaDe, catalogo, nombresDeEtiquetas, relacionadosConLugar } from "@/lib/datos";
+import { TALLERES } from "@/lib/cultura/datos-talleres";
+import { actividadesEn, esCentroCultural, esMuseo, talleresDelCentro } from "@/lib/cultura/espacios";
+import { contenido, porSlug, categoriaDe, catalogo, nombresDeEtiquetas, ocurrenciasDeAgenda, relacionadosConLugar } from "@/lib/datos";
 import { formatear } from "@/lib/i18n/definir";
 import { alternativas, textosActuales } from "@/lib/i18n/servidor";
 
@@ -37,6 +40,14 @@ export default async function FichaLugar({ params }: PageProps<"/[idioma]/lugare
   const mas = categoria
     ? todos.filter((i) => i.entidad === "lugar" && i.slug !== l.slug && i.categorias.includes(categoria.id)).slice(0, 3)
     : [];
+  // Museos y centros culturales: su sección en las migas, el aviso de los lunes, los talleres y lo que viene.
+  const te = t.espacios;
+  const museo = esMuseo(l);
+  const centro = esCentroCultural(l);
+  const talleres = talleresDelCentro(TALLERES.talleres, l.slug);
+  const proximas = actividadesEn(ocurrenciasDeAgenda(c), [l.slug]);
+  const seccion = museo ? { texto: te.museos.titulo, url: "/museos" }
+    : centro ? { texto: te.centros.titulo, url: "/centros-culturales" } : undefined;
 
   return (
     <>
@@ -53,7 +64,7 @@ export default async function FichaLugar({ params }: PageProps<"/[idioma]/lugare
       )}
 
       <EncabezadoPagina
-        migas={[
+        migas={seccion ? [seccion, { texto: l.titulo }] : [
           { texto: t.comun.nav.queHacer, url: "/que-hacer" },
           ...(categoria ? [{ texto: categoria.titulo, url: `/que-hacer/${categoria.id}` }] : []),
           { texto: l.titulo },
@@ -104,6 +115,7 @@ export default async function FichaLugar({ params }: PageProps<"/[idioma]/lugare
         <aside className="ficha__lateral" aria-labelledby="info-practica">
           <div className="panel-practico">
             <h2 id="info-practica">{dato.infoPractica}</h2>
+            {museo && <p className="aviso-lunes aviso-lunes--chico" role="note"><Icono nombre="info" tamano={18} /><span>{te.ficha.lunes}</span></p>}
             <dl>
               {(l.direccion || l.zona) && (
                 <Dato icono="ubicacion" titulo={dato.donde}>
@@ -129,6 +141,36 @@ export default async function FichaLugar({ params }: PageProps<"/[idioma]/lugare
       </div>
 
       <div className="contenedor relacionados">
+        {talleres.length > 0 && (
+          <section className="grupo talleres-centro" aria-labelledby="rel-talleres">
+            <div className="grupo__cabecera">
+              <h2 id="rel-talleres">{te.ficha.talleres}</h2>
+              <Enlace href={`/talleres?centro=${l.slug}`} className="cabecera__enlace">
+                {formatear(te.ficha.verTalleres, { n: talleres.length })} <Icono nombre="flecha" tamano={18} />
+              </Enlace>
+            </div>
+            <p>{te.ficha.talleresBajada}</p>
+            <ul className="talleres-centro__lista">
+              {talleres.map(({ taller, dias }) => (
+                <li key={taller.id}>
+                  <strong>{taller.titulo}</strong>
+                  <span>{dias.map((d) => t.talleres.diasCortos[d]).join(" · ")}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+        {proximas.length > 0 && (
+          <section className="grupo" aria-labelledby="rel-proximas">
+            <div className="grupo__cabecera">
+              <h2 id="rel-proximas">{te.ficha.actividades}</h2>
+              <Enlace href={`/agenda?lugar=${l.slug}`} className="cabecera__enlace">
+                {formatear(te.ficha.verAgenda, { n: proximas.length })} <Icono nombre="flecha" tamano={18} />
+              </Enlace>
+            </div>
+            <GrillaEventos ocurrencias={proximas.slice(0, 3)} categorias={c.categoriasAgenda} />
+          </section>
+        )}
         {rel.experiencias.length > 0 && (
           <section className="grupo" aria-labelledby="rel-exp">
             <h2 id="rel-exp">{tl.experiencias}</h2>
@@ -141,7 +183,8 @@ export default async function FichaLugar({ params }: PageProps<"/[idioma]/lugare
             <ul className="items">{rel.recorridos.map((r) => { const i = item("recorrido", r.slug); return i && <li key={r.slug}><TarjetaItem item={i} /></li>; })}</ul>
           </section>
         )}
-        {rel.eventos.length > 0 && (
+        {/* Sin próximas fechas, los eventos que la ficha tiene vinculados (el calendario anual, por ejemplo). */}
+        {proximas.length === 0 && rel.eventos.length > 0 && (
           <section className="grupo" aria-labelledby="rel-ev">
             <h2 id="rel-ev">{tl.eventos}</h2>
             <ul className="items">{rel.eventos.map((e) => { const i = item("evento", e.slug); return i && <li key={e.slug}><TarjetaItem item={i} /></li>; })}</ul>

@@ -38,6 +38,8 @@ const SECCIONES: Record<string, Record<Exclude<Idioma, "es">, string>> = {
   "bus-educativo": { en: "school-bus", pt: "onibus-escolar" },
   reserva: { en: "booking", pt: "reserva" },
   galeria: { en: "gallery", pt: "galeria" },
+  museos: { en: "museums", pt: "museus" },
+  "centros-culturales": { en: "cultural-centers", pt: "centros-culturais" },
 };
 
 /** Direcciones que no son páginas del sitio y no pasan por los idiomas. */

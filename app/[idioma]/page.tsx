@@ -16,6 +16,7 @@ import { CategoriasAgenda, GrillaEventos, SemanaAgenda } from "@/components/cult
 import { TalleresPortada } from "@/components/cultura/TalleresPortada";
 import { categoriasPopulares, filtrarAgenda, proximosDias, proximosEventos, type FiltrosAgenda } from "@/lib/cultura/agenda";
 import { TALLERES } from "@/lib/cultura/datos-talleres";
+import { CENTROS_CULTURALES, enOrden, museosCerrados, museosDe } from "@/lib/cultura/espacios";
 import { diaDeSemana, diaLocal, formatearOcurrencia, nombreMes, partesDeFecha } from "@/lib/fechas";
 import { LOCALE } from "@/lib/i18n/config";
 import { formatear } from "@/lib/i18n/definir";
@@ -108,7 +109,7 @@ export default async function Portada() {
         titulo: th.gratisTitulo, icono: "ticket", tono: 4, url: "/agenda?cuando=finde&gratis=1",
         detalle: gratisFinde ? formatear(th.gratisDetalle, { n: gratisFinde }) : th.gratisNada,
       },
-      { titulo: th.museosTitulo, icono: "estatua", tono: 1, url: "/que-hacer/historia-y-patrimonio", detalle: diaHoy === 1 ? th.museosLunes : th.museosAbiertos },
+      { titulo: th.museosTitulo, icono: "estatua", tono: 1, url: "/museos", detalle: museosCerrados(diaHoy) ? th.museosLunes : th.museosAbiertos },
     ],
     turista: [
       accesoAgenda,
@@ -118,10 +119,19 @@ export default async function Portada() {
           : salidaBus.fecha === diaLocal(ahora) ? formatear(th.busHoy, { hora: salidaBus.hora.slice(0, 5) })
             : formatear(th.busProxima, { fecha: new Intl.DateTimeFormat(LOCALE[c.idioma].intl, { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }).format(new Date(`${salidaBus.fecha}T12:00:00Z`)) }),
       },
-      { titulo: th.museosTitulo, icono: "estatua", tono: 1, url: "/que-hacer/historia-y-patrimonio", detalle: diaHoy === 1 ? th.museosLunes : th.museosAbiertos },
+      { titulo: th.museosTitulo, icono: "estatua", tono: 1, url: "/museos", detalle: museosCerrados(diaHoy) ? th.museosLunes : th.museosAbiertos },
       { titulo: th.planificaTitulo, icono: "chispas", tono: 4, url: "/planifica", detalle: th.planificaDetalle },
     ],
   };
+
+  // ---- Museos municipales y centros culturales (solo los publicados) ----
+  const museosPortada = museosDe(c.lugares).municipales;
+  const centrosPortada = enOrden(c.lugares, CENTROS_CULTURALES);
+  const te = textosPagina.espacios;
+  const columnasEspacios = [
+    { titulo: tc.nav.museos, lugares: museosPortada, url: "/museos", ver: te.portada.verMuseos, icono: "estatua" },
+    { titulo: tc.nav.centros, lugares: centrosPortada, url: "/centros-culturales", ver: te.portada.verCentros, icono: "personas" },
+  ].filter((k) => k.lugares.length);
 
   return (
     <>
@@ -243,6 +253,28 @@ export default async function Portada() {
 
       {/* ---- Talleres en los centros culturales ---- */}
       <TalleresPortada t={textosPagina.talleres} ahora={ahora} />
+
+      {/* ---- Museos y centros culturales ---- */}
+      {columnasEspacios.length > 0 && (
+        <section className="bloque contenedor espacios-portada" id="espacios" aria-labelledby="espacios-titulo" data-modulo="cultura">
+          <Cabecera id="espacios-titulo" kicker={te.portada.kicker} titulo={te.portada.titulo} bajada={te.portada.bajada} />
+          <div className="espacios-portada__columnas">
+            {columnasEspacios.map((k, i) => (
+              <div key={k.url} className={`espacios-portada__columna tono-${[1, 0][i]}`}>
+                <h3><span className="icono-pastel"><Icono nombre={k.icono} tamano={22} /></span> {k.titulo}</h3>
+                <ul>
+                  {k.lugares.map((l) => (
+                    <li key={l.slug}>
+                      <Link href={rutas.lugar(l.slug)}><strong>{l.titulo}</strong>{l.direccion && <small>{l.direccion}</small>}</Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link className="enlace-flecha" href={k.url}>{k.ver} <Icono nombre="flecha" tamano={16} /></Link>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ---- Bus Turístico y recorridos ---- */}
       <section className="recorridos" id="recorridos" aria-labelledby="recorridos-titulo">

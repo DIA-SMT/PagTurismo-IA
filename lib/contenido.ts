@@ -36,12 +36,13 @@ export type Enlace = { clave: ClavePie; url: string; externo?: boolean };
 export const NAV: { clave: ClaveNav; url: string; sub?: Subseccion[] }[] = [
   { clave: "agenda", url: "/agenda" },
   { clave: "talleres", url: "/talleres" },
-  { clave: "busTuristico", url: "/bus-turistico" },
+  { clave: "museos", url: "/museos" },
+  { clave: "centros", url: "/centros-culturales" },
   {
     clave: "turismo",
     url: "/descubri",
     sub: [
-      { clave: "general", url: "/descubri", icono: "brujula" },
+      { clave: "busTuristico", url: "/bus-turistico", icono: "bus-linea" },
       { clave: "queHacer", url: "/que-hacer", icono: "estrella" },
       { clave: "lugares", url: "/lugares", icono: "ubicacion" },
       { clave: "recorridos", url: "/recorridos", icono: "estatua" },
@@ -79,6 +80,8 @@ export const PIE: { columna: keyof TextosComun["pie"]["columnas"]; enlaces: Enla
       { clave: "sabores", url: "/sabores" },
       { clave: "escapadas", url: "/escapadas" },
       { clave: "talleres", url: "/talleres" },
+      { clave: "museos", url: "/museos" },
+      { clave: "centros", url: "/centros-culturales" },
     ],
   },
   {
