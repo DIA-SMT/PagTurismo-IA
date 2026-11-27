@@ -140,6 +140,7 @@ export const normalizarEvento = (c: Record<string, unknown>, slug: string): Even
     fueraDeLaCiudad: c.fueraDeLaCiudad === true,
     localidad: opcional(c.localidad),
     organizador: opcional(c.organizador),
+    area: (["turismo", "museos", "gestion-cultural", "palacio-deportes"].includes(c.area as string) ? c.area : undefined) as Evento["area"],
     costo: costo(c.costo),
     inscripcion: opcional(c.inscripcion),
     urlOficial: opcional(c.urlOficial),

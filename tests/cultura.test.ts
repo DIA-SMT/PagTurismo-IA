@@ -26,7 +26,7 @@ const LISTA: OcurrenciaAgenda[] = [
   base({ evento: "muestra", inicio: "2026-11-01", fin: "2026-12-10", titulo: "Muestra de fotografía", rubros: ["fotografia"] }),
 ];
 
-const filtros = (f: Partial<FiltrosAgenda> = {}): FiltrosAgenda => ({ cuando: "proximos", fecha: "", q: "", rubro: "", lugar: "", gratis: false, ...f });
+const filtros = (f: Partial<FiltrosAgenda> = {}): FiltrosAgenda => ({ cuando: "proximos", fecha: "", q: "", rubro: "", lugar: "", area: "", gratis: false, ...f });
 
 describe("filtros de la agenda", () => {
   it("saca lo que ya terminó y deja lo cancelado rotulado", () => {

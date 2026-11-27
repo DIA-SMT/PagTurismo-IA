@@ -27,6 +27,7 @@ import {
   normalizarLugar, normalizarPlato, normalizarRecorrido,
 } from "./normalizar";
 import type { OcurrenciaAgenda } from "./cultura/agenda";
+import { areaDe } from "./cultura/areas";
 import { esTallerAnual } from "./cultura/talleres";
 import { rutas } from "./rutas";
 import type {
@@ -258,7 +259,7 @@ export function ocurrenciasDeAgenda(c: Contenido, ahora = Date.now(), { conTalle
       evento: o.evento, inicio: o.inicio, fin: o.fin, estado: o.estado, sede: o.sede ?? o.datos.sede, nota: o.nota, enCurso: o.enCurso,
       titulo: o.datos.titulo, url: rutas.evento(o.evento), resumen: o.datos.resumen,
       lugar: lugar?.titulo ?? o.datos.sede, lugarSlug: lugar?.slug,
-      rubros: o.datos.rubros, gratis: o.datos.costo.modalidad === "gratis", destacado: o.datos.destacado,
+      rubros: o.datos.rubros, area: areaDe(o.datos), gratis: o.datos.costo.modalidad === "gratis", destacado: o.datos.destacado,
       fueraDeLaCiudad: !!o.datos.fueraDeLaCiudad,
       // Como en Agenda Cultural: la foto del evento o, si no tiene, la del lugar.
       imagen: o.datos.imagen ? { src: o.datos.imagen.src, alt: "" } : lugar?.imagen ? { src: lugar.imagen.src, alt: "" } : undefined,

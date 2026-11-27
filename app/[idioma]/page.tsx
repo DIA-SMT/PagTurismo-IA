@@ -83,7 +83,7 @@ export default async function Portada() {
 
   // ---- ¿Qué hacer hoy? Accesos con datos del día, para vecinos y para visitantes ----
   const th = t.hoy;
-  const sinFiltros: FiltrosAgenda = { cuando: "hoy", fecha: "", q: "", rubro: "", lugar: "", gratis: false };
+  const sinFiltros: FiltrosAgenda = { cuando: "hoy", fecha: "", q: "", rubro: "", lugar: "", area: "", gratis: false };
   const hoyEnAgenda = filtrarAgenda(ocurrenciasAgenda, sinFiltros, ahora).length;
   const gratisFinde = filtrarAgenda(ocurrenciasAgenda, { ...sinFiltros, cuando: "finde", gratis: true }, ahora).length;
   const diaHoy = diaDeSemana(ahora);

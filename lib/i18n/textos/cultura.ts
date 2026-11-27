@@ -6,6 +6,12 @@ import { definir } from "../definir";
  */
 export const cultura = definir({
   es: {
+    areas: {
+      turismo: "Turismo",
+      museos: "Museos",
+      "gestion-cultural": "Gestión Cultural",
+      "palacio-deportes": "Palacio de los Deportes",
+    },
     buscador: {
       titulo: "Buscar en la agenda",
       buscar: "Buscar",
@@ -14,6 +20,7 @@ export const cultura = definir({
       todas: "Todas",
       lugar: "Lugar",
       todos: "Todos",
+      area: "Dirección",
       gratis: "Solo gratis",
       limpiar: "Limpiar filtros",
       filtros: "Filtros",
@@ -108,6 +115,12 @@ export const cultura = definir({
     },
   },
   en: {
+    areas: {
+      turismo: "Tourism",
+      museos: "Museums",
+      "gestion-cultural": "Cultural Affairs",
+      "palacio-deportes": "Palacio de los Deportes",
+    },
     buscador: {
       titulo: "Search events",
       buscar: "Search",
@@ -116,6 +129,7 @@ export const cultura = definir({
       todas: "All",
       lugar: "Venue",
       todos: "All",
+      area: "Organized by",
       gratis: "Free only",
       limpiar: "Clear filters",
       filtros: "Filters",
@@ -210,6 +224,12 @@ export const cultura = definir({
     },
   },
   pt: {
+    areas: {
+      turismo: "Turismo",
+      museos: "Museus",
+      "gestion-cultural": "Gestão Cultural",
+      "palacio-deportes": "Palacio de los Deportes",
+    },
     buscador: {
       titulo: "Buscar na agenda",
       buscar: "Buscar",
@@ -218,6 +238,7 @@ export const cultura = definir({
       todas: "Todas",
       lugar: "Local",
       todos: "Todos",
+      area: "Direção",
       gratis: "Só gratuitos",
       limpiar: "Limpar filtros",
       filtros: "Filtros",

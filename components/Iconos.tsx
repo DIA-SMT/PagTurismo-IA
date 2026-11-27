@@ -216,6 +216,10 @@ export function SpriteIconos() {
           <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />
         </symbol>
 
+        <symbol id="i-cama" viewBox="0 0 24 24" {...T}>
+          <path d="M3 18V6M3 14h18v4M21 14v-2a3 3 0 0 0-3-3h-7v5M7 11.5a1.5 1.5 0 1 0 0-.01" />
+        </symbol>
+
         {/* ---- Clima ---- */}
         <symbol id="i-sol" viewBox="0 0 24 24" {...T}>
           <circle cx="12" cy="12" r="4" /><path d="M12 2.5v2m0 15v2M2.5 12h2m15 0h2M5.3 5.3l1.4 1.4m10.6 10.6 1.4 1.4m0-13.4-1.4 1.4M6.7 17.3l-1.4 1.4" />
