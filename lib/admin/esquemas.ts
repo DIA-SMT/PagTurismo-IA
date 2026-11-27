@@ -254,6 +254,11 @@ export const ESQUEMAS: Esquema[] = [
           ] },
         { tipo: "texto", nombre: "localidad", etiqueta: "Localidad", ancho: "medio", marcador: "Famaillá, a unos 35 km" },
         { tipo: "texto", nombre: "organizador", etiqueta: "Organizador", ancho: "medio" },
+        { tipo: "opciones", nombre: "area", etiqueta: "Dirección que organiza", ancho: "medio",
+          ayuda: "Para filtrar la agenda por dirección. Si queda vacío, se deduce del lugar: un museo municipal es de Museos y un centro cultural, de Gestión Cultural.", opciones: [
+            { valor: "turismo", texto: "Dirección de Turismo" }, { valor: "museos", texto: "Dirección de Museos" },
+            { valor: "gestion-cultural", texto: "Dirección de Gestión Cultural" }, { valor: "palacio-deportes", texto: "Palacio de los Deportes" },
+          ] },
         costo,
         { tipo: "texto", nombre: "inscripcion", etiqueta: "Entradas o inscripción", traducible: true, ancho: "medio" },
         { tipo: "url", nombre: "urlOficial", etiqueta: "Sitio oficial", ancho: "medio" },

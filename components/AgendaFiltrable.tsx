@@ -9,6 +9,7 @@ import {
   CUANDOS, contarPorDia, esMes, filtrarAgenda, filtrosAUrl, hayFiltrosDeContenido, intensidad, leerFiltrosAgenda, mesDe,
   opcionesConFechas, semanasDelMes, sumarMeses, type FiltrosAgenda, type OcurrenciaAgenda,
 } from "@/lib/cultura/agenda";
+import { AREAS } from "@/lib/cultura/areas";
 import { formatear } from "@/lib/i18n/definir";
 import { GrillaEventos } from "@/components/cultura/Agenda";
 import { LOCALE } from "@/lib/i18n/config";
@@ -84,7 +85,7 @@ export function AgendaFiltrable({ ocurrencias, categorias, populares = [], ahora
 
   const limpiar = () => {
     setBusqueda("");
-    setF({ cuando: "proximos", fecha: "", q: "", rubro: "", lugar: "", gratis: false });
+    setF({ cuando: "proximos", fecha: "", q: "", rubro: "", lugar: "", area: "", gratis: false });
   };
 
   const filtros = (
@@ -112,6 +113,15 @@ export function AgendaFiltrable({ ocurrencias, categorias, populares = [], ahora
           {opciones.lugares.map((l) => <option key={l.slug} value={l.slug}>{l.titulo}</option>)}
         </select>
       </div>
+      {(opciones.areas.size > 0 || f.area) && (
+        <div className="filtros__campo">
+          <label htmlFor={`${id}-area`}>{tc.buscador.area}</label>
+          <select id={`${id}-area`} value={f.area} onChange={(e) => cambiar({ area: e.target.value })}>
+            <option value="">{tc.buscador.todas}</option>
+            {AREAS.filter((a) => opciones.areas.has(a) || f.area === a).map((a) => <option key={a} value={a}>{tc.areas[a]}</option>)}
+          </select>
+        </div>
+      )}
       <label className="filtros__check">
         <input type="checkbox" checked={f.gratis} onChange={(e) => cambiar({ gratis: e.target.checked })} />
         {tc.buscador.gratis}

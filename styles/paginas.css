@@ -469,3 +469,19 @@
 .tabla thead th { color: var(--c-ink-muted); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.04em; }
 .revision .lista-simple { display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-sm); }
 .revision h2 { display: flex; align-items: center; gap: var(--sp-2); }
+
+/* ---- Alojamientos (/alojamientos) ---- */
+.alojamientos__cuenta { display: inline-grid; place-items: center; min-width: 1.8rem; height: 1.8rem; margin-left: 0.35rem; padding: 0 0.45rem; border-radius: var(--r-full); background: var(--c-azul-50); color: var(--c-azul-700); font-size: 0.85rem; vertical-align: middle; }
+.alojamientos__grilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+.alojamiento { display: flex; flex-direction: column; gap: var(--sp-2); height: 100%; padding: var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); }
+.alojamiento h3 { margin: 0; font-size: 1.1rem; }
+.alojamiento__estrellas { margin: -0.25rem 0 0; color: #e0a800; letter-spacing: 0.1em; }
+.alojamiento__dato { display: flex; gap: 0.4rem; align-items: flex-start; margin: 0; color: var(--c-ink); font-size: 0.88rem; }
+.alojamiento__dato svg { flex: none; margin-top: 2px; color: var(--c-azul-700); }
+.alojamiento__servicios { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0; padding: 0; list-style: none; }
+.alojamiento__servicios li { padding: 0.15rem 0.55rem; border-radius: var(--r-full); background: var(--c-azul-50); color: var(--c-ink-soft); font-size: 0.75rem; }
+.alojamiento__acciones { display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; margin-top: auto; padding-top: var(--sp-2); border-top: 1px solid var(--c-borde-suave); }
+.alojamiento__acciones a { display: inline-flex; gap: 0.3rem; align-items: center; color: var(--c-azul-700); font-size: 0.85rem; font-weight: var(--fw-semi); text-decoration: none; }
+.alojamiento__acciones a:hover { text-decoration: underline; }
+.alojamientos__fuente { display: flex; gap: var(--sp-2); align-items: flex-start; margin-top: var(--sp-6); color: var(--c-ink-soft); font-size: 0.85rem; }
+.alojamientos__fuente svg { flex: none; margin-top: 2px; }

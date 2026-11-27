@@ -131,6 +131,8 @@ export type Evento = Comun & {
   fueraDeLaCiudad?: boolean;
   localidad?: string;
   organizador?: string;
+  /** Dirección de Cultura que lo organiza (lib/cultura/areas.ts). Si falta, se deduce del lugar. */
+  area?: "turismo" | "museos" | "gestion-cultural" | "palacio-deportes";
   costo: Costo;
   inscripcion?: string;
   urlOficial?: string;

@@ -49,6 +49,7 @@ export const NAV: { clave: ClaveNav; url: string; sub?: Subseccion[] }[] = [
       { clave: "recorridos", url: "/recorridos", icono: "estatua" },
       { clave: "mapa", url: "/mapa", icono: "mapa" },
       { clave: "sabores", url: "/sabores", icono: "plato" },
+      { clave: "alojamientos", url: "/alojamientos", icono: "cama" },
       { clave: "escapadas", url: "/escapadas", icono: "caminata" },
       { clave: "planifica", url: "/planifica", icono: "avion" },
     ],
@@ -99,6 +100,7 @@ export const PIE: { columna: keyof TextosComun["pie"]["columnas"]; enlaces: Enla
     columna: "planifica",
     enlaces: [
       { clave: "agenda", url: "/agenda" },
+      { clave: "alojamientos", url: "/alojamientos" },
       { clave: "comoLlegar", url: "/planifica/como-llegar" },
       { clave: "comoMoverse", url: "/planifica/como-moverse" },
       { clave: "accesibilidad", url: "/planifica/accesibilidad" },

@@ -1,0 +1,876 @@
+{
+  "fuente": "Registro de alojamientos del Ente Tucumán Turismo",
+  "url": "https://www.tucumanturismo.gob.ar",
+  "relevado": "2026-11-27",
+  "alojamientos": [
+    {
+      "id": "384",
+      "nombre": "A la Gurda",
+      "tipo": "hostel",
+      "estrellas": 0,
+      "direccion": "Maipu 490",
+      "telefono": "+543813368726, +543812324008",
+      "email": "hostelalagurda@gmail.com",
+      "instagram": "https://www.instagram.com/alagurdahostel.tuc/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Asistencia médica",
+        "Bar",
+        "Desayuno",
+        "Pet friendly",
+        "Tarjetas de crédito y débito",
+        "TV en habitaciones",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.823898116390648,
+        "lng": -65.20618557929994
+      },
+      "actualizado": "2025-09-15"
+    },
+    {
+      "id": "372",
+      "nombre": "Amerian Tucuman Apart & Suite",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Santiago del Estero 419",
+      "telefono": "+543815601766, +543814319441, +543812581775",
+      "web": "https://amerian.com/destinos/amerian-tucuman-apart-suitre/",
+      "email": "infotuc@amerian.com",
+      "facebook": "https://www.facebook.com/amerianhoteles/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Caja de seguridad",
+        "Desayuno",
+        "Estacionamiento al aire libre",
+        "Frigo bar",
+        "Gimnasio",
+        "Habitaciones accesibles",
+        "Lavandería",
+        "Restaurante",
+        "Room service",
+        "Salones de usos múltiples",
+        "TV en habitaciones",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.82450164815381,
+        "lng": -65.20193696022035
+      },
+      "actualizado": "2025-09-03"
+    },
+    {
+      "id": "374",
+      "nombre": "América",
+      "tipo": "hotel",
+      "estrellas": 2,
+      "direccion": "Santiago del Estero 1064",
+      "telefono": "+543814224853",
+      "web": "https://www.hotelamerica.com.ar",
+      "email": "info@hotelamerica.com.ar",
+      "instagram": "https://www.instagram.com/hotalamericatucuman/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Asistencia médica",
+        "Bar",
+        "Caja de seguridad",
+        "Pet friendly",
+        "Restaurante",
+        "TV en habitaciones",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.82256621779705,
+        "lng": -65.21146912442171
+      },
+      "actualizado": "2025-09-08"
+    },
+    {
+      "id": "47",
+      "nombre": "Astoria",
+      "tipo": "hotel",
+      "estrellas": 1,
+      "direccion": "Congreso 88",
+      "telefono": "+543814937828",
+      "web": "http://www.hotelastoriatucuman.com.ar",
+      "email": "astoriahotel88@gmail.com",
+      "servicios": [
+        "Caja de seguridad",
+        "Desayuno",
+        "Restaurante"
+      ],
+      "coordenadas": {
+        "lat": -26.833089806819242,
+        "lng": -65.2037286758423
+      },
+      "actualizado": "2024-11-27"
+    },
+    {
+      "id": "362",
+      "nombre": "Bicentenario Suites & Spa",
+      "tipo": "hotel",
+      "estrellas": 4,
+      "direccion": "Las Heras Nº 21",
+      "telefono": "+543812546289, +543815569205",
+      "web": "http://www.hotelbicentenario.com.ar/",
+      "email": "reservas@hotelbicentenario.com.ar",
+      "instagram": "https://www.instagram.com/hotelbicentenariotucuman/",
+      "servicios": [
+        "Baño sauna/finlandés",
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Gimnasio",
+        "Habitaciones accesibles",
+        "Lavandería",
+        "Piscina",
+        "Restaurante",
+        "Room service",
+        "Salones de usos múltiples",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.831952116485684,
+        "lng": -65.20190028432441
+      },
+      "actualizado": "2025-08-29"
+    },
+    {
+      "id": "70",
+      "nombre": "Brisa",
+      "tipo": "hostel",
+      "estrellas": 0,
+      "direccion": "Congreso 190",
+      "telefono": "(381) 5167770",
+      "email": "germanorlandoroldan62@hotmail.com",
+      "servicios": [],
+      "coordenadas": {
+        "lat": -26.8338816,
+        "lng": -65.2036827
+      },
+      "actualizado": "2024-07-16"
+    },
+    {
+      "id": "370",
+      "nombre": "Carlos V",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "25 de Mayo 330",
+      "telefono": "+543812526323, +543814311666, +543816580744",
+      "web": "https://www.hotelcarlosv.com.ar",
+      "email": "reservas@redcarlosv.com.ar",
+      "facebook": "https://www.facebook.com/CarlosVHotel/",
+      "servicios": [
+        "Ascensor",
+        "Asistencia médica",
+        "Caja de seguridad",
+        "Calefacción en habitaciones",
+        "Desayuno",
+        "Lavandería",
+        "Restaurante",
+        "Room service",
+        "Salones de usos múltiples",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.826483502402603,
+        "lng": -65.20380377769472
+      },
+      "actualizado": "2025-09-03"
+    },
+    {
+      "id": "354",
+      "nombre": "Catalinas Park",
+      "tipo": "hotel",
+      "estrellas": 5,
+      "direccion": "Av. Soldati 380",
+      "telefono": "+5438156275071",
+      "web": "https://www.hotelcatalinastucuman.com.ar",
+      "email": "reservas@hotelcatalinaspark.com",
+      "servicios": [
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Gimnasio",
+        "Piscina",
+        "Restaurante",
+        "Tarjetas de crédito y débito",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.824224181739933,
+        "lng": -65.19261896610261
+      },
+      "actualizado": "2025-08-11"
+    },
+    {
+      "id": "381",
+      "nombre": "Charcas",
+      "tipo": "hotel",
+      "estrellas": 1,
+      "direccion": "Charcas 31",
+      "telefono": "+543814219576",
+      "email": "shell_ladiagonal@hotmail.com",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Calefacción en habitaciones",
+        "Cochera",
+        "Desayuno",
+        "TV en habitaciones"
+      ],
+      "coordenadas": {
+        "lat": -26.834559208460725,
+        "lng": -65.19538164138795
+      },
+      "actualizado": "2025-09-12"
+    },
+    {
+      "id": "52",
+      "nombre": "Colonial",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "San Martín 35",
+      "telefono": "4222738 / 0381 455-8875",
+      "web": "http://www.hotelcolonialweb.com.ar",
+      "email": "hotelcolonial@arnet.com.ar",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Baño privado",
+        "Cochera",
+        "Pet friendly",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.8310765,
+        "lng": -65.1971982
+      },
+      "actualizado": "2024-08-29"
+    },
+    {
+      "id": "29",
+      "nombre": "Del Jardín",
+      "tipo": "hotel",
+      "estrellas": 4,
+      "direccion": "Laprida 463",
+      "telefono": "0381-2441320 y 381-4159705",
+      "web": "http://www.hoteldeljardin.com.ar/",
+      "email": "reservas@hoteldeljardin.com.ar",
+      "servicios": [
+        "Baño privado",
+        "Cochera",
+        "Piscina",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.825279,
+        "lng": -65.20169
+      },
+      "actualizado": "2025-03-10"
+    },
+    {
+      "id": "367",
+      "nombre": "Embajador",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Las Heras 221",
+      "telefono": "+543813587268, +543814229885, +543814311264",
+      "web": "https://www.hotelembajador.com.ar",
+      "email": "reservas@hotelembajadortuc.com.ar",
+      "instagram": "https://www.instagram.com/hotelembajadortuc/",
+      "facebook": "https://www.facebook.com/embajadortuc/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Bar",
+        "Business center",
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Estacionamiento al aire libre",
+        "Frigo bar",
+        "Gimnasio",
+        "Lavandería",
+        "Piscina",
+        "Restaurante",
+        "Tarjetas de crédito y débito",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.834578171160008,
+        "lng": -65.20265579223634
+      },
+      "actualizado": "2025-09-02"
+    },
+    {
+      "id": "369",
+      "nombre": "Francia",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Crisostomo Alvarez 467",
+      "telefono": "+543813875731, +543814310781",
+      "web": "https://www.hotelfrancia.com.ar/",
+      "email": "reservas@hotelfrancia.com.ar",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Ascensor",
+        "Business center",
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Frigo bar",
+        "Restaurante",
+        "Salones de usos múltiples",
+        "Tarjetas de crédito y débito",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.832424170572615,
+        "lng": -65.20421147346498
+      },
+      "actualizado": "2025-09-02"
+    },
+    {
+      "id": "55",
+      "nombre": "Garden",
+      "tipo": "hotel",
+      "estrellas": 1,
+      "direccion": "Crisóstomo Álvarez 627",
+      "telefono": "(54 381) 4311246/ 4227354",
+      "email": "hgardentucuman@hotmail.com",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Cochera",
+        "Desayuno",
+        "Room service",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.83186867967767,
+        "lng": -65.20706534385683
+      },
+      "actualizado": "2018-07-23"
+    },
+    {
+      "id": "43",
+      "nombre": "Garden Park Suites & Eventos",
+      "tipo": "hotel",
+      "estrellas": 4,
+      "direccion": "Av. Soldati 330",
+      "telefono": "0381 431-0700 / 3815842242",
+      "web": "http://www.hotelgardenpark.com.ar/",
+      "email": "reservas@gardenparkhotel.com.ar",
+      "servicios": [],
+      "coordenadas": {
+        "lat": -26.8283197,
+        "lng": -65.1932752
+      },
+      "actualizado": "2024-08-29"
+    },
+    {
+      "id": "376",
+      "nombre": "H la Terminal",
+      "tipo": "hotel",
+      "estrellas": 2,
+      "direccion": "Av. Brigido Teran 227",
+      "telefono": "+543812073681, +543812128973, +543814210647",
+      "web": "http://hotellaterminal.com.ar",
+      "email": "hlaterminal223@gmail.com",
+      "facebook": "https://www.facebook.com/hotellaterminal/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Gimnasio",
+        "Internet",
+        "Lavandería",
+        "TV en habitaciones"
+      ],
+      "coordenadas": {
+        "lat": -26.836214984220256,
+        "lng": -65.1955533027649
+      },
+      "actualizado": "2025-09-09"
+    },
+    {
+      "id": "361",
+      "nombre": "Hilton Garden Inn Tucuman",
+      "tipo": "hotel",
+      "estrellas": 4,
+      "direccion": "Las Piedras Nº 1550",
+      "telefono": "+543814525555, +5438154434764",
+      "web": "https://www.hgitucuman.com",
+      "email": "hgitucuman.reservas@hilton.com",
+      "instagram": "https://www.instagram.com/hgitucuman/",
+      "facebook": "https://www.facebook.com/hgitucuman/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Baño privado",
+        "Baño sauna/finlandés",
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Habitaciones accesibles",
+        "Piscina",
+        "Restaurante",
+        "Teléfono en habitaciones",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.822731862428085,
+        "lng": -65.22608114626773
+      },
+      "actualizado": "2025-08-28"
+    },
+    {
+      "id": "383",
+      "nombre": "Las Carretas",
+      "tipo": "hostel",
+      "estrellas": 0,
+      "direccion": "Benjamin Araoz 38",
+      "telefono": "+543814216211, +543815813634, +543814214186",
+      "web": "https://www.lascarretashostal.com.ar",
+      "email": "hostallascarretas@gmail.com",
+      "instagram": "https://www.instagram.com/hostal-lascarretas.tuc/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Asistencia médica",
+        "Desayuno",
+        "Quincho con parrilla",
+        "Restaurante",
+        "Room service",
+        "Teléfono en habitaciones",
+        "TV en habitaciones",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.832625304137878,
+        "lng": -65.19619703292848
+      },
+      "actualizado": "2025-09-15"
+    },
+    {
+      "id": "371",
+      "nombre": "Le Park",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Junin 1134",
+      "telefono": "+543812526323, +543814311666, +543816580744",
+      "email": "info@hotellepark.com",
+      "facebook": "https://www.facebook.com/hotellepark/",
+      "servicios": [
+        "Asistencia médica",
+        "Bar",
+        "Caja de seguridad",
+        "Desayuno",
+        "Frigo bar",
+        "Restaurante",
+        "Tarjetas de crédito y débito",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.814744904311187,
+        "lng": -65.2057509514284
+      },
+      "actualizado": "2025-09-03"
+    },
+    {
+      "id": "377",
+      "nombre": "LG Golden Suite",
+      "tipo": "hotel",
+      "estrellas": 2,
+      "direccion": "Bernabe Araoz 36",
+      "telefono": "+543815798882, +543814216286",
+      "email": "lggoldensuite@hotmail.com",
+      "instagram": "https://www.instagram.com/lggoldensuites/",
+      "facebook": "https://www.facebook.com/Hotel.LG.Golden.Suite/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Cochera",
+        "Desayuno",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.829437087195146,
+        "lng": -65.21553039550783
+      },
+      "actualizado": "2025-09-09"
+    },
+    {
+      "id": "365",
+      "nombre": "Mediterraneo",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "24 de Septiembre 364",
+      "telefono": "+543813186849, +543814867853",
+      "web": "https://www.hotelmediterraneotuc.com.ar",
+      "email": "contacto@hotelmediterraneotuc.com.ar",
+      "instagram": "https://www.instagram.com/hotelmediterraneotuc/",
+      "facebook": "https://www.facebook.com/hotelmediterraneotucuman/",
+      "servicios": [
+        "Asistencia médica",
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Internet",
+        "Lavandería",
+        "Tarjetas de crédito y débito",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.831500294306434,
+        "lng": -65.20273089408876
+      },
+      "actualizado": "2025-09-02"
+    },
+    {
+      "id": "385",
+      "nombre": "Mercer",
+      "tipo": "hostel",
+      "estrellas": 0,
+      "direccion": "Suipacha 685",
+      "telefono": "+543814331268, +5438156819173",
+      "web": "https://www.mercerhostal.com.ar",
+      "email": "info@mercerhostal.com.ar",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Salones de usos múltiples",
+        "Teléfono en habitaciones",
+        "TV en habitaciones",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.81941275187365,
+        "lng": -65.21455943584444
+      },
+      "actualizado": "2025-09-15"
+    },
+    {
+      "id": "358",
+      "nombre": "Metropol",
+      "tipo": "hotel",
+      "estrellas": 4,
+      "direccion": "24 de Septiembre 524",
+      "telefono": "+543814311180, +545157338",
+      "web": "https://hotelmetropol.com.ar/portal/es-es/2387/Home",
+      "email": "eventos-metropol@hotmail.com",
+      "instagram": "https://www.instagram.com/hotelmetropol.tuc/",
+      "facebook": "https://www.facebook.com/hotelmetropol.tuc/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Ascensor",
+        "Baño privado",
+        "Caja de seguridad",
+        "Cochera",
+        "Frigo bar",
+        "Lavandería",
+        "Piscina",
+        "Restaurante",
+        "Salones de usos múltiples",
+        "Teléfono en habitaciones",
+        "TV en habitaciones",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.8310790595414,
+        "lng": -65.20500540733339
+      },
+      "actualizado": "2025-08-26"
+    },
+    {
+      "id": "366",
+      "nombre": "Miami",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Junin 580",
+      "telefono": "+543814310265, +543815647361",
+      "web": "https://hotelmiamituc.com",
+      "email": "hotelmiamituc@hotmail.com",
+      "servicios": [
+        "Asistencia médica",
+        "Cochera",
+        "Desayuno",
+        "Piscina",
+        "Salones de usos múltiples",
+        "Tarjetas de crédito y débito"
+      ],
+      "coordenadas": {
+        "lat": -26.822256259494548,
+        "lng": -65.20739793777467
+      },
+      "actualizado": "2025-09-02"
+    },
+    {
+      "id": "364",
+      "nombre": "Premier",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Crisostomo Alvarez 510",
+      "telefono": "+543814310381, +543814310382, +543816580744",
+      "web": "https://hotelpremier.com.ar",
+      "email": "hotelpremier@redcarlosv.com.ar",
+      "instagram": "https://www.instagram.com/hotelpremiertucuman/",
+      "facebook": "https://www.facebook.com/HotelPremierTuc/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Ascensor",
+        "Asistencia médica",
+        "Caja de seguridad",
+        "Calefacción en habitaciones",
+        "Desayuno",
+        "Lavandería",
+        "Pet friendly",
+        "Restaurante",
+        "Room service",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.83243225847397,
+        "lng": -65.20536448216315
+      },
+      "actualizado": "2025-08-29"
+    },
+    {
+      "id": "357",
+      "nombre": "Ramada Plaza",
+      "tipo": "hotel",
+      "estrellas": 4,
+      "direccion": "Laprida 35",
+      "telefono": "+543814311755",
+      "web": "https://hotelgardenplaza.com.ar/#!/-hoteltucuman/",
+      "email": "reservas@hotelgardenplaza.com.ar",
+      "instagram": "https://www.instagram.com/hotelgardenplaza/",
+      "facebook": "https://www.facebook.com/hotelgardenplaza/",
+      "servicios": [
+        "Baño sauna/finlandés",
+        "Cochera",
+        "Desayuno",
+        "Frigo bar",
+        "Gimnasio",
+        "Piscina",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.830863665511654,
+        "lng": -65.20302057266237
+      },
+      "actualizado": "2025-08-26"
+    },
+    {
+      "id": "368",
+      "nombre": "Republica",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Rivadavia Nº 71",
+      "telefono": "+543814310481, +543814310483",
+      "web": "https://www.hotelrepublica.net",
+      "email": "financiera@leonalperovich.com.ar",
+      "servicios": [
+        "Cochera",
+        "Room service",
+        "Salones de usos múltiples",
+        "Tarjetas de crédito y débito",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.830576329204607,
+        "lng": -65.20137906074525
+      },
+      "actualizado": "2025-09-02"
+    },
+    {
+      "id": "355",
+      "nombre": "Sheraton Tucuman",
+      "tipo": "hotel",
+      "estrellas": 5,
+      "direccion": "Av. Soldatti 440",
+      "telefono": "+543814554700, +5438145554730, +543815511000",
+      "web": "https://www.sheraton.com/tucuman",
+      "email": "reservas@soldelnoa.com,",
+      "servicios": [
+        "Baño privado",
+        "Baño sauna/finlandés",
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Gimnasio",
+        "Piscina",
+        "Restaurante",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.82710967270872,
+        "lng": -65.19336939375363
+      },
+      "actualizado": "2025-08-18"
+    },
+    {
+      "id": "373",
+      "nombre": "Solar Norte",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Mexico 879",
+      "telefono": "+543814272722, +543815404755",
+      "email": "info@hotelsolarnorte.com.ar",
+      "instagram": "https://www.instagram.com/hotelsolarnorte/",
+      "facebook": "https://www.facebook.com/hotelsolarnorte/",
+      "servicios": [
+        "Asistencia médica",
+        "Cochera",
+        "Desayuno",
+        "Gimnasio",
+        "Lavandería",
+        "Piscina",
+        "Salones de usos múltiples",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.80268440986152,
+        "lng": -65.2033853530884
+      },
+      "actualizado": "2025-09-08"
+    },
+    {
+      "id": "359",
+      "nombre": "Suite Garden Park",
+      "tipo": "hotel",
+      "estrellas": 4,
+      "direccion": "Av. Soldati 330",
+      "telefono": "+54381 4310700, +543815842242",
+      "web": "https://www.gardenparkhotel.com.ar",
+      "email": "reservas@gardenparkhotel.com.ar",
+      "facebook": "https://www.facebook.com/GardenParkSuitesyEventos/",
+      "servicios": [
+        "Cochera",
+        "Desayuno",
+        "Frigo bar",
+        "Gimnasio",
+        "Lavandería",
+        "Piscina",
+        "Restaurante",
+        "Salones de usos múltiples",
+        "Tarjetas de crédito y débito",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.828055549465457,
+        "lng": -65.19364967887925
+      },
+      "actualizado": "2025-08-27"
+    },
+    {
+      "id": "382",
+      "nombre": "The Point Casa",
+      "tipo": "departamentos",
+      "estrellas": 0,
+      "direccion": "Virgen de la Merced 120",
+      "telefono": "+543816319589",
+      "web": "https://www.thepointcasa.com.ar",
+      "email": "thepointcasa@gmail.com",
+      "instagram": "https://www.instagram.com/htepointcasa/",
+      "facebook": "https://www.facebook.com/thepointcasa.com.ar/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Ascensor",
+        "Cochera",
+        "Gimnasio",
+        "Piscina",
+        "Quincho con parrilla",
+        "Salones de usos múltiples",
+        "TV en habitaciones",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.829503979956154,
+        "lng": -65.20140051841737
+      },
+      "actualizado": "2025-09-15"
+    },
+    {
+      "id": "217",
+      "nombre": "TP Apart Hotel",
+      "tipo": "departamentos",
+      "estrellas": 0,
+      "direccion": "Santa Fe 1635",
+      "telefono": "(0381)4237821 - (0381) 154177559",
+      "email": "tpaparthotel@gmail.com",
+      "servicios": [],
+      "coordenadas": {
+        "lat": -26.81662,
+        "lng": -65.219049
+      },
+      "actualizado": "2024-08-15"
+    },
+    {
+      "id": "360",
+      "nombre": "Tucuman Center Suites Bussins",
+      "tipo": "hotel",
+      "estrellas": 4,
+      "direccion": "25 de Mayo Nº 230",
+      "telefono": "+54381 4525555, +543815070790, +543815070794",
+      "web": "https://www.tucumancenterhotel.com.ar",
+      "email": "reservas@tucumancenterhotel.com.ar",
+      "instagram": "https://www.instagram.com/hoteltucumancenter/",
+      "facebook": "https://www.facebook.com/hotelTucumanCenter/",
+      "servicios": [
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Frigo bar",
+        "Gimnasio",
+        "Lavandería",
+        "Piscina",
+        "Restaurante",
+        "Room service",
+        "Salones de usos múltiples",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.82797076411433,
+        "lng": -65.20416392624087
+      },
+      "actualizado": "2025-08-28"
+    },
+    {
+      "id": "65",
+      "nombre": "Universo",
+      "tipo": "residencial",
+      "estrellas": 0,
+      "direccion": "Santiago del Estero 1060",
+      "telefono": "(0381) 4311136 / (0381) 5624299",
+      "email": "hoteluniversotucuman@gmail.com",
+      "servicios": [],
+      "coordenadas": {
+        "lat": -26.8224522,
+        "lng": -65.2113732
+      },
+      "actualizado": "2024-07-16"
+    },
+    {
+      "id": "375",
+      "nombre": "Versailles",
+      "tipo": "hotel",
+      "estrellas": 3,
+      "direccion": "Crisostomo Alvarez 481",
+      "telefono": "+543814229760",
+      "web": "https://www.hotelversaillestuc.com.ar",
+      "email": "info@hotelversaillestuc.com.ar",
+      "instagram": "https://www.instagram.com/hotelversaillestucuman/",
+      "facebook": "https://www.facebook.com/hotelversallies/",
+      "servicios": [
+        "Aire acondicionado en habitaciones",
+        "Bar",
+        "Caja de seguridad",
+        "Cochera",
+        "Desayuno",
+        "Salones de usos múltiples",
+        "Tarjetas de crédito y débito",
+        "Wi-Fi"
+      ],
+      "coordenadas": {
+        "lat": -26.832316099252946,
+        "lng": -65.20475548049734
+      },
+      "actualizado": "2025-09-08"
+    }
+  ]
+}

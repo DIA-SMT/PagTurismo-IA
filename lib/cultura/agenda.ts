@@ -24,6 +24,8 @@ export type OcurrenciaAgenda = OcurrenciaDeEvento & {
   /** Ficha del lugar, para filtrar por espacio. */
   lugarSlug?: string;
   rubros: string[];
+  /** Dirección de Cultura que lo organiza (la cargada o la deducida del lugar). */
+  area?: string;
   gratis: boolean;
   destacado: boolean;
   fueraDeLaCiudad: boolean;
@@ -40,6 +42,8 @@ export type FiltrosAgenda = {
   q: string;
   rubro: string;
   lugar: string;
+  /** Dirección que organiza (lib/cultura/areas.ts). */
+  area: string;
   gratis: boolean;
 };
 
@@ -55,6 +59,7 @@ export function leerFiltrosAgenda(p: Parametros): FiltrosAgenda {
     q: (p.get("q") ?? "").slice(0, 80),
     rubro: p.get("categoria") ?? "",
     lugar: p.get("lugar") ?? "",
+    area: p.get("area") ?? "",
     gratis: p.get("gratis") === "1",
   };
 }
@@ -67,17 +72,19 @@ export function filtrosAUrl(f: FiltrosAgenda, extra: Record<string, string> = {}
   if (f.q.trim()) p.set("q", f.q.trim());
   if (f.rubro) p.set("categoria", f.rubro);
   if (f.lugar) p.set("lugar", f.lugar);
+  if (f.area) p.set("area", f.area);
   if (f.gratis) p.set("gratis", "1");
   for (const [k, v] of Object.entries(extra)) if (v) p.set(k, v);
   return p.toString();
 }
 
-export const hayFiltrosDeContenido = (f: FiltrosAgenda) => !!(f.q.trim() || f.rubro || f.lugar || f.gratis);
+export const hayFiltrosDeContenido = (f: FiltrosAgenda) => !!(f.q.trim() || f.rubro || f.lugar || f.area || f.gratis);
 
-/** Búsqueda sin tildes ni mayúsculas sobre título, resumen y lugar; categoría, lugar y gratuidad. */
-export function coincide(o: OcurrenciaAgenda, f: Pick<FiltrosAgenda, "q" | "rubro" | "lugar" | "gratis">): boolean {
+/** Búsqueda sin tildes ni mayúsculas sobre título, resumen y lugar; categoría, lugar, dirección y gratuidad. */
+export function coincide(o: OcurrenciaAgenda, f: Pick<FiltrosAgenda, "q" | "rubro" | "lugar" | "gratis"> & { area?: string }): boolean {
   if (f.rubro && !o.rubros.includes(f.rubro)) return false;
   if (f.lugar && o.lugarSlug !== f.lugar) return false;
+  if (f.area && o.area !== f.area) return false;
   if (f.gratis && !o.gratis) return false;
   const q = normalizar(f.q);
   if (q) {
@@ -115,14 +122,17 @@ export function filtrarAgenda(ocurrencias: OcurrenciaAgenda[], f: FiltrosAgenda,
 /** Opciones de los selectores: solo categorías y lugares que tienen fechas por venir. */
 export function opcionesConFechas(ocurrencias: OcurrenciaAgenda[], ahora: number) {
   const rubros = new Set<string>();
+  const areas = new Set<string>();
   const lugares = new Map<string, string>();
   for (const o of ocurrencias) {
     if (finDeOcurrencia(o) < ahora || o.estado === "cancelado") continue;
     o.rubros.forEach((r) => rubros.add(r));
+    if (o.area) areas.add(o.area);
     if (o.lugarSlug && o.lugar) lugares.set(o.lugarSlug, o.lugar);
   }
   return {
     rubros,
+    areas,
     lugares: [...lugares].map(([slug, titulo]) => ({ slug, titulo })).sort((a, b) => a.titulo.localeCompare(b.titulo, "es")),
   };
 }
