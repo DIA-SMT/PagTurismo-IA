@@ -445,3 +445,56 @@
 .espacios-portada__columna li strong { color: var(--c-titulo); }
 .espacios-portada__columna li small { color: var(--c-ink-soft); }
 @media (max-width: 45rem) { .espacios-portada__columnas { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- Programas de Gestión Cultural (/programas) ---- */
+.espacios__programas { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; margin: calc(var(--sp-3) * -1) 0 var(--sp-6); color: var(--c-ink-soft); }
+.programas__indice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-4); margin-bottom: var(--sp-6); }
+.programa-acceso { display: flex; gap: var(--sp-4); align-items: center; padding: var(--sp-4); border: 1px solid var(--tono-borde); border-radius: var(--r-lg); background: var(--tono-fondo); color: var(--c-ink); text-decoration: none; transition: transform var(--t-media), box-shadow var(--t-media); }
+.programa-acceso:hover { color: var(--c-ink); transform: translateY(-2px); box-shadow: 0 10px 24px rgb(9 35 76 / 14%); }
+.programa-acceso img { flex: none; width: 5.5rem; height: 5.5rem; padding: 0.4rem; border-radius: 1rem; background: #fff; object-fit: contain; }
+.programa-acceso > span { flex: 1; min-width: 0; }
+.programa-acceso strong { display: block; color: var(--c-titulo); font-family: var(--f-titulos); font-size: 1.25rem; }
+.programa-acceso small { display: block; margin-top: 4px; color: var(--c-ink-soft); font-size: 0.88rem; line-height: 1.4; }
+.programa-acceso > svg { flex: none; color: var(--tono-tinta); }
+
+.programa { display: grid; gap: var(--sp-5); padding: var(--sp-6) 0; border-top: 1px solid var(--c-borde-suave); scroll-margin-top: 6rem; }
+.programa__cabecera { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-5); align-items: start; }
+.programa__cabecera h2 { margin: 0 0 var(--sp-2); font-size: clamp(1.8rem, 3.2vw, 2.4rem); }
+.programa__cabecera p { max-width: 48rem; margin: 0 0 var(--sp-2); color: var(--c-ink-soft); line-height: 1.55; }
+.programa__cabecera .programa__bajada { color: var(--c-ink); font-size: 1.1rem; font-weight: var(--fw-semi); }
+.programa__logo { width: 9rem; height: 9rem; padding: 0.5rem; border-radius: 1.25rem; background: #fff; box-shadow: 0 4px 16px rgb(9 35 76 / 10%); object-fit: contain; }
+.programa__logo--ancho { width: 11rem; height: auto; }
+.programa__cifras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+.programa__cifras li { display: flex; flex-direction: column; gap: 2px; padding: var(--sp-4); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); }
+.programa__cifras strong { color: var(--c-azul-700); font-family: var(--f-titulos); font-size: clamp(1.8rem, 3vw, 2.4rem); line-height: 1.1; }
+.programa__cifras span { color: var(--c-ink); font-size: 0.92rem; }
+.programa__cifras small { color: var(--c-ink-soft); font-size: 0.8rem; }
+.programa__lineas, .programa__ejes { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+.programa__lineas li, .programa__ejes li { position: relative; padding: var(--sp-4); border: 1px solid var(--tono-borde); border-radius: var(--r-lg); background: var(--tono-fondo); }
+.programa__lineas h3, .programa__ejes h4 { margin: 0 0 var(--sp-2); color: var(--c-titulo); font-size: 1.1rem; }
+.programa__lineas p, .programa__ejes p { margin: 0; color: var(--c-ink); font-size: 0.92rem; line-height: 1.5; }
+.programa__ejes { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+.programa__numero { display: inline-grid; place-items: center; width: 2rem; height: 2rem; margin-bottom: var(--sp-2); border-radius: 50%; background: var(--tono-icono); color: var(--tono-tinta); font-family: var(--f-titulos); font-weight: var(--fw-fuerte); }
+.programa__nota { max-width: 48rem; margin: 0; color: var(--c-ink-soft); font-style: italic; }
+.programa__objetivo { padding: var(--sp-4) var(--sp-5); border-left: 4px solid var(--c-azul-600); border-radius: 0 var(--r-lg) var(--r-lg) 0; background: var(--c-azul-50); }
+.programa__objetivo h3 { margin: 0 0 var(--sp-1); font-size: 1rem; }
+.programa__objetivo p { margin: 0; line-height: 1.55; }
+.programa__subtitulo { margin: 0; font-size: 1.3rem; }
+.programa__lema { margin: 0; padding: var(--sp-5); border-radius: var(--r-lg); background: linear-gradient(120deg, #6840dc, #0066ff); color: #fff; text-align: center; }
+.programa__lema p { margin: 0; font-family: var(--f-titulos); font-size: clamp(1.25rem, 2.4vw, 1.7rem); font-weight: var(--fw-fuerte); line-height: 1.3; }
+.programa__esquinas { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-5); align-items: center; padding: var(--sp-5); border: 1px solid var(--c-borde-objeto); border-radius: var(--r-lg); background: var(--c-blanco); }
+.programa__esquinas img { width: 13rem; height: auto; }
+.programa__esquinas h3 { margin: 0 0 var(--sp-1); }
+.programa__esquinas p { margin: 0 0 var(--sp-3); color: var(--c-ink-soft); }
+.programa__actividades h3 { margin: 0; }
+.programa__sede { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); margin-top: var(--sp-2) !important; color: var(--c-ink) !important; font-size: 0.9rem; }
+.programa__sede span { display: inline-flex; gap: 0.35rem; align-items: center; }
+@media (max-width: 56rem) {
+  .programa__cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .programas__indice { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 37.5rem) {
+  .programa__cabecera, .programa__esquinas { grid-template-columns: minmax(0, 1fr); }
+  .programa__logo { width: 7rem; height: 7rem; }
+  .programa__logo--ancho { width: 9rem; height: auto; }
+}

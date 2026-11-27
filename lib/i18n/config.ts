@@ -40,6 +40,7 @@ const SECCIONES: Record<string, Record<Exclude<Idioma, "es">, string>> = {
   galeria: { en: "gallery", pt: "galeria" },
   museos: { en: "museums", pt: "museus" },
   "centros-culturales": { en: "cultural-centers", pt: "centros-culturais" },
+  programas: { en: "programs", pt: "programas" },
 };
 
 /** Direcciones que no son páginas del sitio y no pasan por los idiomas. */
